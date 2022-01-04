@@ -1,0 +1,19 @@
+{
+  "primary": "#000000",
+  "secondary": "#999999",
+  "success": "#95CD41",
+  "warning": "#FFBD35",
+  "danger": "#FF5959",
+  "dark": "#1E1E1E",
+  "light": "#F0F0F0",
+  
+  "globalMinHeight": "40px",
+  "globalFontSize": "1rem",
+  "globalBorderRadius": ".4rem",
+  "globalPadding": ".7rem",
+  "globalBorderColor": "#DAE1E7",
+
+  
+
+  "nothing": ""
+}

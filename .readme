@@ -1,0 +1,12 @@
+ESTO ESTÁ HECHO BASADO EN ESTA GUÍA
+https://www.freecodecamp.org/news/how-to-create-and-publish-a-vue-component-library/
+
+PARA AGREGAR A UN PROYECTO
+En consola, yarn add cleek
+
+(Vue 2) Después en main.js lo siguiente:
+import qvButton from 'ck-button'
+import Vue from "vue";
+
+Vue.use(qvButton);
+

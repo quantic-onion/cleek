@@ -1,0 +1,96 @@
+json('./StylusVars.json')
+@require 'templateStyle.styl'
+
+// "primary": "#8687DA",
+// "secondary": "#4E4D86",
+
+
+// group
+.ck-component__group--left
+  border-radius-right(0 !important)
+  border-right 0 !important
+.ck-component__group--right
+  border-radius-left(0 !important)
+.ck-component__group--center
+  border-radius 0 !important
+  border-right 0 !important
+
+// group vertical
+.ck-component__group-vertical--top
+  border-bottom 0 !important
+  border-radius-bottom(0 !important)
+.ck-component__group-vertical--bottom
+  border-radius-top(0 !important)
+.ck-component__group-vertical--center
+  border-radius 0 !important
+  border-bottom 0 !important
+
+// bg color
+.ck-component__bg-color--primary
+  background-color primary !important
+  border-color primary !important
+  color white !important
+.ck-component__bg-color--primary-light
+  background-color rgba(primary, .15) !important
+  border-color rgba(primary, .15) !important
+  color primary !important
+  font-weight 600 !important
+.ck-component__bg-color--secondary
+  background-color secondary !important
+  border-color secondary !important
+  color white !important
+.ck-component__bg-color--secondary-light
+  background-color rgba(secondary, .15) !important
+  border-color rgba(secondary, .15) !important
+  color secondary !important
+  font-weight 600 !important
+.ck-component__bg-color--success
+  background-color success !important
+  border-color success !important
+  color rgba(white, 0.9) !important
+.ck-component__bg-color--danger
+  background-color danger !important
+  border-color danger !important
+  color rgba(white, 0.9) !important
+.ck-component__bg-color--warning
+  background-color warning !important
+  border-color warning !important
+  color rgba(white, 0.9) !important
+.ck-component__bg-color--dark
+  background-color dark !important
+  border-color dark !important
+  color rgba(white, 0.9) !important
+.ck-component__bg-color--light
+  background-color light !important
+  border-color light !important
+
+// border color
+.ck-component__border-color--primary
+  color primary !important
+  border-color primary !important
+.ck-component__border-color--primary-light
+  color rgba(primary, .15) !important
+  border-color rgba(primary, .15) !important
+  font-weight 600 !important
+.ck-component__border-color--secondary
+  color secondary !important
+  border-color secondary !important
+.ck-component__border-color--secondary-light
+  color rgba(secondary, .15) !important
+  border-color rgba(secondary, .15) !important
+  font-weight 600 !important
+.ck-component__border-color--success
+  color success !important
+  border-color success !important
+.ck-component__border-color--danger
+  color danger !important
+  border-color danger !important
+.ck-component__border-color--warning
+  color warning !important
+  border-color warning !important
+.ck-component__border-color--dark
+  color dark !important
+  border-color dark !important
+.ck-component__border-color--light
+  color light !important
+  border-color light !important

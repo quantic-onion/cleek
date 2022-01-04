@@ -1,0 +1,23 @@
+{
+  "name": "cleek-styles",
+  "version": "0.0.1",
+  "description": "styles for cleek libraries",
+  "main": "index.css",
+  "scripts": {
+    "build": "rimraf css stylus css --out dist/",
+    "watch": "stylus -w styles/index.styl -o dist/index.css",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "files": [
+    "build"
+  ],
+  "author": "Quantic Onion",
+  "license": "ISC",
+  "devDependencies": {
+    "rimraf": "^3.0.2"
+  },
+  "dependencies": {
+    "global": "^4.4.0",
+    "stylus": "^0.56.0"
+  }
+}
