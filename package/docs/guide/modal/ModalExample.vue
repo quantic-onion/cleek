@@ -23,7 +23,7 @@
   </Modal>
 </template>
 <script>
-import { Button, Modal } from '../../../src/index'
+import { Button, Modal } from '../../../src/components/index'
 
 export default {
   name: 'ButtonExample',

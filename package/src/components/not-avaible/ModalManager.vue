@@ -6,7 +6,7 @@
 
 <script>
 import { markRaw } from 'vue'
-import { EVENTS, EventBus, Modal } from '../../index'
+import { EVENTS, EventBus, Modal } from '../index'
 
 const ESCAPE_KEY = 27
 

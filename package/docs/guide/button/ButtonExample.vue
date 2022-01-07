@@ -10,7 +10,7 @@ ck-button.mr-2.mb-2(disabled)
 </template>
 
 <script>
-import { ckButton } from '../../../src/index';
+import { ckButton } from '../../../src/components/index';
 
 export default {
   name: 'ButtonExample',

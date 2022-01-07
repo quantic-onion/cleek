@@ -11,7 +11,7 @@
   </div>
 </template>
 <script>
-import { Switch } from '../../../src/index'
+import { Switch } from '../../../src/components/index'
 
 export default {
   name: 'SwitchExample',

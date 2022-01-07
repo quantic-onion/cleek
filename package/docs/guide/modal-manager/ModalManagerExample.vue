@@ -6,7 +6,7 @@
 </template>
 <script>
 import LayoutExample from './LayoutExample.vue'
-import { Button, EVENTS, EventBus, ModalManager } from '../../../src/index'
+import { Button, EVENTS, EventBus, ModalManager } from '../../../src/components/index'
 
 export default {
   name: 'ButtonExample',

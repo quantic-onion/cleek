@@ -3,7 +3,7 @@
   <Link label="Example link" disabled />
 </template>
 <script>
-import { Link } from '../../../src/index'
+import { Link } from '../../../src/components/index'
 
 export default {
   name: 'LinkExample',

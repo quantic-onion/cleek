@@ -49,7 +49,7 @@
   </Sidebar>
 </template>
 <script>
-import { Button, Sidebar } from '../../../src/index'
+import { Button, Sidebar } from '../../../src/components/index'
 
 export default {
   name: 'SidebarExample',

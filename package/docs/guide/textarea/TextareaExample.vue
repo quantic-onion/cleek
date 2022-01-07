@@ -56,7 +56,7 @@
   </div>
 </template>
 <script>
-import { Textarea } from '../../../src/index'
+import { Textarea } from '../../../src/components/index'
 
 export default {
   name: 'SwitchExample',

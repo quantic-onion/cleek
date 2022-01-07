@@ -6,7 +6,7 @@
 
 <script>
 import { markRaw } from 'vue'
-import { EVENTS, EventBus, Sidebar } from '../../index'
+import { EVENTS, EventBus, Sidebar } from '../index'
 
 const ESCAPE_KEY = 27
 

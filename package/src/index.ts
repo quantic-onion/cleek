@@ -1,6 +1,6 @@
 import { App, Plugin } from 'vue';
 // vue components
-import * as components from '@/lib-components/index';
+import * as components from './components/index.js';
 
 // install function executed by Vue.use()
 const install: Exclude<Plugin['install'], undefined> = function installCleek(app: App, options: any) {
@@ -18,4 +18,4 @@ export default install;
 
 // To allow individual component use, export components
 // each can be registered via Vue.component()
-export * from '@/lib-components/index';
+export * from './components/index.js';

@@ -29,7 +29,7 @@
   </div>
 </template>
 <script>
-import { Input } from '../../../src/index'
+import { Input } from '../../../src/components/index'
 
 export default {
   name: 'InputExample',

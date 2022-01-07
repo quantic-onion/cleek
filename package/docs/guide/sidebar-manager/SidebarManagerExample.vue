@@ -6,7 +6,7 @@
 </template>
 <script>
 import LayoutExample from './LayoutExample.vue'
-import { Button, EVENTS, EventBus, SidebarManager } from '../../../src/index'
+import { Button, EVENTS, EventBus, SidebarManager } from '../../../src/components/index'
 
 export default {
   name: 'ButtonExample',

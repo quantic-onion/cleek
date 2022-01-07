@@ -4,7 +4,7 @@
   </Tooltip>
 </template>
 <script>
-import { Tooltip } from '../../../src/index'
+import { Tooltip } from '../../../src/components/index'
 
 export default {
   name: 'TooltipExample',

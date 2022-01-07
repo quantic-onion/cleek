@@ -16,6 +16,10 @@ The button component is a simple customizable button.
 <ck-button type="text">
   Text
 </ck-button>
+
+<ck-button disabled>
+  Disabled
+</ck-button>
 ```
 
 | Prop       | Description               | Accepted Values                 | Default     |

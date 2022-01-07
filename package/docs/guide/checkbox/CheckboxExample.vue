@@ -15,7 +15,7 @@
   </div>
 </template>
 <script>
-import { Checkbox } from '../../../src/index'
+import { Checkbox } from '../../../src/components/index'
 
 export default {
   name: 'CheckboxExample',

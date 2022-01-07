@@ -28,7 +28,7 @@
   </transition>
 </template>
 <script>
-import { lockScroll, unlockScroll } from '../../index'
+import { lockScroll, unlockScroll } from '../index'
 import { tabbable } from 'tabbable'
 
 const ESCAPE_KEY = 27
