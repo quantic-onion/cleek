@@ -12,7 +12,6 @@ const myApp = createApp(App);
 myApp.use(store);
 myApp.use(router);
 
-
 // const CleekParams = {
 //   test: 'holis',
 // };
@@ -23,4 +22,4 @@ myApp.mount('#app');
 console.log('ESTOY EN SANDBOX');
 
 // css
-require('cleek/dist/style.css')
+require('cleek/dist/style.css');

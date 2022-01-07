@@ -1,22 +1,27 @@
-<template>
-  <div id="nav">
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
-    <div class="licha-crack">Hola soy Lichykz</div>
-    <Button label="Holi">
-      Lich BTN
-    </Button>
-  </div>
-  <router-view/>
+<template lang="pug">
+#nav
+  router-link(to="/")
+    | Home
+  router-link(to="/about")
+    | About
+  .licha-crack
+    | Hola soy Lichykz
+  ck-button
+    | Outlined
+  ck-button(type="filled")
+    | Filled
+  ck-button(type="text")
+    | Text
+router-view
 </template>
 
 <script>
-import { Button } from 'cleek';
+import { ckButton } from 'cleek';
 
 export default {
   name: 'ButtonExample',
   components: {
-    Button,
+    ckButton,
   },
 }; // export default
 </script>
