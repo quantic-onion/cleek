@@ -1,6 +1,6 @@
 {
   "name": "cleek",
-  "version": "1.1.2",
+  "version": "1.1.4",
   "description": "",
   "main": "dist/cleek.ssr.js",
   "browser": "dist/cleek.esm.js",
@@ -19,7 +19,9 @@
     "build:ssr": "cross-env NODE_ENV=production rollup --config build/rollup.config.js --format cjs",
     "build:es": "cross-env NODE_ENV=production rollup --config build/rollup.config.js --format es",
     "build:unpkg": "cross-env NODE_ENV=production rollup --config build/rollup.config.js --format iife",
-    "postbuild": "rimraf ./dist/types/dev ./dist/types/src/entry.d.ts"
+    "postbuild": "rimraf ./dist/types/dev ./dist/types/src/entry.d.ts",
+    "watch-styles": "stylus -w src/styles/ -o dist/styles",
+    "build-styles": "stylus src/styles/ -o dist/styles/"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.36",
@@ -27,6 +29,7 @@
     "@fortawesome/free-regular-svg-icons": "^5.15.4",
     "@fortawesome/free-solid-svg-icons": "^5.15.4",
     "@fortawesome/vue-fontawesome": "^3.0.0-4",
+    "rollup-plugin-css-only": "^3.1.0",
     "rollup-plugin-pug": "^1.1.1",
     "vue-select": "^4.0.0-beta.1"
   },

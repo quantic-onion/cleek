@@ -5,6 +5,7 @@
   :class="computedClass"
   @click="$emit('click', $event)"
   )
+    | ck button
     //- icon left
     //- ck-icon.ck-button--icon-left(
     //- v-if="icon"
@@ -60,3 +61,9 @@ export default {
   }, // computed
 }; // export default
 </script>
+
+<style scoped>
+.ck-button > button {
+  background-color: red !important;
+}
+</style>

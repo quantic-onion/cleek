@@ -15,6 +15,7 @@ import minimist from 'minimist';
 import pug from 'rollup-plugin-pug';
 import stylus from 'rollup-plugin-stylus-compiler';
 import stylusCssModules from 'rollup-plugin-stylus-css-modules';
+import css from 'rollup-plugin-css-only';
 
 // Get browserslist config and remove ie from es build targets
 const esbrowserslist = fs.readFileSync('./.browserslistrc')
@@ -48,33 +49,40 @@ const baseConfig = {
       preventAssignment: true,
     },
     vue: {
+      css: false,
     },
     postVue: [
       resolve({
         extensions: ['.js', '.jsx', '.ts', '.tsx', '.vue'],
       }),
-      stylus(),
-      stylusCssModules({
-        output: 'styles.css',
-      }),
       // Process only `<style module>` blocks.
-      PostCSS({
-        modules: {
-          generateScopedName: '[local]___[hash:base64:5]',
-        },
-        include: /&module=.*\.css$/,
-      }),
+      // PostCSS({
+      //   modules: {
+      //     generateScopedName: '[local]___[hash:base64:5]',
+      //   },
+      //   include: /&module=.*\.css$/,
+      // }),
       // Process all `<style>` blocks except `<style module>`.
       PostCSS({ include: /(?<!&module=.*)\.css$/ }),
       commonjs(),
+      pug({
+        locals: { message: 'Hello World' },
+      }),
     ],
     babel: {
-      exclude: 'node_modules/**',
+      exclude: ['node_modules/**'],
       extensions: ['.js', '.jsx', '.ts', '.tsx', '.vue'],
       babelHelpers: 'bundled',
     },
+    postBabel: [
+      // css(),
+      stylus(),
+      // stylusCssModules({
+      // //   output: 'styles.css',
+      // }),
+    ],
   },
-} ;
+} ; 
 
 // ESM/UMD/IIFE shared settings: externals
 // Refer to https://rollupjs.org/guide/en/#warning-treating-module-as-external-dependency
@@ -95,6 +103,7 @@ const globals = {
 // Customize configs for individual targets
 const buildFormats = [];
 if (!argv.format || argv.format === 'es') {
+  console.log('FORMAT es');
   const esConfig = {
     ...baseConfig,
     input: 'src/entry.esm.ts',
@@ -116,9 +125,6 @@ if (!argv.format || argv.format === 'es') {
         useTsconfigDeclarationDir: true,
         emitDeclarationOnly: true,
       }),
-      pug({
-        locals: { message: 'Hello World' },
-      }),
       babel({
         ...baseConfig.plugins.babel,
         presets: [
@@ -131,12 +137,14 @@ if (!argv.format || argv.format === 'es') {
           ],
         ],
       }),
+      ...baseConfig.plugins.postBabel,
     ],
   };
   buildFormats.push(esConfig);
 }
 
 if (!argv.format || argv.format === 'cjs') {
+  console.log('FORMAT cjs');
   const umdConfig = {
     ...baseConfig,
     external,
@@ -154,12 +162,14 @@ if (!argv.format || argv.format === 'cjs') {
       vue(baseConfig.plugins.vue),
       ...baseConfig.plugins.postVue,
       babel(baseConfig.plugins.babel),
+      ...baseConfig.plugins.postBabel,
     ],
   };
   buildFormats.push(umdConfig);
 }
 
 if (!argv.format || argv.format === 'iife') {
+  console.log('FORMAT iife');
   const unpkgConfig = {
     ...baseConfig,
     external,
@@ -177,6 +187,7 @@ if (!argv.format || argv.format === 'iife') {
       vue(baseConfig.plugins.vue),
       ...baseConfig.plugins.postVue,
       babel(baseConfig.plugins.babel),
+      ...baseConfig.plugins.postBabel,
       terser({
         output: {
           ecma: 5,

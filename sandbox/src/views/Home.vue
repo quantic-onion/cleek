@@ -2,12 +2,9 @@
   <div class="home">
     <!-- <img alt="Vue logo" src="../assets/logo.png">
     <HelloWorld msg="Welcome to Your Vue.js + TypeScript App"/> -->
-    <ck-button>
-      Holis
-    </ck-button>
-    <ck-input-text label="holis"/>
+    <!-- <ck-input-text label="holis"/>
     <ck-label> Jerardo Sofovich
-    </ck-label>
+    </ck-label> -->
   </div>
 </template>
 

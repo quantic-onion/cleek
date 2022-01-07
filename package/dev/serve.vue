@@ -2,13 +2,13 @@
 #app
   .sandbox-container
     h1.sandbox-title Centro de pruebas universal
-    CheckSameHeight
-    ShowerSelect
+    //- CheckSameHeight
+    //- ShowerSelect
     ShowerButton
-    ShowerInputText
-    ShowerTextarea
-    ShowerIcon
-    ShowerLabel
+    //- ShowerInputText
+    //- ShowerTextarea
+    //- ShowerIcon
+    //- ShowerLabel
 </template>
 
 <script lang="ts">

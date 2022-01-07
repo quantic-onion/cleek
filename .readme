@@ -1,6 +1,9 @@
 ESTO ESTÁ HECHO BASADO EN ESTA GUÍA
 https://www.freecodecamp.org/news/how-to-create-and-publish-a-vue-component-library/
 
+PARA HACER TESTING EN DEVELOPMENT
+npm run serve, y en otra consola, al mismo tiempo "npm run watch-styles"
+
 PARA AGREGAR A UN PROYECTO
 En consola, yarn add cleek
 

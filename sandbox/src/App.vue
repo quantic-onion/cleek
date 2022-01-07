@@ -3,9 +3,23 @@
     <router-link to="/">Home</router-link> |
     <router-link to="/about">About</router-link>
     <div class="licha-crack">Hola soy Lichykz</div>
+    <Button label="Holi">
+      Lich BTN
+    </Button>
   </div>
   <router-view/>
 </template>
+
+<script>
+import { Button } from 'cleek';
+
+export default {
+  name: 'ButtonExample',
+  components: {
+    Button,
+  },
+}; // export default
+</script>
 
 <style lang="stylus">
 #app
