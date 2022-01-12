@@ -34,6 +34,7 @@ function getComponents() {
     { text: 'Button', link: '/guide/ck-button/ck-button' },
     { text: 'Checkbox', link: '/guide/ck-checkbox/ck-checkbox' },
     { text: 'Icon', link: '/guide/ck-icon/ck-icon' },
+    { text: 'Img', link: '/guide/ck-img/ck-img' },
     { text: 'Input Text', link: '/guide/ck-input-text/ck-input-text' },
     { text: 'Label', link: '/guide/ck-label/ck-label' },
     // { text: 'Link', link: '/guide/link/link' },

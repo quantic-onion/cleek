@@ -1,0 +1,67 @@
+
+PARA NIZA
+  sidebar
+  img
+  popup
+  switch-options
+  table
+  pagination
+  datepicker
+  print
+
+
+
+
+TERMINAR
+  button
+  checkbox
+  icon
+  input-text
+  label
+  radio
+  select
+  switch
+  textarea
+  tooltip
+
+
+
+
+
+
+CREAR
+  autocomplete
+  breadcrumb
+  card
+  checkbox
+  chip
+  circle
+  countdown
+  dropdown
+  hideable-content
+  img
+  info
+  input-color
+  input-date
+  input-hour
+  input-number
+  input-password
+  label
+  list
+  notification
+  pagination
+  popup
+  print
+  select-with-img
+  sidebar
+  steps
+  switch-options
+  table
+    tbody
+    td
+    th
+    tr
+  textarea
+  tooltip
+  upload-photo
+  video

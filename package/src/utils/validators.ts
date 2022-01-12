@@ -1,7 +1,7 @@
 export default {
   // general
   size: (type) => {
-    return ['xs', 's', 'm', 'l', 'xl'].includes(type)
+    return ['', 'xs', 's', 'm', 'l', 'xl'].includes(type)
   },
   group: (type) => {
     return ['left', 'right', 'center'].includes(type)

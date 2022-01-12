@@ -13,6 +13,7 @@ type="button"
 <script>
 import validators from '../utils/validators';
 import functions from '../utils/functions';
+import globalVariables from '../utils/globalVariables';
 const defaults = { type: 'outlined' };
 export default {
   name: 'CkButton',
