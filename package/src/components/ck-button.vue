@@ -15,11 +15,12 @@ import validators from '../utils/validators';
 import functions from '../utils/functions';
 const defaults = { type: 'outlined' };
 export default {
-  name: 'Button',
+  name: 'CkButton',
   props: {
     title: { type: String, default: undefined },
-    type: { type: String, default: 'outlined', validator: validators.buttonType },
+    type: { type: String, default: defaults.type, validator: validators.buttonType },
     color: { type: String, default: '' },
+    disabled: { type: Boolean, default: false },
     // icon
     icon: { type: [String, Array], default: undefined },
     iconPackage: { type: String, default: undefined },
@@ -31,7 +32,6 @@ export default {
     group: { type: String, default: undefined, validator: validators.group },
     groupBreak: { type: String, default: 's' },
     groupVertical: { type: String, default: undefined, validator: validators.groupVertical  },
-    disabled: { type: Boolean, default: false },
   },
   emits: ['click'],
   computed: {
@@ -64,7 +64,8 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
-$primary = #15b0ce
+@import '../styles/.variables.styl'
+
 button
   cursor pointer
   display inline-flex
@@ -110,5 +111,5 @@ button
   &:disabled::before
     display none
   &:disabled > span
-    color #757575
+    color $color-disabled
 </style>

@@ -6,22 +6,55 @@
     | About
   .licha-crack
     | Hola soy Lichykz
-  ck-button
-    | Outlined
-  ck-button(type="filled")
-    | Filled
-  ck-button(type="text")
-    | Text
+
+.content
+  //- input text
+  div
+    h3 Input Text
+      div {{ text }}
+      ck-input-text(v-model="text")
+  //- icon
+  div
+    h3 Icon
+    ck-icon(icon="helicopter")
+    ck-icon(spin icon="spinner")
+  //- button
+  div
+    h3 Buttons
+    ck-button
+      | Outlined
+    ck-button(type="filled")
+      | Filled
+    ck-button(type="text")
+      | Text
+  //- select
+  div
+    h3 Select
+    ck-select(v-model="selectedOption")
 router-view
 </template>
 
 <script>
-import { ckButton } from 'cleek';
+import { ckButton, ckInputText, ckIcon, ckSelect } from 'cleek';
 
 export default {
   name: 'ButtonExample',
+  data() {
+    return {
+      text: 'holi',
+      selectedOption: 0,
+      options: [
+        { id: 1, name: 'Lisandro' },
+        { id: 2, name: 'Germán' },
+        { id: 3, name: 'Alberto Palavecino' },
+      ],
+    };
+  },
   components: {
     ckButton,
+    ckInputText,
+    ckIcon,
+    ckSelect,
   },
 }; // export default
 </script>

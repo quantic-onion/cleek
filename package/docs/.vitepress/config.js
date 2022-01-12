@@ -30,18 +30,22 @@ module.exports = {
 
 function getComponents() {
   return [
-    { text: 'Button', link: '/guide/button/button' },
-    { text: 'Checkbox', link: '/guide/checkbox/checkbox' },
-    { text: 'Input', link: '/guide/input/input' },
-    { text: 'Link', link: '/guide/link/link' },
-    { text: 'Modal', link: '/guide/modal/modal' },
-    { text: 'ModalManager', link: '/guide/modal-manager/modal-manager' },
-    { text: 'Progress', link: '/guide/progress/progress' },
-    { text: 'Radio', link: '/guide/radio/radio' },
-    { text: 'Sidebar', link: '/guide/sidebar/sidebar' },
-    { text: 'SidebarManager', link: '/guide/sidebar-manager/sidebar-manager' },
-    { text: 'Switch', link: '/guide/switch/switch' },
-    { text: 'Textarea', link: '/guide/textarea/textarea' },
-    { text: 'Tooltip', link: '/guide/tooltip/tooltip' },
+
+    { text: 'Button', link: '/guide/ck-button/ck-button' },
+    { text: 'Checkbox', link: '/guide/ck-checkbox/ck-checkbox' },
+    { text: 'Icon', link: '/guide/ck-icon/ck-icon' },
+    { text: 'Input Text', link: '/guide/ck-input-text/ck-input-text' },
+    { text: 'Label', link: '/guide/ck-label/ck-label' },
+    // { text: 'Link', link: '/guide/link/link' },
+    // { text: 'Modal', link: '/guide/modal/modal' },
+    // { text: 'ModalManager', link: '/guide/modal-manager/modal-manager' },
+    // { text: 'Progress', link: '/guide/progress/progress' },
+    { text: 'Radio', link: '/guide/ck-radio/ck-radio' },
+    { text: 'Select', link: '/guide/ck-select/ck-select' },
+    // { text: 'Sidebar', link: '/guide/sidebar/sidebar' },
+    // { text: 'SidebarManager', link: '/guide/sidebar-manager/sidebar-manager' },
+    { text: 'Switch', link: '/guide/ck-switch/ck-switch' },
+    { text: 'Textarea', link: '/guide/ck-textarea/ck-textarea' },
+    { text: 'Tooltip', link: '/guide/ck-tooltip/ck-tooltip' },
   ]
 }

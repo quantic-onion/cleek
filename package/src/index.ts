@@ -6,7 +6,7 @@ import * as components from './components/index.js';
 const install: Exclude<Plugin['install'], undefined> = function installCleek(app: App, options: any) {
   console.log('arranco paquete');
   console.log('options', options);
-
+    
   // vue components
   Object.entries(components).forEach(([componentName, component]) => {
     app.component(componentName, component);

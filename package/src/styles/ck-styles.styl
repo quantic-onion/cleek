@@ -1,8 +1,8 @@
-json('./StylusVars.json')
-@require 'templateStyle.styl'
+@require './.variables'
+@require './ck-mixins'
 
-// "primary": "#8687DA",
-// "secondary": "#4E4D86",
+// "$primary": "#8687DA",
+// "$secondary": "#4E4D86",
 
 
 // group
@@ -27,70 +27,70 @@ json('./StylusVars.json')
 
 // bg color
 .ck-component__bg-color--primary
-  background-color primary !important
-  border-color primary !important
+  background-color $primary !important
+  border-color $primary !important
   color white !important
 .ck-component__bg-color--primary-light
-  background-color rgba(primary, .15) !important
-  border-color rgba(primary, .15) !important
-  color primary !important
+  background-color rgba($primary, .15) !important
+  border-color rgba($primary, .15) !important
+  color $primary !important
   font-weight 600 !important
 .ck-component__bg-color--secondary
-  background-color secondary !important
-  border-color secondary !important
+  background-color $secondary !important
+  border-color $secondary !important
   color white !important
 .ck-component__bg-color--secondary-light
-  background-color rgba(secondary, .15) !important
-  border-color rgba(secondary, .15) !important
-  color secondary !important
+  background-color rgba($secondary, .15) !important
+  border-color rgba($secondary, .15) !important
+  color $secondary !important
   font-weight 600 !important
 .ck-component__bg-color--success
-  background-color success !important
-  border-color success !important
+  background-color $success !important
+  border-color $success !important
   color rgba(white, 0.9) !important
 .ck-component__bg-color--danger
-  background-color danger !important
-  border-color danger !important
+  background-color $danger !important
+  border-color $danger !important
   color rgba(white, 0.9) !important
 .ck-component__bg-color--warning
-  background-color warning !important
-  border-color warning !important
+  background-color $warning !important
+  border-color $warning !important
   color rgba(white, 0.9) !important
 .ck-component__bg-color--dark
-  background-color dark !important
-  border-color dark !important
+  background-color $dark !important
+  border-color $dark !important
   color rgba(white, 0.9) !important
 .ck-component__bg-color--light
-  background-color light !important
-  border-color light !important
+  background-color $light !important
+  border-color $light !important
 
 // border color
 .ck-component__border-color--primary
-  color primary !important
-  border-color primary !important
+  color $primary !important
+  border-color $primary !important
 .ck-component__border-color--primary-light
-  color rgba(primary, .15) !important
-  border-color rgba(primary, .15) !important
+  color rgba($primary, .15) !important
+  border-color rgba($primary, .15) !important
   font-weight 600 !important
 .ck-component__border-color--secondary
-  color secondary !important
-  border-color secondary !important
+  color $secondary !important
+  border-color $secondary !important
 .ck-component__border-color--secondary-light
-  color rgba(secondary, .15) !important
-  border-color rgba(secondary, .15) !important
+  color rgba($secondary, .15) !important
+  border-color rgba($secondary, .15) !important
   font-weight 600 !important
 .ck-component__border-color--success
-  color success !important
-  border-color success !important
+  color $success !important
+  border-color $success !important
 .ck-component__border-color--danger
-  color danger !important
-  border-color danger !important
+  color $danger !important
+  border-color $danger !important
 .ck-component__border-color--warning
-  color warning !important
-  border-color warning !important
+  color $warning !important
+  border-color $warning !important
 .ck-component__border-color--dark
-  color dark !important
-  border-color dark !important
+  color $dark !important
+  border-color $dark !important
 .ck-component__border-color--light
-  color light !important
-  border-color light !important
+  color $light !important
+  border-color $light !important

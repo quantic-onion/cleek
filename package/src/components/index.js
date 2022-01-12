@@ -1,16 +1,22 @@
-export { default as ckButton } from './ck-button.vue'
-export { default as Checkbox } from './not-avaible/Checkbox.vue'
-export { default as Input } from './not-avaible/Input.vue'
-export { default as Link } from './not-avaible/Link.vue'
-export { default as Modal } from './not-avaible/Modal.vue'
-export { default as ModalManager } from './not-avaible/ModalManager.vue'
-export { default as Progress } from './not-avaible/Progress.vue'
-export { default as Radio } from './not-avaible/Radio.vue'
-export { default as Sidebar } from './not-avaible/Sidebar.vue'
-export { default as SidebarManager } from './not-avaible/SidebarManager.vue'
-export { default as Switch } from './not-avaible/Switch.vue'
-export { default as Textarea } from './not-avaible/Textarea.vue'
-export { default as Tooltip } from './not-avaible/Tooltip.vue'
+export { default as ckButton } from './ck-button.vue';
+export { default as ckCheckbox } from './ck-checkbox.vue'
+export { default as ckIcon } from './ck-icon.vue';
+export { default as ckInputText } from './ck-input-text.vue';
+export { default as ckLabel } from './ck-label.vue';
+export { default as ckRadio } from './ck-radio.vue'
+export { default as ckSelect } from './ck-select.vue';
+export { default as ckSwitch } from './ck-switch.vue';
+export { default as ckTextarea } from './ck-textarea.vue';
+export { default as ckTooltip } from './ck-tooltip.vue';
+
+
+// export { default as Input } from './not-avaible/Input.vue'
+export { default as ckLink } from './not-avaible/Link.vue'
+// export { default as ckModal } from './not-avaible/Modal.vue'
+// export { default as ckModalManager } from './not-avaible/ModalManager.vue'
+export { default as ckProgress } from './not-avaible/Progress.vue'
+// export { default as ckSidebar } from './not-avaible/Sidebar.vue'
+// export { default as ckSidebarManager } from './not-avaible/SidebarManager.vue'
 
 export { default as EVENTS } from '../utils/events'
 export { default as EventBus } from '../utils/mitt'

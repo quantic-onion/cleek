@@ -13,4 +13,11 @@ export default {
   buttonType: (type) => {
     return ['filled', 'outlined', 'text'].includes(type)
   },
-};
+  radioOptions: (options) => {
+    let isValid = true
+    options.forEach((option) => {
+      isValid = isValid && 'label' in option && 'value' in option
+    })
+    return isValid
+  },
+}; // export default
