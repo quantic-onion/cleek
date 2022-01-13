@@ -4,6 +4,7 @@ export { default as ckIcon } from './ck-icon.vue';
 export { default as ckImg } from './ck-img.vue';
 export { default as ckInputText } from './ck-input-text.vue';
 export { default as ckLabel } from './ck-label.vue';
+export { default as ckPopup } from './ck-popup.vue'
 export { default as ckRadio } from './ck-radio.vue'
 export { default as ckSelect } from './ck-select.vue';
 export { default as ckSwitch } from './ck-switch.vue';

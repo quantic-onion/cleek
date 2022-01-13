@@ -1,5 +1,5 @@
 <template lang="pug">
-.rs-img(
+.ck-img(
 :class="computedClass"
 :style="computedStyle"
 @click="clickImg()"
@@ -52,7 +52,7 @@ export default {
       if (size === 'default' && !this.sizeAbsolute && !this.width && !this.height) {
         size = 'm';
       }
-      if (size) classList.push(`rs-img-size__${size}`);
+      if (size) classList.push(`ck-img__size--${size}`);
       // border
       if (this.realBorderColor) {
         classList.push('ck-img__has-border');
@@ -115,7 +115,7 @@ export default {
 <style lang="stylus" scoped>
 @require '../styles/ck-styles'
 
-.rs-img
+.ck-img
   display inline-flex
   border-radius .5rem
   overflow hidden
@@ -135,27 +135,27 @@ export default {
     max-height 100%
     max-width 100%
     margin auto
-  &.rs-img-size__xxs
+  &.ck-img__size--xxs
     width 2rem
     height @width
     border-radius .25rem
-  &.rs-img-size__xs
+  &.ck-img__size--xs
     width 2.5rem
     height @width
     border-radius .25rem
-  &.rs-img-size__s
+  &.ck-img__size--s
     width 4rem
     height @width
     border-radius .5rem
-  &.rs-img-size__m
+  &.ck-img__size--m
     width 7rem
     height @width
     border-radius 1rem
-  &.rs-img-size__l
+  &.ck-img__size--l
     width 11rem
     height @width
     border-radius 1.25rem
-  &.rs-img-size__xl
+  &.ck-img__size--xl
     width 15rem
     height @width
     border-radius 1.5rem

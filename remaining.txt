@@ -1,7 +1,6 @@
 
 PARA NIZA
   sidebar
-  img
   popup
   switch-options
   table
@@ -13,6 +12,7 @@ PARA NIZA
 
 
 TERMINAR
+  img
   button
   checkbox
   icon
@@ -39,7 +39,6 @@ CREAR
   countdown
   dropdown
   hideable-content
-  img
   info
   input-color
   input-date
