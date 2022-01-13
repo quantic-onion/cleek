@@ -47,6 +47,7 @@ function getComponents() {
     // { text: 'Sidebar', link: '/guide/sidebar/sidebar' },
     // { text: 'SidebarManager', link: '/guide/sidebar-manager/sidebar-manager' },
     { text: 'Switch', link: '/guide/ck-switch/ck-switch' },
+    { text: 'Switch Options', link: '/guide/ck-switch-options/ck-switch-options' },
     { text: 'Textarea', link: '/guide/ck-textarea/ck-textarea' },
     { text: 'Tooltip', link: '/guide/ck-tooltip/ck-tooltip' },
   ]

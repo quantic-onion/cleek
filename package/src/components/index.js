@@ -8,6 +8,7 @@ export { default as ckPopup } from './ck-popup.vue'
 export { default as ckRadio } from './ck-radio.vue'
 export { default as ckSelect } from './ck-select.vue';
 export { default as ckSwitch } from './ck-switch.vue';
+export { default as ckSwitchOptions } from './ck-switch-options.vue';
 export { default as ckTextarea } from './ck-textarea.vue';
 export { default as ckTooltip } from './ck-tooltip.vue';
 
