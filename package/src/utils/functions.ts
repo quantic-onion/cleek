@@ -19,4 +19,7 @@ export default {
     if (color === 'light') return true;
     return false;
   },
-};
+  isTableColumnsVisible(col) {
+    return !col.isHidden;
+  },
+}; // export default

@@ -9,6 +9,9 @@ export default {
   groupVertical: (type) => {
     return ['top', 'bottom', 'center'].includes(type)
   },
+  align: (type) => {
+    return ['left', 'center', 'right'].includes(type)
+  },
   // specials
   buttonType: (type) => {
     return ['filled', 'outlined', 'text'].includes(type)

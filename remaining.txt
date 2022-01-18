@@ -1,11 +1,7 @@
 - Controlar todas las variables de stylus y mixins que hay algunas que quedaron out
 
 PARA NIZA
-  sidebar
   table
-  pagination
-  datepicker
-  print
 
 
 

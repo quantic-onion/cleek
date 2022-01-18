@@ -7,16 +7,30 @@ type="button"
 :disabled="disabled"
 @click="onClick($event)"
 )
+  ck-icon.ck-button__icon-left(
+  v-if="icon"
+  :icon="icon"
+  :icon-pack="iconPack"
+  )
   slot
+  ck-icon.ck-button__icon-right(
+  v-if="iconRight"
+  :icon="iconRight"
+  :icon-pack="iconPack"
+  )
 </template>
 
 <script>
 import validators from '../utils/validators';
 import functions from '../utils/functions';
 import globalVariables from '../utils/globalVariables';
+import ckIcon from './ck-icon.vue';
 const defaults = { type: 'outlined' };
 export default {
   name: 'CkButton',
+  components: {
+    ckIcon,
+  },
   props: {
     title: { type: String, default: undefined },
     type: { type: String, default: defaults.type, validator: validators.buttonType },
@@ -113,4 +127,8 @@ button
     display none
   &:disabled > span
     color $color-disabled
+  > .ck-button__icon-left
+    margin-right .5rem
+  > .ck-button__icon-right
+    margin-left .5rem
 </style>
