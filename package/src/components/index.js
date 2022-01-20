@@ -18,10 +18,10 @@ export { default as ckTr } from './ck-tr.vue';
 
 
 // export { default as Input } from './not-avaible/Input.vue'
-export { default as ckLink } from './not-avaible/Link.vue'
+// export { default as ckLink } from './not-avaible/Link.vue'
 // export { default as ckModal } from './not-avaible/Modal.vue'
 // export { default as ckModalManager } from './not-avaible/ModalManager.vue'
-export { default as ckProgress } from './not-avaible/Progress.vue'
+// export { default as ckProgress } from './not-avaible/Progress.vue'
 // export { default as ckSidebar } from './not-avaible/Sidebar.vue'
 // export { default as ckSidebarManager } from './not-avaible/SidebarManager.vue'
 

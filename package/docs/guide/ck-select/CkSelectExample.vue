@@ -2,6 +2,7 @@
 .flex
   .w-half
     div Selected ID: {{ selectedId }}
+    ck-select()
     ck-select(
     label="¿Quién es el más lindo?"
     v-model="selectedId"

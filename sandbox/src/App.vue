@@ -30,12 +30,16 @@
   //- select
   div
     h3 Select
-    ck-select(v-model="selectedOption")
+    ck-select(
+    v-model="selectedOption"
+    :options="options"
+    noDataText="No hay opciones"
+    )
 router-view
 </template>
 
 <script>
-import { ckButton, ckInputText, ckIcon, ckSelect } from 'cleek';
+// import { ckButton, ckInputText, ckIcon, ckSelect } from 'cleek';
 
 export default {
   name: 'ButtonExample',
@@ -50,12 +54,12 @@ export default {
       ],
     };
   },
-  components: {
-    ckButton,
-    ckInputText,
-    ckIcon,
-    ckSelect,
-  },
+  // components: {
+  //   ckButton,
+  //   ckInputText,
+  //   ckIcon,
+  //   ckSelect,
+  // },
 }; // export default
 </script>
 

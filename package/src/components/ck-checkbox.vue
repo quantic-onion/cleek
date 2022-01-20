@@ -58,7 +58,7 @@ export default {
 .ck-checkbox {
   cursor: pointer;
   position: relative;
-  display: flex;
+  display: inline-flex;
   align-items: center;
   width: -moz-fit-content;
   width: fit-content;

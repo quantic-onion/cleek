@@ -1,6 +1,6 @@
 {
   "name": "cleek",
-  "version": "1.3.3",
+  "version": "1.5.5",
   "description": "Moon based ux Vue library",
   "repository": "",
   "author": "Quantic Onion",
@@ -40,7 +40,8 @@
     "prettier": "^2.3.2",
     "rollup-plugin-visualizer": "^5.5.2",
     "vite": "^2.4.3",
-    "vitepress": "^0.21.4"
+    "vitepress": "^0.21.4",
+    "vue-select": "^4.0.0-beta.2"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.36",
@@ -53,7 +54,7 @@
     "stylus": "^0.56.0",
     "tabbable": "^5.2.0",
     "tippy.js": "^6.3.1",
-    "vue-perfect-scrollbar": "^0.2.1",
-    "vue-select": "4.0.0-beta.1"
+    "vue": "^3.2.25",
+    "vue-perfect-scrollbar": "^0.2.1"
   }
 }

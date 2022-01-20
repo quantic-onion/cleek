@@ -2,37 +2,32 @@
 .ck-select(
 :style="computedStyle"
 )
-  //- ck-label(v-if="label" :label-align="labelAlign") {{ label }}
-  | select
-  v-select.ck-select__v-select(
-  ref="vSelect"
-  v-model="value"
-  :label="prop"
-  :options="options"
-  :disabled="!!disabled"
-  :reduce="realReduceFunction"
-  :clearable="!notClearable && !valueIsDefault"
-  :searchable="realSearchable"
-  )
-    span(slot="no-options") {{ noDataText }}
+  div {{ options }}
+  //- v-select.ck-select__v-select(
+  //- ref="vSelect"
+  //- v-model="value"
+  //- :label="prop"
+  //- :options="options"
+  //- :disabled="!!disabled"
+  //- :reduce="realReduceFunction"
+  //- :clearable="!notClearable && !valueIsDefault"
+  //- :searchable="realSearchable"
+  //- )
+  //-   span(slot="no-options") {{ noDataText }}
 </template>
 
 <script>
-console.log('vue coso');
 import vSelect from 'vue-select';
-// console.log('vue imported', vSelect);
 import functions from '../utils/functions.ts';
-
-// console.log('VueSelect', VueSelect);
 import 'vue-select/dist/vue-select.css';
 
 export default {
   name: 'CkSelect',
   components: {
-    vSelect,
+    // vSelect,
   },
   props: {
-    modelValue: { required: true, type: [Boolean, Number, Object, Array] },
+    modelValue: { default: null, type: [Boolean, Number, Object, Array] },
     prop: { type: String, default: 'name' }, // prop of the object showed in HTML
     autofocus: { type: Boolean, default: false }, // CHECK
     noDataText: { type: String, default: 'No se encontró nada' },
@@ -96,6 +91,7 @@ export default {
         case 'number': return this.modelValue === 0;
         case 'string': return this.modelValue === '';
         case 'object': // array is also object
+          if (!this.modelValue) return null;
           if (this.modelValue.constructor === Array) {
             return this.modelValue.length() === 0;
           }
