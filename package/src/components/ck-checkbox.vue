@@ -75,7 +75,7 @@ export default {
   height: 24px;
   border: 2px solid;
   border-radius: 4px;
-  border-color: $primary;
+  border-color: $color-primary;
   transition: 0.15s;
 }
 
@@ -103,7 +103,7 @@ export default {
 /* Checked */
 
 .ck-checkbox__input:checked + .ck-checkbox__element {
-  background-color: $primary;
+  background-color: $color-primary;
 }
 
 .ck-checkbox__input:checked + .ck-checkbox__element::after {

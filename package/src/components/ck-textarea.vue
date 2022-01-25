@@ -38,5 +38,5 @@ export default {
     border-radius $globalBorderRadius
     border 1px solid $globalBorderColor
     &:focus-visible
-      outline-color $primary
+      outline-color $color-primary
 </style>

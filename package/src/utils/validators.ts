@@ -14,7 +14,7 @@ export default {
   },
   // specials
   buttonType: (type) => {
-    return ['filled', 'outlined', 'text'].includes(type)
+    return ['filled', 'outlined', 'flat'].includes(type)
   },
   radioOptions: (options) => {
     let isValid = true

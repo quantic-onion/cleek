@@ -15,6 +15,7 @@ div
   ck-icon.mr-2.mb-2(icon="user" size="3x" color="warning")
   ck-icon.mr-2.mb-2(icon="user" size="3x" color="dark")
   ck-icon.mr-2.mb-2(icon="user" size="3x" color="light")
+  ck-icon.mr-2.mb-2(icon="user" size="3x" color="unset")
 </template>
 
 <script>

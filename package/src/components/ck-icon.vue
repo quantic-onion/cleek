@@ -73,8 +73,6 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
-@import '../styles/.variables.styl'
 .ck-icon
-  color $color-default
   display inline-flex
 </style>

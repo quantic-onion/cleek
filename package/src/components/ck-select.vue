@@ -185,7 +185,7 @@ export default {
     padding $globalPadding
     box-sizing border-box
     &:focus
-      border-color $primary
+      border-color $color-primary
       outline 0
 
 // .ck-select

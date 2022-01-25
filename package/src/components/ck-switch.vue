@@ -80,11 +80,11 @@ $border-width = 2px // m
     box-sizing border-box
     width $width
     height $height
-    border $border-width solid $color-unset
+    border $border-width solid $color-lightgrey
     border-radius $height
     background-color white
     transition $transitionTime
-    background-color $color-unset
+    background-color $color-lightgrey
     &:before
       content ''
       border-radius 50%
@@ -103,17 +103,17 @@ $border-width = 2px // m
 // outlined
 .ck-switch.is-outlined
   .ck-switch__slider
-    border-color $primary
+    border-color $color-primary
     background-color white
     &:before
-      background-color $primary
+      background-color $color-primary
 
 /* Checked */
 .ck-switch__input:checked + .ck-switch__slider
-  border-color $primary
-  background-color $primary
+  border-color $color-primary
+  background-color $color-primary
 .ck-switch__input:focus + .ck-switch__slider
-  box-shadow 0 0 1px $primary
+  box-shadow 0 0 1px $color-primary
 .ck-switch__input:checked + .ck-switch__slider:before
   background-color white
   transform translate($width - $height)

@@ -3,7 +3,7 @@ ck-button.mr-2.mb-2
   | Outlined (default)
 ck-button.mr-2.mb-2(type="filled")
   | Filled
-ck-button.mr-2.mb-2(type="text")
+ck-button.mr-2.mb-2(type="flat")
   | Text
 ck-button.mr-2.mb-2(disabled)
   | disabled

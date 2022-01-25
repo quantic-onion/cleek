@@ -1,23 +1,14 @@
 <template lang="pug">
 ck-input-text.mb-2(label="Default")
 .mb-2
-  p Example with label - {{ labelText }}
+  ck-input-text(label="Icon placeholder" icon="user" v-model="text" placeholder="Buscar...")
+  ck-input-text(label="Icon text" icon="search" v-model="textInInput")
+.mb-2
   ck-input-text(label="Example text" v-model="labelText")
-.mb-2
-  p Example with placeholder - {{ placeholderLabelText }}
   ck-input-text(placeholder="Write something here" v-model="placeholderLabelText")
-.mb-2
-  p Example without label - {{ noLabelText }}
-  ck-input-text(v-model="noLabelText")
-.mb-2
-  p Example with required - {{ requiredText }}
+  ck-input-text(v-model="noLabelText" placeholder="No label")
   ck-input-text(label="I am required" v-model="requiredText" required)
-.mb-2
-  p Disabled
-  ck-input-text(label="Oh :(" disabled)
-.mb-2
-  p Disabled with a label
-  ck-input-text(label="Oh :(" modelValue="Hello" disabled)
+  ck-input-text(label="Disabled" disabled)
 </template>
 
 <script>
@@ -31,6 +22,8 @@ export default {
   data() {
     return {
       labelText: '',
+      text: '',
+      textInInput: 'Texto en el input',
       placeholderLabelText: '',
       noLabelText: '',
       requiredText: '',

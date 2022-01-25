@@ -1,40 +1,67 @@
 <template lang="pug">
-table.ck-table
-  //- header
-  thead(v-if="$slots.header || columns.length")
+.ck-table
+  .ck-table__header(v-if="$slots.header || !hideHeaderActions")
     slot(name="header")
-    ck-tr
-      ck-table-title(
-      v-for="col in columns"
-      :key="col.title"
-      :col="col"
-      )
-  //- body
-  tbody
-    slot
-  //- footer
-  tfoot(v-if="$slots.footer")
-    slot(name="footeer")
+    //- v-model:search="searchLocal"
+    TableHeaderItems(
+    v-if="!hideHeaderActions"
+    :refreshBtn="refreshBtn"
+    :hideItemsPerPage="hideItemsPerPage"
+    :hideSearch="hideSearch"
+    @refreshList="$emit('refreshList', $evemt)"
+    )
+  table.ck-table__table
+    //- header
+    thead(v-if="columns.length")
+      ck-tr
+        ck-table-title(
+        v-for="col in columns"
+        :key="col.title"
+        :col="col"
+        )
+    //- body
+    tbody
+      slot
+    //- footer
+    tfoot(v-if="$slots.footer")
+      slot(name="footeer")
 </template>
 
-<script>
+<script setup lang="ts">
 import ckTr from './ck-tr.vue';
 import ckTableTitle from './inner-components/ck-table__title.vue';
+import TableHeaderItems from './inner-components/ck-table__header-items.vue';
+</script>
 
+<script lang="ts">
 export default {
-  components: {
-    ckTr,
-    ckTableTitle,
-  },
   props: {
     columns: { type: Array, required: true, default: () => ([]) },
+    // header items
+    search: { type: String, default: 'asd' },
+    hideHeaderActions: { type: Boolean, default: false },
+    refreshBtn: { type: Boolean, default: false },
+    hideItemsPerPage: { type: Boolean, default: false },
+    hideSearch: { type: Boolean, default: false },
+  },
+  emits: ['refreshList', 'update:search'],
+  computed: {
+    searchLocal: {
+      get() { return this.search; },
+      get(val) { this.$emit('update:search', val); }
+    },
   },
 }; // export default
 </script>
 
 <style lang="stylus" scoped>
-.ck-table
+.ck-table__table
   width 100%
   border-collapse collapse
   display table
+.ck-table__header
+  display flex
+  flex-wrap wrap
+  align-items flex-end
+  flex-direction row-reverse
 </style>
