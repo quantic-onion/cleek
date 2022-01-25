@@ -24,16 +24,14 @@
             | Aceptar
 </template>
 
-<script>
+<script setup lang="ts">
 import VuePerfectScrollbar from 'vue-perfect-scrollbar';
-import { ckButton, ckIcon } from './index';
+import ckButton from './ck-button.vue';
+import ckIcon from './ck-icon.vue';
+</script>
 
+<script lang="ts">
 export default {
-  components: {
-    ckButton,
-    ckIcon,
-    VuePerfectScrollbar,
-  },
   props: {
     modelValue: { type: Boolean },
     confirmButtons: { type: Boolean, default: false },

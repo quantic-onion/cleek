@@ -2,13 +2,15 @@
 .ck-table
   .ck-table__header(v-if="$slots.header || !hideHeaderActions")
     slot(name="header")
-    //- v-model:search="searchLocal"
     TableHeaderItems(
     v-if="!hideHeaderActions"
+    v-model:search="searchLocal"
+    :currentPage="currentPage"
+    :itemsPerPage="itemsPerPage"
+    :listLength="listLength"
     :refreshBtn="refreshBtn"
     :hideItemsPerPage="hideItemsPerPage"
-    :hideSearch="hideSearch"
-    @refreshList="$emit('refreshList', $evemt)"
+    @refreshList="refreshList($event)"
     )
   table.ck-table__table
     //- header
@@ -37,20 +39,30 @@ import TableHeaderItems from './inner-components/ck-table__header-items.vue';
 export default {
   props: {
     columns: { type: Array, required: true, default: () => ([]) },
+    // pagination
+    currentPage: { type: Number, default: 0 },
+    itemsPerPage: { type: Number, default: 0 },
+    listLength: { type: Number, default: 0 },
     // header items
-    search: { type: String, default: 'asd' },
+    search: { type: String, default: undefined },
     hideHeaderActions: { type: Boolean, default: false },
     refreshBtn: { type: Boolean, default: false },
     hideItemsPerPage: { type: Boolean, default: false },
-    hideSearch: { type: Boolean, default: false },
   },
   emits: ['refreshList', 'update:search'],
   computed: {
     searchLocal: {
       get() { return this.search; },
-      get(val) { this.$emit('update:search', val); }
+      set(val) { this.$emit('update:search', val); }
     },
   },
+  methods: {
+    // refreshList
+
+    refreshList(pageChange: boolean = false) {
+      this.$emit('refreshList', pageChange);
+    },
+  }, // methods
 }; // export default
 </script>
 

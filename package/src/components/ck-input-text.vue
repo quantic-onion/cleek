@@ -16,6 +16,7 @@
   :placeholder="placeholder"
   :class="computedClass"
   :id="label ? 'ck-input-text' : ''"
+  @change="onChange($event)"
   )
   //- icon right
   ck-icon.ck-input__icon-right(
@@ -48,7 +49,7 @@ export default {
     groupBreak: { type: String, default: 's' },
     groupVertical: { type: String, default: '' },
   },
-  emits: ['update:modelValue'],
+  emits: ['update:modelValue', 'change'],
   computed: {
     value: {
       get() { return this.modelValue; },
@@ -64,6 +65,12 @@ export default {
       return classList;
     },
   }, // computed
+  methods: {
+    // onChange
+    onChange(event) {
+      this.$emit('change', event);
+    },
+  }, // methods
 }; // export default
 </script>
 
@@ -75,7 +82,7 @@ export default {
   position relative
   > input
     padding $globalPadding
-    font-size $globalFontSize
+    font-size $globalFontSize-s
     border-radius $globalBorderRadius
     border 1px solid $globalBorderColor
     min-height 40px

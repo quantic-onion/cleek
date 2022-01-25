@@ -1,6 +1,10 @@
 <template lang="pug">
 ck-table(
+v-model:search="table1.search"
 :columns="table1.columns"
+:itemsPerPage="table1.itemsPerPage"
+:currentPage="table1.currentPage"
+:listLength="table1.listLength"
 )
   ck-tr(v-for="item in table1.list")
     ck-td {{ item.id }}
@@ -37,6 +41,11 @@ export default {
   data() {
     return {
       table1: {
+        search: '',
+        // search: 'wenas',
+        itemsPerPage: 2,
+        currentPage: 1,
+        listLength: 48,
         columns: [
           { title: 'ID' },
           { title: 'Nombre' },

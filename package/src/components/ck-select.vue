@@ -34,7 +34,7 @@ form.ck-select(action="/action_page.php" method="get")
 
 <script>
 import functions from '../utils/functions.ts';
-import { ckLabel } from './index';
+import ckLabel from './ck-label.vue';
 // import { qmStr } from 'quantic-methods';
 import { qmStr } from '../../node_modules/quantic-methods/dist/quantic-methods.es.ts';
 
