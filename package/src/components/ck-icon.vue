@@ -1,5 +1,6 @@
 <template lang="pug">
 .ck-icon(
+:class="computedClass"
 @click="onClick($event)"
 )
   font-awesome-icon(
@@ -31,6 +32,7 @@ export default {
   },
   props: {
     icon: { type: [String, Array], default: '' },
+    color: { type: String, default: '' },
     iconPack: { type: String, default: '' },
     size: { type: String, default: null }, // xs || lg || 6x
     rotation: { type: String, default: null }, // 90 || 180 || 270
@@ -50,6 +52,12 @@ export default {
       if (this.iconPack === 'feather') return this.iconPack;
       return defaultPackage;
     },
+    computedClass() {
+      const classList = [];
+      // group
+      if (this.color) classList.push(`ck-component__color--${this.color}`);
+      return classList;
+    },
   }, // computed
   created() {
     library.add(fas);
@@ -65,6 +73,8 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
+@import '../styles/.variables.styl'
 .ck-icon
+  color $color-default
   display inline-flex
 </style>

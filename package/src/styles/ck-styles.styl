@@ -1,5 +1,5 @@
 @require './.variables'
-@require './ck-mixins'
+@require '../../public/cleek-styles/cleek-mixins'
 
 // "$primary": "#8687DA",
 // "$secondary": "#4E4D86",
@@ -24,6 +24,26 @@
 .ck-component__group-vertical--center
   border-radius 0 !important
   border-bottom 0 !important
+
+// color
+.ck-component__color--primary
+  color $primary !important
+.ck-component__color--primary-light
+  color rgba($primary, .15) !important
+.ck-component__color--secondary
+  color $secondary !important
+.ck-component__color--secondary-light
+  color rgba($secondary, .15) !important
+.ck-component__color--success
+  color $success !important
+.ck-component__color--danger
+  color $danger !important
+.ck-component__color--warning
+  color $warning !important
+.ck-component__color--dark
+  color $dark !important
+.ck-component__color--light
+  color $light !important
 
 // bg color
 .ck-component__bg-color--primary
