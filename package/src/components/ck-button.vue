@@ -38,7 +38,7 @@ export default {
     disabled: { type: Boolean, default: false },
     // icon
     icon: { type: [String, Array], default: undefined },
-    iconPackage: { type: String, default: undefined },
+    iconPack: { type: String, default: undefined },
     iconRight: { type: String, default: undefined },
     // label
     label: { type: String, default: undefined },
@@ -62,6 +62,13 @@ export default {
           classList.push(`ck-component__border-color--${this.color}`);
         }
       }
+      // icon margin
+      if (!this.$slots.default) {
+        if (this.icon || this.iconRight) {
+          if (!(this.icon && this.iconRight)) classList.push('just-icon');
+        }
+      }
+
       // type
       let type = this.type;
       if (!validators.buttonType(this.type)) type = defaults.type;
@@ -85,10 +92,11 @@ button
   cursor pointer
   display inline-flex
   align-items center
-  height 32px
-  padding 0 16px
-  border-radius 4px
+  min-height $globalMinHeight
+  border-radius $globalBorderRadius
   position relative
+  font-size $globalFontSize
+  padding $globalPadding (2 * $globalPadding)
   &::before
     content ''
     position absolute
@@ -131,4 +139,10 @@ button
     margin-right .5rem
   > .ck-button__icon-right
     margin-left .5rem
+  &.just-icon
+    > .ck-button__icon-left
+      margin-right 0
+    > .ck-button__icon-right
+      margin-left 0
+
 </style>

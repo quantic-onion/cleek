@@ -1,47 +1,30 @@
 <template lang="pug">
-//- .ck-select(
-//- :style="computedStyle"
-//- ) 
-//-   input(
-//-   v-model="search"
-//-   )
-//-   select(
-//-   v-model="value"
-//-   )
-//-     option(
-//-     v-for="option in filteredOptions"
-//-     :value="getOptionKey(option)"
-//-     :key="getOptionKey(option)"
-//-     )
-//-       | {{ getOptionName(option) }}
-
-
-form.ck-select(action="/action_page.php" method="get")
-  //- label
-  ck-label(v-if="label" :align="labelAlign" for="ck-select") {{ label }}
-  input(
-    list="ck-select__list"
-    name="ck-select"
-    id="ck-select"
-    :placeholder="lastSelectedValue"
-    :class="computedClass"
-    @focus="onFocus($event)"
-    @blur="onBlur($event)"
+.ck-select(
+:style="computedStyle"
+)
+  div {{ options }}
+  v-select.ck-select__v-select(
+  ref="vSelect"
+  v-model="value"
+  :label="prop"
+  :options="options"
+  :disabled="!!disabled"
+  :reduce="realReduceFunction"
+  :clearable="!notClearable && !valueIsDefault"
+  :searchable="realSearchable"
   )
-  datalist(id="ck-select__list")
-    option(:value="option.name" v-for="option in options")
+    span(slot="no-options") {{ noDataText }}
 </template>
 
 <script>
+import vSelect from 'vue-select';
 import functions from '../utils/functions.ts';
-import { ckLabel } from './index';
-// import { qmStr } from 'quantic-methods';
-import { qmStr } from '../../node_modules/quantic-methods/dist/quantic-methods.es.ts';
+import 'vue-select/dist/vue-select.css';
 
 export default {
   name: 'CkSelect',
   components: {
-    ckLabel,
+    vSelect,
   },
   props: {
     modelValue: { default: null, type: [Boolean, Number, Object, Array] },
@@ -50,7 +33,7 @@ export default {
     noDataText: { type: String, default: 'No se encontró nada' },
     notReduce: { type: Boolean, default: false },
     options: { type: Array, default: () => [] },
-    reduceFunction: { type: Function, default: (Option) => Option.id },
+    reduceFunction: { type: Function, default: Option => Option.id },
     notClearable: { type: Boolean, default: false },
     clearValue: { type: [Boolean, String], default: 'auto' },
     searchable: { type: [Boolean, String], default: 'auto' },
@@ -67,12 +50,6 @@ export default {
     labelAlign: { type: String, default: '' },
   },
   emits: ['update:modelValue'],
-  data() {
-    return {
-      search: '',
-      lastSelectedValue: null,
-    }; // return data
-  }, // data
   computed: {
     value: {
       get() { return this.modelValue; },
@@ -80,12 +57,6 @@ export default {
         if (val === null) val = this.realClearValue;
         this.$emit('update:modelValue', val);
       },
-    },
-    filteredOptions() {
-      return this.options.filter((option) => {
-        const name = this.getOptionName(option);
-        return qmStr.checkContainsStr(name, this.search);
-      });
     },
     computedClass() {
       const classList = [];
@@ -130,43 +101,18 @@ export default {
     },
   }, // computed
   methods: {
-    // onBlur
-    // onFocus
-    // checkOptionsIsValid
-    // getOptionKey
-    // getOptionName
     // reduceFunction
     // setFocus [ CALLED BY OUTSIDE ]
 
-    onBlur(event) {
-      const isValid = this.checkOptionsIsValid(event.target.value)
-      if (!isValid) event.target.value = this.lastSelectedValue;
-      this.lastSelectedValue = null;
-    },
-    onFocus(event) {
-      this.lastSelectedValue = event.target.value;
-      event.target.value = '';
-    },
-    checkOptionsIsValid(optionName) {
-      if (!optionName) return;
-      return this.options.some(i => this.getOptionName(i) === optionName);
-    },
-    getOptionKey(option) {
-      return this.realReduceFunction(option);
-    },
-    getOptionName(option) {
-      if (!this.prop) return option;
-      return option[this.prop];
-    },
-    realReduceFunction(option) {
-      if (this.notReduce) return option;
-      return this.reduceFunction(option);
+    realReduceFunction(Option) {
+      if (this.notReduce) return Option;
+      return this.reduceFunction(Option);
     },
     setFocus() {
-      // const el = this.$refs.vSelect.$el.children[0].children[0].children[1];
-      // setTimeout(() => {
-      //   el.focus();
-      // }, 100);
+      const el = this.$refs.vSelect.$el.children[0].children[0].children[1];
+      setTimeout(() => {
+        el.focus();
+      }, 100);
     },
   }, // methods
 }; // export default
@@ -174,19 +120,6 @@ export default {
 
 <style lang="stylus" scoped>
 @import '../styles/.variables.styl';
-
-.ck-select
-  display inline-block
-  input
-    border 1px solid $globalBorderColor
-    height $globalMinHeight
-    border-radius $globalBorderRadius
-    font-size $globalFontSize
-    padding $globalPadding
-    box-sizing border-box
-    &:focus
-      border-color $primary
-      outline 0
 
 // .ck-select
 //   display inline-flex

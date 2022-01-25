@@ -1,9 +1,10 @@
 <template lang="pug">
 .ck-input-text
   //- label
-  //- ck-label(v-if="label" :align="labelAlign") {{ label }}
+  ck-label(v-if="label" :align="labelAlign" for="ck-input-text") {{ label }}
   //- input
   input(
+  :id="label ? 'ck-input-text' : ''"
   v-model="value"
   type="text"
   :placeholder="placeholder"
@@ -13,9 +14,13 @@
 
 <script>
 import functions from '../utils/functions.ts';
+import ckLabel from './ck-label.vue';
 
 export default {
   name: 'CkInputText',
+  components: {
+    ckLabel,
+  },
   props: {
     modelValue: { type: String, default: '' },
     label: { type: String, default: '' },

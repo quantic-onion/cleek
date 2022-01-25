@@ -55,12 +55,15 @@ export default {
 </script>
 <style lang="stylus" scoped>
 @import '../styles/.variables.styl'
-$height = 24px
-$width = 48px
-$height = 34px
-$width = 60px
+$height = 24px // s
+$width = 48px // s
+$height = 34px // m
+$width = 60px // m
+$height = 40px
+$width = 70px
 $transitionTime = 0.4s
-$border-width = 2px
+$border-width = 2px // m
+// $border-width = 4px
 
 .ck-switch
   cursor pointer
@@ -74,6 +77,7 @@ $border-width = 2px
   .ck-switch__slider
     position relative
     display block
+    box-sizing border-box
     width $width
     height $height
     border $border-width solid $color-unset

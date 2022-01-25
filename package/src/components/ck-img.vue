@@ -30,6 +30,7 @@ export default {
     zoom: { type: Boolean, default: false }, // check
     zoomTitle: { type: String, default: '' }, // check
     // border
+    hasBorder: { type: Boolean, default: false },
     radius: { type: String, default: '' },
     borderColor: { type: String, default: '' }, // check
   },
@@ -54,7 +55,7 @@ export default {
       }
       if (size) classList.push(`ck-img__size--${size}`);
       // border
-      if (this.realBorderColor) {
+      if (this.hasBorder) {
         classList.push('ck-img__has-border');
         if (functions.isColorTemplateVariable(this.realBorderColor)) {
           classList.push(`ck-component__border-color--${this.realBorderColor}`);
@@ -74,7 +75,7 @@ export default {
       // radius
       if (this.radius) styleList.push({ 'border-radius': this.radius });
       // border
-      if (this.realBorderColor) {
+      if (this.hasBorder) {
         if (!functions.isColorTemplateVariable(this.realBorderColor)) {
           styleList.push({ 'border-color': this.realBorderColor });
         }

@@ -3,7 +3,7 @@
 @click="onClick($event)"
 )
   font-awesome-icon(
-  v-if="computedIconPackage === 'font-awesome'"
+  v-if="computediconPack === 'font-awesome'"
   :icon="icon"
   :size="size"
   :rotation="rotation"
@@ -31,7 +31,7 @@ export default {
   },
   props: {
     icon: { type: [String, Array], default: '' },
-    iconPackage: { type: String, default: '' },
+    iconPack: { type: String, default: '' },
     size: { type: String, default: null }, // xs || lg || 6x
     rotation: { type: String, default: null }, // 90 || 180 || 270
     flip: { type: String, default: null }, // horizontal || vertical || both
@@ -44,10 +44,10 @@ export default {
   },
   emits: ['click'],
   computed: {
-    computedIconPackage() {
+    computediconPack() {
       const defaultPackage = 'font-awesome';
-      if (this.iconPackage === '') return defaultPackage;
-      if (this.iconPackage === 'feather') return this.iconPackage;
+      if (this.iconPack === '') return defaultPackage;
+      if (this.iconPack === 'feather') return this.iconPack;
       return defaultPackage;
     },
   }, // computed

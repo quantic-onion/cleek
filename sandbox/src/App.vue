@@ -42,7 +42,7 @@ router-view
 // import { ckButton, ckInputText, ckIcon, ckSelect } from 'cleek';
 
 export default {
-  name: 'ButtonExample',
+  name: 'Testing app',
   data() {
     return {
       text: 'holi',

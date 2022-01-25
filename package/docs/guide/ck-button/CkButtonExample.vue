@@ -7,6 +7,7 @@ ck-button.mr-2.mb-2(type="text")
   | Text
 ck-button.mr-2.mb-2(disabled)
   | disabled
+ck-button.mr-2.mb-2(icon="square")
 ck-button.mr-2.mb-2(icon="helicopter")
   | Icon
 ck-button.mr-2.mb-2(icon="user" icon-right="times")

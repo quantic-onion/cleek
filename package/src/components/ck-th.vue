@@ -35,6 +35,7 @@ export default {
 .ck-th
   > span
     display flex
+    padding .5rem
     &.align-center
       justify-content center
       margin-x auto

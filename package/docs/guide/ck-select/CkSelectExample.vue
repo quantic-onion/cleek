@@ -2,7 +2,6 @@
 .flex
   .w-half
     div Selected ID: {{ selectedId }}
-    ck-select()
     ck-select(
     label="¿Quién es el más lindo?"
     v-model="selectedId"
@@ -36,6 +35,7 @@ export default {
         { id: 3, name: 'Alberto piedrabuena' },
         { id: 4, name: 'Jorge Risso' },
         { id: 5, name: 'Ernesto Laprida' },
+        { id: 6, name: 'Lautaro Dalla Costa' },
       ],
     }; // return data
   }, // data

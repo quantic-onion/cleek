@@ -1,6 +1,8 @@
 <template lang="pug">
 .ck-switch-options__container-exterior
+  //- label
   ck-label(v-if="label" :align="labelAlign") {{ label }}
+  //- switch options
   .ck-switch-options__container(:class="computedClass")
     .ck-switch-options__option(
     v-for="(Option, index) in options"
@@ -8,11 +10,13 @@
     :class="{ selected: selectedOption == getOptionValue(Option)}"
     :style="computedItemStyle"
     @click="selectedOption = getOptionValue(Option)"
-    ) {{ Option[prop] }}
+    )
+      | {{ Option[prop] }}
 </template>
 
 <script>
-import { ckLabel } from './index';
+import functions from '../utils/functions.ts';
+import ckLabel from './ck-label.vue';
 
 export default {
   components: {
@@ -27,9 +31,11 @@ export default {
     reduceFunction: { type: Function, default: Option => Option.id },
     // label
     label: { type: String, default: '' },
-    labelAlign: { type: String, default: 'center' },
+    labelAlign: { type: String, default: '' },
     // group
-    group: { type: String, default: '' }, // check
+    group: { type: String, default: '' },
+    groupBreak: { type: String, default: 's' },
+    groupVertical: { type: String, default: '' },
     // style
     sameWidthOptions: { type: Boolean, default: false },
   }, // props
@@ -43,10 +49,14 @@ export default {
       },
     },
     computedClass() {
-      return {
-        'group-top': this.group === 'top',
-        'group-bottom': this.group === 'bottom',
-      };
+      const classList = [];
+      // group
+      classList.push(functions.getGroupClass(this));
+      return classList;
+      // return {
+      //   'group-top': this.group === 'top',
+      //   'group-bottom': this.group === 'bottom',
+      // };
     },
     computedItemStyle() {
       const list = [];
@@ -77,6 +87,7 @@ $borderColor = rgba($primary, .45)
   display flex
   align-items stretch
   flex-wrap wrap
+  min-height $globalMinHeight
   .ck-switch-options__option
     border-right $borderWidth solid $borderColor
     display inline-flex
@@ -88,12 +99,15 @@ $borderColor = rgba($primary, .45)
     border-radius 0
     text-align center
     font-weight 500
-    color #9097A1
+    color #999
     // padding 7px
     padding 5px 15px
     cursor pointer
     transition transform .2s /* Animation */
     flex-grow 1
+    transition .4s
+    &:hover
+      background-color rgba($primary, .1)
     // margin-bottom $borderWidth
     &:first-of-type
       border-top-left-radius $borderRadius
@@ -110,13 +124,13 @@ $borderColor = rgba($primary, .45)
 // group
 .group-top
   &.ck-switch-options__container
-    border-radius ($borderRadius+2px) ($borderRadius+2px) 0 0
+    border-radius-bottom 0
   .ck-switch-options__option
     border-radius 0 !important
 .group-bottom
   &.ck-switch-options__container
     border-top 0
-    border-radius 0 0 ($borderRadius+2px) ($borderRadius+2px)
+    border-radius-top 0
   .ck-switch-options__option
     border-radius 0 !important
 

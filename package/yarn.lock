@@ -1424,6 +1424,11 @@ punycode@^2.1.0:
   resolved "https://registry.yarnpkg.com/punycode/-/punycode-2.1.1.tgz#b58b010ac40c22c5657616c8d2c2c02c7bf479ec"
   integrity sha512-XRsRjdf+j5ml+y/6GKHPZbrF/8p2Yga0JPtdqTIY2Xe5ohJPD9saDJJLPvp9+NSBprVvevdXZybnj2cv8OEd0A==
 
+quantic-methods@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/quantic-methods/-/quantic-methods-1.0.1.tgz#d6108bd17194f931478c1fb5c42d811d33726c9d"
+  integrity sha512-vUzoi0lbLwbvPcNdnfXWtoNogK5RyCoPqQt+ofWlnaUIxogtzRznpQKSjJg0nbVUhzdHP6+v7lk3etB2pTsS0A==
+
 regexpp@^3.1.0:
   version "3.2.0"
   resolved "https://registry.yarnpkg.com/regexpp/-/regexpp-3.2.0.tgz#0425a2768d8f23bad70ca4b90461fa2f1213e1b2"
@@ -1713,11 +1718,6 @@ vue-perfect-scrollbar@^0.2.1:
   version "0.2.1"
   resolved "https://registry.yarnpkg.com/vue-perfect-scrollbar/-/vue-perfect-scrollbar-0.2.1.tgz#2fecab975512f7c8c37e1610dee48faf46d649f3"
   integrity sha512-45rOonNrZaKX0mu0N9v422+c3Ngm8iTnVAP0N2iUwPfWZJds4S6eRGdmiNbrVFqmUc8IfRNI0Dpa3Zk8ntjaZQ==
-
-vue-select@^4.0.0-beta.2:
-  version "4.0.0-beta.2"
-  resolved "https://registry.yarnpkg.com/vue-select/-/vue-select-4.0.0-beta.2.tgz#767c07a3ef4cf23cdebc4b050f3054bc2a0425da"
-  integrity sha512-uR7Jn6dkfaFbvbXfKKp6s//ArkbP+U4mK432D6rbsQKk6NfG9J7Nwe0jonzQdttfHPuBPCiw0PV8nnWmpY5jtg==
 
 vue@^3.2.25, vue@^3.2.27:
   version "3.2.27"

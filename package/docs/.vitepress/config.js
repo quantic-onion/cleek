@@ -21,6 +21,12 @@ module.exports = {
         link: '/',
       },
       {
+        text: 'Testing',
+        children: [
+          { text: 'Altura', link: '/testing/TestSameHeight/TestSameHeight' },
+        ],
+      },
+      {
         text: 'Components',
         children: getComponents(),
       },

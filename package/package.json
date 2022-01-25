@@ -1,7 +1,7 @@
 {
   "name": "cleek",
-  "version": "1.5.5",
-  "description": "Moon based ux Vue library",
+  "version": "1.6.4",
+  "description": "Complete UX Vue library",
   "repository": "",
   "author": "Quantic Onion",
   "license": "MIT",
@@ -40,8 +40,7 @@
     "prettier": "^2.3.2",
     "rollup-plugin-visualizer": "^5.5.2",
     "vite": "^2.4.3",
-    "vitepress": "^0.21.4",
-    "vue-select": "^4.0.0-beta.2"
+    "vitepress": "^0.21.4"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.36",
@@ -51,6 +50,7 @@
     "@fortawesome/vue-fontawesome": "^3.0.0-5",
     "mitt": "^3.0.0",
     "pug": "^3.0.2",
+    "quantic-methods": "^1.0.1",
     "stylus": "^0.56.0",
     "tabbable": "^5.2.0",
     "tippy.js": "^6.3.1",

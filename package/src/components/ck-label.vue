@@ -1,5 +1,6 @@
 <template lang="pug">
 label.ck-label(
+:for="for"
 :class="computedClass"
 )
   slot
@@ -9,6 +10,7 @@ label.ck-label(
 export default {
   name: 'CkLabel',
   props: {
+    for: { type: String, default: '' },
     align: { type: String, default: '' },
   },
   computed: {
@@ -29,10 +31,9 @@ export default {
 
 .ck-label
   width 100%
-  padding-x .5rem
+  padding-x 5px
   display flex
-  margin-bottom .1rem
-  font-size .85rem
+  font-size 13.5px
   &.ck-align--left
     justify-content flex-start
   &.ck-align--right
