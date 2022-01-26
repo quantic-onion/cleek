@@ -14,9 +14,11 @@
   v-model="value"
   type="text"
   :placeholder="placeholder"
-  :class="computedClass"
+  :class="computedClassInput"
+  :style="computedStyleInput"
   :id="label ? 'ck-input-text' : ''"
   @change="onChange($event)"
+  @click="onClick($event)"
   )
   //- icon right
   ck-icon.ck-input__icon-right(
@@ -34,12 +36,15 @@ import ckIcon from './ck-icon.vue';
 
 <script lang="ts">
 import functions from '../utils/functions.ts';
+import validators from '../utils/validators.ts';
 export default {
   props: {
-    modelValue: { type: String, default: '' },
-    label: { type: String, default: '' },
+    // CORREGIR "NUMBER"
+    modelValue: { type: [String, Number], default: '' },
     placeholder: { type: String, default: '' },
-    labelAlign: { type: String, default: '' },
+    // label
+    label: { type: String, default: '' },
+    labelAlign: { type: String, validator: validators.align, default: undefined },
     // icon
     icon: { type: [String, Array], default: undefined },
     iconPack: { type: String, default: undefined },
@@ -48,27 +53,51 @@ export default {
     group: { type: String, default: '' },
     groupBreak: { type: String, default: 's' },
     groupVertical: { type: String, default: '' },
+    // style
+    hideBorder: { type: Boolean, default: false },
+    width: { type: String, default: undefined },
+    align: { type: String, validator: validators.align, default: undefined },
+    // functions
+    autoSelect: { type: Boolean, default: false },
   },
-  emits: ['update:modelValue', 'change'],
+  emits: ['update:modelValue', 'change', 'click'],
   computed: {
     value: {
       get() { return this.modelValue; },
       set(val) { this.$emit('update:modelValue', val); },
     },
-    computedClass() {
-      const classList = [];
+    computedStyleInput() {
+      const list = [];
+      // width
+      if (this.width) list.push({ width: this.width });
+      return list;
+    },
+    computedClassInput() {
+      const list = [];
       // group
-      classList.push(functions.getGroupClass(this));
+      list.push(functions.getGroupClass(this));
       // icon
-      if (this.icon) classList.push('has-icon-left');
-      if (this.iconRight) classList.push('has-icon-right');
-      return classList;
+      if (this.icon) list.push('has-icon-left');
+      if (this.iconRight) list.push('has-icon-right');
+      // align
+      if (this.align) list.push(`align--${this.align}`);
+      // hideBorder
+      if (this.hideBorder) list.push('no-border');
+      return list;
     },
   }, // computed
   methods: {
     // onChange
+    // onClick
+
     onChange(event) {
       this.$emit('change', event);
+    },
+    onClick(event) {
+      console.log('autoSelect', this.autoSelect);
+      console.log('event', event);
+      if (this.autoSelect) event.target.select();
+      this.$emit('click', event);
     },
   }, // methods
 }; // export default
@@ -89,6 +118,12 @@ export default {
     box-sizing border-box
     &:focus-visible
       outline-color $color-primary
+    &.align--center
+      text-align center
+    &.align--right
+      text-align right
+    &.no-border
+      border-color transparent
     &.has-icon-left
       padding-left 14px + (3 * $globalPadding)
     &.has-icon-right

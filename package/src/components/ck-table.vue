@@ -8,7 +8,7 @@
     :currentPage="currentPage"
     :itemsPerPage="itemsPerPage"
     :listLength="listLength"
-    :refreshBtn="refreshBtn"
+    :hideRefreshBtn="hideRefreshBtn"
     :hideItemsPerPage="hideItemsPerPage"
     @refreshList="refreshList($event)"
     )
@@ -27,26 +27,38 @@
     //- footer
     tfoot(v-if="$slots.footer")
       slot(name="footeer")
+  TablePagination(
+  v-model:currentPage="currentPage"
+  :itemsPerPage="itemsPerPage"
+  :listLength="listLength"
+  :align="paginationAlign"
+  @refreshList="refreshList(true)"
+  )
 </template>
 
 <script setup lang="ts">
 import ckTr from './ck-tr.vue';
 import ckTableTitle from './inner-components/ck-table__title.vue';
 import TableHeaderItems from './inner-components/ck-table__header-items.vue';
+import TablePagination from './inner-components/ck-table__pagination.vue';
 </script>
 
 <script lang="ts">
+import validators from '../utils/validators';
+const defaultPaginationAlign = 'center';
+const defaultItemsPerPage = 40;
 export default {
   props: {
     columns: { type: Array, required: true, default: () => ([]) },
-    // pagination
+    // pagination - header items
     currentPage: { type: Number, default: 0 },
-    itemsPerPage: { type: Number, default: 0 },
+    itemsPerPage: { type: Number, default: defaultItemsPerPage },
     listLength: { type: Number, default: 0 },
+    paginationAlign: { type: String, default: defaultPaginationAlign, validator: validators.align },
     // header items
     search: { type: String, default: undefined },
     hideHeaderActions: { type: Boolean, default: false },
-    refreshBtn: { type: Boolean, default: false },
+    hideRefreshBtn: { type: Boolean, default: false },
     hideItemsPerPage: { type: Boolean, default: false },
   },
   emits: ['refreshList', 'update:search'],

@@ -2,7 +2,7 @@
 .ck-table__header-items
   //- refresh btn
   ck-button(
-  v-if="!refreshBtn"
+  v-if="!hideRefreshBtn"
   type="flat"
   icon="redo-alt"
   @click="$emit('refreshList', false)"
@@ -12,7 +12,7 @@
   v-if="!hideItemsPerPage && listLength"
   :class="{ 'ck-component__group--left': (!hideSearch) }"
   )
-    | {{ currentPage }} - {{ currentPage * itemsPerPage }} de {{ listLength }}
+    | {{ itemsPerPageStart }} - {{ itemsPerPageEnd }} de {{ listLength }}
   //- search
   ck-input-text(
   v-if="!hideSearch"
@@ -33,7 +33,7 @@ import ckInputText from '../ck-input-text.vue';
 export default {
   props: {
     search: { type: String, default: undefined, },
-    refreshBtn: { type: Boolean, required: true },
+    hideRefreshBtn: { type: Boolean, required: true },
     hideItemsPerPage: { type: Boolean, required: true },
     currentPage: { type: Number, required: true },
     itemsPerPage: { type: Number, required: true },
@@ -48,6 +48,17 @@ export default {
     hideSearch() {
       return typeof this.searchLocal === 'undefined';
     },
+    itemsPerPageStart() {
+      return (this.currentPage -1) * this.itemsPerPage + 1;
+    },
+    itemsPerPageEnd() {
+      const value = this.currentPage * this.itemsPerPage;
+      if (value > this.listLength) return this.listLength;
+      return value;
+    },
+    itemsPerPageStart() {
+      return (this.currentPage -1) * this.itemsPerPage + 1;
+    },
   }, // computed
 }; // export default
 </script>
@@ -60,6 +71,7 @@ export default {
     font-size $globalFontSize-s
     display flex
     align-items center
+    cursor pointer
     padding-x 10px
     background-color rgba($globalBorderColor, .15)
     border 1px solid $globalBorderColor

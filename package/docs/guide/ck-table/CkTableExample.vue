@@ -43,9 +43,9 @@ export default {
       table1: {
         search: '',
         // search: 'wenas',
-        itemsPerPage: 2,
-        currentPage: 1,
-        listLength: 48,
+        itemsPerPage: 20,
+        currentPage: 3,
+        listLength: 148,
         columns: [
           { title: 'ID' },
           { title: 'Nombre' },
