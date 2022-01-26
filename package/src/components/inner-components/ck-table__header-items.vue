@@ -31,6 +31,7 @@ import ckInputText from '../ck-input-text.vue';
 
 <script lang="ts">
 export default {
+  name: 'CkTableHeaderItems',
   props: {
     search: { type: String, default: undefined, },
     hideRefreshBtn: { type: Boolean, required: true },
@@ -52,12 +53,11 @@ export default {
       return (this.currentPage -1) * this.itemsPerPage + 1;
     },
     itemsPerPageEnd() {
+      console.log('this.currentPage', this.currentPage);
+      console.log('this.itemsPerPage', this.itemsPerPage);
       const value = this.currentPage * this.itemsPerPage;
       if (value > this.listLength) return this.listLength;
       return value;
-    },
-    itemsPerPageStart() {
-      return (this.currentPage -1) * this.itemsPerPage + 1;
     },
   }, // computed
 }; // export default

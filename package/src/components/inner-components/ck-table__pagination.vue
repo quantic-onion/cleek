@@ -1,13 +1,13 @@
 <template lang="pug">
 .ck-table__pagination-container(
-  v-if="currentPage && itemsPerPage"
+v-if="currentPage && totalPages > 1"
 :class="`pagination-align--${align}`"
 )
   .ck-table__pagination
     //- arrow left
     .ck-table__pagination--arrow-left(
     v-if="hasArrowLeft"
-    @click="updateCurrentPage(currentPageLocal - 1)"
+    @click="updateCurrentPage(currentPage - 1)"
     )
       ck-icon(icon="arrow-left")
     //- list left
@@ -21,7 +21,7 @@
     autoSelect 
     width="50px"
     align="center"
-    v-model="currentPageLocal"
+    v-model="currentPageLocal2"
     @change="validateInputNumber($event.target.value)"
     )
     //- list right
@@ -33,7 +33,7 @@
     //- arrow right
     .ck-table__pagination--arrow-right(
     v-if="hasArrowRight"
-    @click="updateCurrentPage(currentPageLocal + 1)"
+    @click="updateCurrentPage(currentPage + 1)"
     )
       ck-icon(icon="arrow-right")
 </template>
@@ -46,6 +46,7 @@ import ckIcon from '../ck-icon.vue';
 <script lang="ts">
 const itemsShowed = 5;
 export default {
+  name: 'CkTablePagination',
   props: {
     currentPage: { type: Number, required: true },
     align: { type: String, required: true },
@@ -54,7 +55,7 @@ export default {
   },
   emits: ['refreshList', 'update:currentPage'],
   computed: {
-    currentPageLocal: {
+    currentPageLocal2: {
       get() { return this.currentPage; },
       set(val) {
         return;
@@ -69,12 +70,10 @@ export default {
     },
     hasArrowRight() {
       if (!this.listRight.length) return false;
-      console.log(this.listRight.length -1);
-      console.log(this.listRight[this.listRight.length -1]);
-      console.log('this.totalPages', this.totalPages);
       return this.listRight[this.listRight.length -1] !== this.totalPages;
     },
     listLeft() {
+      if (!this.listLength) return [];
       const list = [];
       const listLength = (itemsShowed - 1) / 2;
       for (const num of Array(listLength).keys()) {
@@ -84,6 +83,7 @@ export default {
       return list;
     },
     listRight() {
+      if (!this.listLength) return [];
       const list = [];
       const listLength = (itemsShowed - 1) / 2;
       for (const num of Array(listLength).keys()) {

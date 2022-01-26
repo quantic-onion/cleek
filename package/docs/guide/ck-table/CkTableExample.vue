@@ -1,11 +1,13 @@
 <template lang="pug">
 ck-table(
 v-model:search="table1.search"
+v-model:currentPage="table1.currentPage"
 :columns="table1.columns"
 :itemsPerPage="table1.itemsPerPage"
-:currentPage="table1.currentPage"
 :listLength="table1.listLength"
 )
+  template(v-slot:header)
+    | HOLA, ESTOY EN EL HEADER
   ck-tr(v-for="item in table1.list")
     ck-td {{ item.id }}
     ck-td {{ item.name }}

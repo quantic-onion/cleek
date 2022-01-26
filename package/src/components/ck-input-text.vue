@@ -94,8 +94,6 @@ export default {
       this.$emit('change', event);
     },
     onClick(event) {
-      console.log('autoSelect', this.autoSelect);
-      console.log('event', event);
       if (this.autoSelect) event.target.select();
       this.$emit('click', event);
     },

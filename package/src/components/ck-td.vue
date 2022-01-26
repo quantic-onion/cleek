@@ -52,6 +52,12 @@ export default {
 .ck-td
   padding .5rem
   overflow auto
+  border-bottom 1px solid $globalBorderColor
+  background #fff
+  &:last-of-type
+    border none
+  &.block
+    display block
   &.auto-width
     width 1px
   > span
