@@ -9,28 +9,27 @@ ck-button.mr-2(@click="isActivePopupNotCloseByBg = true")
   | Not close by bg
 
 //- popup
-ck-popup(v-model="isActivePopup")
-  template(v-slot:header) Popup Normal
-  template(v-slot:body)
+ck-popup(v-model="isActivePopup" title="Popup Normal")
+  div
     | Este es un popup normal que solo contiene información
   template(v-slot:footer) pie de popup
 
 //- confirm
 ck-popup(confirmButtons v-model="isActiveConfirm")
   template(v-slot:header) Popup tipo Confirm
-  template(v-slot:body)
-    | Popup con todos opciones, que emite: "@accept" y "@cancel"
+  div
+    | Popup con dos opciones, que emite: "@accept" y "@cancel"
 
 //- not close btn
 ck-popup(notCloseBtn v-model="isActivePopupNotCloseBtn")
   template(v-slot:header) Not close button
-  template(v-slot:body)
+  div
     | Oculta el botón de cerrar
 
 //- not close on bgClick
 ck-popup(notCloseByBg v-model="isActivePopupNotCloseByBg")
   template(v-slot:header) Not close by background
-  template(v-slot:body)
+  div
     | Si hacés click afuera no se cierra
 
 </template>

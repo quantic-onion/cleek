@@ -1,8 +1,7 @@
 <template lang="pug">
 .ck-table
   .ck-table__header(v-if="$slots.header || !hideHeaderActions")
-    .ck-table__header--slot(v-if="$slots.header")
-      slot(name="header")
+    //- header items
     TableHeaderItems(
     v-if="!hideHeaderActions"
     v-model:search="searchLocal"
@@ -13,6 +12,9 @@
     :hideItemsPerPage="hideItemsPerPage"
     @refreshList="refreshList($event)"
     )
+    //- header slot
+    .ck-table__header--slot(v-if="$slots.header")
+      slot(name="header")
   table.ck-table__table
     //- header
     thead(v-if="columns.length")
@@ -104,7 +106,6 @@ export default {
   justify-content space-between
   align-items end
   flex-direction row-reverse
-  flex-flow wrap-reverse
   .ck-table__header--slot
     display flex
     align-items flex-end

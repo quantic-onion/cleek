@@ -8,7 +8,7 @@
 export default {
   name: 'CkTextarea',
   props: {
-    modelValue: { type: String, required: true },
+    modelValue: { },
     // label
     label: { type: String, default: '' },
     labelAlign: { type: String, default: '' },

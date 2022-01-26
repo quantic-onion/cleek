@@ -24,45 +24,14 @@
 export default {
   name: 'Textarea',
   props: {
-    modelValue: {
-      type: String,
-      required: false,
-      default: undefined,
-    },
-    label: {
-      type: String,
-      required: false,
-      default: undefined,
-    },
-    placeholder: {
-      type: String,
-      required: false,
-      default: undefined,
-    },
-    name: {
-      type: String,
-      required: false,
-      default: undefined,
-    },
-    autogrow: {
-      type: Boolean,
-      required: false,
-      default: false,
-    },
-    required: {
-      type: Boolean,
-      required: false,
-      default: false,
-    },
-    disabled: {
-      type: Boolean,
-      required: false,
-      default: false,
-    },
-    resize: {
-      type: String,
-      required: false,
-      default: 'default',
+    modelValue: { type: String, default: undefined },
+    label: { type: String, default: undefined },
+    placeholder: { type: String, default: undefined },
+    name: { type: String, default: undefined },
+    autogrow: { type: Boolean, default: false },
+    required: { type: Boolean, default: false },
+    disabled: { type: Boolean, default: false },
+    resize: { type: String, default: 'default',
       validator(resize) {
         return ['default', 'vertical', 'horizontal', 'none'].includes(resize)
       },

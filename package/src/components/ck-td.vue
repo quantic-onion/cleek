@@ -56,8 +56,6 @@ export default {
   background #fff
   &:last-of-type
     border none
-  &.block
-    display block
   &.auto-width
     width 1px
   > span
@@ -74,4 +72,6 @@ export default {
       margin-left auto
     &.wrap-text
       white-space unset
+    &.block
+      display block
 </style>

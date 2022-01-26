@@ -2,7 +2,7 @@
 
 Textarea
 
-<TextareaExample />
+<CkTextareaExample/>
 
 ```vue
 <p>State: {{ text }}</p>
@@ -24,5 +24,5 @@ Textarea
 | `update:modelValue` | Triggered on native input event | `newValue`: Text on textarea |
 
 <script setup>
-import TextareaExample from './TextareaExample.vue'
+import CkTextareaExample from './CkTextareaExample.vue'
 </script>

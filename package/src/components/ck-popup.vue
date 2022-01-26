@@ -4,7 +4,10 @@
   .popup-container(@click="onBgClick()")
     .ck-popup__content(@click.stop="")
       .ck-popup__slot-header
-        //- header
+        //- title
+        h3.ck-popup__title(v-if="title")
+          | {{ title }}
+        //- header slot
         slot.ml-3(name="header")
         //- close btn
         ck-icon.mr-3.close(
@@ -14,7 +17,7 @@
         )
       //- VuePerfectScrollbar.ck-popup__slot-body
       .ck-popup__slot-body
-        slot(name="body")
+        slot
       .ck-popup__slot-footer(v-if="$slots.footer || confirmButtons")
         slot(name="footer")
         .ck-popup-slot-footer__confirm-buttons(v-if="confirmButtons")
@@ -34,11 +37,13 @@ import ckIcon from './ck-icon.vue';
 export default {
   props: {
     modelValue: { type: Boolean },
+    title: { type: String, default: undefined },
     confirmButtons: { type: Boolean, default: false },
     notCloseBtn: { type: Boolean, default: false },
     notCloseByBg: { type: Boolean, default: false },
+    preventCloseOnCancel: { type: Boolean, default: false },
   },
-  emits: ['update:modelValue', 'cancel', 'confirm'],
+  emits: ['update:modelValue', 'cancel', 'accept'],
   // data() {
   //   return {
   //     perfectScrollbarSettings: { // perfectscrollbar settings
@@ -59,10 +64,10 @@ export default {
 
     onCancel() {
       this.$emit('cancel');
-      this.value = false;
+      if (!this.preventCloseOnCancel) this.value = false;
     },
     onAccept() {
-      this.$emit('confirm');
+      this.$emit('accept');
     },
     onBgClick() {
       // hacerle un movimiento de rebote como en vuesax
@@ -93,7 +98,6 @@ export default {
   .ck-popup__content
     background-color white
     min-width 30vw
-    min-height 20vw
     width 500px
     max-width 95vw
     @media(min-width 1150px)
@@ -114,6 +118,8 @@ export default {
       border-radius 10px 10px 0 0
       box-shadow 0 5px 10px -2px RGBA(0, 0, 0, 0.15)
       position relative
+      .ck-popup__title
+        margin 0
       .close
         padding .5rem .75rem
         right .5rem
