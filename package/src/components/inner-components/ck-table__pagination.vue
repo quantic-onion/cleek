@@ -17,8 +17,9 @@ v-if="currentPage && totalPages > 1"
     )
       | {{ num }}
     //- input
-    ck-input-text.ck-table__pagination-input(
+    ck-input.ck-table__pagination-input(
     autoSelect 
+    type="number"
     width="50px"
     align="center"
     v-model="currentPageLocal2"
@@ -39,7 +40,7 @@ v-if="currentPage && totalPages > 1"
 </template>
 
 <script setup lang="ts">
-import ckInputText from '../ck-input-text.vue';
+import ckInputText from '../ck-input.vue';
 import ckIcon from '../ck-icon.vue';
 </script>
 

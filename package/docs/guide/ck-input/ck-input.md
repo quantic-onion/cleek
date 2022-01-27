@@ -1,6 +1,6 @@
 # Input
 
-<CkInputTextExample/>
+<CkInputExample/>
 
 ```vue
 <p>{{ text }}</p>
@@ -18,8 +18,8 @@
 
 | Event               | Description                     | Parameters                |
 | :------------------ | :------------------------------ | :------------------------ |
-| `update:modelValue` | Triggered on native input event | `newValue`: Text on input |
+| `update:modelValue` | Triggered on native input event | `newValue`:  on input |
 
 <script setup>
-import CkInputTextExample from './CkInputTextExample.vue'
+import CkInputExample from './CkInputExample.vue'
 </script>

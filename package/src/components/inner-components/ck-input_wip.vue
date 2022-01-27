@@ -112,11 +112,4 @@ $color-border = #e53935
   box-shadow inset 0 0 0 1px $color-border
 .c-Input__input:invalid + .c-Input__label
   color $color-border
-.c-Input__input:disabled
-  cursor not-allowed
-  border-color $color-disabled
-  color $color-disabled
-  background-color #e0e0e0
-.c-Input__input:disabled + .c-Input__label
-  color $color-disabled
 </style>

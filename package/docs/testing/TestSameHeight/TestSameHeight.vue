@@ -10,11 +10,11 @@
     label="Select"
     :options="[{ id: 1, name: 'A'}, { id: 2, name: 'B'}, { id: 3, name: 'C'}]"
     )
-    //- input-text
-    ck-input-text.mt-2(label="Input text" group="right")
+    //- input
+    ck-input.mt-2(label="Input text" group="right")
   .same-height__row
-    //- input-text
-    ck-input-text.mt-2(label="Input text 2" group="left")
+    //- input
+    ck-input.mt-2(label="Input text 2" group="left")
     //- switch-options
     ck-switch-options.mt-2(
     label="Switch options"

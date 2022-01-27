@@ -16,6 +16,9 @@ export default {
   buttonType: (type) => {
     return ['filled', 'outlined', 'flat'].includes(type)
   },
+  inputType: (type) => {
+    return ['text', 'number', 'date', 'time', 'password'].includes(type)
+  },
   radioOptions: (options) => {
     let isValid = true
     options.forEach((option) => {

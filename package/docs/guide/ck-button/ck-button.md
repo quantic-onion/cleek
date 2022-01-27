@@ -13,8 +13,8 @@ The button component is a simple customizable button.
   Filled
 </ck-button>
 
-<ck-button type="text">
-  Text
+<ck-button type="flat">
+  Flat
 </ck-button>
 
 <ck-button disabled>

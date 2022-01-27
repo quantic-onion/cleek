@@ -14,7 +14,7 @@
   )
     | {{ itemsPerPageStart }} - {{ itemsPerPageEnd }} de {{ listLength }}
   //- search
-  ck-input-text(
+  ck-input(
   v-if="!hideSearch"
   v-model="searchLocal"
   icon="search"
@@ -26,7 +26,7 @@
 
 <script setup lang="ts">
 import ckButton from '../ck-button.vue';
-import ckInputText from '../ck-input-text.vue';
+import ckInput from '../ck-input.vue';
 </script>
 
 <script lang="ts">
