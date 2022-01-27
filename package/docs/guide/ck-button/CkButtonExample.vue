@@ -1,17 +1,18 @@
 <template lang="pug">
-ck-button.mr-2.mb-2
-  | Outlined (default)
-ck-button.mr-2.mb-2(type="filled")
-  | Filled
-ck-button.mr-2.mb-2(type="flat")
-  | Text
-ck-button.mr-2.mb-2(disabled)
-  | disabled
-ck-button.mr-2.mb-2(icon="square")
-ck-button.mr-2.mb-2(icon="helicopter")
-  | Icon
-ck-button.mr-2.mb-2(icon="user" icon-right="times")
-  | Icons
+.bg-red
+  ck-button.mr-2.mb-2
+    | Outlined (default)
+  ck-button.mr-2.mb-2(type="filled")
+    | Filled
+  ck-button.mr-2.mb-2(type="flat")
+    | Flat
+  ck-button.mr-2.mb-2(disabled)
+    | disabled
+  ck-button.mr-2.mb-2(icon="square")
+  ck-button.mr-2.mb-2(icon="helicopter")
+    | Icon
+  ck-button.mr-2.mb-2(icon="user" icon-right="times")
+    | Icons
 </template>
 
 <script>
@@ -26,5 +27,5 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
-@import '../../../src/styles/tailwind-fake'
+@import '../../../public/cleek-styles/tiny-tailwind'
 </style>

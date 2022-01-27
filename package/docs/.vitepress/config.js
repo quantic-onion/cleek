@@ -6,7 +6,6 @@ module.exports = {
   lang: 'en-US',
   title: 'Cleek',
   description: 'A lightweight Vue 3 component library',
-
   themeConfig: {
     docsDir: 'docs',
     nav: [
@@ -36,7 +35,6 @@ module.exports = {
 
 function getComponents() {
   return [
-
     { text: 'Button', link: '/guide/ck-button/ck-button' },
     { text: 'Checkbox', link: '/guide/ck-checkbox/ck-checkbox' },
     { text: 'Icon', link: '/guide/ck-icon/ck-icon' },

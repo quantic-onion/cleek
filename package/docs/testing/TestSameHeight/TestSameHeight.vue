@@ -65,7 +65,7 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
-@import '../../../src/styles/tailwind-fake'
+@import '../../../public/cleek-styles/tiny-tailwind'
 
 .same-height-container
   display flex
