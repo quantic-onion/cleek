@@ -31,9 +31,9 @@
 </template>
 
 <script setup lang="ts">
+import { computed } from 'vue';
 import functions from '../utils/functions';
 import validators from '../utils/validators';
-import { computed, defineProps } from 'vue';
 import ckLabel from './ck-label.vue';
 import ckIcon from './ck-icon.vue';
 const props = defineProps({
@@ -73,6 +73,7 @@ const onClick = (event) => {
   emits('click', event);
 };
 const onInput = (event) => {
+  console.log('input');
   emits('input', event);
 };
 const onChange = (event) => {
