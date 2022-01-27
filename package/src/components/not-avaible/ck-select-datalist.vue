@@ -1,20 +1,28 @@
 <template lang="pug">
-.ck-select(
-:style="computedStyle"
-) 
-  //- input(
-  //- v-model="search"
-  //- )
-  select(
-  v-model="value"
+form.ck-select(action="/action_page.php" method="get")
+  //- label
+  ck-label(v-if="label" :align="labelAlign" for="ck-select") {{ label }}
+  //- chevron
+  //- ck-icon.ck-select__chevron-icon(v-if="" icon="chevron-down")
+  input(
+  autocomplete="off"
+  list="ck-select__list"
+  name="ck-select"
+  v-model="search"
+  :id="label ? 'ck-select' : ''"
+  :placeholder="lastSelectedValue"
   :class="computedClass"
+  @focus="onFocus($event)"
+  @blur="onBlur($event)"
+  @change="onChangeOption($event)"
   )
+  datalist(id="ck-select__list")
     option(
-    v-for="option in filteredOptions"
-    :value="getOptionKey(option)"
-    :key="(option)"
+    @click="onClickOption(option)"
+    :key="getOptionKey(option)"
+    :value="getOptionName(option)"
+    v-for="option in options"
     )
-      | {{ getOptionName(option) }}
 </template>
 
 <script setup lang="ts">
@@ -74,7 +82,7 @@ const filteredOptions = computed(() => {
 const computedClass = computed(() => {
   const classList = [];
   // group
-  classList.push(functions.getGroupClass(props));
+  classList.push(functions.getGroupClass(this));
   return classList;
 });
 const computedStyle = computed(() => {
@@ -161,8 +169,7 @@ const setFocus = () => {
 .ck-select
   display inline-block
   position relative
-  select
-    width 100%
+  input
     border 1px solid $globalBorderColor
     height $globalMinHeight
     border-radius $globalBorderRadius
@@ -172,8 +179,18 @@ const setFocus = () => {
     &:focus
       border-color $color-primary
       outline 0
-  // .ck-select__chevron-icon
-  //   position absolute
-  //   right 10px
-  //   bottom 10px
+  .ck-select__chevron-icon
+    position absolute
+    right 10px
+    bottom 10px
+// .ck-select
+//   display inline-flex
+//   flex-wrap wrap
+//   > .ck-select__v-select
+//     width 100%
+//     /deep/ .vs__dropdown-toggle
+//       border-radius $globalBorderRadius
+//       border 1px solid $globalBorderColor
+//       height 40px
+//       background-color white
 </style>

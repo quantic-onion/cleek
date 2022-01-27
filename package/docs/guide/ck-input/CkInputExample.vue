@@ -25,7 +25,7 @@ ComponentShower(title="Not working")
 </template>
 
 <script setup lang="ts">
-// name: 'CkInputTextExample',
+// name: 'CkInputExample',
 import { ref } from 'vue';
 import { ckInput } from '../../../src/components/index';
 import ComponentShower from '../../layout/componentsShower/ComponentShower.vue';

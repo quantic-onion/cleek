@@ -40,7 +40,7 @@ v-if="currentPage && totalPages > 1"
 </template>
 
 <script setup lang="ts">
-import ckInputText from '../ck-input.vue';
+import ckInput from '../ck-input.vue';
 import ckIcon from '../ck-icon.vue';
 </script>
 
