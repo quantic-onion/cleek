@@ -47,6 +47,7 @@ function getComponents() {
     // { text: 'Progress', link: '/guide/progress/progress' },
     { text: 'Popup', link: '/guide/ck-popup/ck-popup' },
     { text: 'Radio', link: '/guide/ck-radio/ck-radio' },
+    // { text: 'Router Link', link: '/guide/ck-router-link/ck-router-link' },
     { text: 'Select', link: '/guide/ck-select/ck-select' },
     // { text: 'Sidebar', link: '/guide/sidebar/sidebar' },
     // { text: 'SidebarManager', link: '/guide/sidebar-manager/sidebar-manager' },

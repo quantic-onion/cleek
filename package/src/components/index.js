@@ -15,6 +15,7 @@ export { default as ckTextarea } from './ck-textarea.vue';
 export { default as ckTh } from './ck-th.vue';
 export { default as ckTooltip } from './ck-tooltip.vue';
 export { default as ckTr } from './ck-tr.vue';
+// export { default as ckRouterLink } from './not-avaible/ck-router-link.vue';
 
 
 // export { default as Input } from './not-avaible/Input.vue'
