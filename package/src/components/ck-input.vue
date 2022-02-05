@@ -19,6 +19,7 @@
   :id="label ? 'ck-input' : ''"
   :disabled="disabled"
   @change="onChange($event)"
+  @input="onInput($event)"
   @click="onClick($event)"
   )
   //- icon right
@@ -73,7 +74,6 @@ const onClick = (event) => {
   emits('click', event);
 };
 const onInput = (event) => {
-  console.log('input');
   emits('input', event);
 };
 const onChange = (event) => {

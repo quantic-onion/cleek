@@ -2,12 +2,15 @@
 .ck-select(
 :style="computedStyle"
 ) 
+  ck-label(v-if="label" :align="labelAlign" for="ck-input") {{ label }}
   //- input(
   //- v-model="search"
   //- )
   select(
   v-model="value"
   :class="computedClass"
+  @click="onClick($event)"
+  @change="onChange($event)"
   )
     option(
     v-for="option in filteredOptions"
@@ -26,7 +29,7 @@ import { qmStr } from '../../node_modules/quantic-methods/dist/quantic-methods.e
 // name: 'CkSelect',
 // methods called by outside: setFocus
 const props = defineProps({
-  modelValue: { default: null, type: [Boolean, Number, Object, Array] },
+  modelValue: { default: null, type: [Boolean, Number, Object, Array, String] },
   prop: { type: String, default: 'name' }, // prop of the object showed in HTML
   autofocus: { type: Boolean, default: false }, // CHECK
   noDataText: { type: String, default: 'No se encontró nada' },
@@ -126,11 +129,14 @@ const onFocus = (event) => {
   lastSelectedValue.value = search.value;
   search.value = '';
 };
-const onChangeOption = (event) => {
-  console.log('option', search.value);
-  const selected = props.options.find(i => getOptionName(i) === search.value);
-  value.value = getOptionKey(selected)
-  event.target.blur();
+function onClick(event) {
+  emits('click', event);
+}
+const onChange = (event) => {
+  emits('change', event);
+  // const selected = props.options.find(i => getOptionName(i) === search.value);
+  // value.value = getOptionKey(selected)
+  // event.target.blur();
 };
 const checkOptionsIsValid = (optionName) => {
   if (!optionName) return;

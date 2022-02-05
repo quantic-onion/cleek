@@ -98,7 +98,7 @@ $border-width = 2px // m
       transition $transitionTime
   .ck-switch__content
     user-select none
-    margin-left 8px * $border-width
+    margin-left 8px
 
 // outlined
 .ck-switch.is-outlined

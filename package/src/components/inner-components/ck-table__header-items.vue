@@ -20,47 +20,47 @@
   icon="search"
   placeholder="Buscar..."
   :group="hideItemsPerPage ? '' : 'right'"
-  @change="$emit('refreshList', false)"
+  @input="checkRefresh()"
   )
 </template>
 
 <script setup lang="ts">
+import { computed } from 'vue'
 import ckButton from '../ck-button.vue';
 import ckInput from '../ck-input.vue';
-</script>
+const props = defineProps({
+  search: { type: String, default: undefined, },
+  hideRefreshBtn: { type: Boolean, required: true },
+  hideItemsPerPage: { type: Boolean, required: true },
+  currentPage: { type: Number, required: true },
+  itemsPerPage: { type: Number, required: true },
+  listLength: { type: Number, required: true },
+});
+const emits = defineEmits(['update:search', 'refreshList']);
 
-<script lang="ts">
-export default {
-  name: 'CkTableHeaderItems',
-  props: {
-    search: { type: String, default: undefined, },
-    hideRefreshBtn: { type: Boolean, required: true },
-    hideItemsPerPage: { type: Boolean, required: true },
-    currentPage: { type: Number, required: true },
-    itemsPerPage: { type: Number, required: true },
-    listLength: { type: Number, required: true },
-  },
-  emits: ['refreshList', 'update:search'],
-  computed: {
-    searchLocal: {
-      get() { return this.search; },
-      set(val) { this.$emit('update:search', val); }
-    },
-    hideSearch() {
-      return typeof this.searchLocal === 'undefined';
-    },
-    itemsPerPageStart() {
-      return (this.currentPage -1) * this.itemsPerPage + 1;
-    },
-    itemsPerPageEnd() {
-      console.log('this.currentPage', this.currentPage);
-      console.log('this.itemsPerPage', this.itemsPerPage);
-      const value = this.currentPage * this.itemsPerPage;
-      if (value > this.listLength) return this.listLength;
-      return value;
-    },
-  }, // computed
-}; // export default
+
+const searchLocal = computed({
+  get() { return props.search; },
+  set(val) { emits('update:search', val); }
+});
+const hideSearch = computed(() => {
+  return typeof searchLocal.value === 'undefined';
+});
+const itemsPerPageStart = computed(() => {
+  return (props.currentPage -1) * props.itemsPerPage + 1;
+});
+const itemsPerPageEnd = computed(() => {
+  const value = props.currentPage * props.itemsPerPage;
+  if (value > props.listLength) return props.listLength;
+  return value;
+});
+function checkRefresh() {
+  const search = searchLocal.value;
+  setTimeout(() => {
+    if (search !== searchLocal.value) return;
+    emits('refreshList', false);
+  }, 1000);
+}
 </script>
 
 <style lang="stylus" scoped>

@@ -122,6 +122,8 @@ export default {
   overflow hidden
   flex-shrink 0
   flex-grow 0
+  max-width 100%
+  max-height 100%
   &.ck-img__has-border
     background-color white
     border 1px solid transparent
@@ -151,7 +153,7 @@ export default {
   &.ck-img__size--m
     width 7rem
     height @width
-    border-radius 1rem
+    border-radius .5rem
   &.ck-img__size--l
     width 11rem
     height @width

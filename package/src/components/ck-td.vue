@@ -63,12 +63,15 @@ export default {
     white-space nowrap
     &.align-center
       justify-content center
+      text-align center
       margin-x auto
     &.align-left
       justify-content flex-start
       margin-right auto
+      text-align left
     &.align-right
       justify-content flex-end
+      text-align right
       margin-left auto
     &.wrap-text
       white-space unset

@@ -30,9 +30,10 @@
     //- footer
     tfoot(v-if="$slots.footer")
       slot(name="footer")
+  //- @update:currentPage="testCurrentPage($event)"
   TablePagination(
+  v-model:currentPage="currentPageLocal"
   :currentPage="currentPage"
-  @update:currentPage="testCurrentPage($event)"
   :itemsPerPage="itemsPerPage"
   :listLength="listLength"
   :align="paginationAlign"
@@ -41,58 +42,43 @@
 </template>
 
 <script setup lang="ts">
+import { computed } from 'vue'
 import ckTr from './ck-tr.vue';
 import ckTableTitle from './inner-components/ck-table__title.vue';
 import TableHeaderItems from './inner-components/ck-table__header-items.vue';
 import TablePagination from './inner-components/ck-table__pagination.vue';
-</script>
-
-<script lang="ts">
 import validators from '../utils/validators';
-const defaultPaginationAlign = 'center';
-const defaultItemsPerPage = 40;
-export default {
-  name: 'CkTable',
-  props: {
-    columns: { type: Array, required: true, default: () => ([]) },
-    // pagination - header items
-    currentPage: { type: Number, default: 0 },
-    itemsPerPage: { type: Number, default: defaultItemsPerPage },
-    listLength: { type: Number, default: 0 },
-    paginationAlign: { type: String, default: defaultPaginationAlign, validator: validators.align },
-    // header items
-    search: { type: String, default: undefined },
-    hideHeaderActions: { type: Boolean, default: false },
-    hideRefreshBtn: { type: Boolean, default: false },
-    hideItemsPerPage: { type: Boolean, default: false },
-  },
-  emits: ['refreshList', 'update:search',  'update:currentPage'],
-  computed: {
-    searchLocal: {
-      get() { return this.search; },
-      set(val) { this.$emit('update:search', val); }
-    },
-    currentPageLocal: {
-      get() { return this.currentPage; },
-      set(val) {
-        console.log('val', val);
-        this.$emit('update:currentPage', val);
-      },
-    },
-  }, // computed
-  methods: {
-    // refreshList
-    // testCurrentPage
 
-    refreshList(pageChange: boolean = false) {
-      this.$emit('refreshList', pageChange);
-    },
-    testCurrentPage(cosito) {
-      console.log('cosito', cosito);
-      this.$emit('update:currentPage', cosito);
-    },
-  }, // methods
-}; // export default
+const props = defineProps({
+  columns: { type: Array, required: true, default: () => ([]) },
+  // pagination - header items
+  currentPage: { type: Number, default: 0 },
+  itemsPerPage: { type: Number, default: 40 },
+  listLength: { type: Number, default: 0 },
+  paginationAlign: { type: String, default: 'center', validator: validators.align },
+  // header items
+  search: { type: String, default: undefined },
+  hideHeaderActions: { type: Boolean, default: false },
+  hideRefreshBtn: { type: Boolean, default: false },
+  hideItemsPerPage: { type: Boolean, default: false },
+});
+const emits = defineEmits(['refreshList', 'update:search',  'update:currentPage']);
+const searchLocal = computed({
+  get() { return props.search; },
+  set(val) { emits('update:search', val); }
+});
+const currentPageLocal = computed({
+  get() { return props.currentPage; },
+  set(val) {
+    emits('update:currentPage', val);
+  },
+});
+function refreshList(pageChange: boolean = false) {
+  emits('refreshList', pageChange);
+}
+// function testCurrentPage(cosito) {
+//   this.$emit('update:currentPage', cosito);
+// }
 </script>
 
 <style lang="stylus" scoped>

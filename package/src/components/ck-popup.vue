@@ -101,7 +101,7 @@ export default {
     width 500px
     max-width 95vw
     @media(min-width 1150px)
-      max-width 65rem
+      max-width 80rem
     margin auto
     border-radius 10px
     padding-bottom 15px

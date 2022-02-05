@@ -1,31 +1,38 @@
 <template lang="pug">
-.bg-red
-  ck-button.mr-2.mb-2
+ComponentShower(title="Types")
+  ck-button.ck-component-item
     | Outlined (default)
-  ck-button.mr-2.mb-2(type="filled")
+  ck-button.ck-component-item(type="filled")
     | Filled
-  ck-button.mr-2.mb-2(type="flat")
+  ck-button.ck-component-item(type="flat")
     | Flat
-  ck-button.mr-2.mb-2(disabled)
+  ck-button.ck-component-item(disabled)
     | disabled
-  ck-button.mr-2.mb-2(icon="square")
-  ck-button.mr-2.mb-2(icon="helicopter")
+
+ComponentShower(title="Icons")
+  ck-button.ck-component-item(icon="square")
+  ck-button.ck-component-item(icon="helicopter")
     | Icon
-  ck-button.mr-2.mb-2(icon="user" icon-right="times")
+  ck-button.ck-component-item(icon="user" icon-right="times")
     | Icons
+
+ComponentShower(title="Group")
+  ck-button.ck-component-item-group-left(group="left")
+    | Left
+  ck-button.ck-component-item-group-center(group="center")
+    | Center
+  ck-button.ck-component-item-group-right(group="right")
+    | Right
+  ck-button.ck-component-item-group-left(group="left" icon="arrow-left")
+  ck-button.ck-component-item-group-center(group="center" icon="arrow-left" icon-right="arrow-right")
+  ck-button.ck-component-item-group-right(group="right" icon-right="arrow-right")
 </template>
 
-<script>
+<script setup lang="ts">
+import ComponentShower from '../../layout/componentsShower/ComponentShower.vue';
 import { ckButton } from '../../../src/components/index';
-
-export default {
-  name: 'ButtonExample',
-  components: {
-    ckButton,
-  },
-}; // export default
 </script>
 
 <style lang="stylus" scoped>
-@import '../../../public/cleek-styles/tiny-tailwind'
+@import '../../style/global'
 </style>
