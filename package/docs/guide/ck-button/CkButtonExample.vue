@@ -9,6 +9,14 @@ ComponentShower(title="Types")
   ck-button.ck-component-item(disabled)
     | disabled
 
+ComponentShower(title="Align")
+  ck-button.ck-component-item.w-full
+    | Default
+  ck-button.ck-component-item.w-full(align="center" icon="helicopter")
+    | Center
+  ck-button.ck-component-item.w-full(align="right" icon="user" icon-right="times")
+    | Right
+
 ComponentShower(title="Icons")
   ck-button.ck-component-item(icon="square")
   ck-button.ck-component-item(icon="helicopter")

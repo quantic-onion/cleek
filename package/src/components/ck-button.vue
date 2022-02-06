@@ -25,17 +25,22 @@ import validators from '../utils/validators';
 import functions from '../utils/functions';
 import globalVariables from '../utils/globalVariables';
 import ckIcon from './ck-icon.vue';
-const defaults = { type: 'outlined' };
+const defaultType = 'outlined';
+const defaultColor = 'primary';
+const defaultAlign = 'left';
 export default {
   name: 'CkButton',
   components: {
     ckIcon,
   },
   props: {
+    // html
     title: { type: String, default: undefined },
-    type: { type: String, default: defaults.type, validator: validators.buttonType },
-    color: { type: String, default: '' },
     disabled: { type: Boolean, default: false },
+    // style
+    type: { type: String, default: defaultType, validator: validators.buttonType },
+    color: { type: String, default: defaultColor },
+    align: { type: String, default: defaultAlign, validator: validators.align },
     // icon
     icon: { type: [String, Array], default: undefined },
     iconPack: { type: String, default: undefined },
@@ -55,12 +60,16 @@ export default {
       // group
       classList.push(functions.getGroupClass(this));
       // color
-      if (this.color) {
+      if (this.color !== defaultColor) {
         if (this.type === 'filled') {
           classList.push(`ck-component__bg-color--${this.color}`);
         } else {
           classList.push(`ck-component__border-color--${this.color}`);
         }
+      }
+      // align
+      if (this.align !== defaultAlign) {
+        classList.push(`ck-button__align--${this.align}`);
       }
       // icon margin
       if (!this.$slots.default) {
@@ -71,7 +80,7 @@ export default {
 
       // type
       let type = this.type;
-      if (!validators.buttonType(this.type)) type = defaults.type;
+      if (!validators.buttonType(this.type)) type = defaultType;
       classList.push(`type-${type}`)
       // if (this.size) classList.push(`rs-component-size__${this.size}`);
       return classList;
@@ -97,6 +106,10 @@ button
   position relative
   font-size $globalFontSize
   padding $globalPadding (2 * $globalPadding)
+  &.ck-button__align--center
+    justify-content center
+  &.ck-button__align--right
+    justify-content flex-end
   &::before
     content ''
     position absolute
