@@ -1,8 +1,8 @@
 @require './.variables'
 @require '../../public/cleek-styles/cleek-mixins'
 
-// "$color-primary": "#8687DA",
-// "$color-secondary": "#4E4D86",
+// "var(--primary)": "#8687DA",
+// "var(--secondary)": "#4E4D86",
 
 
 // group
@@ -27,23 +27,23 @@
 
 // color
 .ck-component__color--primary
-  color $color-primary !important
-.ck-component__color--primary-light
-  color rgba($color-primary, .15) !important
+  color var(--primary) !important
+// .ck-component__color--primary-light
+  // color rgba(var(--primary), .15) !important FIXRGBA
 .ck-component__color--secondary
-  color $color-secondary !important
-.ck-component__color--secondary-light
-  color rgba($color-secondary, .15) !important
+  color var(--secondary) !important
+// .ck-component__color--secondary-light
+  // color rgba(var(--secondary), .15) !important  FIXRGBA
 .ck-component__color--success
-  color $color-success !important
+  color var(--success) !important
 .ck-component__color--danger
-  color $color-danger !important
+  color var(--danger) !important
 .ck-component__color--warning
-  color $color-warning !important
+  color var(--warning) !important
 .ck-component__color--dark
-  color $color-dark !important
+  color var(--dark) !important
 .ck-component__color--light
-  color $color-light !important
+  color var(--light) !important
 .ck-component__color--unset
   color $color-unset !important
 .ck-component__color--lightgrey
@@ -51,80 +51,80 @@
 
 // bg color
 .ck-component__bg-color--primary
-  background-color $color-primary !important
-  border-color $color-primary !important
+  background-color var(--primary) !important
+  border-color var(--primary) !important
   color white !important
 .ck-component__bg-color--primary-light
-  background-color rgba($color-primary, .15) !important
-  border-color rgba($color-primary, .15) !important
-  color $color-primary !important
+  // background-color rgba(var(--primary), .15) !important  FIXRGBA
+  // border-color rgba(var(--primary), .15) !important  FIXRGBA
+  color var(--primary) !important
   font-weight 600 !important
 .ck-component__bg-color--secondary
-  background-color $color-secondary !important
-  border-color $color-secondary !important
+  background-color var(--secondary) !important
+  border-color var(--secondary) !important
   color white !important
 .ck-component__bg-color--secondary-light
-  background-color rgba($color-secondary, .15) !important
-  border-color rgba($color-secondary, .15) !important
-  color $color-secondary !important
+  // background-color rgba(var(--secondary), .15) !important  FIXRGBA
+  // border-color rgba(var(--secondary), .15) !important  FIXRGBA
+  color var(--secondary) !important
   font-weight 600 !important
 .ck-component__bg-color--success
-  background-color $color-success !important
-  border-color $color-success !important
+  background-color var(--success) !important
+  border-color var(--success) !important
   color rgba(white, 0.9) !important
 .ck-component__bg-color--danger
-  background-color $color-danger !important
-  border-color $color-danger !important
+  background-color var(--danger) !important
+  border-color var(--danger) !important
   color rgba(white, 0.9) !important
 .ck-component__bg-color--warning
-  background-color $color-warning !important
-  border-color $color-warning !important
+  background-color var(--warning) !important
+  border-color var(--warning) !important
   color rgba(white, 0.9) !important
 .ck-component__bg-color--dark
-  background-color $color-dark !important
-  border-color $color-dark !important
+  background-color var(--dark) !important
+  border-color var(--dark) !important
   color rgba(white, 0.9) !important
 .ck-component__bg-color--light
-  background-color $color-light !important
-  border-color $color-light !important
+  background-color var(--light) !important
+  border-color var(--light) !important
 .ck-component__bg-color--unset
   background-color $color-unset !important
   border-color $color-unset !important
-  color white !important
+  color white !important 
 .ck-component__bg-color--lightgrey
   background-color $color-lightgrey !important
   border-color $color-lightgrey !important
 
 // border color
 .ck-component__border-color--primary
-  color $color-primary !important
-  border-color $color-primary !important
+  color var(--primary) !important
+  border-color var(--primary) !important
 .ck-component__border-color--primary-light
-  color rgba($color-primary, .15) !important
-  border-color rgba($color-primary, .15) !important
+  // color rgba(var(--primary), .15) !important  FIXRGBA
+  // border-color rgba(var(--primary), .15) !important  FIXRGBA
   font-weight 600 !important
 .ck-component__border-color--secondary
-  color $color-secondary !important
-  border-color $color-secondary !important
+  color var(--secondary) !important
+  border-color var(--secondary) !important
 .ck-component__border-color--secondary-light
-  color rgba($color-secondary, .15) !important
-  border-color rgba($color-secondary, .15) !important
+  // color rgba(var(--secondary), .15) !important  FIXRGBA
+  // border-color rgba(var(--secondary), .15) !important  FIXRGBA
   font-weight 600 !important
 .ck-component__border-color--success
-  color $color-success !important
-  border-color $color-success !important
+  color var(--success) !important
+  border-color var(--success) !important
 .ck-component__border-color--danger
-  color $color-danger !important
-  border-color $color-danger !important
+  color var(--danger) !important
+  border-color var(--danger) !important
 .ck-component__border-color--warning
-  color $color-warning !important
-  border-color $color-warning !important
+  color var(--warning) !important
+  border-color var(--warning) !important
 .ck-component__border-color--dark
-  color $color-dark !important
-  border-color $color-dark !important
+  color var(--dark) !important
+  border-color var(--dark) !important
 .ck-component__border-color--light
-  color $color-light !important
-  border-color $color-light !important
+  color var(--light) !important
+  border-color var(--light) !important
 .ck-component__border-color--unset
   color $color-unset !important
   border-color $color-unset !important

@@ -137,7 +137,7 @@ $itemSize = 40px
       height @width
       cursor pointer
     .ck-table__pagination-item
-      background-color $color-primary
+      background-color var(--primary)
       color white
       &.pagination-item__left
         margin-right ($globalPadding / 2)
@@ -146,7 +146,7 @@ $itemSize = 40px
     // arrow
     .ck-table__pagination--arrow-left,
     .ck-table__pagination--arrow-right
-      border 1px solid $color-primary
+      border 1px solid var(--primary)
     .ck-table__pagination--arrow-left
       margin-right $globalPadding
     .ck-table__pagination--arrow-right

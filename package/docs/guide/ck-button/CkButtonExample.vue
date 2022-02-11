@@ -17,6 +17,16 @@ ComponentShower(title="Align")
   ck-button.ck-component-item.w-full(align="right" icon="user" icon-right="times")
     | Right
 
+ComponentShower(title="Colors")
+  ck-button.ck-component-item(type="filled")
+    | primary
+  ck-button.ck-component-item(color="secondary" type="filled")
+    | secondary
+  ck-button.ck-component-item(color="success" type="filled")
+    | success
+  ck-button.ck-component-item(color="danger" type="filled")
+    | danger
+
 ComponentShower(title="Icons")
   ck-button.ck-component-item(icon="square")
   ck-button.ck-component-item(icon="helicopter")

@@ -73,7 +73,7 @@ function checkRefresh() {
     align-items center
     cursor pointer
     padding-x 10px
-    background-color rgba($globalBorderColor, .15)
+    // background-color rgba($globalBorderColor, .15) FIXRGBA
     border 1px solid $globalBorderColor
     border-radius:  $globalBorderRadius
 </style>

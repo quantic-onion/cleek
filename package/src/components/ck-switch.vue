@@ -103,17 +103,17 @@ $border-width = 2px // m
 // outlined
 .ck-switch.is-outlined
   .ck-switch__slider
-    border-color $color-primary
+    border-color var(--primary)
     background-color white
     &:before
-      background-color $color-primary
+      background-color var(--primary)
 
 /* Checked */
 .ck-switch__input:checked + .ck-switch__slider
-  border-color $color-primary
-  background-color $color-primary
+  border-color var(--primary)
+  background-color var(--primary)
 .ck-switch__input:focus + .ck-switch__slider
-  box-shadow 0 0 1px $color-primary
+  box-shadow 0 0 1px var(--primary)
 .ck-switch__input:checked + .ck-switch__slider:before
   background-color white
   transform translate($width - $height)

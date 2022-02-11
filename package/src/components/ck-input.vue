@@ -116,7 +116,7 @@ const computedClassInput = computed(() => {
     min-height 40px
     box-sizing border-box
     &:focus-visible
-      outline-color $color-primary
+      outline-color var(--primary)
     &.align--center
       text-align center
     &.align--right

@@ -121,23 +121,23 @@ button
     z-index 1
     opacity 0
     transition opacity 0.15s ease-in-out
-    background-color $color-primary
+    background-color var(--primary)
   &:hover::before
     opacity 0.1
   &:active::before
     opacity 0.2
   &.type-filled
-    background-color $color-primary
-    border 1px solid $color-primary
+    background-color var(--primary)
+    border 1px solid var(--primary)
     color white
   &.type-outlined
     background-color transparent
-    border 1px solid $color-primary
-    color $color-primary
+    border 1px solid var(--primary)
+    color var(--primary)
   &.type-flat
     background-color transparent
     border none
-    color $color-primary
+    color var(--primary)
   &.type-filled:disabled,
   &.type-outlined:disabled,
   &.type-flat:disabled

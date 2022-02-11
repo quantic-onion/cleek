@@ -78,7 +78,7 @@ export default {
 
 $borderWidth = 2px
 $borderRadius = 5px
-$borderColor = rgba($color-primary, .45)
+// $borderColor = rgba(var(--primary), .45) FIXRGBA
 .ck-switch-options__container
   overflow hidden
   border $borderWidth solid $borderColor
@@ -107,7 +107,7 @@ $borderColor = rgba($color-primary, .45)
     flex-grow 1
     transition .4s
     &:hover
-      background-color rgba($color-primary, .1)
+      // background-color rgba(var(--primary), .1) FIXRGBA
     // margin-bottom $borderWidth
     &:first-of-type
       border-top-left-radius $borderRadius
@@ -119,7 +119,7 @@ $borderColor = rgba($color-primary, .45)
     &:hover
       opacity 0.9
     &.selected
-      background-color $color-primary
+      background-color var(--primary)
       color white
 // group
 .group-top

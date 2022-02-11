@@ -177,7 +177,7 @@ const setFocus = () => {
     padding $globalPadding
     box-sizing border-box
     &:focus
-      border-color $color-primary
+      border-color var(--primary)
       outline 0
   .ck-select__chevron-icon
     position absolute
