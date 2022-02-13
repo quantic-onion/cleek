@@ -7,110 +7,123 @@
   img(
   :src="imageUrl"
   :style="computedImgStyle"
+  :alt="alt"
   @error="altNeeded = true"
   )
 </template>
 
-<script>
+<script setup lang="ts">
+import { computed, getCurrentInstance, onMounted, ref } from 'vue';
 import functions from '../utils/functions';
 import globalVariables from '../utils/globalVariables';
 import validators from '../utils/validators';
-export default {
-  props: {
-    // src
-    src: { type: String, default: '' },
-    isFullPath: { type: Boolean, default: false },
-    failImgSrc: { type: String, default: '' },
-    // size
-    size: { type: String, default: '', validator: validators.size },
-    sizeAbsolute: { type: String, default: '' },
-    width: { type: String, default: '' },
-    height: { type: String, default: '' },
-    // zoom
-    zoom: { type: Boolean, default: false }, // check
-    zoomTitle: { type: String, default: '' }, // check
-    // border
-    hasBorder: { type: Boolean, default: false },
-    radius: { type: String, default: '' },
-    borderColor: { type: String, default: '' }, // check
-  },
-  computed: {
-    imageUrl() {
-      if (this.isFullPath) return this.src;
-      // if (this.altNeeded) {
-      //   let failImgSrc = this.failImgSrc;
-      //   if (!failImgSrc && globalVariables.defaultFailImg) {
-      //     failImgSrc = globalVariables.defaultFailImg;
-      //   }
-      //   return this.getImg(failImgSrc);
-      // }
-      return this.getImg(this.src);
-    },
-    computedClass() {
-      const classList = [];
-      // size
-      let { size } = this;
-      if (size === 'default' && !this.sizeAbsolute && !this.width && !this.height) {
-        size = 'm';
-      }
-      if (size) classList.push(`ck-img__size--${size}`);
-      // border
-      if (this.hasBorder) {
-        classList.push('ck-img__has-border');
-        if (functions.isColorTemplateVariable(this.realBorderColor)) {
-          classList.push(`ck-component__border-color--${this.realBorderColor}`);
-        }
-      }
-      // zoom
-      if (this.zoom) classList.push('zoom-able');
-      return classList;
-    },
-    computedStyle() {
-      const styleList = [];
-      // sizeAbsolute
-      if (this.sizeAbsolute) {
-        styleList.push({ width: this.sizeAbsolute });
-        styleList.push({ height: this.sizeAbsolute });
-      }
-      // radius
-      if (this.radius) styleList.push({ 'border-radius': this.radius });
-      // border
-      if (this.hasBorder) {
-        if (!functions.isColorTemplateVariable(this.realBorderColor)) {
-          styleList.push({ 'border-color': this.realBorderColor });
-        }
-      }
-      return styleList;
-    },
-    computedImgStyle() {
-      const styleList = [];
-      if (this.radius) styleList.push({ 'border-radius': this.radius });
-      if (this.width) styleList.push({ width: this.width });
-      if (this.height) styleList.push({ height: this.height });
-      return styleList;
-    },
-    realBorderColor() {
-      if (this.borderColor) return this.borderColor;
-      return globalVariables.defaultImgBorderColor;
-    },
-  }, // computed
-  methods: {
-    // clickImg
 
-    clickImg() {
-      if (this.zoom) {
-        console.log('hola');
-        this.$store.dispatch('layout/setZoomImgPath', this.imageUrl);
-        if (this.zoomTitle) {
-          return this.$store.dispatch('layout/setZoomImgTitle', this.zoomTitle);
-        }
-      }
-    },
-    getImg(src) {
-      return `${globalVariables.imagesFolderPath}${src}`;
-    },
-  }, // methods
-}; // export default
+const altNeeded = ref(false);
+
+const props = defineProps({
+  // src
+  src: { type: String, default: '' },
+  isFullPath: { type: Boolean, default: false },
+  failImgSrc: { type: String, default: '' },
+  alt: { type: String, default: '' },
+  // size
+  size: { type: String, default: '', validator: validators.size },
+  sizeAbsolute: { type: String, default: '' },
+  width: { type: String, default: '' },
+  height: { type: String, default: '' },
+  // zoom
+  zoom: { type: Boolean, default: false }, // check
+  zoomTitle: { type: String, default: '' }, // check
+  // border
+  hasBorder: { type: Boolean, default: false },
+  radius: { type: String, default: '' },
+  borderColor: { type: String, default: '' }, // check
+});
+
+let context;
+let isMounted = ref(false);
+
+const imageUrl = computed(() => {
+  if (!isMounted.value) return '';
+  if (props.isFullPath) return props.src;
+  // if (altNeeded.value) {
+  //   let failImgSrc = props.failImgSrc;
+  //   if (!failImgSrc && globalVariables.defaultFailImg) {
+  //     failImgSrc = globalVariables.defaultFailImg;
+  //   }
+  //   return getImg(failImgSrc);
+  // }
+  return getImg(props.src);
+});
+const computedClass = computed(() => {
+  const classList = [];
+  let size = props.size;
+  // size
+  if (!size && !props.sizeAbsolute && !props.width && !props.height) {
+    size = 'm';
+  }
+  if (size) classList.push(`ck-img__size--${size}`);
+  // border
+  if (props.hasBorder) {
+    classList.push('ck-img__has-border');
+    if (functions.isColorTemplateVariable(realBorderColor.value)) {
+      classList.push(`ck-component__border-color--${realBorderColor.value}`);
+    }
+  }
+  // zoom
+  if (props.zoom) classList.push('zoom-able');
+  return classList;
+});
+const computedStyle = computed(() => {
+  const styleList = [];
+  // sizeAbsolute
+  if (props.sizeAbsolute) {
+    styleList.push({ width: props.sizeAbsolute });
+    styleList.push({ height: props.sizeAbsolute });
+  }
+  // radius
+  if (props.radius) styleList.push({ 'border-radius': props.radius });
+  // border
+  if (props.hasBorder) {
+    if (!functions.isColorTemplateVariable(realBorderColor.value)) {
+      styleList.push({ 'border-color': realBorderColor.value });
+    }
+  }
+  return styleList;
+});
+const computedImgStyle = computed(() => {
+  const styleList = [];
+  if (props.radius) styleList.push({ 'border-radius': props.radius });
+  if (props.width) styleList.push({ width: props.width });
+  if (props.height) styleList.push({ height: props.height });
+  return styleList;
+});
+const realBorderColor = computed(() => {
+  if (props.borderColor) return props.borderColor;
+  return globalVariables.defaultImgBorderColor;
+});
+
+function clickImg() {
+  if (props.zoom) {
+    // store.dispatch('layout/setZoomImgPath', imageUrl.value);
+    // if (props.zoomTitle) {
+    //   return store.dispatch('layout/setZoomImgTitle', props.zoomTitle);
+    // }
+  }
+}
+function getImg(src) {
+  let path = '';
+  const $cleekOptions = functions.getCleekOptions(getCurrentInstance);
+  if ($cleekOptions) {
+    if ($cleekOptions.imgPath) path = $cleekOptions.imgPath;
+  }
+  return `${path}${src}`;
+}
+
+onMounted(() => {
+  context = getCurrentInstance().ctx;
+  isMounted.value = true;
+});
 </script>
 
 <style lang="stylus" scoped>

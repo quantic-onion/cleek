@@ -348,6 +348,11 @@
     "@vue/compiler-dom" "3.2.29"
     "@vue/shared" "3.2.29"
 
+"@vue/devtools-api@^6.0.0-beta.11":
+  version "6.0.8"
+  resolved "https://registry.yarnpkg.com/@vue/devtools-api/-/devtools-api-6.0.8.tgz#78708d2d437093224f00b775f8808e2c35d024a3"
+  integrity sha512-bzei608bPVQE2yq9Ghrjn/dnpf27mWfrr0q0ZQiuZoO3LQqFG0T1xSGz+9vw1j9KAZM2Cu9vdQMkddDxqzZGNg==
+
 "@vue/reactivity-transform@3.2.27":
   version "3.2.27"
   resolved "https://registry.yarnpkg.com/@vue/reactivity-transform/-/reactivity-transform-3.2.27.tgz#610b6df174cdceba6de1376f3218736c3b0e753d"
@@ -1514,10 +1519,10 @@ punycode@^2.1.0:
   resolved "https://registry.yarnpkg.com/punycode/-/punycode-2.1.1.tgz#b58b010ac40c22c5657616c8d2c2c02c7bf479ec"
   integrity sha512-XRsRjdf+j5ml+y/6GKHPZbrF/8p2Yga0JPtdqTIY2Xe5ohJPD9saDJJLPvp9+NSBprVvevdXZybnj2cv8OEd0A==
 
-quantic-methods@^1.0.1:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/quantic-methods/-/quantic-methods-1.0.1.tgz#d6108bd17194f931478c1fb5c42d811d33726c9d"
-  integrity sha512-vUzoi0lbLwbvPcNdnfXWtoNogK5RyCoPqQt+ofWlnaUIxogtzRznpQKSjJg0nbVUhzdHP6+v7lk3etB2pTsS0A==
+quantic-methods@^1.2.3:
+  version "1.2.3"
+  resolved "https://registry.yarnpkg.com/quantic-methods/-/quantic-methods-1.2.3.tgz#e2b6e94a8d6190c312353c53379763d0285f3770"
+  integrity sha512-NHF7xed3WMEXg3E5SyEfTi9Yqrky0JQWoylvVDOIeeyzvCDtQ2Jc1WuEazTI70ghmnM5uaJ2R5uYEM9fiXBiHA==
 
 regexpp@^3.1.0:
   version "3.2.0"
@@ -1830,6 +1835,13 @@ vue@^3.2.29:
     "@vue/runtime-dom" "3.2.29"
     "@vue/server-renderer" "3.2.29"
     "@vue/shared" "3.2.29"
+
+vuex@^4.0.2:
+  version "4.0.2"
+  resolved "https://registry.yarnpkg.com/vuex/-/vuex-4.0.2.tgz#f896dbd5bf2a0e963f00c67e9b610de749ccacc9"
+  integrity sha512-M6r8uxELjZIK8kTKDGgZTYX/ahzblnzC4isU1tpmEuOIIKmV+TRdc+H4s8ds2NuZ7wpUTdGRzJRtoj+lI+pc0Q==
+  dependencies:
+    "@vue/devtools-api" "^6.0.0-beta.11"
 
 which@^2.0.1:
   version "2.0.2"

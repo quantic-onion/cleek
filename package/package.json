@@ -1,6 +1,6 @@
 {
   "name": "cleek",
-  "version": "2.0.0",
+  "version": "2.0.3",
   "description": "Complete UX Vue library",
   "repository": "",
   "author": "Quantic Onion",
@@ -47,11 +47,12 @@
     "@fortawesome/vue-fontawesome": "^3.0.0-5",
     "mitt": "^3.0.0",
     "pug": "^3.0.2",
-    "quantic-methods": "^1.0.1",
+    "quantic-methods": "^1.2.3",
     "stylus": "^0.56.0",
     "tabbable": "^5.2.0",
     "tippy.js": "^6.3.1",
     "vue": "^3.2.29",
-    "vue-perfect-scrollbar": "^0.2.1"
+    "vue-perfect-scrollbar": "^0.2.1",
+    "vuex": "^4.0.2"
   }
 }

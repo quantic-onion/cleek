@@ -1,4 +1,9 @@
 export default {
+  // getGroupClass
+  // isColorTemplateVariable
+  // isColumnDisplayed
+  // getCleekOptions
+
   getGroupClass({ group = '', groupVertical = '', groupBreak = '' } = {}) {
     const _screenSize = '';
     if (groupBreak && groupBreak === _screenSize) return [];
@@ -19,7 +24,11 @@ export default {
     if (color === 'light') return true;
     return false;
   },
-  isTableColumnsVisible(col) {
-    return !col.isHidden;
+  isColumnDisplayed(column) {
+    if (column.isDisplayed === false) return false;
+    return true;
+  },
+  getCleekOptions(getCurrentInstance) {
+    return getCurrentInstance().appContext.app.config.globalProperties.$cleekOptions;
   },
 }; // export default

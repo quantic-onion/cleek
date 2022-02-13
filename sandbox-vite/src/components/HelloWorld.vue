@@ -1,13 +1,24 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { getCurrentInstance, onMounted, ref } from 'vue'
 
 defineProps<{ msg: string }>()
+
+let context;
+
+onMounted(() => {
+  context = getCurrentInstance().ctx;
+  console.log('context.$test', context.$test);
+});
 
 const count = ref(0)
 </script>
 
 <template>
   <h1>{{ msg }}</h1>
+
+  <h2>{{ $test }}</h2>
+
+  <ck-img src="lit-killah-gaucho.jpg"/>
 
   <p>
     Recommended IDE setup:

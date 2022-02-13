@@ -201,6 +201,11 @@
     "@vue/compiler-dom" "3.2.30"
     "@vue/shared" "3.2.30"
 
+"@vue/devtools-api@^6.0.0-beta.11":
+  version "6.0.8"
+  resolved "https://registry.yarnpkg.com/@vue/devtools-api/-/devtools-api-6.0.8.tgz#78708d2d437093224f00b775f8808e2c35d024a3"
+  integrity sha512-bzei608bPVQE2yq9Ghrjn/dnpf27mWfrr0q0ZQiuZoO3LQqFG0T1xSGz+9vw1j9KAZM2Cu9vdQMkddDxqzZGNg==
+
 "@vue/reactivity-transform@3.2.30":
   version "3.2.30"
   resolved "https://registry.yarnpkg.com/@vue/reactivity-transform/-/reactivity-transform-3.2.30.tgz#2006e9f4645777a481b78ae77fc486159afa8480"
@@ -304,10 +309,10 @@ character-parser@^2.2.0:
   dependencies:
     is-regex "^1.0.3"
 
-cleek@^2.0.0:
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/cleek/-/cleek-2.0.0.tgz#bdf164a648975c1475ac6fad327177a7d7ec8ee6"
-  integrity sha512-GLBvavI7BoAP9n4Kyz64PcOTNTK7V+vthOKxXNCkMsbMnjITxAD1dAT68PugpwjIbg/wKvUh6dZfpTYLErqTTQ==
+cleek@^2.0.3:
+  version "2.0.3"
+  resolved "https://registry.yarnpkg.com/cleek/-/cleek-2.0.3.tgz#bd7a22ac8ec5d15e1182183552ba40830b0f4d9c"
+  integrity sha512-oMv8ljIy7zqo0yqeUM0VEFLlf294FPbMuD8nmfeFcktDNTqYlvn0cXk87TxUZoYO2SL0qLZ7RsWS+IxULKOceg==
   dependencies:
     "@fortawesome/fontawesome-svg-core" "^1.2.36"
     "@fortawesome/free-brands-svg-icons" "^5.15.4"
@@ -322,6 +327,7 @@ cleek@^2.0.0:
     tippy.js "^6.3.1"
     vue "^3.2.29"
     vue-perfect-scrollbar "^0.2.1"
+    vuex "^4.0.2"
 
 concat-map@0.0.1:
   version "0.0.1"
@@ -1140,6 +1146,13 @@ vue@^3.2.25, vue@^3.2.29:
     "@vue/runtime-dom" "3.2.30"
     "@vue/server-renderer" "3.2.30"
     "@vue/shared" "3.2.30"
+
+vuex@^4.0.2:
+  version "4.0.2"
+  resolved "https://registry.yarnpkg.com/vuex/-/vuex-4.0.2.tgz#f896dbd5bf2a0e963f00c67e9b610de749ccacc9"
+  integrity sha512-M6r8uxELjZIK8kTKDGgZTYX/ahzblnzC4isU1tpmEuOIIKmV+TRdc+H4s8ds2NuZ7wpUTdGRzJRtoj+lI+pc0Q==
+  dependencies:
+    "@vue/devtools-api" "^6.0.0-beta.11"
 
 with@^7.0.0:
   version "7.0.2"
