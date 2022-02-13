@@ -25,7 +25,8 @@ import { ref, computed } from 'vue';
 import functions from '../utils/functions.ts';
 import ckLabel from './ck-label.vue';
 import ckIcon from './ck-icon.vue';
-import { qmStr } from '../../node_modules/quantic-methods/dist/quantic-methods.es.ts';
+import qm from '../../node_modules/quantic-methods/dist/quantic-methods.es.ts';
+const { qmStr } = qm;
 // name: 'CkSelect',
 // methods called by outside: setFocus
 const props = defineProps({
