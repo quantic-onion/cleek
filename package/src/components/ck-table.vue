@@ -1,4 +1,11 @@
 <template lang="pug">
+//- columns manager
+TableColumnsManager(
+v-if="hasColumnManager && columnsAreObj"
+v-model="IsPopupActive.columnsManager"
+:columnsArray="columnsArray"
+:columns="columns"
+)
 .ck-table
   .ck-table__header(v-if="$slots.header || !hideHeaderActions")
     //- header items
@@ -6,21 +13,23 @@
     v-if="!hideHeaderActions"
     v-model:search="searchLocal"
     :currentPage="currentPage"
+    :hasColumnManager="hasColumnManager"
     :itemsPerPage="itemsPerPage"
     :listLength="listLength"
     :hideRefreshBtn="hideRefreshBtn"
     :hideItemsPerPage="hideItemsPerPage"
     @refreshList="refreshList($event)"
+    @openColumnsManager="openColumnsManager()"
     )
     //- header slot
     .ck-table__header--slot(v-if="$slots.header")
       slot(name="header")
   table.ck-table__table
     //- header
-    thead(v-if="columns.length")
+    thead(v-if="filteredColumnsList.length")
       ck-tr
         ck-table-title(
-        v-for="col in columns"
+        v-for="col in filteredColumnsList"
         :key="col.title"
         :col="col"
         )
@@ -42,15 +51,20 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
+import functions from '../utils/functions';
 import ckTr from './ck-tr.vue';
 import ckTableTitle from './inner-components/ck-table__title.vue';
 import TableHeaderItems from './inner-components/ck-table__header-items.vue';
 import TablePagination from './inner-components/ck-table__pagination.vue';
+import TableColumnsManager from './inner-components/ck-table__columns-manager.vue';
 import validators from '../utils/validators';
+import qm from '../../node_modules/quantic-methods/dist/quantic-methods.es.ts';
+const { qmObj } = qm;
 
 const props = defineProps({
-  columns: { type: Array, required: true, default: () => ([]) },
+  columns: { type: [Array, Object], required: true, default: () => ([]) },
+  hasColumnManager: { type: Boolean, default: false },
   // pagination - header items
   currentPage: { type: Number, default: 0 },
   itemsPerPage: { type: Number, default: 40 },
@@ -62,7 +76,31 @@ const props = defineProps({
   hideRefreshBtn: { type: Boolean, default: false },
   hideItemsPerPage: { type: Boolean, default: false },
 });
+
 const emits = defineEmits(['refreshList', 'update:search',  'update:currentPage']);
+
+const IsPopupActive = ref({
+  columnsManager: false,
+});
+const columnsAreObj = computed(() => !qmObj.isArray(props.columns));
+const columnsArray = computed(() => {
+  // array
+  if (!columnsAreObj.value) return props.columns;
+  // object
+  const arr = Object.values(props.columns);
+  const keys = Object.keys(props.columns);
+  arr.forEach((col, index) => {
+    const key = keys[index];
+    col.name = key;
+  });
+  return arr;
+});
+
+// filter
+const filteredColumnsList = computed(() => {
+  return columnsArray.value.filter(functions.isColumnDisplayed);
+});
+
 const searchLocal = computed({
   get() { return props.search; },
   set(val) { emits('update:search', val); }
@@ -73,8 +111,16 @@ const currentPageLocal = computed({
     emits('update:currentPage', val);
   },
 });
+
 function refreshList(pageChange: boolean = false) {
   emits('refreshList', pageChange);
+}
+function openColumnsManager() {
+  if (columnsAreObj.value) {
+    IsPopupActive.value.columnsManager = true
+  } else {
+    console.log('ERROR ck-table', 'The columns list should be an object');
+  }
 }
 // function testCurrentPage(cosito) {
 //   this.$emit('update:currentPage', cosito);

@@ -4,6 +4,8 @@ Que el input number, cuando el número es 0, lo muestre como "" pero envíe un 0
 
 Que el input del pagination, aparezca solo cuando hay alguna de las arrows
 
+button href (to)
+
 TERMINAR
   img
   button

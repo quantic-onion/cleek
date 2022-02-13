@@ -5,11 +5,12 @@
   v-if="!hideRefreshBtn"
   type="flat"
   icon="redo-alt"
+  title="Recargar lista"
   @click="$emit('refreshList', false)"
   )
   //- pages
   .items-per-page(
-  v-if="!hideItemsPerPage && listLength"
+  v-if="itemsPerPageIsVisible"
   :class="{ 'ck-component__group--left': (!hideSearch) }"
   )
     | {{ itemsPerPageStart }} - {{ itemsPerPageEnd }} de {{ listLength }}
@@ -19,8 +20,17 @@
   v-model="searchLocal"
   icon="search"
   placeholder="Buscar..."
-  :group="hideItemsPerPage ? '' : 'right'"
+  :group="searchGroupValue"
   @input="checkRefresh()"
+  )
+  //- columns manager
+  ck-button(
+  icon="columns"
+  type="filled"
+  title="Administrador de columnas"
+  v-if="hasColumnManager"
+  :group="itemsPerPageIsVisible || !hideSearch ? 'left' : ''"
+  @click="$emit('openColumnsManager')"
   )
 </template>
 
@@ -28,15 +38,17 @@
 import { computed } from 'vue'
 import ckButton from '../ck-button.vue';
 import ckInput from '../ck-input.vue';
+
 const props = defineProps({
   search: { type: String, default: undefined, },
+  hasColumnManager: { type: Boolean, default: false },
   hideRefreshBtn: { type: Boolean, required: true },
   hideItemsPerPage: { type: Boolean, required: true },
   currentPage: { type: Number, required: true },
   itemsPerPage: { type: Number, required: true },
   listLength: { type: Number, required: true },
 });
-const emits = defineEmits(['update:search', 'refreshList']);
+const emits = defineEmits(['update:search', 'refreshList', 'openColumnsManager']);
 
 
 const searchLocal = computed({
@@ -54,6 +66,18 @@ const itemsPerPageEnd = computed(() => {
   if (value > props.listLength) return props.listLength;
   return value;
 });
+const itemsPerPageIsVisible = computed(() => {
+  return !props.hideItemsPerPage && props.listLength;
+});
+const searchGroupValue = computed(() => {
+  if (itemsPerPageIsVisible.value && props.hasColumnManager) {
+    return 'center';
+  }
+  if (itemsPerPageIsVisible.value) return 'right';
+  if (props.hasColumnManager) return 'left';
+  return '';
+});
+
 function checkRefresh() {
   const search = searchLocal.value;
   setTimeout(() => {
