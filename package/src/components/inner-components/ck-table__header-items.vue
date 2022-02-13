@@ -28,7 +28,7 @@
   icon="columns"
   type="filled"
   title="Administrador de columnas"
-  v-if="hasColumnManager"
+  v-if="hasColumnsManager"
   :group="itemsPerPageIsVisible || !hideSearch ? 'left' : ''"
   @click="$emit('openColumnsManager')"
   )
@@ -41,7 +41,7 @@ import ckInput from '../ck-input.vue';
 
 const props = defineProps({
   search: { type: String, default: undefined, },
-  hasColumnManager: { type: Boolean, default: false },
+  hasColumnsManager: { type: Boolean, default: false },
   hideRefreshBtn: { type: Boolean, required: true },
   hideItemsPerPage: { type: Boolean, required: true },
   currentPage: { type: Number, required: true },
@@ -70,11 +70,11 @@ const itemsPerPageIsVisible = computed(() => {
   return !props.hideItemsPerPage && props.listLength;
 });
 const searchGroupValue = computed(() => {
-  if (itemsPerPageIsVisible.value && props.hasColumnManager) {
+  if (itemsPerPageIsVisible.value && props.hasColumnsManager) {
     return 'center';
   }
   if (itemsPerPageIsVisible.value) return 'right';
-  if (props.hasColumnManager) return 'left';
+  if (props.hasColumnsManager) return 'left';
   return '';
 });
 

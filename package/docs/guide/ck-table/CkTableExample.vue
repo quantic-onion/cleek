@@ -31,7 +31,7 @@ ck-table(
 //- table 3
 h3 Alineación
 ck-table(
-hasColumnManager
+hasColumnsManager
 :columns="table3.columns"
 )
   template(#header)

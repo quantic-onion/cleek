@@ -1,7 +1,7 @@
 <template lang="pug">
 //- columns manager
 TableColumnsManager(
-v-if="hasColumnManager && columnsAreObj"
+v-if="hasColumnsManager && columnsAreObj"
 v-model="IsPopupActive.columnsManager"
 :columnsArray="columnsArray"
 :columns="columns"
@@ -13,7 +13,7 @@ v-model="IsPopupActive.columnsManager"
     v-if="!hideHeaderActions"
     v-model:search="searchLocal"
     :currentPage="currentPage"
-    :hasColumnManager="hasColumnManager"
+    :hasColumnsManager="hasColumnsManager"
     :itemsPerPage="itemsPerPage"
     :listLength="listLength"
     :hideRefreshBtn="hideRefreshBtn"
@@ -64,7 +64,7 @@ const { qmObj } = qm;
 
 const props = defineProps({
   columns: { type: [Array, Object], required: true, default: () => ([]) },
-  hasColumnManager: { type: Boolean, default: false },
+  hasColumnsManager: { type: Boolean, default: false },
   // pagination - header items
   currentPage: { type: Number, default: 0 },
   itemsPerPage: { type: Number, default: 40 },
