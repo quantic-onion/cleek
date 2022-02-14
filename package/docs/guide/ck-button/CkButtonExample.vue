@@ -1,49 +1,49 @@
 <template lang="pug">
 ComponentShower(title="Types")
-  ck-button.ck-component-item
+  ck-button
     | Outlined (default)
-  ck-button.ck-component-item(type="filled")
+  ck-button(type="filled")
     | Filled
-  ck-button.ck-component-item(type="flat")
+  ck-button(type="flat")
     | Flat
-  ck-button.ck-component-item(disabled)
+  ck-button(disabled)
     | disabled
 
 ComponentShower(title="Align")
-  ck-button.ck-component-item.w-full
+  ck-button.w-full
     | Default
-  ck-button.ck-component-item.w-full(align="center" icon="helicopter")
+  ck-button.w-full(align="center" icon="helicopter")
     | Center
-  ck-button.ck-component-item.w-full(align="right" icon="user" icon-right="times")
+  ck-button.w-full(align="right" icon="user" icon-right="times")
     | Right
 
 ComponentShower(title="Colors")
-  ck-button.ck-component-item(type="filled")
+  ck-button(type="filled")
     | primary
-  ck-button.ck-component-item(color="secondary" type="filled")
+  ck-button(color="secondary" type="filled")
     | secondary
-  ck-button.ck-component-item(color="success" type="filled")
+  ck-button(color="success" type="filled")
     | success
-  ck-button.ck-component-item(color="danger" type="filled")
+  ck-button(color="danger" type="filled")
     | danger
 
 ComponentShower(title="Icons")
-  ck-button.ck-component-item(icon="square")
-  ck-button.ck-component-item(icon="helicopter")
+  ck-button(icon="square")
+  ck-button(icon="helicopter")
     | Icon
-  ck-button.ck-component-item(icon="user" icon-right="times")
+  ck-button(icon="user" icon-right="times")
     | Icons
 
-ComponentShower(title="Group")
-  ck-button.ck-component-item-group-left(group="left")
+ComponentShower(title="Group" noGap)
+  ck-button(group="left")
     | Left
-  ck-button.ck-component-item-group-center(group="center")
+  ck-button(group="center")
     | Center
-  ck-button.ck-component-item-group-right(group="right")
+  ck-button(group="right")
     | Right
-  ck-button.ck-component-item-group-left(group="left" icon="arrow-left")
-  ck-button.ck-component-item-group-center(group="center" icon="arrow-left" icon-right="arrow-right")
-  ck-button.ck-component-item-group-right(group="right" icon-right="arrow-right")
+  ck-button.ml-2(group="left" icon="arrow-left")
+  ck-button(group="center" icon="arrow-left" icon-right="arrow-right")
+  ck-button(group="right" icon-right="arrow-right")
 </template>
 
 <script setup lang="ts">

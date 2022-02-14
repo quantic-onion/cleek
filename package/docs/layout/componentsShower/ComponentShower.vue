@@ -2,7 +2,9 @@
 .component-shower
   h3 {{ title }}
   h6(v-if="subtitle") {{ subtitle }}
-  .component-shower__body
+  .component-shower__body(
+  :class="{ 'no-gap': noGap }"
+  )
     slot
 </template>
 
@@ -10,6 +12,7 @@
 const props = defineProps({
   title: { type: String, default: '' },
   subtitle: { type: String, default: '' },
+  noGap: { type: Boolean, default: false },
 });
 </script>
 
@@ -29,4 +32,10 @@ const props = defineProps({
     margin-x 1rem
     background-color white
     border-radius .5rem
+    display flex
+    flex-wrap wrap
+    gap .5rem
+    align-items flex-end
+    &.no-gap
+      gap 0
 </style>
