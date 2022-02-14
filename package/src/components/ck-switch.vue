@@ -13,45 +13,61 @@ v-bind="computedAttributes"
   :disabled="disabled"
   @click="onTrigger()"
   )
-  .ck-switch__slider
+  .ck-switch__slider-container
+    //- slider
+    .ck-switch__slider
+    //- icon-left
+    ck-icon.ck-switch__icon-left(
+    v-if="icon && value"
+    :icon="icon"
+    :icon-pack="iconPack"
+    )
+    //- icon-right
+    ck-icon.ck-switch__icon-right(
+    v-if="icon && !value"
+    :icon="icon"
+    :icon-pack="iconPack"
+    )
   span.ck-switch__content(v-if="$slots.default")
     slot
 </template>
 
-<script>
-export default {
-  name: 'Switch',
-  props: {
-    modelValue: { type: Boolean, default: false },    
-    disabled: { type: Boolean, default: false },
-    outlined: { type: Boolean, default: false },
-    squared: { type: Boolean, default: false },
-  },
-  emits: ['update:modelValue'],
-  computed: {
-    value: {
-      get() { return this.modelValue; },
-      set(val) { this.$emit('update:modelValue', val); },
-    },
-    computedClass() {
-      const list = [];
-      if (this.squared) list.push('is-squared');
-      if (this.outlined) list.push('is-outlined');
-      return list;
-    },
-    computedAttributes() {
-      return {
-        'aria-disabled': this.disabled,
-        tabindex: this.disabled ? undefined : '0',
-      }
-    },
-  }, // computed
-  methods: {
-    onTrigger() {
-      this.value = !this.value;
-    },
-  }, // methods
-}; // export default
+<script setup lang="ts">
+import { computed } from 'vue';
+import ckIcon from './ck-icon.vue';
+
+const props = defineProps({
+  modelValue: { type: Boolean, default: false },    
+  disabled: { type: Boolean, default: false },
+  outlined: { type: Boolean, default: false },
+  squared: { type: Boolean, default: false },
+  // icon
+  icon: { type: String, default: undefined },
+  iconPack: { type: String, default: undefined },
+});
+
+const emits = defineEmits(['update:modelValue']);
+
+const value = computed({
+  get() { return props.modelValue; },
+  set(val) { emits('update:modelValue', val); },
+});
+const computedClass = computed(() => {
+  const list = [];
+  if (props.squared) list.push('is-squared');
+  if (props.outlined) list.push('is-outlined');
+  return list;
+});
+const computedAttributes = computed(() => {
+  return {
+    'aria-disabled': props.disabled,
+    tabindex: props.disabled ? undefined : '0',
+  }
+});
+
+function onTrigger() {
+  value.value = !value.value;
+}
 </script>
 <style lang="stylus" scoped>
 @import '../styles/.variables.styl'
@@ -64,7 +80,7 @@ $width = 70px
 $transitionTime = 0.4s
 $border-width = 2px // m
 // $border-width = 4px
-
+$ball-size = $height - (4 * $border-width)
 .ck-switch
   cursor pointer
   position relative
@@ -74,31 +90,43 @@ $border-width = 2px // m
   width fit-content
   input
     display none
-  .ck-switch__slider
+  .ck-switch__slider-container
     position relative
-    display block
-    box-sizing border-box
-    width $width
-    height $height
-    border $border-width solid $color-lightgrey
-    border-radius $height
-    background-color white
-    transition $transitionTime
-    background-color $color-lightgrey
-    &:before
-      content ''
-      border-radius 50%
-      position absolute
-      position absolute
-      height $height - (4 * $border-width)
-      width $height - (4 * $border-width)
-      left $border-width
-      top $border-width
+    .ck-switch__slider
+      position relative
+      display block
+      box-sizing border-box
+      width $width
+      height $height
+      border $border-width solid $color-lightgrey
+      border-radius $height
       background-color white
       transition $transitionTime
+      background-color $color-lightgrey
+      &:before
+        content ''
+        border-radius 50%
+        position absolute
+        position absolute
+        height $ball-size
+        width $ball-size
+        left $border-width
+        top $border-width
+        background-color white
+        transition $transitionTime
   .ck-switch__content
     user-select none
     margin-left 8px
+  .ck-switch__icon-left, .ck-switch__icon-right
+    position absolute
+    z-index 1
+    top $border-width * 6
+  .ck-switch__icon-left
+    color white
+    left $border-width * 6
+  .ck-switch__icon-right
+    color white
+    right $border-width * 6
 
 // outlined
 .ck-switch.is-outlined
@@ -107,14 +135,16 @@ $border-width = 2px // m
     background-color white
     &:before
       background-color var(--primary)
+  .ck-switch__icon-right
+    color var(--primary)
 
 /* Checked */
-.ck-switch__input:checked + .ck-switch__slider
+.ck-switch__input:checked + .ck-switch__slider-container > .ck-switch__slider
   border-color var(--primary)
   background-color var(--primary)
-.ck-switch__input:focus + .ck-switch__slider
+.ck-switch__input:focus + .ck-switch__slider-container > .ck-switch__slider
   box-shadow 0 0 1px var(--primary)
-.ck-switch__input:checked + .ck-switch__slider:before
+.ck-switch__input:checked + .ck-switch__slider-container > .ck-switch__slider:before
   background-color white
   transform translate($width - $height)
 
@@ -131,7 +161,7 @@ $border-width = 2px // m
     background-color $color-disabled-secondary
     &:before
       background-color $color-disabled
-  .ck-switch__input:checked + .ck-switch__slider
+  .ck-switch__input:checked + .ck-switch__slider-container > .ck-switch__slider
     border $border-width solid $color-disabled
     background-color $color-disabled
     &:before
