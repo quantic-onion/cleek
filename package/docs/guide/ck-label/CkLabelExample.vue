@@ -7,15 +7,8 @@ ck-label.mb-2(align="right")
   | Jerardo Sofovich
 </template>
 
-<script>
+<script setup lang="ts">
 import { ckLabel } from '../../../src/components/index';
-
-export default {
-  name: 'CkLabelExample',
-  components: {
-    ckLabel,
-  },
-}; // export default
 </script>
 
 <style lang="stylus" scoped>

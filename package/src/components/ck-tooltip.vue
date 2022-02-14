@@ -3,21 +3,21 @@
   slot
 </template>
 
-<script>
+<script setup lang="ts">
+import { getCurrentInstance, onMounted } from 'vue';
 import tippy from 'tippy.js';
 import 'tippy.js/dist/tippy.css';
 
-export default {
-  name: 'CkTooltip',
-  props: {
-    content: { type: String, required: true },
-  },
-  mounted() {
-    tippy(this.$el, {
-      content: this.content,
-    });
-  },
-}; // export default
+const props = defineProps({
+  content: { type: String, required: true },
+});
+
+onMounted(() => {
+  const context = getCurrentInstance().ctx;
+  tippy(context.$el, {
+    content: context.content,
+  });
+});
 </script>
 
 <style lang="stylus" scoped>

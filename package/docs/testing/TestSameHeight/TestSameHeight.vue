@@ -53,15 +53,8 @@
       )
 </template>
 
-<script>
+<script setup lang="ts">
 import * as cleek from '../../../src/components/index';
-
-export default {
-  name: 'TestSameHeight',
-  components: {
-    ...cleek,
-  },
-}; // export default
 </script>
 
 <style lang="stylus" scoped>

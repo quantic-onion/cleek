@@ -18,15 +18,8 @@ div
   ck-icon.mr-2.mb-2(icon="user" size="3x" color="unset")
 </template>
 
-<script>
+<script setup lang="ts">
 import { ckIcon } from '../../../src/components/index';
-
-export default {
-  name: 'CkIconExample',
-  components: {
-    ckIcon,
-  },
-}; // export default
 </script>
 
 <style lang="stylus" scoped>

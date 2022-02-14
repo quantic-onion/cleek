@@ -7,28 +7,27 @@ th.ck-th
     slot
 </template>
 
-<script>
+<script setup lang="ts">
+import { computed } from 'vue';
 import validators from '../utils/validators';
-export default {
-  props: {
-    align: { type: String, default: 'center', validator: validators.align },
-    minWidth: { type: String, default: undefined },
-  },
-  computed: {
-    computedSpanClass() {
-      return {
-        'align-center': this.align !== 'left' && this.align !== 'right',
-        'align-left': this.align === 'left',
-        'align-right': this.align === 'right',
-      };
-    },
-    computedStyle() {
-      const list = [];
-      if (this.minWidth) list.push({ 'min-width': this.minWidth });
-      return list;
-    }
-  }, // computed
-}; // export default
+
+const props = defineProps({
+  align: { type: String, default: 'center', validator: validators.align },
+  minWidth: { type: String, default: undefined },
+});
+
+const computedSpanClass = computed(() => {
+  return {
+    'align-center': props.align !== 'left' && props.align !== 'right',
+    'align-left': props.align === 'left',
+    'align-right': props.align === 'right',
+  };
+});
+const computedStyle = computed (() => {
+  const list = [];
+  if (props.minWidth) list.push({ 'min-width': props.minWidth });
+  return list;
+});
 </script>
 
 <style lang="stylus" scoped>

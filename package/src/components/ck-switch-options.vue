@@ -14,63 +14,58 @@
       | {{ Option[prop] }}
 </template>
 
-<script>
+<script setup lang="ts">
+import { computed } from 'vue';
 import functions from '../utils/functions.ts';
 import ckLabel from './ck-label.vue';
 
-export default {
-  components: {
-    ckLabel,
+const props = defineProps({
+  modelValue: { type: [Boolean, Number, Object], default: 0 },
+  options: { type: Array, required: true },
+  // reduce functions
+  prop: { type: String, default: 'name' },
+  notReduce: { type: Boolean, default: false },
+  reduceFunction: { type: Function, default: Option => Option.id },
+  // label
+  label: { type: String, default: '' },
+  labelAlign: { type: String, default: '' },
+  // group
+  group: { type: String, default: '' },
+  groupBreak: { type: String, default: 's' },
+  groupVertical: { type: String, default: '' },
+  // style
+  sameWidthOptions: { type: Boolean, default: false },
+});
+
+const emits = defineEmits(['update:modelValue', 'change']);
+
+const selectedOption = computed({
+  get() { return props.modelValue; },
+  set(val) {
+    emits('update:modelValue', val);
+    emits('change', val);
   },
-  props: {
-    modelValue: { type: [Boolean, Number, Object], default: 0 },
-    options: { type: Array, required: true },
-    // reduce functions
-    prop: { type: String, default: 'name' },
-    notReduce: { type: Boolean, default: false },
-    reduceFunction: { type: Function, default: Option => Option.id },
-    // label
-    label: { type: String, default: '' },
-    labelAlign: { type: String, default: '' },
-    // group
-    group: { type: String, default: '' },
-    groupBreak: { type: String, default: 's' },
-    groupVertical: { type: String, default: '' },
-    // style
-    sameWidthOptions: { type: Boolean, default: false },
-  }, // props
-  emits: ['update:modelValue', 'change'],
-  computed: {
-    selectedOption: {
-      get() { return this.modelValue; },
-      set(val) {
-        this.$emit('update:modelValue', val);
-        this.$emit('change', val);
-      },
-    },
-    computedClass() {
-      const classList = [];
-      // group
-      classList.push(functions.getGroupClass(this));
-      return classList;
-      // return {
-      //   'group-top': this.group === 'top',
-      //   'group-bottom': this.group === 'bottom',
-      // };
-    },
-    computedItemStyle() {
-      const list = [];
-      if (this.sameWidthOptions) list.push({ width: `${100 / this.options.length}%` });
-      return list;
-    },
-  }, // computed
-  methods: {
-    getOptionValue(Option) {
-      if (this.notReduce) return Option;
-      return this.reduceFunction(Option);
-    },
-  }, // methods
-}; // export default
+});
+const computedClass = computed(() => {
+  const classList = [];
+  // group
+  classList.push(functions.getGroupClass(props));
+  return classList;
+  // return {
+  //   'group-top': props.group === 'top',
+  //   'group-bottom': props.group === 'bottom',
+  // };
+});
+const computedItemStyle = computed(() => {
+  const list = [];
+  if (props.sameWidthOptions) list.push({ width: `${100 / props.options.length}%` });
+  return list;
+});
+
+function getOptionValue(Option) {
+  if (props.notReduce) return Option;
+  return props.reduceFunction(Option);
+}
 </script>
 
 <style lang="stylus" scoped>

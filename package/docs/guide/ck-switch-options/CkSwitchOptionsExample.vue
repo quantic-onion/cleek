@@ -20,27 +20,18 @@ div
     | Mi club es: {{ SelectedTeam }}
 </template>
 
-<script>
+<script setup lang="ts">
+import { ref } from 'vue';
 import { ckSwitchOptions } from '../../../src/components/index';
 
-export default {
-  name: 'CkIconExample',
-  components: {
-    ckSwitchOptions,
-  },
-  data() {
-    return {
-      iLikeMen: false,
-      SelectedTeam: {},
-      teamOptions: [
-        { id: 1, teamName: 'Bokita' },
-        { id: 2, teamName: 'Ribergüenza' },
-        { id: 3, teamName: 'Coloncito papá' },
-        { id: 4, teamName: 'Bunión' },
-      ],
-    }; // return data
-  }, // data
-}; // export default
+const iLikeMen = ref(false);
+const SelectedTeam = ref({});
+const teamOptions = ref([
+  { id: 1, teamName: 'Bokita' },
+  { id: 2, teamName: 'Ribergüenza' },
+  { id: 3, teamName: 'Coloncito papá' },
+  { id: 4, teamName: 'Bunión' },
+]);
 </script>
 
 <style lang="stylus" scoped>

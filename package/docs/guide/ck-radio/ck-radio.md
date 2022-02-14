@@ -2,7 +2,7 @@
 
 Radio
 
-<RadioExample/>
+<CkRadioExample/>
 
 ```js
 const options = [
@@ -35,5 +35,5 @@ const options = [
 
 
 <script setup>
-import RadioExample from './RadioExample.vue'
+import CkRadioExample from './CkRadioExample.vue'
 </script>

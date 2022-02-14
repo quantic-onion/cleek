@@ -44,23 +44,14 @@
   )
 </template>
 
-<script>
+<script setup lang="ts">
+import { ref } from 'vue';
 import { ckTextarea } from '../../../src/components/index'
 
-export default {
-  name: 'SwitchExample',
-  components: {
-    ckTextarea,
-  },
-  data() {
-    return {
-      labelText: '',
-      placeholderLabelText: '',
-      noLabelText: '',
-      requiredText: '',
-    }; // return data
-  }, // data
-}; // export default
+const labelText = ref('');
+const placeholderLabelText = ref('');
+const noLabelText = ref('');
+const requiredText = ref('');
 </script>
 
 <style lang="stylus" scoped>

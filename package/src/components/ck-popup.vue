@@ -28,54 +28,44 @@
 </template>
 
 <script setup lang="ts">
+import { computed } from 'vue';
 import VuePerfectScrollbar from 'vue-perfect-scrollbar';
 import ckButton from './ck-button.vue';
 import ckIcon from './ck-icon.vue';
-</script>
 
-<script lang="ts">
-export default {
-  props: {
-    modelValue: { type: Boolean },
-    title: { type: String, default: undefined },
-    confirmButtons: { type: Boolean, default: false },
-    notCloseBtn: { type: Boolean, default: false },
-    notCloseByBg: { type: Boolean, default: false },
-    preventCloseOnCancel: { type: Boolean, default: false },
-  },
-  emits: ['update:modelValue', 'cancel', 'accept'],
-  // data() {
-  //   return {
-  //     perfectScrollbarSettings: { // perfectscrollbar settings
-  //       maxScrollbarLength: 60,
-  //       wheelSpeed: 0.60,
-  //     },
-  //   }; // return data
-  // }, // data
-  computed: {
-    value: {
-      get() { return this.modelValue; },
-      set(val) { this.$emit('update:modelValue', val); },
-    },
-  }, // computed
-  methods: {
-    // onCancel
-    // onAccept
+const props = defineProps({
+  modelValue: { type: Boolean },
+  title: { type: String, default: undefined },
+  confirmButtons: { type: Boolean, default: false },
+  notCloseBtn: { type: Boolean, default: false },
+  notCloseByBg: { type: Boolean, default: false },
+  preventCloseOnCancel: { type: Boolean, default: false },
+});
 
-    onCancel() {
-      this.$emit('cancel');
-      if (!this.preventCloseOnCancel) this.value = false;
-    },
-    onAccept() {
-      this.$emit('accept');
-    },
-    onBgClick() {
-      // hacerle un movimiento de rebote como en vuesax
-      if (this.notCloseByBg) return;
-      this.value = false;
-    },
-  }, // methods
-}; // export default
+const emits = defineEmits(['update:modelValue', 'cancel', 'accept']);
+
+// const perfectScrollbarSettings = { // perfectscrollbar settings
+//   maxScrollbarLength: 60,
+//   wheelSpeed: 0.60,
+// };
+
+const value = computed({
+  get() { return props.modelValue; },
+  set(val) { emits('update:modelValue', val); },
+});
+
+function onCancel() {
+  emits('cancel');
+  if (!props.preventCloseOnCancel) value.value = false;
+}
+function onAccept() {
+  emits('accept');
+}
+function onBgClick() {
+  // hacerle un movimiento de rebote como en vuesax
+  if (props.notCloseByBg) return;
+  value.value = false;
+}
 </script>
 
 <style lang="stylus">

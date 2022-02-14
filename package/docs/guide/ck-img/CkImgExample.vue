@@ -10,20 +10,9 @@ ck-img.mr-2.mb-2(size="l" :src="imgSrc")
 ck-img.mr-2.mb-2(size="xl" :src="imgSrc")
 </template>
 
-<script>
+<script setup lang="ts">
 import { ckImg } from '../../../src/components/index';
-
-export default {
-  name: 'CkImgExample',
-  components: {
-    ckImg,
-  },
-  data() {
-    return {
-      imgSrc: 'https://dynamic-media-cdn.tripadvisor.com/media/photo-o/15/a4/9b/77/legacy-hotel-at-img-academy.jpg?w=1200&h=-1&s=1',
-    }; // return data
-  }, // data
-}; // export default
+const imgSrc = 'https://dynamic-media-cdn.tripadvisor.com/media/photo-o/15/a4/9b/77/legacy-hotel-at-img-academy.jpg?w=1200&h=-1&s=1';
 </script>
 
 <style lang="stylus" scoped>

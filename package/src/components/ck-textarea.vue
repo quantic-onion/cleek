@@ -4,23 +4,23 @@
   textarea(v-model="value")
 </template>
 
-<script>
-export default {
-  name: 'CkTextarea',
-  props: {
-    modelValue: { },
-    // label
-    label: { type: String, default: '' },
-    labelAlign: { type: String, default: '' },
-  },
-  emits: ['update:modelValue'],
-  computed: {
-    value: {
-      get() { return this.modelValue; },
-      set(val) { this.$emit('update:modelValue', val); },
-    },
-  }, // computed
-}; // export default
+<script setup lang="ts">
+import { computed } from 'vue';
+import ckLabel from './ck-label.vue';
+
+const props = defineProps({
+  modelValue: { },
+  // label
+  label: { type: String, default: '' },
+  labelAlign: { type: String, default: '' },
+});
+
+const emits = defineEmits(['update:modelValue']);
+
+const value = computed({
+  get() { return props.modelValue; },
+  set(val) { emits('update:modelValue', val); },
+});
 </script>
 
 <style lang="stylus" scoped>

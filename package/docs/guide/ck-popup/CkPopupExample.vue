@@ -34,24 +34,14 @@ ck-popup(notCloseByBg v-model="isActivePopupNotCloseByBg")
 
 </template>
 
-<script>
+<script setup lang="ts">
+import { ref } from 'vue';
 import { ckButton, ckPopup } from '../../../src/components/index';
 
-export default {
-  name: 'CkPopupExample',
-  components: {
-    ckButton,
-    ckPopup,
-  },
-  data() {
-    return {
-      isActivePopup: false,
-      isActiveConfirm: false,
-      isActivePopupNotCloseBtn: false,
-      isActivePopupNotCloseByBg: false,
-    }; // return data
-  }, // data
-}; // export default
+const isActivePopup = ref(false)
+const isActiveConfirm = ref(false)
+const isActivePopupNotCloseBtn = ref(false)
+const isActivePopupNotCloseByBg = ref(false)
 </script>
 
 <style lang="stylus" scoped>

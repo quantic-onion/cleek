@@ -20,78 +20,80 @@ type="button"
   )
 </template>
 
-<script>
+<script setup lang="ts">
+import { computed, getCurrentInstance, onMounted, ref } from 'vue';
 import validators from '../utils/validators';
 import functions from '../utils/functions';
 import globalVariables from '../utils/globalVariables';
 import ckIcon from './ck-icon.vue';
-const defaultType = 'outlined';
-const defaultColor = 'primary';
-const defaultAlign = 'left';
-export default {
-  name: 'CkButton',
-  components: {
-    ckIcon,
-  },
-  props: {
-    // html
-    title: { type: String, default: undefined },
-    disabled: { type: Boolean, default: false },
-    // style
-    type: { type: String, default: defaultType, validator: validators.buttonType },
-    color: { type: String, default: defaultColor },
-    align: { type: String, default: defaultAlign, validator: validators.align },
-    // icon
-    icon: { type: [String, Array], default: undefined },
-    iconPack: { type: String, default: undefined },
-    iconRight: { type: String, default: undefined },
-    // label
-    label: { type: String, default: undefined },
-    labelAlign: { type: String, default: undefined },
-    // group
-    group: { type: String, default: undefined, validator: validators.group },
-    groupBreak: { type: String, default: 's' },
-    groupVertical: { type: String, default: undefined, validator: validators.groupVertical  },
-  },
-  emits: ['click'],
-  computed: {
-    computedClass() {
-      const classList = [];
-      // group
-      classList.push(functions.getGroupClass(this));
-      // color
-      if (this.color !== defaultColor) {
-        if (this.type === 'filled') {
-          classList.push(`ck-component__bg-color--${this.color}`);
-        } else {
-          classList.push(`ck-component__border-color--${this.color}`);
-        }
-      }
-      // align
-      if (this.align !== defaultAlign) {
-        classList.push(`ck-button__align--${this.align}`);
-      }
-      // icon margin
-      if (!this.$slots.default) {
-        if (this.icon || this.iconRight) {
-          if (!(this.icon && this.iconRight)) classList.push('just-icon');
-        }
-      }
 
-      // type
-      let type = this.type;
-      if (!validators.buttonType(this.type)) type = defaultType;
-      classList.push(`type-${type}`)
-      // if (this.size) classList.push(`rs-component-size__${this.size}`);
-      return classList;
-    },
-  }, // computed
-  methods: {
-    onClick(event) {
-      this.$emit('click', event)
-    },
-  }, // methods
-}; // export default
+const props = defineProps({
+  // html
+  title: { type: String, default: undefined },
+  disabled: { type: Boolean, default: false },
+  // style
+  type: { type: String, default: 'outlined', validator: validators.buttonType },
+  color: { type: String, default: 'primary' },
+  align: { type: String, default: 'left', validator: validators.align },
+  // icon
+  icon: { type: [String, Array], default: undefined },
+  iconPack: { type: String, default: undefined },
+  iconRight: { type: String, default: undefined },
+  // label
+  label: { type: String, default: undefined },
+  labelAlign: { type: String, default: undefined },
+  // group
+  group: { type: String, default: undefined, validator: validators.group },
+  groupBreak: { type: String, default: 's' },
+  groupVertical: { type: String, default: undefined, validator: validators.groupVertical  },
+});
+
+let context;
+const isMounted = ref(false);
+
+const emits = defineEmits(['click']);
+
+const computedClass = computed(() => {
+  const classList = [];
+  // group
+  classList.push(functions.getGroupClass(props));
+  // color
+  if (props.color !== 'primary') {
+    if (props.type === 'filled') {
+      classList.push(`ck-component__bg-color--${props.color}`);
+    } else {
+      classList.push(`ck-component__border-color--${props.color}`);
+    }
+  }
+  // align
+  if (props.align !== 'left') {
+    classList.push(`ck-button__align--${props.align}`);
+  }
+  // icon margin
+  if (isMounted.value) {
+    if (!context.$slots.default) {
+      if (props.icon || props.iconRight) {
+        if (!(props.icon && props.iconRight)) classList.push('just-icon');
+      }
+    }
+  }
+
+  // type
+  let type = props.type;
+  if (!validators.buttonType(props.type)) type = 'outlined';
+  classList.push(`type-${type}`)
+  // if (props.size) classList.push(`rs-component-size__${props.size}`);
+  return classList;
+});
+
+function onClick(event) {
+  emits('click', event)
+}
+
+onMounted(() => {
+  context = getCurrentInstance().ctx;
+  isMounted.value = true;
+});
 </script>
 
 <style lang="stylus" scoped>

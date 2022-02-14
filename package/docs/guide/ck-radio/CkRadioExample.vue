@@ -1,6 +1,6 @@
 <template lang="pug">
 .mb-2
-  p Selected value: {{ selectedValue }}
+  p Selected value: {{ selectedValue1 }}
   ck-radio(
   name="example"
   v-model="selectedValue1"
@@ -16,25 +16,16 @@
   )
 </template>
 
-<script>
+<script setup lang="ts">
+import { ref } from 'vue';
 import { ckRadio } from '../../../src/components/index';
 
-export default {
-  name: 'CkRadioExample',
-  components: {
-    ckRadio,
-  },
-  data() {
-    return {
-      selectedValue1: 'value1',
-      selectedValue2: 'value1',
-      options: [
-        { label: 'Label 1', value: 'value1' },
-        { label: 'Label 2', value: 'value2' },
-      ],
-    }; // return data
-  }, // data
-}; // export default
+const selectedValue1 = ref('value1');
+const selectedValue2 = ref('value1');
+const options = [
+  { label: 'Label 1', value: 'value1' },
+  { label: 'Label 2', value: 'value2' },
+];
 </script>
 
 <style lang="stylus" scoped>

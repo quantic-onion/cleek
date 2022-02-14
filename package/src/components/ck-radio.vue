@@ -23,36 +23,33 @@ v-for="(item, index) in options"
       | {{ item.label }}
 </template>
 
-<script>
+<script setup lang="ts">
+import { computed } from 'vue';
 import validators from '../utils/validators';
-export default {
-  name: 'CkRadio',
-  props: {
-    modelValue: { type: String, default: undefined },
-    name: { type: String, required: true },
-    options: { type: Array, required: true, validator: validators.radioOptions },
-    disabled: { type: Boolean, default: false },
-  },
-  emits: ['update:modelValue', 'change'],
-  computed: {
-    value: {
-      get() { return this.modelValue; },
-      set(val) { this.$emit('update:modelValue', val); },
-    },
-    radioAttributes() {
-      return {
-        'aria-disabled': this.disabled,
-        tabindex: this.disabled ? undefined : '0',
-      }
-    },
-  }, // computed
-  methods: {
-    handleChange(value) {
-      this.value = value
-      this.$emit('change', value);
-    },
-  }, // methods
-}; // export default
+const props = defineProps({
+  modelValue: { type: String, default: undefined },
+  name: { type: String, required: true },
+  options: { type: Array, required: true, validator: validators.radioOptions },
+  disabled: { type: Boolean, default: false },
+});
+
+const emits = defineEmits(['update:modelValue', 'change']);
+
+const value = computed({
+  get() { return props.modelValue; },
+  set(val) { emits('update:modelValue', val); },
+});
+const radioAttributes = computed(() => {
+  return {
+    'aria-disabled': props.disabled,
+    tabindex: props.disabled ? undefined : '0',
+  }
+});
+
+function handleChange(value) {
+  value.value = value
+  emits('change', value);
+}
 </script>
 
 <style lang="stylus" scoped>

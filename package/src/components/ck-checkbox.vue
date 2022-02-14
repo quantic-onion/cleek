@@ -18,36 +18,34 @@ v-bind="checkboxAttributes"
     slot
 </template>
 
-<script>
-export default {
-  name: 'CkCheckbox',
-  props: {
-    modelValue: { type: Boolean, default: false },
-    label: { type: String, default: undefined },
-    disabled: { type: Boolean, default: false },
-  },
-  emits: ['update:modelValue', 'change'],
-  computed: {
-    value: {
-      get() { return this.modelValue; },
-      set(val) { this.$emit('update:modelValue', val); },
-    },
-    checkboxAttributes() {
-      return {
-        'aria-disabled': this.disabled,
-        tabindex: this.disabled ? undefined : '0',
-      }
-    },
-  }, // computed
-  methods: {
-    onChange(event) {
-      this.$emit('change', event);
-    },
-    onTrigger() {
-      this.value = !this.value
-    },
-  }, // methods
-}; // export default
+<script setup lang="ts">
+import { computed } from "@vue/runtime-core";
+
+const props = defineProps({
+  modelValue: { type: Boolean, default: false },
+  label: { type: String, default: undefined },
+  disabled: { type: Boolean, default: false },
+});
+
+const emits = defineEmits(['update:modelValue', 'change']);
+
+const value = computed({
+  get() { return props.modelValue; },
+  set(val) { emits('update:modelValue', val); },
+});
+const checkboxAttributes = computed(() => {
+  return {
+    'aria-disabled': props.disabled,
+    tabindex: props.disabled ? undefined : '0',
+  }
+});
+
+function onChange(event) {
+  emits('change', event);
+}
+function onTrigger() {
+  value.value = !value.value;
+}
 </script>
 
 <style lang="stylus" scoped>

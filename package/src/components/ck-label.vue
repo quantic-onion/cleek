@@ -6,24 +6,21 @@ label.ck-label(
   slot
 </template>
 
-<script>
-export default {
-  name: 'CkLabel',
-  props: {
-    for: { type: String, default: '' },
-    align: { type: String, default: '' },
-  },
-  computed: {
-    computedClass() {
-      const list = [];
-      // align
-      let align = 'left';
-      if (this.align === 'center' || this.align === 'right') align = this.align;
-      list.push(`ck-align--${align}`);
-      return list;
-    },
-  }, // computed
-}; // export default
+<script setup lang="ts">
+import { computed } from 'vue';
+const props = defineProps({
+  for: { type: String, default: '' },
+  align: { type: String, default: '' },
+});
+
+const computedClass = computed(() => {
+  const list = [];
+  // align
+  let align = 'left';
+  if (props.align === 'center' || props.align === 'right') align = props.align;
+  list.push(`ck-align--${align}`);
+  return list;
+});
 </script>
 
 <style lang="stylus" scoped>

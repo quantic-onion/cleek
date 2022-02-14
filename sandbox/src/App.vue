@@ -38,29 +38,16 @@
 router-view
 </template>
 
-<script>
-// import { ckButton, ckInputText, ckIcon, ckSelect } from 'cleek';
+<script setup lang="ts">
+import { ref } from 'vue';
 
-export default {
-  name: 'Testing app',
-  data() {
-    return {
-      text: 'holi',
-      selectedOption: 0,
-      options: [
-        { id: 1, name: 'Lisandro' },
-        { id: 2, name: 'Germán' },
-        { id: 3, name: 'Alberto Palavecino' },
-      ],
-    };
-  },
-  // components: {
-  //   ckButton,
-  //   ckInputText,
-  //   ckIcon,
-  //   ckSelect,
-  // },
-}; // export default
+const text = ref('holi');
+const selectedOption = ref(0);
+const options = ref([
+  { id: 1, name: 'Lisandro' },
+  { id: 2, name: 'Germán' },
+  { id: 3, name: 'Alberto Palavecino' },
+]);
 </script>
 
 <style lang="stylus">

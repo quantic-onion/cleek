@@ -11,20 +11,11 @@
     | Checked disabled
 </template>
 
-<script>
+<script setup lang="ts">
+import { ref } from 'vue';
 import { ckCheckbox } from '../../../src/components/index'
 
-export default {
-  name: 'CheckboxExample',
-  components: {
-    ckCheckbox,
-  },
-  data() {
-    return {
-      state: true,
-    }
-  },
-} // export default
+const state = ref(false);
 </script>
 
 <style lang="stylus" scoped>
