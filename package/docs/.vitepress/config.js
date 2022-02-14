@@ -37,6 +37,7 @@ function getComponents() {
   return [
     { text: 'Button', link: '/guide/ck-button/ck-button' },
     { text: 'Checkbox', link: '/guide/ck-checkbox/ck-checkbox' },
+    { text: 'Chip', link: '/guide/ck-chip/ck-chip' },
     { text: 'Icon', link: '/guide/ck-icon/ck-icon' },
     { text: 'Img', link: '/guide/ck-img/ck-img' },
     { text: 'Input', link: '/guide/ck-input/ck-input' },

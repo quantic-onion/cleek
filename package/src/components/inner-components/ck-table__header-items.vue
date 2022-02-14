@@ -29,7 +29,7 @@
   type="filled"
   title="Administrador de columnas"
   v-if="hasColumnsManager"
-  :group="itemsPerPageIsVisible || !hideSearch ? 'left' : ''"
+  :group="itemsPerPageIsVisible || !hideSearch ? 'right' : ''"
   @click="$emit('openColumnsManager')"
   )
 </template>
