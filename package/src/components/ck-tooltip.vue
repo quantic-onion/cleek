@@ -9,13 +9,13 @@ import tippy from 'tippy.js';
 import 'tippy.js/dist/tippy.css';
 
 const props = defineProps({
-  content: { type: String, required: true },
+  text: { type: String, required: true },
 });
 
 onMounted(() => {
   const context = getCurrentInstance().ctx;
   tippy(context.$el, {
-    content: context.content,
+    content: context.text,
   });
 });
 </script>
