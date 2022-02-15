@@ -14,7 +14,7 @@ import validators from '../utils/validators';
 
 const props = defineProps({
   col: { type: Object, default: undefined },
-  wrap: { type: Boolean, default: false },
+  nowrap: { type: Boolean, default: false },
   block: { type: Boolean, default: false },
   autoWidth: { type: Boolean, default: false },
   align: { type: String, default: undefined, validator: validators.align },
@@ -41,8 +41,8 @@ const computedSpanClass = computed(() => {
   }
   // block
   if (props.block) list.push('block');
-  // wrap
-  if (props.block) list.push('wrap-text');
+  // nowrap
+  if (props.block) list.push('no-wrap-text');
   return list;
 });
 const computedStyle = computed(() => {
@@ -75,7 +75,6 @@ const isColumnDisplayed = computed(() => {
     width 1px
   > span
     display flex
-    white-space nowrap
     // &.align-left
     justify-content flex-start
     margin-right auto
@@ -88,8 +87,8 @@ const isColumnDisplayed = computed(() => {
       justify-content flex-end
       text-align right
       margin-left auto
-    &.wrap-text
-      white-space unset
+    &.no-wrap-text
+      white-space nowrap
     &.block
       display block
 </style>

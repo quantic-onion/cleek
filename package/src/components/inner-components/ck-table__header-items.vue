@@ -67,7 +67,7 @@ const itemsPerPageEnd = computed(() => {
   return value;
 });
 const itemsPerPageIsVisible = computed(() => {
-  return !props.hideItemsPerPage && props.listLength;
+  return !props.hideItemsPerPage && props.listLength && props.currentPage;
 });
 const searchGroupValue = computed(() => {
   if (itemsPerPageIsVisible.value && props.hasColumnsManager) {

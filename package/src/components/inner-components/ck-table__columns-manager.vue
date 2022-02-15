@@ -46,13 +46,13 @@ function setColumnsCheckable() {
   console.log('hoola');
   const list = [];
   props.columnsArray.forEach(col => {
-    const value = functions;
-    if (functions)
-    list.push({
-      name: col.name,
-      title: col.title,
-      value: functions.isColumnDisplayed(col),
-    })
+    if (!col.unchangeable) {
+      list.push({
+        name: col.name,
+        title: col.title,
+        value: functions.isColumnDisplayed(col),
+      });
+    }
   });
   columnsCheckable.value = list;
 }

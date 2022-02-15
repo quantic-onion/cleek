@@ -37,7 +37,7 @@ import { computed } from 'vue';
 import ckIcon from './ck-icon.vue';
 
 const props = defineProps({
-  modelValue: { type: Boolean, default: false },    
+  modelValue: { type: [Boolean, Number], default: false },    
   disabled: { type: Boolean, default: false },
   outlined: { type: Boolean, default: false },
   squared: { type: Boolean, default: false },

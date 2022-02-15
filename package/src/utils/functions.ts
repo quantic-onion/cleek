@@ -26,6 +26,10 @@ export default {
   },
   isColumnDisplayed(column) {
     if (column.isDisplayed === false) return false;
+    if (column.unchangeable) {
+      if (column.isDisplayed === true) return true;
+      return false;
+    }
     return true;
   },
   getCleekOptions(getCurrentInstance) {

@@ -24,23 +24,26 @@ v-model="IsPopupActive.columnsManager"
     //- header slot
     .ck-table__header--slot(v-if="$slots.header")
       slot(name="header")
-  table.ck-table__table
-    //- header
-    thead(v-if="filteredColumnsList.length")
-      ck-tr
-        ck-table-title(
-        v-for="col in filteredColumnsList"
-        :key="col.title"
-        :col="col"
-        )
-    //- body
-    tbody
-      slot
-    //- footer
-    tfoot(v-if="$slots.footer")
-      slot(name="footer")
+  .ck-table__table-container
+    table.ck-table__table(
+    :class="{ 'not-full-width': notFullWidth }"
+    )
+      //- header
+      thead(v-if="filteredColumnsList.length")
+        ck-tr
+          ck-table-title(
+          v-for="col in filteredColumnsList"
+          :key="col.title"
+          :col="col"
+          )
+      //- body
+      tbody
+        slot
+      //- footer
+      tfoot(v-if="$slots.footer")
+        slot(name="footer")
   //- @update:currentPage="testCurrentPage($event)"
-  TablePagination(
+  TablePagination.ck-table__pagination(
   v-model:currentPage="currentPageLocal"
   :currentPage="currentPage"
   :itemsPerPage="itemsPerPage"
@@ -75,6 +78,8 @@ const props = defineProps({
   hideHeaderActions: { type: Boolean, default: false },
   hideRefreshBtn: { type: Boolean, default: false },
   hideItemsPerPage: { type: Boolean, default: false },
+  // style
+  notFullWidth: { type: Boolean, default: false },
 });
 
 const emits = defineEmits(['refreshList', 'update:search',  'update:currentPage']);
@@ -128,10 +133,16 @@ function openColumnsManager() {
 </script>
 
 <style lang="stylus" scoped>
-.ck-table__table
-  width 100%
-  border-collapse collapse
-  display table
+.ck-table__table-container
+  max-width 100%
+  overflow auto
+  .ck-table__table
+    width 100%
+    border-collapse collapse
+    display table
+    margin 0
+    &.not-full-width
+      width unset
 .ck-table__header
   display flex
   flex-wrap wrap
@@ -142,4 +153,7 @@ function openColumnsManager() {
     display flex
     align-items flex-end
     flex-wrap wrap
+    margin-bottom .5rem
+.ck-table__pagination
+  margin-top 1rem
 </style>

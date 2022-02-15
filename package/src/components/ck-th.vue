@@ -32,6 +32,7 @@ const computedStyle = computed (() => {
 
 <style lang="stylus" scoped>
 .ck-th
+  vertical-align bottom
   > span
     display flex
     padding .5rem
