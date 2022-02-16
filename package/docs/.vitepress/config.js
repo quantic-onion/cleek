@@ -1,11 +1,20 @@
 /**
  * This can be used as an example
  * https://github.com/vuejs/vitepress/blob/master/docs/.vitepress/config.js
- */
+*/
+
+const path = require('path')
+
 module.exports = {
   lang: 'en-US',
   title: 'Cleek',
   description: 'A lightweight Vue 3 component library',
+  plugins: [
+    {
+      name: 'root-component-setup',
+      clientAppRootComponentFiles: path.resolve(__dirname, './RootComponent.vue'),
+    },
+  ],
   themeConfig: {
     docsDir: 'docs',
     nav: [
@@ -38,6 +47,7 @@ function getComponents() {
     { text: 'Button', link: '/guide/ck-button/ck-button' },
     { text: 'Checkbox', link: '/guide/ck-checkbox/ck-checkbox' },
     { text: 'Chip', link: '/guide/ck-chip/ck-chip' },
+    { text: 'Dropdown', link: '/guide/ck-dropdown/ck-dropdown' },
     { text: 'Icon', link: '/guide/ck-icon/ck-icon' },
     { text: 'Img', link: '/guide/ck-img/ck-img' },
     { text: 'Input', link: '/guide/ck-input/ck-input' },
