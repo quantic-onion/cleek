@@ -17,6 +17,7 @@ const props = defineProps({
   nowrap: { type: Boolean, default: false },
   block: { type: Boolean, default: false },
   autoWidth: { type: Boolean, default: false },
+  overflowAuto: { type: Boolean, default: false },
   align: { type: String, default: undefined, validator: validators.align },
   fixedWidth: { type: String, default: '' }, // min and max width
   minWidth: { type: String, default: '' },
@@ -27,6 +28,7 @@ const props = defineProps({
 const computedTdClass = computed(() => {
   return {
     'auto-width': props.autoWidth,
+    'overflow-auto': props.overflowAuto,
   };
 });
 const computedSpanClass = computed(() => {
@@ -66,15 +68,17 @@ const isColumnDisplayed = computed(() => {
 <style lang="stylus" scoped>
 .ck-td
   padding .5rem
-  overflow auto
   border-bottom 1px solid $globalBorderColor
   background #fff
   &:last-of-type
     border none
+  &.overflow-auto
+    overflow auto
   &.auto-width
     width 1px
   > span
     display flex
+    align-items center
     // &.align-left
     justify-content flex-start
     margin-right auto

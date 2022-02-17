@@ -38,6 +38,8 @@ const props = defineProps({
   hasBorder: { type: Boolean, default: false },
   radius: { type: String, default: '' },
   borderColor: { type: String, default: '' }, // check
+  // style
+  rounded: { type: Boolean, default: false },
 });
 
 let context;
@@ -57,12 +59,14 @@ const imageUrl = computed(() => {
 });
 const computedClass = computed(() => {
   const classList = [];
-  let size = props.size;
+  // let size = props.size;
   // size
-  if (!size && !props.sizeAbsolute && !props.width && !props.height) {
-    size = 'm';
-  }
-  if (size) classList.push(`ck-img__size--${size}`);
+  // if (!size && !props.sizeAbsolute && !props.width && !props.height) {
+  //   size = 'm';
+  // }
+  if (props.size) classList.push(`ck-img__size--${props.size}`);
+  // rounded
+  if (props.rounded) classList.push('is-rounded');
   // border
   if (props.hasBorder) {
     classList.push('ck-img__has-border');
@@ -145,6 +149,8 @@ onMounted(() => {
     cursor pointer
     &:hover
       border-color primary
+  &.is-rounded img
+    border-radius 50%
   img
     display block
     width auto
