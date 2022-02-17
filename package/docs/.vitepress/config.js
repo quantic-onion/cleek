@@ -55,6 +55,7 @@ function getComponents() {
     // { text: 'Link', link: '/guide/link/link' },
     // { text: 'Modal', link: '/guide/modal/modal' },
     // { text: 'ModalManager', link: '/guide/modal-manager/modal-manager' },
+    { text: 'Navbar', link: '/guide/ck-navbar/ck-navbar' },
     // { text: 'Progress', link: '/guide/progress/progress' },
     { text: 'Popup', link: '/guide/ck-popup/ck-popup' },
     { text: 'Radio', link: '/guide/ck-radio/ck-radio' },

@@ -1,4 +1,5 @@
 export { default as ckDropdown } from './ck-dropdown/ck-dropdown.vue';
+export { default as ckNavbar } from './ck-navbar/ck-navbar.vue';
 // export { default as ckDropdownContent } from './ck-dropdown/ck-dropdown-content.vue';
 // export { default as ckDropdownItem } from './ck-dropdown/ck-dropdown-item.vue';
 
