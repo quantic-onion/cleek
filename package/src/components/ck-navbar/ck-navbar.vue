@@ -35,6 +35,8 @@ const computedStyle = computed(() => {
 
 .ck-navbar
   width 100%
+  top 0
+  z-index 99
   .ck-navbar__content
     padding .75rem 1rem
     background-color white
