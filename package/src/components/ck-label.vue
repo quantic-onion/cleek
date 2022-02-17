@@ -24,7 +24,7 @@ const computedClass = computed(() => {
 </script>
 
 <style lang="stylus" scoped>
-@require '../styles/ck-styles'
+@require '../styles/index'
 
 .ck-label
   width 100%

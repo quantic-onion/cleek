@@ -114,7 +114,7 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
-@import '../../styles/ck-styles';
+@import '../../styles/index';
 $itemSize = 40px
 .ck-table__pagination-container
     display flex

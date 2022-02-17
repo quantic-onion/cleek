@@ -127,7 +127,7 @@ onMounted(() => {
 </script>
 
 <style lang="stylus" scoped>
-@require '../styles/ck-styles'
+@require '../styles/index'
 
 .ck-img
   display inline-flex

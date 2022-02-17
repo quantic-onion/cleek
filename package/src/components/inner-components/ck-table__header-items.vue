@@ -88,7 +88,7 @@ function checkRefresh() {
 </script>
 
 <style lang="stylus" scoped>
-@import '../../styles/ck-styles';
+@import '../../styles/index';
 .ck-table__header-items
   display flex
   .items-per-page

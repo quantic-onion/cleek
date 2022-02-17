@@ -69,7 +69,7 @@ function getOptionValue(Option) {
 </script>
 
 <style lang="stylus" scoped>
-@require '../styles/ck-styles'
+@require '../styles/index'
 
 $borderWidth = 2px
 $borderRadius = 5px

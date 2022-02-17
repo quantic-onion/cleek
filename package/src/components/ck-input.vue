@@ -140,5 +140,5 @@ const computedClassInput = computed(() => {
     left 1.5 * $globalPadding
   > .ck-input__icon-right
     right 1.5 * $globalPadding
-@require '../styles/ck-styles'
+@require '../styles/index'
 </style>

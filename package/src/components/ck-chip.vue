@@ -47,7 +47,7 @@ const computedStyle = computed(() => {
 </script>
 
 <style lang="stylus" scoped>
-@require '../styles/ck-styles'
+@require '../styles/index'
 
 .ck-chip
   display inline-flex
