@@ -2,7 +2,7 @@
 .ck-table__header-items
   //- refresh btn
   ck-button(
-  v-if="!hideRefreshBtn"
+  v-if="refreshBtnIsVisible"
   type="flat"
   icon="redo-alt"
   title="Recargar lista"
@@ -42,7 +42,7 @@ import ckInput from '../ck-input.vue';
 const props = defineProps({
   search: { type: String, default: undefined, },
   hasColumnsManager: { type: Boolean, default: false },
-  hideRefreshBtn: { type: Boolean, required: true },
+  showRefreshBtn: { type: Boolean, required: true },
   hideItemsPerPage: { type: Boolean, required: true },
   currentPage: { type: Number, required: true },
   itemsPerPage: { type: Number, required: true },
@@ -68,6 +68,9 @@ const itemsPerPageEnd = computed(() => {
 });
 const itemsPerPageIsVisible = computed(() => {
   return !props.hideItemsPerPage && props.listLength && props.currentPage;
+});
+const refreshBtnIsVisible = computed(() => {
+  return itemsPerPageIsVisible.value || props.showRefreshBtn;
 });
 const searchGroupValue = computed(() => {
   if (itemsPerPageIsVisible.value && props.hasColumnsManager) {

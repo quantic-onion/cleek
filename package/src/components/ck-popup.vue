@@ -1,5 +1,5 @@
 <template lang="pug">
-.ck-popup(v-if="value")
+.ck-popup(v-if="isActive")
   .blackout
   .popup-container(@click="onBgClick()")
     .ck-popup__content(@click.stop="")
@@ -8,12 +8,12 @@
         h3.ck-popup__title(v-if="title")
           | {{ title }}
         //- header slot
-        slot.ml-3(name="header")
+        slot(name="header")
         //- close btn
-        ck-icon.mr-3.close(
+        ck-icon.close(
         icon="times"
         v-if="!notCloseBtn"
-        @click="value = false"
+        @click="isActive = false"
         )
       //- VuePerfectScrollbar.ck-popup__slot-body
       .ck-popup__slot-body
@@ -21,7 +21,7 @@
       .ck-popup__slot-footer(v-if="$slots.footer || confirmButtons")
         slot(name="footer")
         .ck-popup-slot-footer__confirm-buttons(v-if="confirmButtons")
-          ck-button.cancel-button(@click="onCancel()" color="danger")
+          ck-button.cancel-button(@click="onCancel()" color="danger" type="flat")
             | Cancelar
           ck-button(@click="onAccept()")
             | Aceptar
@@ -49,14 +49,14 @@ const emits = defineEmits(['update:modelValue', 'cancel', 'accept']);
 //   wheelSpeed: 0.60,
 // };
 
-const value = computed({
+const isActive = computed({
   get() { return props.modelValue; },
   set(val) { emits('update:modelValue', val); },
 });
 
 function onCancel() {
   emits('cancel');
-  if (!props.preventCloseOnCancel) value.value = false;
+  if (!props.preventCloseOnCancel) isActive.value = false;
 }
 function onAccept() {
   emits('accept');
@@ -64,7 +64,7 @@ function onAccept() {
 function onBgClick() {
   // hacerle un movimiento de rebote como en vuesax
   if (props.notCloseByBg) return;
-  value.value = false;
+  isActive.value = false;
 }
 </script>
 

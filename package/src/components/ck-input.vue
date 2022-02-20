@@ -11,6 +11,7 @@
   )
   //- input
   input(
+  ref="realInput"
   v-model="value"
   :type="type"
   :placeholder="placeholder"
@@ -32,11 +33,14 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue';
+import { computed, ref } from 'vue';
 import functions from '../utils/functions';
 import validators from '../utils/validators';
 import ckLabel from './ck-label.vue';
 import ckIcon from './ck-icon.vue';
+
+defineExpose({ setFocus, setSelect });
+
 const props = defineProps({
   modelValue: {  },
   type: { type: String, validator: validators.inputType, default: 'text' },
@@ -60,6 +64,8 @@ const props = defineProps({
   // functions
   autoSelect: { type: Boolean, default: false },
 });
+
+const realInput = ref(null);
 
 const emits = defineEmits(['update:modelValue', 'click', 'input', 'change']);
 
@@ -100,6 +106,13 @@ const computedClassInput = computed(() => {
   if (props.hideBorder) list.push('no-border');
   return list;
 });
+
+function setFocus() {
+  realInput.value.focus();
+}
+function setSelect() {
+  realInput.value.select();
+}
 </script>
 
 <style lang="stylus" scoped>

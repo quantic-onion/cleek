@@ -16,7 +16,7 @@ v-model="IsPopupActive.columnsManager"
     :hasColumnsManager="hasColumnsManager"
     :itemsPerPage="itemsPerPage"
     :listLength="listLength"
-    :hideRefreshBtn="hideRefreshBtn"
+    :showRefreshBtn="showRefreshBtn"
     :hideItemsPerPage="hideItemsPerPage"
     @refreshList="refreshList($event)"
     @openColumnsManager="openColumnsManager()"
@@ -76,7 +76,7 @@ const props = defineProps({
   // header items
   search: { type: String, default: undefined },
   hideHeaderActions: { type: Boolean, default: false },
-  hideRefreshBtn: { type: Boolean, default: false },
+  showRefreshBtn: { type: Boolean, default: false },
   hideItemsPerPage: { type: Boolean, default: false },
   // style
   notFullWidth: { type: Boolean, default: false },

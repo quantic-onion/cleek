@@ -21,14 +21,12 @@ v-bind="computedAttributes"
     v-if="icon && value"
     :icon="icon"
     :icon-pack="iconPack"
-    :class="iconClass"
     )
     //- icon-right
     ck-icon.ck-switch__icon-right(
     v-if="icon && !value"
     :icon="icon"
     :icon-pack="iconPack"
-    :class="iconClass"
     )
   span.ck-switch__content(v-if="$slots.default")
     slot
@@ -43,7 +41,7 @@ const props = defineProps({
   disabled: { type: Boolean, default: false },
   outlined: { type: Boolean, default: false },
   squared: { type: Boolean, default: false },
-  size: { type: String, default: 'm' },
+  size: { type: String, default: 's' },
   // icon
   icon: { type: String, default: undefined },
   iconPack: { type: String, default: undefined },
@@ -59,10 +57,6 @@ const computedClass = computed(() => {
   const list = [];
   if (props.squared) list.push('is-squared');
   if (props.outlined) list.push('is-outlined');
-  // size
-  let size = 's';
-  if (props.size === 'm' || props.size === 'l') size = props.size;
-  list.push(`ck-switch--size-${size}`);
   return list;
 });
 const computedAttributes = computed(() => {
@@ -71,13 +65,6 @@ const computedAttributes = computed(() => {
     tabindex: props.disabled ? undefined : '0',
   }
 });
-const iconClass = computed(() => {
-  const list = [];
-  if (props.size && props.size !== 'm') {
-    list.push(`ck-switch__icon-size--${props.size}`)
-  }
-  return list;
-});
 
 function onTrigger() {
   value.value = !value.value;
@@ -85,8 +72,16 @@ function onTrigger() {
 </script>
 <style lang="stylus" scoped>
 @import '../styles/.variables.styl'
+$height = 24px // s
+$width = 48px // s
+$height = 34px // m
+$width = 60px // m
+$height = 40px
+$width = 70px
 $transitionTime = 0.4s
-
+$border-width = 2px // m
+// $border-width = 4px
+$ball-size = $height - (4 * $border-width)
 .ck-switch
   cursor pointer
   position relative
@@ -97,15 +92,15 @@ $transitionTime = 0.4s
   input
     display none
   .ck-switch__slider-container
-    display flex
-    align-items center
     position relative
-    transition $transitionTime
     .ck-switch__slider
       position relative
       display block
       box-sizing border-box
-      border 0px solid $color-lightgrey
+      width $width
+      height $height
+      border $border-width solid $color-lightgrey
+      border-radius $height
       background-color white
       transition $transitionTime
       background-color $color-lightgrey
@@ -114,16 +109,25 @@ $transitionTime = 0.4s
         border-radius 50%
         position absolute
         position absolute
+        height $ball-size
+        width $ball-size
+        left $border-width
+        top $border-width
         background-color white
         transition $transitionTime
   .ck-switch__content
     user-select none
-    margin-left 5px
+    margin-left 8px
   .ck-switch__icon-left, .ck-switch__icon-right
     position absolute
     z-index 1
-    font-size .65rem
+    top $border-width * 6
+  .ck-switch__icon-left
     color white
+    left $border-width * 6
+  .ck-switch__icon-right
+    color white
+    right $border-width * 6
 
 // outlined
 .ck-switch.is-outlined
@@ -143,134 +147,24 @@ $transitionTime = 0.4s
   box-shadow 0 0 1px var(--primary)
 .ck-switch__input:checked + .ck-switch__slider-container > .ck-switch__slider:before
   background-color white
+  transform translate($width - $height)
 
 // squared
 .ck-switch.is-squared .ck-switch__slider
-  border-radius 0 !important
+  border-radius 0
   &:before
-    border-radius 0 !important
+    border-radius 0
 /* Disabled */
 .ck-switch[aria-disabled='true']
   cursor not-allowed
   .ck-switch__slider
-    border 0px solid $color-disabled
+    border $border-width solid $color-disabled
     background-color $color-disabled-secondary
     &:before
       background-color $color-disabled
   .ck-switch__input:checked + .ck-switch__slider-container > .ck-switch__slider
-    border 0px solid $color-disabled
+    border $border-width solid $color-disabled
     background-color $color-disabled
     &:before
       background-color $color-disabled-secondary
-
-
-
-
-
-
-
-
-      
-
-
-
-// size S
-.ck-switch.ck-switch--size-s
-  $height = 22px
-  $width = 42px
-  $border-width = 1px
-  $ball-size = $height - (4 * $border-width)
-  .ck-switch__slider-container
-    .ck-switch__slider
-      width $width
-      height $height
-      border-width $border-width
-      border-radius $height
-      &:before
-        height $ball-size
-        width $ball-size
-        left $border-width
-        top $border-width
-  .ck-switch__icon-left, .ck-switch__icon-right
-    font-size .8rem
-  .ck-switch__icon-left
-    left $border-width * 8
-  .ck-switch__icon-right
-    right $border-width * 8
-  .ck-switch__input:checked + .ck-switch__slider-container > .ck-switch__slider:before
-    transform translate($width - $height)
-  /* Disabled */
-  &[aria-disabled='true']
-    .ck-switch__slider
-      border-width $border-width
-    .ck-switch__input:checked + .ck-switch__slider-container > .ck-switch__slider
-      border-width $border-width
-
-
-
-// size M
-.ck-switch.ck-switch--size-m
-  $height = 34px
-  $width = 65px
-  $border-width = 2px
-  $ball-size = $height - (4 * $border-width)
-  .ck-switch__slider-container
-    .ck-switch__slider
-      width $width
-      height $height
-      border-width $border-width
-      border-radius $height
-      &:before
-        height $ball-size
-        width $ball-size
-        left $border-width
-        top $border-width
-  .ck-switch__icon-left, .ck-switch__icon-right
-    font-size 1.1rem
-  .ck-switch__icon-left
-    left $border-width * 6
-  .ck-switch__icon-right
-    right $border-width * 6
-  .ck-switch__input:checked + .ck-switch__slider-container > .ck-switch__slider:before
-    transform translate($width - $height)
-  /* Disabled */
-  &[aria-disabled='true']
-    .ck-switch__slider
-      border-width $border-width
-    .ck-switch__input:checked + .ck-switch__slider-container > .ck-switch__slider
-      border-width $border-width
-
-
-
-// size L
-.ck-switch.ck-switch--size-l
-  $height = 45px
-  $width = 90px
-  $border-width = 2px
-  $ball-size = $height - (4 * $border-width)
-  .ck-switch__slider-container
-    .ck-switch__slider
-      width $width
-      height $height
-      border-width $border-width
-      border-radius $height
-      &:before
-        height $ball-size
-        width $ball-size
-        left $border-width
-        top $border-width
-  .ck-switch__icon-left, .ck-switch__icon-right
-    font-size 1.5rem
-  .ck-switch__icon-left
-    left $border-width * 7
-  .ck-switch__icon-right
-    right $border-width * 7
-  .ck-switch__input:checked + .ck-switch__slider-container > .ck-switch__slider:before
-    transform translate($width - $height)
-  /* Disabled */
-  &[aria-disabled='true']
-    .ck-switch__slider
-      border-width $border-width
-    .ck-switch__input:checked + .ck-switch__slider-container > .ck-switch__slider
-      border-width $border-width
 </style>
