@@ -6,6 +6,12 @@ ComponentShower(title="Default")
         | Abrete sésamo
     template(#popper)
       | Dijiste las palabras mágias
+  ck-dropdown(align="right")
+    template(#trigger)
+      ck-button
+        | Abrete a la izquierda
+    template(#popper)
+      .whitespace-nowrap Okay mi jefecito, lo que usted diga
 </template>
 
 <script setup lang="ts">

@@ -14,9 +14,9 @@ title="Administrador de columnas"
 
 <script setup lang="ts">
 import { computed, ref, watch } from 'vue';
-import functions from '../../utils/functions';
-import ckCheckbox from '../ck-checkbox.vue';
-import ckPopup from '../ck-popup.vue';
+import functions from '../../../utils/functions';
+import ckCheckbox from '../../ck-checkbox.vue';
+import ckPopup from '../../ck-popup.vue';
 
 const props = defineProps({
   modelValue: { type: Boolean, required: true },
@@ -43,7 +43,6 @@ watch(() => isActive.value, (val) => {
 });
 
 function setColumnsCheckable() {
-  console.log('hoola');
   const list = [];
   props.columnsArray.forEach(col => {
     if (!col.unchangeable) {

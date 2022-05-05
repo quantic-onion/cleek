@@ -18,6 +18,9 @@
 import { computed } from 'vue';
 import functions from '../utils/functions.ts';
 import ckLabel from './ck-label.vue';
+import useWindowWidth from '../hooks/windowWidth';
+
+const { windowWidth } = useWindowWidth(); 
 
 const props = defineProps({
   modelValue: { type: [Boolean, Number, Object], default: 0 },
@@ -31,7 +34,7 @@ const props = defineProps({
   labelAlign: { type: String, default: '' },
   // group
   group: { type: String, default: '' },
-  groupBreak: { type: String, default: 's' },
+  widthBreaks: { type: Array, default: undefined },
   groupVertical: { type: String, default: '' },
   // style
   sameWidthOptions: { type: Boolean, default: false },
@@ -47,14 +50,10 @@ const selectedOption = computed({
   },
 });
 const computedClass = computed(() => {
-  const classList = [];
+  const list = [];
   // group
-  classList.push(functions.getGroupClass(props));
-  return classList;
-  // return {
-  //   'group-top': props.group === 'top',
-  //   'group-bottom': props.group === 'bottom',
-  // };
+  list.push(functions.getGroupClass(props, windowWidth.value));
+  return list;
 });
 const computedItemStyle = computed(() => {
   const list = [];
@@ -73,6 +72,7 @@ function getOptionValue(Option) {
 
 $borderWidth = 2px
 $borderRadius = 5px
+$borderColor = var(--primary)
 // $borderColor = rgba(var(--primary), .45) FIXRGBA
 .ck-switch-options__container
   overflow hidden
@@ -94,7 +94,7 @@ $borderRadius = 5px
     border-radius 0
     text-align center
     font-weight 500
-    color #999
+    color #666
     // padding 7px
     padding 5px 15px
     cursor pointer

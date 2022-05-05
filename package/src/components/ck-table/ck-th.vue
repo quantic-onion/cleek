@@ -9,10 +9,10 @@ th.ck-th
 
 <script setup lang="ts">
 import { computed } from 'vue';
-import validators from '../utils/validators';
+import validators from '../../utils/validators';
 
 const props = defineProps({
-  align: { type: String, default: 'center', validator: validators.align },
+  align: { type: String, default: 'left', validator: validators.align },
   minWidth: { type: String, default: undefined },
 });
 
@@ -36,6 +36,7 @@ const computedStyle = computed (() => {
   > span
     display flex
     padding .5rem
+    font-size .8rem
     &.align-center
       justify-content center
       margin-x auto

@@ -40,8 +40,8 @@ v-if="currentPage && totalPages > 1"
 </template>
 
 <script setup lang="ts">
-import ckInput from '../ck-input.vue';
-import ckIcon from '../ck-icon.vue';
+import ckInput from '../../ck-input.vue';
+import ckIcon from '../../ck-icon.vue';
 </script>
 
 <script lang="ts">
@@ -52,7 +52,7 @@ export default {
     currentPage: { type: Number, required: true },
     align: { type: String, required: true },
     itemsPerPage: { type: Number, required: true },
-    listLength: { type: Number, required: true },
+    listLength: { type: Number, default: 0 },
   },
   emits: ['refreshList', 'update:currentPage'],
   computed: {
@@ -114,7 +114,7 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
-@import '../../styles/index';
+@import '../../../styles/index';
 $itemSize = 40px
 .ck-table__pagination-container
     display flex

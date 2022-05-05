@@ -2,7 +2,10 @@
 .ck-popup(v-if="isActive")
   .blackout
   .popup-container(@click="onBgClick()")
-    .ck-popup__content(@click.stop="")
+    .ck-popup__content(
+    @click.stop=""
+    :style="computedStyleContent"
+    )
       .ck-popup__slot-header
         //- title
         h3.ck-popup__title(v-if="title")
@@ -12,7 +15,7 @@
         //- close btn
         ck-icon.close(
         icon="times"
-        v-if="!notCloseBtn"
+        v-if="!(notCloseBtn || notClose)"
         @click="isActive = false"
         )
       //- VuePerfectScrollbar.ck-popup__slot-body
@@ -37,9 +40,12 @@ const props = defineProps({
   modelValue: { type: Boolean },
   title: { type: String, default: undefined },
   confirmButtons: { type: Boolean, default: false },
+  notClose: { type: Boolean, default: false },
   notCloseBtn: { type: Boolean, default: false },
   notCloseByBg: { type: Boolean, default: false },
   preventCloseOnCancel: { type: Boolean, default: false },
+  width: { type: String, default: undefined },
+  maxWidth: { type: String, default: undefined },
 });
 
 const emits = defineEmits(['update:modelValue', 'cancel', 'accept']);
@@ -53,6 +59,12 @@ const isActive = computed({
   get() { return props.modelValue; },
   set(val) { emits('update:modelValue', val); },
 });
+const computedStyleContent = computed(() => {
+  const list = [];
+  if (props.maxWidth) list.push({ maxWidth: props.maxWidth });
+  if (props.width) list.push({ width: props.width });
+  return list;
+});
 
 function onCancel() {
   emits('cancel');
@@ -63,7 +75,7 @@ function onAccept() {
 }
 function onBgClick() {
   // hacerle un movimiento de rebote como en vuesax
-  if (props.notCloseByBg) return;
+  if (props.notCloseByBg || props.notClose) return;
   isActive.value = false;
 }
 </script>
@@ -88,7 +100,7 @@ function onBgClick() {
   .ck-popup__content
     background-color white
     min-width 30vw
-    width 500px
+    // width 500px
     max-width 95vw
     @media(min-width 1150px)
       max-width 80rem
@@ -96,19 +108,19 @@ function onBgClick() {
     border-radius 10px
     padding-bottom 15px
     .ck-popup__slot-header
+      padding-y .6rem
       font-weight 600
       font-size 1.2rem
       background-color #f0f0f0
-      padding-x 1rem
-      min-height 50px
-      font-size 17px
+      padding-x 1.2rem
       display flex
       justify-content space-between
       align-items center
       border-radius 10px 10px 0 0
-      box-shadow 0 5px 10px -2px RGBA(0, 0, 0, 0.15)
+      box-shadow 0 5px 10px -2px RGBA(0, 0, 0, 0.05)
       position relative
       .ck-popup__title
+        font-size 1.2rem
         margin 0
       .close
         padding .5rem .75rem

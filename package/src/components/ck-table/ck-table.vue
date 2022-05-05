@@ -10,8 +10,8 @@ v-model="IsPopupActive.columnsManager"
   .ck-table__header(v-if="$slots.header || !hideHeaderActions")
     //- header items
     TableHeaderItems(
-    v-if="!hideHeaderActions"
     v-model:search="searchLocal"
+    :hideHeaderActions="hideHeaderActions"
     :currentPage="currentPage"
     :hasColumnsManager="hasColumnsManager"
     :itemsPerPage="itemsPerPage"
@@ -24,12 +24,17 @@ v-model="IsPopupActive.columnsManager"
     //- header slot
     .ck-table__header--slot(v-if="$slots.header")
       slot(name="header")
-  .ck-table__table-container
+
+  //- desktop
+  .ck-table__table-container(
+  v-if="!isMobileVisible"
+  :class="{ 'not-overflow': notOverflow }"
+  )
     table.ck-table__table(
-    :class="{ 'not-full-width': notFullWidth }"
+    :class="computedClassTable"
     )
       //- header
-      thead(v-if="filteredColumnsList.length")
+      thead(v-if="filteredColumnsList.length && !($slots.mobile && isMobileVisible)")
         ck-tr
           ck-table-title(
           v-for="col in filteredColumnsList"
@@ -39,10 +44,21 @@ v-model="IsPopupActive.columnsManager"
       //- body
       tbody
         slot
+        slot(name="desktop")
+        //- noResultsText - if not used, listLength = undefined 
+        ck-tr(v-if="listLength === 0")
+          ck-td.no-result-text(colspan="100%" align="center")
+            | {{ noResultsText }}
       //- footer
       tfoot(v-if="$slots.footer")
         slot(name="footer")
   //- @update:currentPage="testCurrentPage($event)"
+
+  //- mobile
+  .ck-table--mobile-container(v-if="isMobileVisible")
+    slot(name="mobile")
+
+  //- pagination
   TablePagination.ck-table__pagination(
   v-model:currentPage="currentPageLocal"
   :currentPage="currentPage"
@@ -54,16 +70,20 @@ v-model="IsPopupActive.columnsManager"
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from 'vue'
-import functions from '../utils/functions';
+import { onBeforeUnmount, computed, nextTick, onMounted, ref } from 'vue';
 import ckTr from './ck-tr.vue';
+import ckTd from './ck-td.vue';
 import ckTableTitle from './inner-components/ck-table__title.vue';
 import TableHeaderItems from './inner-components/ck-table__header-items.vue';
 import TablePagination from './inner-components/ck-table__pagination.vue';
 import TableColumnsManager from './inner-components/ck-table__columns-manager.vue';
-import validators from '../utils/validators';
-import qm from '../../node_modules/quantic-methods/dist/quantic-methods.es.ts';
+import functions from '../../utils/functions';
+import validators from '../../utils/validators';
+import qm from '../../../node_modules/quantic-methods/dist/quantic-methods.es.ts';
+import useWindowWidth from '../../hooks/windowWidth';
 const { qmObj } = qm;
+
+const { windowWidth } = useWindowWidth();
 
 const props = defineProps({
   columns: { type: [Array, Object], required: true, default: () => ([]) },
@@ -71,7 +91,7 @@ const props = defineProps({
   // pagination - header items
   currentPage: { type: Number, default: 0 },
   itemsPerPage: { type: Number, default: 40 },
-  listLength: { type: Number, default: 0 },
+  listLength: { type: Number, default: undefined },
   paginationAlign: { type: String, default: 'center', validator: validators.align },
   // header items
   search: { type: String, default: undefined },
@@ -80,6 +100,12 @@ const props = defineProps({
   hideItemsPerPage: { type: Boolean, default: false },
   // style
   notFullWidth: { type: Boolean, default: false },
+  cellPadding: { type: String, default: undefined }, // s, m, l, none
+  cellPaddingY: { type: String, default: undefined }, // s, m, l, none
+  noResultsText: { type: String, default: 'No se encontraron resultados' },
+  notOverflow: { type: Boolean, default: false },
+  // mobile
+  mobileMaxWidth: { type: [Number, String], default: 800 },
 });
 
 const emits = defineEmits(['refreshList', 'update:search',  'update:currentPage']);
@@ -87,18 +113,30 @@ const emits = defineEmits(['refreshList', 'update:search',  'update:currentPage'
 const IsPopupActive = ref({
   columnsManager: false,
 });
+
 const columnsAreObj = computed(() => !qmObj.isArray(props.columns));
 const columnsArray = computed(() => {
-  // array
-  if (!columnsAreObj.value) return props.columns;
   // object
-  const arr = Object.values(props.columns);
-  const keys = Object.keys(props.columns);
-  arr.forEach((col, index) => {
-    const key = keys[index];
-    col.name = key;
+  if (columnsAreObj.value) {
+    const arr = Object.values(props.columns);
+    const keys = Object.keys(props.columns);
+    arr.forEach((col, index) => {
+      const key = keys[index];
+      col.name = key;
+    });
+    return arr;
+  }
+  // array
+  // can be array of objects or array of strings
+  const newList = [];
+  props.columns.forEach((col) => {
+    if (typeof col === 'string') {
+      newList.push({ title: col });
+    } else {
+      newList.push(col);
+    }
   });
-  return arr;
+  return newList;
 });
 
 // filter
@@ -117,6 +155,10 @@ const currentPageLocal = computed({
   },
 });
 
+// isMobileVisible
+const isMobileVisible = computed(() => {
+  return windowWidth.value <= +props.mobileMaxWidth;
+});
 function refreshList(pageChange: boolean = false) {
   emits('refreshList', pageChange);
 }
@@ -127,15 +169,38 @@ function openColumnsManager() {
     console.log('ERROR ck-table', 'The columns list should be an object');
   }
 }
+
+const computedClassTable = computed(() => {
+  const list = [];
+  if (props.cellPadding) list.push(`table__cell-padding--${props.cellPadding}`);
+  if (props.cellPaddingY) list.push(`table__cell-padding-y--${props.cellPaddingY}`);
+  if (props.notFullWidth) list.push('not-full-width');
+  return list;
+});
 // function testCurrentPage(cosito) {
 //   this.$emit('update:currentPage', cosito);
 // }
 </script>
 
+<style lang="stylus">
+.ck-table__table-container .ck-table__table
+  &.table__cell-padding--none
+    td
+      padding 0
+  &.table__cell-padding-y--xs
+    td
+      padding-bottom .25rem
+  &.table__cell-padding-y--s
+    td
+      padding-bottom .5rem
+</style>
+
 <style lang="stylus" scoped>
 .ck-table__table-container
   max-width 100%
   overflow auto
+  &.not-overflow
+    overflow initial
   .ck-table__table
     width 100%
     border-collapse collapse
@@ -147,13 +212,20 @@ function openColumnsManager() {
   display flex
   flex-wrap wrap
   justify-content space-between
-  align-items end
+  align-items flex-end
   flex-direction row-reverse
   .ck-table__header--slot
     display flex
     align-items flex-end
     flex-wrap wrap
-    margin-bottom .5rem
+    gap .5rem
 .ck-table__pagination
   margin-top 1rem
+
+.no-result-text
+  background-color #eee
+  color #666
+  font-weight 600
+  font-size 1.1rem
+  padding 3rem 1rem
 </style>

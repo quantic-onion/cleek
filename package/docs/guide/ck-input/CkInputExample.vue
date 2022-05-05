@@ -2,6 +2,32 @@
 ComponentShower(title="Default")
   ck-input
 
+ComponentShower(title="Group break")
+  ComponentShowerRow(noGap)
+    ck-input(label="Group break S 1" group="left" line-break="s")
+    ck-input(label="Group break S 2" group="center" line-break="s")
+    ck-input(label="Group break S 3" group="right" line-break="s")
+  ComponentShowerRow(noGap)
+    ck-input(label="Group break 800px 1" group="left" line-break="800")
+    ck-input(label="Group break 800px 2" group="center" line-break="800")
+    ck-input(label="Group break 800px 3" group="right" line-break="800")
+
+ComponentShower(title="Type")
+  ck-input(label="Text (default)")
+  ck-input(label="Number" type="number")
+  ck-input(label="Password" type="password")
+
+ComponentShower(title="Rounded")
+  ck-input(label="Text (default)" rounded)
+  ck-input(label="Number" type="number" rounded)
+  ck-input(label="Password" type="password" rounded)
+
+ComponentShower(title="Size")
+  ck-input(v-model="textSize" size="s" label="Size s")
+  ck-input(v-model="textSize" size="m" label="Size m (default)")
+  ck-input(v-model="textSize" size="l" label="Size l")
+  ck-input(v-model="textSize" size="xl" label="Size xl")
+
 ComponentShower(title="Icon" noGap)
   ck-input(group="left" label="Icon" icon="helicopter")
   ck-input(group="center" label="Icon placeholder" icon="user" placeholder="Buscar...")
@@ -53,6 +79,7 @@ const text = ref('Dynamic label');
 const disabledText = ref('Not posible to change');
 const testFocusVal = ref('');
 const testSelectVal = ref('selectable');
+const textSize = ref('size text');
 
 
 function testFocus() {
@@ -64,5 +91,5 @@ function testSelect() {
 </script>
 
 <style lang="stylus" scoped>
-@import '../../style/global'
+@import '../../../public/cleek-styles/tiny-tailwind'
 </style>

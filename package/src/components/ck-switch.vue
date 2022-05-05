@@ -43,7 +43,7 @@ const props = defineProps({
   disabled: { type: Boolean, default: false },
   outlined: { type: Boolean, default: false },
   squared: { type: Boolean, default: false },
-  size: { type: String, default: 'm' },
+  size: { type: String, default: 's' },
   // icon
   icon: { type: String, default: undefined },
   iconPack: { type: String, default: undefined },
@@ -61,7 +61,7 @@ const computedClass = computed(() => {
   if (props.outlined) list.push('is-outlined');
   // size
   let size = 's';
-  if (props.size === 'm' || props.size === 'l') size = props.size;
+  if (props.size === 'xs' || props.size === 'm' || props.size === 'l') size = props.size;
   list.push(`ck-switch--size-${size}`);
   return list;
 });
@@ -179,6 +179,8 @@ $transitionTime = 0.4s
   $height = 22px
   $width = 42px
   $border-width = 1px
+  $icon-size = .8rem
+  $icon-distance = 8px
   $ball-size = $height - (4 * $border-width)
   .ck-switch__slider-container
     .ck-switch__slider
@@ -191,12 +193,47 @@ $transitionTime = 0.4s
         width $ball-size
         left $border-width
         top $border-width
-  .ck-switch__icon-left, .ck-switch__icon-right
-    font-size .8rem
   .ck-switch__icon-left
-    left $border-width * 8
+    font-size $icon-size
+    left $icon-distance
   .ck-switch__icon-right
-    right $border-width * 8
+    font-size $icon-size
+    right $icon-distance
+  .ck-switch__input:checked + .ck-switch__slider-container > .ck-switch__slider:before
+    transform translate($width - $height)
+  /* Disabled */
+  &[aria-disabled='true']
+    .ck-switch__slider
+      border-width $border-width
+    .ck-switch__input:checked + .ck-switch__slider-container > .ck-switch__slider
+      border-width $border-width
+
+      
+// size XS
+.ck-switch.ck-switch--size-xs
+  $height = 14px
+  $width = 24px
+  $border-width = 1px
+  $icon-size = .5rem
+  $icon-distance = 4px
+  $ball-size = $height - (4 * $border-width)
+  .ck-switch__slider-container
+    .ck-switch__slider
+      width $width
+      height $height
+      border-width $border-width
+      border-radius $height
+      &:before
+        height $ball-size
+        width $ball-size
+        left $border-width
+        top $border-width
+  .ck-switch__icon-left
+    font-size $icon-size
+    left $icon-distance
+  .ck-switch__icon-right
+    font-size $icon-size
+    right $icon-distance
   .ck-switch__input:checked + .ck-switch__slider-container > .ck-switch__slider:before
     transform translate($width - $height)
   /* Disabled */
@@ -208,11 +245,14 @@ $transitionTime = 0.4s
 
 
 
+
 // size M
 .ck-switch.ck-switch--size-m
   $height = 34px
   $width = 65px
   $border-width = 2px
+  $icon-size = 1.1rem
+  $icon-distance = 12px
   $ball-size = $height - (4 * $border-width)
   .ck-switch__slider-container
     .ck-switch__slider
@@ -225,12 +265,12 @@ $transitionTime = 0.4s
         width $ball-size
         left $border-width
         top $border-width
-  .ck-switch__icon-left, .ck-switch__icon-right
-    font-size 1.1rem
   .ck-switch__icon-left
-    left $border-width * 6
+    font-size $icon-size
+    left $icon-distance
   .ck-switch__icon-right
-    right $border-width * 6
+    font-size $icon-size
+    right $icon-distance
   .ck-switch__input:checked + .ck-switch__slider-container > .ck-switch__slider:before
     transform translate($width - $height)
   /* Disabled */
@@ -247,6 +287,8 @@ $transitionTime = 0.4s
   $height = 45px
   $width = 90px
   $border-width = 2px
+  $icon-size = 1.5rem
+  $icon-distance = 14px
   $ball-size = $height - (4 * $border-width)
   .ck-switch__slider-container
     .ck-switch__slider
@@ -259,12 +301,12 @@ $transitionTime = 0.4s
         width $ball-size
         left $border-width
         top $border-width
-  .ck-switch__icon-left, .ck-switch__icon-right
-    font-size 1.5rem
   .ck-switch__icon-left
-    left $border-width * 7
+    font-size $icon-size
+    left $icon-distance
   .ck-switch__icon-right
-    right $border-width * 7
+    font-size $icon-size
+    right $icon-distance
   .ck-switch__input:checked + .ck-switch__slider-container > .ck-switch__slider:before
     transform translate($width - $height)
   /* Disabled */

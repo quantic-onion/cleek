@@ -23,7 +23,6 @@ const altNeeded = ref(false);
 const props = defineProps({
   // src
   src: { type: String, default: '' },
-  isFullPath: { type: Boolean, default: false },
   failImgSrc: { type: String, default: '' },
   alt: { type: String, default: '' },
   // size
@@ -43,11 +42,16 @@ const props = defineProps({
 });
 
 let context;
-let isMounted = ref(false);
+let $cleekOptions;
+const isMounted = ref(false);
+
+const isFullPath = computed(() => {
+  return props.src.substring(0, 4) === 'http';
+});
 
 const imageUrl = computed(() => {
   if (!isMounted.value) return '';
-  if (props.isFullPath) return props.src;
+  if (isFullPath.value) return props.src;
   // if (altNeeded.value) {
   //   let failImgSrc = props.failImgSrc;
   //   if (!failImgSrc && globalVariables.defaultFailImg) {
@@ -117,15 +121,15 @@ function clickImg() {
 }
 function getImg(src) {
   let path = '';
-  const $cleekOptions = functions.getCleekOptions(getCurrentInstance);
   if ($cleekOptions) {
-    if ($cleekOptions.imgPath) path = $cleekOptions.imgPath;
+    path = $cleekOptions.img.basePath;
   }
   return `${path}${src}`;
 }
 
 onMounted(() => {
   context = getCurrentInstance().ctx;
+  $cleekOptions = functions.getCleekOptions(getCurrentInstance);
   isMounted.value = true;
 });
 </script>

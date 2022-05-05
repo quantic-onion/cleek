@@ -50,6 +50,7 @@ const computedStyle = computed(() => {
 @require '../styles/index'
 
 .ck-chip
+  text-align center
   display inline-flex
   align-items center
   justify-content center

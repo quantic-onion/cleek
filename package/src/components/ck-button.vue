@@ -5,18 +5,21 @@ type="button"
 :title="title"
 :aria-label="title"
 :disabled="disabled"
+:style="computedStyle"
 @click="onClick($event)"
 )
   ck-icon.ck-button__icon-left(
   v-if="icon"
   :icon="icon"
   :icon-pack="iconPack"
+  :class="{ 'just-icon': !$slots.default }"
   )
   slot
   ck-icon.ck-button__icon-right(
   v-if="iconRight"
   :icon="iconRight"
   :icon-pack="iconPack"
+  :class="{ 'just-icon': !$slots.default }"
   )
 </template>
 
@@ -26,15 +29,23 @@ import validators from '../utils/validators';
 import functions from '../utils/functions';
 import globalVariables from '../utils/globalVariables';
 import ckIcon from './ck-icon.vue';
+import useWindowWidth from '../hooks/windowWidth';
+
+const { windowWidth } = useWindowWidth();
+
+const defaultButtonType = 'outlined';
 
 const props = defineProps({
   // html
   title: { type: String, default: undefined },
   disabled: { type: Boolean, default: false },
   // style
-  type: { type: String, default: 'outlined', validator: validators.buttonType },
+  type: { type: String, default: undefined, validator: validators.buttonType },
   color: { type: String, default: 'primary' },
   align: { type: String, default: 'left', validator: validators.align },
+  size: { type: String, default: 'm', validator: validators.size },
+  width: { type: String, default: '' },
+  rounded: { type: Boolean, default: false },
   // icon
   icon: { type: [String, Array], default: undefined },
   iconPack: { type: String, default: undefined },
@@ -44,46 +55,62 @@ const props = defineProps({
   labelAlign: { type: String, default: undefined },
   // group
   group: { type: String, default: undefined, validator: validators.group },
-  groupBreak: { type: String, default: 's' },
+  widthBreaks: { type: Array, default: undefined },
   groupVertical: { type: String, default: undefined, validator: validators.groupVertical  },
 });
 
-let context;
+let $cleekOptions;
 const isMounted = ref(false);
 
 const emits = defineEmits(['click']);
 
+const realButtonType = computed(() => {
+  // if (!validators.buttonType(props.type)) type = 'outlined';
+  if (props.type) return props.type;
+  if (isMounted.value) {
+    if ($cleekOptions) return $cleekOptions.button.type;
+  }
+  return defaultButtonType;
+});
 const computedClass = computed(() => {
-  const classList = [];
+  const list = [];
   // group
-  classList.push(functions.getGroupClass(props));
+  list.push(functions.getGroupClass(props, windowWidth.value));
   // color
   if (props.color !== 'primary') {
-    if (props.type === 'filled') {
-      classList.push(`ck-component__bg-color--${props.color}`);
+    if (realButtonType.value === 'filled') {
+      list.push(`ck-component__bg-color--${props.color}`);
     } else {
-      classList.push(`ck-component__border-color--${props.color}`);
+      list.push(`ck-component__border-color--${props.color}`);
     }
   }
   // align
-  if (props.align !== 'left') {
-    classList.push(`ck-button__align--${props.align}`);
+  if (props.align === 'center' || props.align === 'right') {
+    list.push(`ck-button__align--${props.align}`);
   }
-  // icon margin
-  if (isMounted.value) {
-    if (!context.$slots.default) {
-      if (props.icon || props.iconRight) {
-        if (!(props.icon && props.iconRight)) classList.push('just-icon');
-      }
+  // rounded
+  if (props.rounded) console.log('rounded');
+  if (props.rounded) list.push('rounded');
+  // type
+  list.push(`type-${realButtonType.value}`);
+  // size
+  if (props.size) list.push(`ck-button-size__${props.size}`);
+  return list;
+});
+const computedStyle = computed(() => {
+  const list = [];
+  // width-break
+  let isWidthDefined = false;
+  if (props.widthBreaks) {
+    const width = functions.getWidthByWidthBreaks(props.widthBreaks, windowWidth.value )
+    if (width) {
+      isWidthDefined = true;
+      list.push({ width });
     }
   }
-
-  // type
-  let type = props.type;
-  if (!validators.buttonType(props.type)) type = 'outlined';
-  classList.push(`type-${type}`)
-  // if (props.size) classList.push(`rs-component-size__${props.size}`);
-  return classList;
+  // width
+  if (props.width && !isWidthDefined) list.push({ width: props.width });
+  return list;
 });
 
 function onClick(event) {
@@ -91,7 +118,7 @@ function onClick(event) {
 }
 
 onMounted(() => {
-  context = getCurrentInstance().ctx;
+  $cleekOptions = functions.getCleekOptions(getCurrentInstance);
   isMounted.value = true;
 });
 </script>
@@ -108,6 +135,8 @@ button
   position relative
   font-size $globalFontSize
   padding $globalPadding (2 * $globalPadding)
+  justify-content flex-start
+  background-color white
   &.ck-button__align--center
     justify-content center
   &.ck-button__align--right
@@ -132,8 +161,12 @@ button
     background-color var(--primary)
     border 1px solid var(--primary)
     color white
+  &.rounded
+    border-radius 10rem
+    &::before
+      border-radius 10rem
   &.type-outlined
-    background-color transparent
+    // background-color transparent
     border 1px solid var(--primary)
     color var(--primary)
   &.type-flat
@@ -152,12 +185,17 @@ button
     color $color-disabled
   > .ck-button__icon-left
     margin-right .5rem
+    &.just-icon
+      margin-right 0
   > .ck-button__icon-right
     margin-left .5rem
-  &.just-icon
-    > .ck-button__icon-left
-      margin-right 0
-    > .ck-button__icon-right
+    &.just-icon
       margin-left 0
-
+  &.ck-button-size__s
+    font-size .7rem
+    min-height unset
+    padding .35rem .5rem
+  &.ck-button-size__l
+    font-size 1.2rem
+    padding .75rem 1.5rem
 </style>

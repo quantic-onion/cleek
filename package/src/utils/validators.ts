@@ -12,6 +12,9 @@ export default {
   align: (type) => {
     return ['left', 'center', 'right'].includes(type)
   },
+  verticalAlign: (type) => {
+    return ['top', 'center', 'bottom'].includes(type)
+  },
   // specials
   buttonType: (type) => {
     return ['filled', 'outlined', 'flat'].includes(type)

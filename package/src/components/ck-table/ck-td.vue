@@ -8,9 +8,9 @@ v-if="isColumnDisplayed"
 </template>
 
 <script setup lang="ts">
-import functions from '../utils/functions';
 import { computed } from 'vue';
-import validators from '../utils/validators';
+import functions from '../../utils/functions';
+import validators from '../../utils/validators';
 
 const props = defineProps({
   col: { type: Object, default: undefined },
@@ -19,6 +19,7 @@ const props = defineProps({
   autoWidth: { type: Boolean, default: false },
   overflowAuto: { type: Boolean, default: false },
   align: { type: String, default: undefined, validator: validators.align },
+  verticalAlign: { type: String, default: undefined, validator: validators.verticalAlign },
   fixedWidth: { type: String, default: '' }, // min and max width
   minWidth: { type: String, default: '' },
   maxWidth: { type: String, default: '' },
@@ -26,10 +27,11 @@ const props = defineProps({
 });
 
 const computedTdClass = computed(() => {
-  return {
-    'auto-width': props.autoWidth,
-    'overflow-auto': props.overflowAuto,
-  };
+  const list = [];
+  if (props.autoWidth) list.push('auto-width');
+  if (props.overflowAuto) list.push('overflow-auto');
+  if (props.verticalAlign) list.push(`vertical-align--${props.verticalAlign}`)
+  return list;
 });
 const computedSpanClass = computed(() => {
   const list = [];
@@ -91,6 +93,10 @@ const isColumnDisplayed = computed(() => {
       justify-content flex-end
       text-align right
       margin-left auto
+    &.vertical-align--top
+      align-items flex-start
+    &.vertical-align--bottom
+      align-items flex-end
     &.no-wrap-text
       white-space nowrap
     &.block

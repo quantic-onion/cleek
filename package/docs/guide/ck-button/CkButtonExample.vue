@@ -9,6 +9,39 @@ ComponentShower(title="Types")
   ck-button(disabled)
     | disabled
 
+ComponentShower(title="Rounded")
+  ck-button(rounded)
+    | Outlined (default)
+  ck-button(type="filled" rounded)
+    | Filled
+  ck-button(type="flat" rounded)
+    | Flat
+  ck-button(disabled rounded)
+    | disabled
+
+ComponentShower(title="Size")
+  ComponentShowerRow(noGap)
+    ck-button(size="s" color="success" type="filled" group="left")
+      | Size S
+    ck-button(size="s" color="warning" type="filled" group="center")
+      | Size S
+    ck-button(size="s" color="danger" type="filled" group="right")
+      | Size S
+  ComponentShowerRow(noGap)
+    ck-button(size="m" color="success" type="filled" group="left")
+      | Size M
+    ck-button(size="m" color="warning" type="filled" group="center")
+      | Size M
+    ck-button(size="m" color="danger" type="filled" group="right")
+      | Size M
+  ComponentShowerRow(noGap)
+    ck-button(size="l" color="success" type="filled" group="left")
+      | Size L
+    ck-button(size="l" color="warning" type="filled" group="center")
+      | Size L
+    ck-button(size="l" color="danger" type="filled" group="right")
+      | Size L
+
 ComponentShower(title="Align")
   ck-button.w-full
     | Default
@@ -26,9 +59,14 @@ ComponentShower(title="Colors")
     | success
   ck-button(color="danger" type="filled")
     | danger
+  ck-button(color="light" type="filled")
+    | light
+  ck-button(color="dark" type="filled")
+    | dark
 
 ComponentShower(title="Icons")
   ck-button(icon="square")
+  ck-button(icon="circle" rounded)
   ck-button(icon="helicopter")
     | Icon
   ck-button(icon="user" icon-right="times")
@@ -48,9 +86,10 @@ ComponentShower(title="Group" noGap)
 
 <script setup lang="ts">
 import ComponentShower from '../../layout/componentsShower/ComponentShower.vue';
+import ComponentShowerRow from '../../layout/componentsShower/ComponentShowerRow.vue';
 import { ckButton } from '../../../src/components/index';
 </script>
 
 <style lang="stylus" scoped>
-@import '../../style/global'
+@import '../../../public/cleek-styles/tiny-tailwind'
 </style>

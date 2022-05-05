@@ -1,59 +1,10 @@
-<template lang="pug">
-ck-table(
-v-model:search="table1.search"
-v-model:currentPage="table1.currentPage"
-:columns="table1.columns"
-:itemsPerPage="table1.itemsPerPage"
-:listLength="table1.listLength"
-)
-  template(v-slot:header)
-    | HOLA, ESTOY EN EL HEADER
-  ck-tr(v-for="item in table1.list")
-    ck-td(align="center") {{ item.id }}
-    ck-td {{ item.name }}
-    ck-td {{ item.surname }}
-    ck-td {{ item.notes }}
-    ck-td(align="center") Borrar
-
-//- table 2
-h3 Alingment
-ck-table(
-:columns="table2.columns"
-)
-  ck-tr(v-for="item in table2.list")
-    ck-td(align="center")
-      ck-button
-        | Detalles
-    ck-td
-      | {{ item.name }}
-    ck-td(align="right") ${{ item.price }}
-
-//- table 3
-h3 Dynamic columns
-div
-  ck-table(
-  hasColumnsManager
-  not-full-width
-  :columns="table3.columns"
-  )
-    template(#header)
-      | Tabla con administrador de columnas
-    template(#default="{ columnsProps }")
-      ck-tr(v-for="item in table3.list")
-        //- quantity
-        ck-td(:col="table3.columns.quantity")
-          | {{ item.quantity }}x
-        //- name
-        ck-td(:col="table3.columns.name")
-          | {{ item.name }}
-        //- price
-        ck-td(:col="table3.columns.price")
-          | ${{ item.price }}
-</template>
-
 <script setup lang="ts">
 import { ref } from 'vue';
 import { ckButton, ckTable, ckTr, ckTd } from '../../../src/components/index';
+import TableEditable from './components/TableEditable.vue';
+import TableResponsive from './components/TableResponsive.vue';
+import TableSimplest from './components/TableSimplest.vue';
+import TableEmpty from './components/TableEmpty.vue';
 
 const table1 = ref({
   search: '',
@@ -105,6 +56,68 @@ const table3 = ref({
   ],
 });
 </script>
+
+<template lang="pug">
+//- .mb-16
+//-   TableEditable
+.mb-16
+  TableSimplest
+.mb-16
+  TableEmpty
+.mb-16
+  TableResponsive
+
+ck-table(
+v-model:search="table1.search"
+v-model:currentPage="table1.currentPage"
+:columns="table1.columns"
+:itemsPerPage="table1.itemsPerPage"
+:listLength="table1.listLength"
+)
+  template(v-slot:header)
+    | HOLA, ESTOY EN EL HEADER
+  ck-tr(v-for="item in table1.list")
+    ck-td(align="center") {{ item.id }}
+    ck-td {{ item.name }}
+    ck-td {{ item.surname }}
+    ck-td {{ item.notes }}
+    ck-td(align="center") Borrar
+
+//- table 2
+h3 Alingment
+ck-table(
+:columns="table2.columns"
+)
+  ck-tr(v-for="item in table2.list")
+    ck-td(align="center")
+      ck-button
+        | Detalles
+    ck-td
+      | {{ item.name }}
+    ck-td(align="right") ${{ item.price }}
+
+//- table 3
+h3 Dynamic columns
+div
+  ck-table(
+  hasColumnsManager
+  not-full-width
+  :columns="table3.columns"
+  )
+    template(#header)
+      | Tabla con administrador de columnas
+    template(#default="{ columnsProps }")
+      ck-tr(v-for="item in table3.list")
+        //- quantity
+        ck-td(:col="table3.columns.quantity")
+          | {{ item.quantity }}x
+        //- name
+        ck-td(:col="table3.columns.name")
+          | {{ item.name }}
+        //- price
+        ck-td(:col="table3.columns.price")
+          | ${{ item.price }}
+</template>
 
 <style lang="stylus" scoped>
 @import '../../../public/cleek-styles/tiny-tailwind'

@@ -8,6 +8,8 @@ ComponentShower(title="Default")
 
 ComponentShower(title="Size")
   ComponentShowerRow
+    ck-switch(v-model="stateTrue" size="xs")
+      | Size XS
     ck-switch(v-model="stateTrue" size="s")
       | Size S
     ck-switch(v-model="stateTrue" size="m")
@@ -15,6 +17,8 @@ ComponentShower(title="Size")
     ck-switch(v-model="stateTrue" size="l")
       | Size L
   ComponentShowerRow
+    ck-switch(v-model="stateTrue" size="xs" icon="dollar-sign")
+      | Size XS
     ck-switch(v-model="stateTrue" size="s" icon="dollar-sign")
       | Size S
     ck-switch(v-model="stateTrue" size="m" icon="dollar-sign")

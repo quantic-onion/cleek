@@ -1,5 +1,15 @@
 <template lang="pug">
 .same-height-container
+  ComponentShower(title="Group break")
+    ComponentShowerRow(noGap)
+      ck-button(label="Group break | Button" group="left" line-break="s")
+        | Button
+      ck-select(label="Group break | Select" group="center" line-break="s")
+      ck-input(label="Group break | Input" group="right" line-break="s")
+    ComponentShowerRow(noGap)
+      ck-input(label="Group break S 1" group="left" line-break="s")
+      ck-input(label="Group break S 2" group="center" line-break="s")
+      ck-input(label="Group break S 3" group="right" line-break="s")
   .same-height__row
     //- button
     ck-button.mt-2(group="left")
@@ -54,7 +64,9 @@
 </template>
 
 <script setup lang="ts">
-import * as cleek from '../../../src/components/index';
+import { ckButton, ckInput, ckSelect, ckSwitch, ckSwitchOptions } from '../../../src/components/index';
+import ComponentShower from '../../layout/componentsShower/ComponentShower.vue';
+import ComponentShowerRow from '../../layout/componentsShower/ComponentShowerRow.vue';
 </script>
 
 <style lang="stylus" scoped>

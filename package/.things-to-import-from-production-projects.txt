@@ -1,0 +1,5 @@
+BINGO CLUB ATLÉTICO SUSANENSE
+  ck-confirm
+  ck-sidebar
+  windowWidth
+  ck-card

@@ -1,1 +1,9 @@
 search "FIXRGBA"
+
+BORRAR TODOS LOS lineBreak & line-break de todos los proyectos (INCLUSO EN CLEEK)
+
+AGREGAR
+
+CK-SELECT
+clearable
+:clearableDefault="1"

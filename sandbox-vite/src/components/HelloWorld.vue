@@ -7,7 +7,6 @@ let context;
 
 onMounted(() => {
   context = getCurrentInstance().ctx;
-  console.log('context.$test', context.$test);
 });
 
 const count = ref(0)
@@ -18,7 +17,8 @@ const count = ref(0)
 
   <h2>{{ $test }}</h2>
 
-  <ck-img src="lit-killah-gaucho.jpg"/>
+  <ck-img src="lit-killah-gaucho.jpg" size="m"/>
+
 
   <p>
     Recommended IDE setup:

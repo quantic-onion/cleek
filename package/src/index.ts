@@ -1,5 +1,7 @@
 import { App, Plugin } from 'vue';
 import { store } from './store'
+import ckNotifyComponent from './components/ck-notify/ck-notify.vue';
+import defaultCleekOptions from './default-cleek-options';
 
 // vue components
 import * as components from './components/index.js';
@@ -8,35 +10,51 @@ function setDefaultConfig(options) {
   globalVariables.imagesFolderPath = options.imgPath;
 }
 
-function setDefaultColors(options) {
-  if (!options) return;
+function setRootColors(colors) {
   var r = document.querySelector(':root');
-  const colorList = [
-    'primary',
-    'secondary',
-    'primary',
-    'secondary',
-    'success',
-    'warning',
-    'danger',
-    'dark',
-    'light',
-  ];
-  if (options.colors) {
-    colorList.forEach((colorName) => {
-      const colorValue = options.colors[colorName];
-      if (colorValue) r.style.setProperty(`--${colorName}`, colorValue);
-    });
+  for (const key in colors) {
+    const colorValue = colors[key];
+    r.style.setProperty(`--${key}`, colorValue);
   }
 }
 
+function getCleekOptions(userOptions) {
+  const options = defaultCleekOptions;
+  for (const category in defaultCleekOptions) {
+    if (userOptions[category]) {
+      for (const key in userOptions[category]) {
+        const value = userOptions[category][key];
+        if (value) options[category][key] = value;
+      }
+    }
+  }
+  setRootColors(options.colors);
+  // console.log('finalOptions', options);
+  return options;
+}
+
+const cleekGlobalComponent = {
+  notify: {
+    ckNotify() {
+
+    },
+    ckSuccess() {
+
+    },
+    ckDanger() {
+
+    },
+    ckWarning() {
+
+    },
+  },
+};
+
 // install function executed by Vue.use()
 const install: Exclude<Plugin['install'], undefined> = function installCleek(app: App, options: any) {
-
-  app.config.globalProperties.$cleekOptions = options;
-
-  console.log('arranco paquete', options);
-  setDefaultColors(options);
+  app.config.globalProperties.$cleekOptions = getCleekOptions(options);
+  // app.config.globalProperties.$cleek = ckNotifyComponent;
+  // app.config.globalProperties.$cleek = cleekGlobalComponent;
   // vue components
   Object.entries(components).forEach(([componentName, component]) => {
     app.component(componentName, component);

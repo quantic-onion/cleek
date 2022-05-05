@@ -11,6 +11,7 @@ import { computed } from 'vue';
 const props = defineProps({
   for: { type: String, default: '' },
   align: { type: String, default: '' },
+  size: { type: String, default: 'm' },
 });
 
 const computedClass = computed(() => {
@@ -19,6 +20,8 @@ const computedClass = computed(() => {
   let align = 'left';
   if (props.align === 'center' || props.align === 'right') align = props.align;
   list.push(`ck-align--${align}`);
+  // size
+  list.push(`ck-size--${props.size}`);
   return list;
 });
 </script>
@@ -28,13 +31,22 @@ const computedClass = computed(() => {
 
 .ck-label
   width 100%
-  padding-x 5px
+  padding-x .5rem
   display flex
-  font-size 13.5px
+  font-size .9rem
+  color #626262
   &.ck-align--left
     justify-content flex-start
   &.ck-align--right
     justify-content flex-end
   &.ck-align--center
     justify-content center
+  &.ck-size--s
+    font-size .7rem
+  &.ck-size--l
+    padding-x .5rem
+    font-size 1.25rem
+  &.ck-size--xl
+    padding-x .75rem
+    font-size 1.5rem
 </style>

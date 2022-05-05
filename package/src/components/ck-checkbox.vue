@@ -91,6 +91,7 @@ function onTrigger() {
   transform-origin: bottom left;
   transform: rotate(45deg);
   opacity: 0;
+  box-sizing border-box
 }
 
 .ck-checkbox__label {

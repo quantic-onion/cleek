@@ -1,6 +1,7 @@
 <template lang="pug">
 .ck-icon(
 :class="computedClass"
+:style="computedStyle"
 @click="onClick($event)"
 )
   font-awesome-icon(
@@ -25,6 +26,7 @@ import { fas } from '@fortawesome/free-solid-svg-icons';
 import { far } from '@fortawesome/free-regular-svg-icons';
 import { fab } from '@fortawesome/free-brands-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
+import functions from '../utils/functions';
 
 library.add(fas);
 library.add(far);
@@ -54,10 +56,20 @@ const computediconPack = computed(() => {
   return defaultPackage;
 });
 const computedClass = computed(() => {
-  const classList = [];
+  const list = [];
   // group
-  if (props.color) classList.push(`ck-component__color--${props.color}`);
-  return classList;
+  if (props.color && functions.isColorTemplateVariable(props.color)) {
+    list.push(`ck-component__color--${props.color}`);
+  }
+  return list;
+});
+const computedStyle = computed(() => {
+  const list = [];
+  // group
+  if (props.color && !functions.isColorTemplateVariable(props.color)) {
+    list.push({ color: props.color })
+  }
+  return list;
 });
 
 function onClick(event) {

@@ -1,18 +1,43 @@
 export default {
+  // getCleekOptions
   // getGroupClass
+  // getWidthByWidthBreaks
   // isColorTemplateVariable
   // isColumnDisplayed
-  // getCleekOptions
+  // 
 
-  getGroupClass({ group = '', groupVertical = '', groupBreak = '' } = {}) {
-    const _screenSize = '';
-    if (groupBreak && groupBreak === _screenSize) return [];
+  getCleekOptions(getCurrentInstance) {
+    return getCurrentInstance().appContext.app.config.globalProperties.$cleekOptions;
+  },
+  getGroupClass({ group = '', groupVertical = '', widthBreaks = [] } = {}, windowWidth) {
+    const componentWidth = this.getWidthByWidthBreaks(widthBreaks, windowWidth);
     const classList: string[] = [];
     // group
-    if (group) classList.push(`ck-component__group--${group}`);
+    if (group && componentWidth !== '100%') classList.push(`ck-component__group--${group}`);
     // groupVertical
     if (groupVertical) classList.push(`ck-component__group-vertical--${groupVertical}`);
     return classList;
+  },
+  getWidthByWidthBreaks(widthBreaks, windowWidth) {
+    if (widthBreaks) {
+      let realWidthBreaks = [...widthBreaks];
+      if (
+        realWidthBreaks.length === 2
+        && typeof realWidthBreaks[0] === 'number'
+        && typeof realWidthBreaks[1] === 'string'
+      ) {
+        realWidthBreaks = [realWidthBreaks];
+      }
+      // ordernarlos del más grande al más chico
+      let finalWidth = 0;
+      realWidthBreaks.forEach((widthBreak) => {
+        const [windowBreak, width] = widthBreak;
+        if (windowWidth >= windowBreak) {
+          finalWidth = width;
+        }
+      })
+      return finalWidth;
+    }
   },
   isColorTemplateVariable(color) {
     if (color === 'primary') return true;
@@ -31,8 +56,5 @@ export default {
       return false;
     }
     return true;
-  },
-  getCleekOptions(getCurrentInstance) {
-    return getCurrentInstance().appContext.app.config.globalProperties.$cleekOptions;
   },
 }; // export default
