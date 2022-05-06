@@ -1,7 +1,10 @@
 import { App, Plugin } from 'vue';
 import { store } from './store'
+import FloatingVue from 'floating-vue'
 import ckNotifyComponent from './components/ck-notify/ck-notify.vue';
 import defaultCleekOptions from './default-cleek-options';
+
+import 'floating-vue/dist/style.css'
 
 // vue components
 import * as components from './components/index.js';
@@ -53,6 +56,7 @@ const cleekGlobalComponent = {
 // install function executed by Vue.use()
 const install: Exclude<Plugin['install'], undefined> = function installCleek(app: App, options: any) {
   app.config.globalProperties.$cleekOptions = getCleekOptions(options);
+  app.use(FloatingVue)
   // app.config.globalProperties.$cleek = ckNotifyComponent;
   // app.config.globalProperties.$cleek = cleekGlobalComponent;
   // vue components

@@ -105,7 +105,7 @@ const props = defineProps({
   noResultsText: { type: String, default: 'No se encontraron resultados' },
   notOverflow: { type: Boolean, default: false },
   // mobile
-  mobileMaxWidth: { type: [Number, String], default: 800 },
+  mobileMaxWidth: { type: [Number, String], default: 0 },
 });
 
 const emits = defineEmits(['refreshList', 'update:search',  'update:currentPage']);
