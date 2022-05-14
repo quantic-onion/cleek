@@ -62,12 +62,20 @@ ck-box-shadow(val = 0.05, color = black)
 justify-align-center()
   align-items center
   justify-content center
-flex-all-center()
+
+flex-center()
   display flex
-  justify-align-center()
-inline-flex-all-center()
+  align-items center
+  justify-content center
+inline-flex-center()
   display inline-flex
-  justify-align-center()
+  align-items center
+  justify-content center
+
+flex-all-center() // should be deleted
+  flex-center()
+inline-flex-all-center() // should be deleted
+  inline-flex-center()
 
 //
 //
