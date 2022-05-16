@@ -1,6 +1,7 @@
 import vue from '@vitejs/plugin-vue';
 import { defineConfig } from 'vite';
 import path from 'path';
+import typescript from 'rollup-plugin-typescript2';
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -11,6 +12,9 @@ export default defineConfig({
     },
   },
   build: {
+    plugins: [
+      typescript(/*{ plugin options }*/)
+    ],
     lib: {
       entry: path.resolve(__dirname, 'src/index.ts'),
       name: 'cleek',
