@@ -17,7 +17,7 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 import functions from '../utils/functions.ts';
-import ckLabel from './ck-label.vue';
+import CkLabel from './ck-label.vue';
 import useWindowWidth from '../hooks/windowWidth';
 
 const { windowWidth } = useWindowWidth(); 

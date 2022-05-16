@@ -11,7 +11,7 @@ ck-tooltip(text="")
 
 <script setup lang="ts">
 import { ref } from 'vue';
-import { ckTooltip, ckInput } from '../../../src/components/index';
+import { CkTooltip, CkInput } from '../../../src/components/index';
 
 // const variableTooltip = ref('Contenido variable...');
 </script>

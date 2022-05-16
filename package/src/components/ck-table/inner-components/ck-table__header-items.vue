@@ -37,8 +37,8 @@
 
 <script setup lang="ts">
 import { computed } from 'vue'
-import ckButton from '../../ck-button.vue';
-import ckInput from '../../ck-input.vue';
+import CkButton from '../../ck-button.vue';
+import CkInput from '../../ck-input.vue';
 
 const props = defineProps({
   search: { type: String, default: undefined, },

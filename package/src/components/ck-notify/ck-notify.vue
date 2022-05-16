@@ -15,10 +15,10 @@ Teleport(to="body" v-if="isActive")
 <script setup lang="ts">
 import { getCurrentInstance, ref } from 'vue';
 import functions from '../../utils/functions';
-import ckIcon from '../ck-icon.vue';
+import CkIcon from '../ck-icon.vue';
 
 defineExpose({
-  ckNotify,
+  CkNotify,
   ckNotifySuccess,
   ckNotifyError ,
   ckNotifyWarning,
@@ -35,7 +35,7 @@ function closeNotification() {
   isActive.value = false;
 }
 
-function ckNotify({ text = '', title = '', color = '#ccc', duration = defaultDuration.value }) {
+function CkNotify({ text = '', title = '', color = '#ccc', duration = defaultDuration.value }) {
   // set info
   globalTitle.value = title;
   globalText.value = text;
@@ -50,7 +50,7 @@ function ckNotify({ text = '', title = '', color = '#ccc', duration = defaultDur
 
 function ckNotifySuccess(text: string = '', title: string = 'Éxito') {
   // const $cleekOptions = functions.getCleekOptions(getCurrentInstance);
-  ckNotify({
+  CkNotify({
     text,
     title,
     color: '#66CC00',
@@ -58,10 +58,10 @@ function ckNotifySuccess(text: string = '', title: string = 'Éxito') {
   });
 }
 function ckNotifyError (text: string = '', title: string = 'Error') {
-  ckNotify({ text, title, color: '#FF3333'});
+  CkNotify({ text, title, color: '#FF3333'});
 }
 function ckNotifyWarning(text: string = '', title: string = 'Atención') {
-  ckNotify({ text, title, color: '#FFDD33'});
+  CkNotify({ text, title, color: '#FFDD33'});
 }
 </script>
 

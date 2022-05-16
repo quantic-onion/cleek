@@ -15,8 +15,8 @@ title="Administrador de columnas"
 <script setup lang="ts">
 import { computed, ref, watch } from 'vue';
 import functions from '../../../utils/functions';
-import ckCheckbox from '../../ck-checkbox.vue';
-import ckPopup from '../../ck-popup.vue';
+import CkCheckbox from '../../ck-checkbox.vue';
+import CkPopup from '../../ck-popup.vue';
 
 const props = defineProps({
   modelValue: { type: Boolean, required: true },

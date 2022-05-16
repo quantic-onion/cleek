@@ -36,7 +36,7 @@ v-bind="computedAttributes"
 
 <script setup lang="ts">
 import { computed } from 'vue';
-import ckIcon from './ck-icon.vue';
+import CkIcon from './ck-icon.vue';
 
 const props = defineProps({
   modelValue: { type: [Boolean, Number], default: false },    

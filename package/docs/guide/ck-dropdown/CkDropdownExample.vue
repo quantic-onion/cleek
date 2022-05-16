@@ -16,8 +16,8 @@ ComponentShower(title="Default")
 
 <script setup lang="ts">
 import ComponentShower from '../../layout/componentsShower/ComponentShower.vue';
-// import { ckDropdown, ckDropdownContent, ckDropdownItem } from '../../../src/components/index';
-import { ckDropdown, ckButton } from '../../../src/components/index';
+// import { CkDropdown, CkDropdownContent, CkDropdownItem } from '../../../src/components/index';
+import { CkDropdown, CkButton } from '../../../src/components/index';
 </script>
 
 <style lang="stylus" scoped>

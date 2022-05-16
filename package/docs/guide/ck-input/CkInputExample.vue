@@ -68,7 +68,7 @@ ComponentShower(title="Not working")
 <script setup lang="ts">
 // name: 'CkInputExample',
 import { ref } from 'vue';
-import { ckButton, ckInput } from '../../../src/components/index';
+import { CkButton, CkInput } from '../../../src/components/index';
 import ComponentShower from '../../layout/componentsShower/ComponentShower.vue';
 import ComponentShowerRow from '../../layout/componentsShower/ComponentShowerRow.vue';
 

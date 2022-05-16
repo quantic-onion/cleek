@@ -1,29 +1,29 @@
-export { default as ckDropdown }      from './ck-dropdown/ck-dropdown.vue';
-export { default as ckNavbar }        from './ck-navbar/ck-navbar.vue';
-export { default as ckNotify }        from './ck-notify/ck-notify.vue';
-export { default as ckTable }         from './ck-table/ck-table.vue';
-export { default as ckTd }            from './ck-table/ck-td.vue';
-export { default as ckTh }            from './ck-table/ck-th.vue';
-export { default as ckTr }            from './ck-table/ck-tr.vue';
-// export { default as ckDropdownContent } from './ck-dropdown/ck-dropdown-content.vue';
-// export { default as ckDropdownItem } from './ck-dropdown/ck-dropdown-item.vue';
+export { default as CkDropdown }      from './ck-dropdown/ck-dropdown.vue';
+export { default as CkNavbar }        from './ck-navbar/ck-navbar.vue';
+export { default as CkNotify }        from './ck-notify/ck-notify.vue';
+export { default as CkTable }         from './ck-table/ck-table.vue';
+export { default as CkTd }            from './ck-table/ck-td.vue';
+export { default as CkTh }            from './ck-table/ck-th.vue';
+export { default as CkTr }            from './ck-table/ck-tr.vue';
+// export { default as CkDropdownContent } from './ck-dropdown/ck-dropdown-content.vue';
+// export { default as CkDropdownItem } from './ck-dropdown/ck-dropdown-item.vue';
 
-export { default as ckButton }        from './ck-button.vue';
-export { default as ckCheckbox }      from './ck-checkbox.vue'
-export { default as ckChip }          from './ck-chip.vue';
-export { default as ckDiv }           from './ck-div.vue';
-export { default as ckIcon }          from './ck-icon.vue';
-export { default as ckImg }           from './ck-img.vue';
-export { default as ckInput }         from './ck-input.vue';
-export { default as ckLabel }         from './ck-label.vue';
-export { default as ckPopup }         from './ck-popup.vue'
-export { default as ckRadio }         from './ck-radio.vue'
-export { default as ckSelect }        from './ck-select.vue';
-export { default as ckSwitch }        from './ck-switch.vue';
-export { default as ckSwitchOptions } from './ck-switch-options.vue';
-export { default as ckTextarea }      from './ck-textarea.vue';
-export { default as ckTooltip }       from './ck-tooltip.vue';
-// export { default as ckRouterLink } from './not-avaible/ck-router-link.vue';
+export { default as CkButton }        from './ck-button.vue';
+export { default as CkCheckbox }      from './ck-checkbox.vue'
+export { default as CkChip }          from './ck-chip.vue';
+export { default as CkDiv }           from './ck-div.vue';
+export { default as CkIcon }          from './ck-icon.vue';
+export { default as CkImg }           from './ck-img.vue';
+export { default as CkInput }         from './ck-input.vue';
+export { default as CkLabel }         from './ck-label.vue';
+export { default as CkPopup }         from './ck-popup.vue'
+export { default as CkRadio }         from './ck-radio.vue'
+export { default as CkSelect }        from './ck-select.vue';
+export { default as CkSwitch }        from './ck-switch.vue';
+export { default as CkSwitchOptions } from './ck-switch-options.vue';
+export { default as CkTextarea }      from './ck-textarea.vue';
+export { default as CkTooltip }       from './ck-tooltip.vue';
+// export { default as CkRouterLink } from './not-avaible/ck-router-link.vue';
 
 
 // export { default as Input } from './not-avaible/Input.vue'

@@ -28,7 +28,7 @@ import { computed, getCurrentInstance, onMounted, ref } from 'vue';
 import validators from '../utils/validators';
 import functions from '../utils/functions';
 import globalVariables from '../utils/globalVariables';
-import ckIcon from './ck-icon.vue';
+import CkIcon from './ck-icon.vue';
 import useWindowWidth from '../hooks/windowWidth';
 
 const { windowWidth } = useWindowWidth();

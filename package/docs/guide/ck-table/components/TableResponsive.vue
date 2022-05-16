@@ -31,7 +31,7 @@ ck-table(:columns="columns")
 
 <script setup lang="ts">
 import { ref } from 'vue';
-import { ckButton, ckInput, ckTable, ckTr, ckTd } from '../../../../src/components/index';
+import { CkButton, CkInput, CkTable, CkTr, CkTd } from '../../../../src/components/index';
 
 const columns = ref({
     quantity: { title: 'Cant.', align: 'right' },

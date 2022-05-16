@@ -7,7 +7,7 @@ ck-th(
 </template>
 
 <script setup lang="ts">
-import ckTh from '../ck-th.vue';
+import CkTh from '../ck-th.vue';
 
 const props = defineProps({
   col: { type: Object, required: true },

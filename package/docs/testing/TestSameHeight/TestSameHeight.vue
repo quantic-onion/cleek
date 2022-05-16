@@ -64,7 +64,7 @@
 </template>
 
 <script setup lang="ts">
-import { ckButton, ckInput, ckSelect, ckSwitch, ckSwitchOptions } from '../../../src/components/index';
+import { CkButton, CkInput, CkSelect, CkSwitch, CkSwitchOptions } from '../../../src/components/index';
 import ComponentShower from '../../layout/componentsShower/ComponentShower.vue';
 import ComponentShowerRow from '../../layout/componentsShower/ComponentShowerRow.vue';
 </script>

@@ -8,7 +8,7 @@ ComponentShower(title="Disabled")
 
 <script setup lang="ts">
 import ComponentShower from '../../layout/componentsShower/ComponentShower.vue';
-import { ckRouterLink } from '../../../src/components/index';
+import { CkRouterLink } from '../../../src/components/index';
 </script>
 
 <style lang="stylus" scoped>

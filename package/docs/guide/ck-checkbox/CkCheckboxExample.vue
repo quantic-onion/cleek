@@ -13,7 +13,7 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
-import { ckCheckbox } from '../../../src/components/index'
+import { CkCheckbox } from '../../../src/components/index'
 
 const state = ref(false);
 </script>

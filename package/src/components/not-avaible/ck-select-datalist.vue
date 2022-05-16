@@ -28,8 +28,8 @@ form.ck-select(action="/action_page.php" method="get")
 <script setup lang="ts">
 import { ref, computed } from 'vue';
 import functions from '../utils/functions.ts';
-import ckLabel from './ck-label.vue';
-import ckIcon from './ck-icon.vue';
+import CkLabel from './ck-label.vue';
+import CkIcon from './ck-icon.vue';
 import qm from '../../node_modules/quantic-methods/dist/quantic-methods.es.ts';
 const { qmStr } = qm;
 // name: 'CkSelect',

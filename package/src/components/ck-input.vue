@@ -38,8 +38,8 @@
 import { computed, ref } from 'vue';
 import functions from '../utils/functions';
 import validators from '../utils/validators';
-import ckLabel from './ck-label.vue';
-import ckIcon from './ck-icon.vue';
+import CkLabel from './ck-label.vue';
+import CkIcon from './ck-icon.vue';
 import useWindowWidth from '../hooks/windowWidth';
 
 const { windowWidth } = useWindowWidth(); 

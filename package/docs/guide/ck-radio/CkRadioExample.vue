@@ -18,7 +18,7 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
-import { ckRadio } from '../../../src/components/index';
+import { CkRadio } from '../../../src/components/index';
 
 const selectedValue1 = ref('value1');
 const selectedValue2 = ref('value1');

@@ -59,7 +59,7 @@ ComponentShower(title="Disabled")
 import { ref } from 'vue';
 import ComponentShower from '../../layout/componentsShower/ComponentShower.vue';
 import ComponentShowerRow from '../../layout/componentsShower/ComponentShowerRow.vue';
-import { ckSwitch } from '../../../src/components/index'
+import { CkSwitch } from '../../../src/components/index'
 
 const state = ref(false);
 const stateTrue = ref(true);

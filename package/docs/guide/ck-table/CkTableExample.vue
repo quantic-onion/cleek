@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import { ckButton, ckTable, ckTr, ckTd } from '../../../src/components/index';
+import { CkButton, CkTable, CkTr, CkTd } from '../../../src/components/index';
 import TableEditable from './components/TableEditable.vue';
 import TableResponsive from './components/TableResponsive.vue';
 import TableSimplest from './components/TableSimplest.vue';

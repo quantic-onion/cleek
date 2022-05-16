@@ -22,7 +22,7 @@ div
 
 <script setup lang="ts">
 import { ref } from 'vue';
-import { ckSwitchOptions } from '../../../src/components/index';
+import { CkSwitchOptions } from '../../../src/components/index';
 
 const iLikeMen = ref(false);
 const SelectedTeam = ref({});

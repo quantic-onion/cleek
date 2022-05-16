@@ -26,13 +26,13 @@ ComponentShower(title="Types")
 import { ref } from 'vue';
 import ComponentShower from '../../layout/componentsShower/ComponentShower.vue';
 import ComponentShowerRow from '../../layout/componentsShower/ComponentShowerRow.vue';
-import { ckNotify, ckButton, ckInput } from '../../../src/components/index';
+import { CkNotify, CkButton, CkInput } from '../../../src/components/index';
 
 const refCkNotify = ref(null);
 const text = ref('Holis');
 
 function testNotify() {
-  refCkNotify.value.ckNotify({ text: text.value });
+  refCkNotify.value.CkNotify({ text: text.value });
 }
 function testNotifySuccess() {
   refCkNotify.value.ckNotifySuccess(text.value);

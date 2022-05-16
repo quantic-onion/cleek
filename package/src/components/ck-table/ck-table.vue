@@ -71,8 +71,8 @@ v-model="IsPopupActive.columnsManager"
 
 <script setup lang="ts">
 import { onBeforeUnmount, computed, nextTick, onMounted, ref } from 'vue';
-import ckTr from './ck-tr.vue';
-import ckTd from './ck-td.vue';
+import CkTr from './ck-tr.vue';
+import CkTd from './ck-td.vue';
 import ckTableTitle from './inner-components/ck-table__title.vue';
 import TableHeaderItems from './inner-components/ck-table__header-items.vue';
 import TablePagination from './inner-components/ck-table__pagination.vue';

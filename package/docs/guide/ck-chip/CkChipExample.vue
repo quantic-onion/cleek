@@ -27,7 +27,7 @@ ComponentShower(title="Colors")
 
 <script setup lang="ts">
 import ComponentShower from '../../layout/componentsShower/ComponentShower.vue';
-import { ckChip } from '../../../src/components/index';
+import { CkChip } from '../../../src/components/index';
 </script>
 
 <style lang="stylus" scoped>

@@ -19,7 +19,7 @@ div
 </template>
 
 <script setup lang="ts">
-import { ckIcon } from '../../../src/components/index';
+import { CkIcon } from '../../../src/components/index';
 </script>
 
 <style lang="stylus" scoped>

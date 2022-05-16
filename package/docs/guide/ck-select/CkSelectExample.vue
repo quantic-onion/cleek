@@ -70,7 +70,7 @@ ComponentShower(title="Group break")
 
 <script setup lang="ts">
 import { computed, ref } from 'vue';
-import { ckSelect } from '../../../src/components/index';
+import { CkSelect } from '../../../src/components/index';
 import ComponentShower from '../../layout/componentsShower/ComponentShower.vue';
 
 const selectedId = ref(0);

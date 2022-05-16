@@ -19,7 +19,7 @@ ComponentShower(title="width-breaks")
 import { ref } from 'vue';
 import ComponentShower from '../../layout/componentsShower/ComponentShower.vue';
 import ComponentShowerRow from '../../layout/componentsShower/ComponentShowerRow.vue';
-import { ckDiv, ckInput, ckSelect } from '../../../src/components/index';
+import { CkDiv, CkInput, CkSelect } from '../../../src/components/index';
 
 const optionsExample = ref([
   { id: 1, name: 'Bueno' },

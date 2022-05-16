@@ -8,7 +8,7 @@ ck-label.mb-2(align="right")
 </template>
 
 <script setup lang="ts">
-import { ckLabel } from '../../../src/components/index';
+import { CkLabel } from '../../../src/components/index';
 </script>
 
 <style lang="stylus" scoped>

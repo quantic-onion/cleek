@@ -33,8 +33,8 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 import VuePerfectScrollbar from 'vue-perfect-scrollbar';
-import ckButton from './ck-button.vue';
-import ckIcon from './ck-icon.vue';
+import CkButton from './ck-button.vue';
+import CkIcon from './ck-icon.vue';
 
 const props = defineProps({
   modelValue: { type: Boolean },

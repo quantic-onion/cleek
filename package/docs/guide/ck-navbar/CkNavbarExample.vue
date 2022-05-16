@@ -12,7 +12,7 @@ ComponentShower(title="Default" dark)
 
 <script setup lang="ts">
 import ComponentShower from '../../layout/componentsShower/ComponentShower.vue';
-import { ckNavbar } from '../../../src/components/index';
+import { CkNavbar } from '../../../src/components/index';
 </script>
 
 <style lang="stylus" scoped>

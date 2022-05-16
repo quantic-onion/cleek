@@ -6,7 +6,7 @@
 
 <script setup lang="ts">
 import { computed } from 'vue';
-import ckLabel from './ck-label.vue';
+import CkLabel from './ck-label.vue';
 
 const props = defineProps({
   modelValue: { },

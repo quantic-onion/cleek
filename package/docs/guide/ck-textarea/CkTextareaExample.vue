@@ -46,7 +46,7 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
-import { ckTextarea } from '../../../src/components/index'
+import { CkTextarea } from '../../../src/components/index'
 
 const labelText = ref('');
 const placeholderLabelText = ref('');

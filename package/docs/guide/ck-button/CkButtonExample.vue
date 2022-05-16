@@ -87,7 +87,7 @@ ComponentShower(title="Group" noGap)
 <script setup lang="ts">
 import ComponentShower from '../../layout/componentsShower/ComponentShower.vue';
 import ComponentShowerRow from '../../layout/componentsShower/ComponentShowerRow.vue';
-import { ckButton } from '../../../src/components/index';
+import { CkButton } from '../../../src/components/index';
 </script>
 
 <style lang="stylus" scoped>
