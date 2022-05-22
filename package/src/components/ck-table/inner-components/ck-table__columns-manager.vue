@@ -1,3 +1,62 @@
+<script setup lang="ts">
+import { computed, ref, watch } from 'vue';
+import type { Ref } from 'vue';
+// components
+import CkCheckbox from '../../ck-checkbox.vue';
+import CkPopup from '../../ck-popup.vue';
+// hooks
+import functions from '../../../utils/functions';
+// types
+import type { ColumnItem } from '../../../types/table';
+
+type ColumnCheckableItem = {
+  name: string;
+  title: string;
+  value: boolean;
+}
+
+const props = defineProps<{
+  modelValue: boolean;
+  columns?: object;
+  columnsArray?: ColumnItem[];
+}>();
+
+const emits = defineEmits<{
+  (e: 'update:modelValue', value: boolean): void;
+}>();
+
+let columnsCheckable: Ref<ColumnCheckableItem[]> = ref([]);
+
+const isActive = computed({
+  get() { return props.modelValue; },
+  set(val: boolean) { emits('update:modelValue', val); },
+});
+
+watch(() => isActive.value, (val) => {
+  if (!val) return;
+  setColumnsCheckable();
+});
+
+function setColumnsCheckable() {
+  const list: ColumnCheckableItem[] = [];
+  (props.columnsArray || []).forEach(col => {
+    if (!col.unchangeable) {
+      list.push({
+        name: col.name,
+        title: col.title,
+        value: functions.isColumnDisplayed(col),
+      });
+    }
+  });
+  columnsCheckable.value = list;
+}
+
+function setColumnDisplayValue(colName: string, value: any) {
+  // @ts-ignore
+  props.columns[colName].isDisplayed = value;
+}
+</script>
+
 <template lang="pug">
 ck-popup(
 v-model="isActive"
@@ -11,55 +70,6 @@ title="Administrador de columnas"
       )
         | {{ col.title }}
 </template>
-
-<script setup lang="ts">
-import { computed, ref, watch } from 'vue';
-import functions from '../../../utils/functions';
-import CkCheckbox from '../../ck-checkbox.vue';
-import CkPopup from '../../ck-popup.vue';
-
-const props = defineProps({
-  modelValue: { type: Boolean, required: true },
-  columns: { type: Object, required: true },
-  columnsArray: { type: Array, required: true },
-});
-
-const emits = defineEmits(['update:modelValue']);
-
-let columnsCheckable = ref([]);
-
-const isActive = computed({
-  get() {
-    return props.modelValue;
-  },
-  set(val) {
-    emits('update:modelValue', val);
-  }
-});
-
-watch(() => isActive.value, (val) => {
-  if (!val) return;
-  setColumnsCheckable();
-});
-
-function setColumnsCheckable() {
-  const list = [];
-  props.columnsArray.forEach(col => {
-    if (!col.unchangeable) {
-      list.push({
-        name: col.name,
-        title: col.title,
-        value: functions.isColumnDisplayed(col),
-      });
-    }
-  });
-  columnsCheckable.value = list;
-}
-
-function setColumnDisplayValue(colName, value) {
-  props.columns[colName].isDisplayed = value;
-}
-</script>
 
 <style lang="stylus" scoped>
 .columns-manger-container

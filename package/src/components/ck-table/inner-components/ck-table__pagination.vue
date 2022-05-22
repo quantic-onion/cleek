@@ -1,3 +1,82 @@
+<script setup lang="ts">
+import { computed } from 'vue';
+// components
+import CkInput from '../../ck-input.vue';
+import CkIcon from '../../ck-icon.vue';
+// hooks
+import functions from '../../../utils/functions';
+
+const props = defineProps<{
+  currentPage: number;
+  align: 'left' | 'center' | 'right';
+  itemsPerPage: number;
+  listLength: number;
+}>();
+
+const emits = defineEmits<{
+  (e: 'refreshList'): void;
+  (e: 'update:currentPage', value: number): void;
+}>();
+
+const itemsShowed = 5;
+
+const currentPageLocal2 = computed({
+  get() { return props.currentPage; },
+  set() {
+    return;
+  },
+});
+const hasArrowLeft = computed(() => {
+  if (!listLeft.value.length) return false;
+  return listLeft.value[0] !== 1;
+});
+const totalPages = computed(() => {
+  return Math.ceil(props.listLength / props.itemsPerPage);
+});
+const hasArrowRight = computed(() => {
+  if (!listRight.value.length) return false;
+  return listRight.value[listRight.value.length -1] !== totalPages.value;
+});
+const listLeft = computed(() => {
+  if (!props.listLength) return [];
+  const list = [];
+  const listLength = (itemsShowed - 1) / 2;
+  for (const num of Array(listLength).keys()) {
+    const listItem = props.currentPage - num - 1;
+    if (listItem > 0) list.unshift(listItem);
+  }
+  return list;
+});
+const listRight = computed(() => {
+  if (!props.listLength) return [];
+  const list = [];
+  const listLength = (itemsShowed - 1) / 2;
+  for (const num of Array(listLength).keys()) {
+    const listItem = props.currentPage + num + 1;
+    if (listItem <= totalPages.value) list.push(listItem);
+  }
+  return list;
+});
+
+// updateCurrentPage
+// validateInputNumber
+function updateCurrentPage(val: number) {
+  emits('update:currentPage', val);
+  emits('refreshList');
+}
+function validateInputNumber(val: number) {
+  val = +val;
+  if (val > totalPages.value) val = totalPages.value; 
+  if (val < 1) val = 1; 
+  if (val === props.currentPage) return;
+  updateCurrentPage(val);
+}
+
+functions.preventUnusedError([
+  validateInputNumber,
+]);
+</script>
+
 <template lang="pug">
 .ck-table__pagination-container(
 v-if="currentPage && totalPages > 1"
@@ -38,80 +117,6 @@ v-if="currentPage && totalPages > 1"
     )
       ck-icon(icon="arrow-right")
 </template>
-
-<script setup lang="ts">
-import CkInput from '../../ck-input.vue';
-import CkIcon from '../../ck-icon.vue';
-</script>
-
-<script lang="ts">
-const itemsShowed = 5;
-export default {
-  name: 'CkTablePagination',
-  props: {
-    currentPage: { type: Number, required: true },
-    align: { type: String, required: true },
-    itemsPerPage: { type: Number, required: true },
-    listLength: { type: Number, default: 0 },
-  },
-  emits: ['refreshList', 'update:currentPage'],
-  computed: {
-    currentPageLocal2: {
-      get() { return this.currentPage; },
-      set(val) {
-        return;
-      },
-    },
-    hasArrowLeft() {
-      if (!this.listLeft.length) return false;
-      return this.listLeft[0] !== 1;
-    },
-    totalPages() {
-      return Math.ceil(this.listLength / this.itemsPerPage);
-    },
-    hasArrowRight() {
-      if (!this.listRight.length) return false;
-      return this.listRight[this.listRight.length -1] !== this.totalPages;
-    },
-    listLeft() {
-      if (!this.listLength) return [];
-      const list = [];
-      const listLength = (itemsShowed - 1) / 2;
-      for (const num of Array(listLength).keys()) {
-        const listItem = this.currentPage - num - 1;
-        if (listItem > 0) list.unshift(listItem);
-      }
-      return list;
-    },
-    listRight() {
-      if (!this.listLength) return [];
-      const list = [];
-      const listLength = (itemsShowed - 1) / 2;
-      for (const num of Array(listLength).keys()) {
-        const listItem = this.currentPage + num + 1;
-        if (listItem <= this.totalPages) list.push(listItem);
-      }
-      return list;
-    },
-  }, // computed
-  methods: {
-    // updateCurrentPage
-    // validateInputNumber
-
-    updateCurrentPage(val: number) {
-      this.$emit('update:currentPage', val);
-      this.$emit('refreshList', val);
-    },
-    validateInputNumber(val: number) {
-      val = +val;
-      if (val > this.totalPages) val = this.totalPages; 
-      if (val < 1) val = 1; 
-      if (val === this.currentPage) return;
-      this.updateCurrentPage(val);
-    },
-  },
-}; // export default
-</script>
 
 <style lang="stylus" scoped>
 @import '../../../styles/index';

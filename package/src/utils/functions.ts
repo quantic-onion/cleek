@@ -1,15 +1,29 @@
+// types
+import type { ColumnItem } from '../types/table';
+
 export default {
   // getCleekOptions
   // getGroupClass
   // getWidthByWidthBreaks
   // isColorTemplateVariable
   // isColumnDisplayed
-  // 
+  // preventUnusedError
 
-  getCleekOptions(getCurrentInstance) {
+  getCleekOptions(getCurrentInstance: ComponentInternalInstance ) {
     return getCurrentInstance().appContext.app.config.globalProperties.$cleekOptions;
   },
-  getGroupClass({ group = '', groupVertical = '', widthBreaks = [] } = {}, windowWidth) {
+  getGroupClass(
+    {
+      group,
+      groupVertical,
+      widthBreaks = [],
+    }: {
+      group?: 'left' | 'right' | 'center';
+      groupVertical?: 'top' | 'bottom' | 'center';
+      widthBreaks?: [number, string][];
+    } = {},
+    windowWidth: number,
+  ) {
     const componentWidth = this.getWidthByWidthBreaks(widthBreaks, windowWidth);
     const classList: string[] = [];
     // group
@@ -18,7 +32,10 @@ export default {
     if (groupVertical) classList.push(`ck-component__group-vertical--${groupVertical}`);
     return classList;
   },
-  getWidthByWidthBreaks(widthBreaks, windowWidth) {
+  getWidthByWidthBreaks(
+    widthBreaks?: [number, string][],
+    windowWidth?: number,
+  ) {
     if (widthBreaks) {
       let realWidthBreaks = [...widthBreaks];
       if (
@@ -29,17 +46,17 @@ export default {
         realWidthBreaks = [realWidthBreaks];
       }
       // ordernarlos del más grande al más chico
-      let finalWidth = 0;
+      let finalWidth = '';
       realWidthBreaks.forEach((widthBreak) => {
         const [windowBreak, width] = widthBreak;
-        if (windowWidth >= windowBreak) {
+        if ((windowWidth || 0) >= windowBreak) {
           finalWidth = width;
         }
       })
       return finalWidth;
     }
   },
-  isColorTemplateVariable(color) {
+  isColorTemplateVariable(color: string) {
     if (color === 'primary') return true;
     if (color === 'secondary') return true;
     if (color === 'success') return true;
@@ -49,7 +66,7 @@ export default {
     if (color === 'light') return true;
     return false;
   },
-  isColumnDisplayed(column) {
+  isColumnDisplayed(column: ColumnItem) {
     if (column.isDisplayed === false) return false;
     if (column.unchangeable) {
       if (column.isDisplayed === true) return true;
@@ -57,4 +74,13 @@ export default {
     }
     return true;
   },
+  preventUnusedError(functions: any[]) {
+    // prevent typescript "unused" error
+    if (Math.random() === 1) { 
+      functions.forEach((func) => {
+        console.log(func);
+      });
+    }
+  }
+  
 }; // export default

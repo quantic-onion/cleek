@@ -1,6 +1,6 @@
 {
   "name": "cleek",
-  "version": "2.3.57",
+  "version": "2.3.59",
   "description": "Complete UX Vue library",
   "repository": "",
   "author": "Quantic Onion",
@@ -22,6 +22,7 @@
   "scripts": {
     "dev": "vitepress dev docs",
     "build": "vite build && vue-tsc --declaration --emitDeclarationOnly",
+    "build:force": "vite build",
     "build:docs": "vitepress build docs",
     "serve": "vitepress serve docs",
     "analyze": "vite build --config analyze.config.js",
@@ -50,7 +51,7 @@
     "floating-vue": "^2.0.0-beta.16",
     "mitt": "^3.0.0",
     "pug": "^3.0.2",
-    "quantic-methods": "^1.2.3",
+    "quantic-methods": "^1.6.3",
     "rollup-plugin-typescript2": "^0.31.2",
     "stylus": "^0.56.0",
     "tabbable": "^5.2.0",

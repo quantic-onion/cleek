@@ -22,7 +22,6 @@ export { default as CkSelect }        from './ck-select.vue';
 export { default as CkSwitch }        from './ck-switch.vue';
 export { default as CkSwitchOptions } from './ck-switch-options.vue';
 export { default as CkTextarea }      from './ck-textarea.vue';
-export { default as CkTooltip }       from './ck-tooltip.vue';
 // export { default as CkRouterLink } from './not-avaible/ck-router-link.vue';
 
 
@@ -34,6 +33,6 @@ export { default as CkTooltip }       from './ck-tooltip.vue';
 // export { default as ckSidebar } from './not-avaible/Sidebar.vue'
 // export { default as ckSidebarManager } from './not-avaible/SidebarManager.vue'
 
-export { default as EVENTS } from '../utils/events'
-export { default as EventBus } from '../utils/mitt'
-export { lockScroll, unlockScroll } from '../utils/scrollLock'
+// export { default as EVENTS } from '../utils/events'
+// export { default as EventBus } from '../utils/mitt'
+// export { lockScroll, unlockScroll } from '../utils/scrollLock'

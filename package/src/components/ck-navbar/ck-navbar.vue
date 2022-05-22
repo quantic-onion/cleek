@@ -1,20 +1,12 @@
-<template lang="pug">
-.ck-navbar(
-:style="computedStyle"
-)
-  .ck-navbar__content(
-  :class="computedClassContent"
-  )
-    slot
-</template>
-
 <script setup lang="ts">
 import { computed } from 'vue';
 
-const props = defineProps({
-  padding: { type: String, default: 0 },
-  position: { type: String, default: 'fixed' },
-});
+const props = defineProps<{
+  padding: string;
+  position: string;
+}>();
+
+const defaultPosition = 'fixed';
 
 const computedClassContent = computed(() => {
   const list = [];
@@ -25,10 +17,22 @@ const computedClassContent = computed(() => {
 const computedStyle = computed(() => {
   const list = [];
   if (props.padding) list.push({ padding: props.padding });
-  if (props.position) list.push({ position: props.position });
+  // position
+  const position = props.position || defaultPosition;
+  if (position) list.push({ position: position });
   return list;
 });
 </script>
+
+<template lang="pug">
+.ck-navbar(
+:style="computedStyle"
+)
+  .ck-navbar__content(
+  :class="computedClassContent"
+  )
+    slot
+</template>
 
 <style lang="stylus" scoped>
 @import '../../styles/index.styl'

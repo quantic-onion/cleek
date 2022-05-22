@@ -1,74 +1,61 @@
-<template lang="pug">
-.ck-select(
-:style="computedStyle"
-) 
-  .ck-select__clear-btn(v-if="isClearBtnVisible" @click="value = realClearValue")
-    ck-icon(icon="times")
-  ck-label(v-if="label" :align="labelAlign" for="ck-input") {{ label }}
-  //- input(
-  //- v-model="search"
-  //- )
-  select(
-  v-model="value"
-  :class="computedClassSelect"
-  :disabled="disabled"
-  @click="onClick($event)"
-  @change="onChange($event)"
-  )
-    option(
-    v-for="option in filteredOptions"
-    :value="getOptionValue(option)"
-    :key="(option)"
-    )
-      | {{ getOptionName(option) }}
-</template>
-
 <script setup lang="ts">
 import { ref, computed } from 'vue';
-import functions from '../utils/functions.ts';
+import { qmStr} from 'quantic-methods';
+// components
 import CkLabel from './ck-label.vue';
 import CkIcon from './ck-icon.vue';
-import qm from '../../node_modules/quantic-methods/dist/quantic-methods.es.ts';
-const { qmStr } = qm;
+// hooks
+import functions from '../utils/functions';
 import useWindowWidth from '../hooks/windowWidth';
 
-const { windowWidth } = useWindowWidth(); 
+type SelectOption = any;
+
+const props = defineProps<{
+  modelValue: any;
+  prop?: string; // SHOULD BE DELETED REPLACE BY reduceNameProp
+  reduceValueProp?: string;
+  reduceNameProp?: string; // prop of the object showed in HTML
+  autofocus?: boolean; // CHECK
+  notReduce?: boolean; // notReduce value & name
+  notReduceValue?: boolean;
+  options?: SelectOption[];
+  reduceNameFunction?: (option: SelectOption) => string; // ej: (option) => option.name
+  reduceValueFunction?: (option: SelectOption) => any; // ej: (option) => option.id
+  notClearable?: boolean;
+  clearValue?: boolean | string;
+  searchable?: boolean | string;
+  minWidth?: string;
+  noBorder?: boolean;
+  bgTransparent?: boolean;
+  disabled?: boolean;
+  // group
+  group?: 'left' | 'right' | 'center';
+  groupVertical?: 'top' | 'bottom' | 'center';
+  widthBreaks?: [number, string][];
+  // label
+  label?: string;
+  labelAlign?: 'left' | 'center' | 'right';
+}>();
+
+const emits = defineEmits<{
+  (e: 'update:modelValue', value: any): void;
+  (e: 'click', event: Event): void;
+  (e: 'change', event: Event): void;
+}>(); // TERMINAR CLICK / CHANGE
 
 defineExpose({
   setFocus,
 });
 
-const props = defineProps({
-  modelValue: { default: null },
-  prop: { type: String, default: undefined }, // SHOULD BE DELETED REPLACE BY reduceNameProp
-  reduceValueProp: { type: String, default: 'id' },
-  reduceNameProp: { type: String, default: 'name' }, // prop of the object showed in HTML
-  autofocus: { type: Boolean, default: false }, // CHECK
-  noDataText: { type: String, default: 'No se encontró nada' },
-  notReduce: { type: Boolean, default: false }, // notReduce value & name
-  notReduceValue: { type: Boolean, default: false },
-  options: { type: Array, default: () => [] },
-  reduceNameFunction: { type: Function, default: undefined }, // ej: (option) => option.name
-  reduceValueFunction: { type: Function, default: undefined }, // ej: (option) => option.id
-  notClearable: { type: Boolean, default: false },
-  clearValue: { type: [Boolean, String], default: 'auto' },
-  searchable: { type: [Boolean, String], default: 'auto' },
-  minWidth: { type: String, default: '180px' },
-  noBorder: { type: Boolean, default: false },
-  bgTransparent: { type: Boolean, default: false },
-  disabled: { type: Boolean, default: false },
-  // group
-  group: { type: String, default: '' },
-  widthBreaks: { type: Array, default: undefined },
-  groupVertical: { type: String, default: '' },
-  // label
-  label: { type: String, default: '' },
-  labelAlign: { type: String, default: '' },
-});
-const emits = defineEmits(['update:modelValue', 'click', 'change']); // TERMINAR CLICK / CHANGE
+const defaultMinWidth = '180px';
+const defaultClearValue = 'auto';
+// const defaultSearchable = 'auto';
+const defaultReduceNameProp = 'name';
+const defaultReduceValueProp = 'id';
 
+const { windowWidth } = useWindowWidth(); 
 const search = ref('');
-const lastSelectedValue = ref(null);
+// const lastSelectedValue: Ref<null | string> = ref(null);
 
 const value = computed({
   get() { return props.modelValue; },
@@ -78,7 +65,8 @@ const value = computed({
   },
 });
 const filteredOptions = computed(() => {
-  const list = props.options.filter((option) => {
+  const options = props.options || [];
+  const list = options.filter((option) => {
     const name = getOptionName(option);
     return qmStr.checkContainsStr(name, search.value);
   });
@@ -117,20 +105,23 @@ const computedStyle = computed(() => {
     }
   }
   // minWidth
-  if (!isWidthDefined && props.minWidth) {
-    list.push({ 'min-width': props.minWidth });
+  const minWidth = props.minWidth || defaultMinWidth;
+  if (!isWidthDefined && minWidth) {
+    list.push({ 'min-width': minWidth });
   }
   return list;
 });
-const realSearchable = computed(() => {
-  if (props.searchable === 'auto') {
-    if (props.options.length < 5) return false;
-    return true;
-  }
-  return props.searchable;
-});
+// const realSearchable = computed(() => {
+//   const searchable = props.searchable || defaultSearchable;
+//   if (searchable === 'auto') {
+//     if (props.options.length < 5) return false;
+//     return true;
+//   }
+//   return searchable;
+// });
 const realClearValue = computed(() => {
-  if (props.clearValue !== 'auto') return props.clearValue;
+  const clearValue = props.clearValue || defaultClearValue;
+  if (clearValue !== 'auto') return clearValue;
   switch (typeof props.modelValue) {
     case 'number': return 0;
     case 'string': return '';
@@ -142,7 +133,8 @@ const realClearValue = computed(() => {
   }
 });
 const valueIsDefault = computed(() => {
-  if (props.clearValue !== 'auto') return value.value === props.clearValue;
+  const clearValue = props.clearValue || defaultClearValue;
+  if (clearValue !== 'auto') return value.value === clearValue;
   switch (typeof props.modelValue) {
     case 'number': return props.modelValue === 0;
     case 'string': return props.modelValue === '';
@@ -156,37 +148,39 @@ const valueIsDefault = computed(() => {
   }
 });
 
-function onBlur(event) {
-  const isValid = checkOptionsIsValid(event.target.value);
-  if (!isValid) event.target.value = lastSelectedValue.value;
-  lastSelectedValue.value = null;
-}
-function onFocus(event) {
-  lastSelectedValue.value = search.value;
-  search.value = '';
-}
-function onClick(event) {
+// function onBlur(event: Event) {
+//   const isValid = checkOptionsIsValid(event.target.value);
+//   if (!isValid) event.target.value = lastSelectedValue.value;
+//   lastSelectedValue.value = null;
+// }
+// function onFocus(event: Event) {
+//   lastSelectedValue.value = search.value;
+//   search.value = '';
+//   emits('focus', event);
+// }
+function onClick(event: Event) {
   emits('click', event);
 }
-function onChange(event) {
+function onChange(event: Event) {
   emits('change', event);
   // const selected = props.options.find(i => getOptionName(i) === search.value);
   // value.value = getOptionValue(selected)
   // event.target.blur();
 }
-function checkOptionsIsValid(optionName) {
-  if (!optionName) return false;
-  return props.options.some(i => getOptionName(i) === optionName);
-}
-function getOptionValue(option) {
+// function checkOptionsIsValid(optionName) {
+//   if (!optionName) return false;
+//   return props.options.some(i => getOptionName(i) === optionName);
+// }
+function getOptionValue(option: SelectOption) {
   if (props.reduceValueFunction) return props.reduceValueFunction(option);
   if (props.notReduceValue || props.notReduce) return option;
-  return option[props.reduceValueProp];
+  return option[props.reduceValueProp || defaultReduceValueProp];
 }
-function getOptionName(option) {
+function getOptionName(option: SelectOption) {
   if (props.reduceNameFunction) return props.reduceNameFunction(option);
   if (props.notReduce) return option;
-  return option[props.prop || props.reduceNameProp];
+  const reduceNameProp = props.reduceNameProp || defaultReduceNameProp;
+  return option[props.prop || reduceNameProp];
 }
 
 function setFocus() {
@@ -195,7 +189,41 @@ function setFocus() {
   //   el.focus();
   // }, 100);
 }
+
+functions.preventUnusedError([
+  computedStyle,
+  computedClassSelect,
+  getOptionValue,
+  onChange,
+  onClick,
+  filteredOptions,
+]);
 </script>
+
+<template lang="pug">
+.ck-select(
+:style="computedStyle"
+) 
+  .ck-select__clear-btn(v-if="isClearBtnVisible" @click="value = realClearValue")
+    ck-icon(icon="times")
+  ck-label(v-if="label" :align="labelAlign" for="ck-input") {{ label }}
+  //- input(
+  //- v-model="search"
+  //- )
+  select(
+  v-model="value"
+  :class="computedClassSelect"
+  :disabled="disabled"
+  @click="onClick($event)"
+  @change="onChange($event)"
+  )
+    option(
+    v-for="option in filteredOptions"
+    :value="getOptionValue(option)"
+    :key="(option)"
+    )
+      | {{ getOptionName(option) }}
+</template>
 
 <style lang="stylus" scoped>
 @import '../styles/.variables.styl';

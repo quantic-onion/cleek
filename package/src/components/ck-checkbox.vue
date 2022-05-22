@@ -1,3 +1,36 @@
+<script setup lang="ts">
+import { computed } from "@vue/runtime-core";
+
+const props = defineProps<{
+  modelValue: boolean;
+  label?: string;
+  disabled?: boolean;
+}>();
+
+const emits = defineEmits<{
+  (e: 'update:modelValue', value: boolean): void;
+  (e: 'change', event: Event): void;
+}>();
+
+const value = computed({
+  get() { return props.modelValue; },
+  set(val: boolean) { emits('update:modelValue', val); },
+});
+const checkboxAttributes = computed(() => {
+  return {
+    'aria-disabled': props.disabled,
+    tabindex: props.disabled ? undefined : '0',
+  }
+});
+
+function onChange(event: Event) {
+  emits('change', event);
+}
+function onTrigger() {
+  value.value = !value.value;
+}
+</script>
+
 <template lang="pug">
 label.ck-checkbox(
 v-bind="checkboxAttributes"
@@ -17,36 +50,6 @@ v-bind="checkboxAttributes"
   span.c-Checkbox__label(v-if="$slots.default")
     slot
 </template>
-
-<script setup lang="ts">
-import { computed } from "@vue/runtime-core";
-
-const props = defineProps({
-  modelValue: { type: Boolean, default: false },
-  label: { type: String, default: undefined },
-  disabled: { type: Boolean, default: false },
-});
-
-const emits = defineEmits(['update:modelValue', 'change']);
-
-const value = computed({
-  get() { return props.modelValue; },
-  set(val) { emits('update:modelValue', val); },
-});
-const checkboxAttributes = computed(() => {
-  return {
-    'aria-disabled': props.disabled,
-    tabindex: props.disabled ? undefined : '0',
-  }
-});
-
-function onChange(event) {
-  emits('change', event);
-}
-function onTrigger() {
-  value.value = !value.value;
-}
-</script>
 
 <style lang="stylus" scoped>
 @import '../styles/.variables.styl'

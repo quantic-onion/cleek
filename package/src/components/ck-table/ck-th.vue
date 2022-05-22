@@ -1,3 +1,25 @@
+<script setup lang="ts">
+import { computed } from 'vue';
+
+const props = defineProps<{
+  align: 'left' | 'center' | 'right'; // default left
+  minWidth: string;
+}>();
+
+const defaultAlign = 'left';
+
+const computedSpanClass = computed(() => {
+  const list = [];
+  list.push(`align-${props.align || defaultAlign}`)
+  return list;
+});
+const computedStyle = computed (() => {
+  const list = [];
+  if (props.minWidth) list.push({ 'min-width': props.minWidth });
+  return list;
+});
+</script>
+
 <template lang="pug">
 th.ck-th
   span(
@@ -6,29 +28,6 @@ th.ck-th
   )
     slot
 </template>
-
-<script setup lang="ts">
-import { computed } from 'vue';
-import validators from '../../utils/validators';
-
-const props = defineProps({
-  align: { type: String, default: 'left', validator: validators.align },
-  minWidth: { type: String, default: undefined },
-});
-
-const computedSpanClass = computed(() => {
-  return {
-    'align-center': props.align !== 'left' && props.align !== 'right',
-    'align-left': props.align === 'left',
-    'align-right': props.align === 'right',
-  };
-});
-const computedStyle = computed (() => {
-  const list = [];
-  if (props.minWidth) list.push({ 'min-width': props.minWidth });
-  return list;
-});
-</script>
 
 <style lang="stylus" scoped>
 .ck-th

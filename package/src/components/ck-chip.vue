@@ -1,3 +1,43 @@
+<script setup lang="ts">
+import { computed } from 'vue';
+// components
+import CkIcon from './ck-icon.vue';
+
+const props = defineProps<{
+  size?: 'xs' | 's' | 'm' | 'l' | 'xl'; // default s
+  color?: string;
+  textColor?: string;
+  // icon
+  icon?: string;
+  iconPack?: 'font-awesome' | 'feather';
+}>();
+
+const defaultColor = 'primary';
+const defaultSize = 's';
+
+const emits = defineEmits<{
+  (e: 'click', event: Event): void;
+}>();
+
+const computedClass = computed(() => {
+  return [
+    `size-${props.size || defaultSize}`,
+    `ck-component__bg-color--${props.color || defaultColor}`,
+  ];
+});
+const computedStyle = computed(() => {
+  // const list = [];
+  // if (props.color) {
+  //   // list.push({ backgroundColor: props.color });
+  //   // if (props.color !== 'light') {
+  //   //   list.push({ color: props.textColor || 'white' });
+  //   // }
+  // }
+  // return list;
+  return [];
+});
+</script>
+
 <template lang="pug">
 .ck-chip(
 :color="color"
@@ -12,39 +52,6 @@
   )
   slot
 </template>
-
-<script setup lang="ts">
-import { computed } from 'vue';
-import CkIcon from './ck-icon.vue';
-
-const props = defineProps({
-  size: { type: String, default: 's' },
-  color: { type: String, default: 'primary' },
-  textColor: { type: String, default: undefined },
-  // icon
-  icon: { type: String, default: undefined },
-  iconPack: { type: String, default: undefined },
-});
-
-const emits = defineEmits(['click']);
-
-const computedClass = computed(() => {
-  return [
-    `size-${props.size}`,
-    `ck-component__bg-color--${props.color}`,
-  ];
-});
-const computedStyle = computed(() => {
-  const list = [];
-  if (props.color) {
-    // list.push({ backgroundColor: props.color });
-    // if (props.color !== 'light') {
-    //   list.push({ color: props.textColor || 'white' });
-    // }
-  }
-  return list;
-});
-</script>
 
 <style lang="stylus" scoped>
 @require '../styles/index'

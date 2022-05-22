@@ -1,61 +1,31 @@
-<template lang="pug">
-.ck-table__header-items
-  template(v-if="!hideHeaderActions")
-    //- refresh btn
-    ck-button(
-    v-if="refreshBtnIsVisible"
-    type="flat"
-    icon="rotate-right"
-    title="Recargar lista"
-    @click="$emit('refreshList', false)"
-    )
-    //- pages
-    .items-per-page(
-    v-if="itemsPerPageIsVisible"
-    :class="{ 'ck-component__group--left': (!hideSearch) }"
-    )
-      | {{ itemsPerPageStart }} - {{ itemsPerPageEnd }} de {{ listLength }}
-    //- search
-    ck-input(
-    v-if="!hideSearch"
-    v-model="searchLocal"
-    icon="magnifying-glass"
-    placeholder="Buscar..."
-    :group="searchGroupValue"
-    @input="checkRefresh()"
-    )
-    //- columns manager
-    ck-button(
-    icon="columns"
-    type="filled"
-    title="Administrador de columnas"
-    v-if="hasColumnsManager"
-    :group="itemsPerPageIsVisible || !hideSearch ? 'right' : ''"
-    @click="$emit('openColumnsManager')"
-    )
-</template>
-
 <script setup lang="ts">
 import { computed } from 'vue'
+// components
 import CkButton from '../../ck-button.vue';
 import CkInput from '../../ck-input.vue';
+// hooks
+import functions from '../../../utils/functions';
 
-const props = defineProps({
-  search: { type: String, default: undefined, },
-  hasColumnsManager: { type: Boolean, default: false },
-  showRefreshBtn: { type: Boolean, required: true },
-  hideItemsPerPage: { type: Boolean, required: true },
-  currentPage: { type: Number, required: true },
-  itemsPerPage: { type: Number, required: true },
-  hideHeaderActions: { type: Boolean, required: true },
-  listLength: { type: Number, default: 0 },
-});
-const emits = defineEmits(['update:search', 'refreshList', 'openColumnsManager']);
+const props = defineProps<{
+  search: string;
+  hasColumnsManager: boolean;
+  showRefreshBtn: boolean;
+  hideItemsPerPage: boolean;
+  currentPage: number;
+  itemsPerPage: number;
+  hideHeaderActions: boolean;
+  listLength: number;
+}>();
+const emits = defineEmits<{
+  (e: 'update:search', value: string): void;
+  (e: 'refreshList', idk: false): void;
+  (e: 'openColumnsManager'): void;
+}>();
 
 
 const searchLocal = computed({
   get() { return props.search; },
-  set(val) { emits('update:search', val); }
+  set(val: string) { emits('update:search', val); }
 });
 const hideSearch = computed(() => {
   return typeof searchLocal.value === 'undefined';
@@ -90,7 +60,48 @@ function checkRefresh() {
     emits('refreshList', false);
   }, 1000);
 }
+functions.preventUnusedError([
+  searchGroupValue,
+  checkRefresh,
+]);
 </script>
+
+<template lang="pug">
+.ck-table__header-items
+  template(v-if="!hideHeaderActions")
+    //- refresh btn
+    ck-button(
+    v-if="refreshBtnIsVisible"
+    type="flat"
+    icon="rotate-right"
+    title="Recargar lista"
+    @click="emits('refreshList', false)"
+    )
+    //- pages
+    .items-per-page(
+    v-if="itemsPerPageIsVisible"
+    :class="{ 'ck-component__group--left': (!hideSearch) }"
+    )
+      | {{ itemsPerPageStart }} - {{ itemsPerPageEnd }} de {{ listLength }}
+    //- search
+    ck-input(
+    v-if="!hideSearch"
+    v-model="searchLocal"
+    icon="magnifying-glass"
+    placeholder="Buscar..."
+    :group="searchGroupValue"
+    @input="checkRefresh()"
+    )
+    //- columns manager
+    ck-button(
+    icon="columns"
+    type="filled"
+    title="Administrador de columnas"
+    v-if="hasColumnsManager"
+    :group="itemsPerPageIsVisible || !hideSearch ? 'right' : ''"
+    @click="emits('openColumnsManager')"
+    )
+</template>
 
 <style lang="stylus" scoped>
 @import '../../../styles/index';

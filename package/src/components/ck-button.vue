@@ -1,71 +1,52 @@
-<template lang="pug">
-button(
-type="button"
-:class="computedClass"
-:title="title"
-:aria-label="title"
-:disabled="disabled"
-:style="computedStyle"
-@click="onClick($event)"
-)
-  ck-icon.ck-button__icon-left(
-  v-if="icon"
-  :icon="icon"
-  :icon-pack="iconPack"
-  :class="{ 'just-icon': !$slots.default }"
-  )
-  slot
-  ck-icon.ck-button__icon-right(
-  v-if="iconRight"
-  :icon="iconRight"
-  :icon-pack="iconPack"
-  :class="{ 'just-icon': !$slots.default }"
-  )
-</template>
-
 <script setup lang="ts">
 import { computed, getCurrentInstance, onMounted, ref } from 'vue';
-import validators from '../utils/validators';
-import functions from '../utils/functions';
-import globalVariables from '../utils/globalVariables';
+// components
 import CkIcon from './ck-icon.vue';
+// hooks
+import functions from '../utils/functions';
 import useWindowWidth from '../hooks/windowWidth';
+// types
+import type { CleekOptions } from '../types/cleek-options';
+
+const props = defineProps<{
+  // html
+  title?: string;
+  disabled?: boolean;
+  // style
+  type?: 'filled' | 'outlined' | 'flat'
+  color?: string;
+  align?: 'left' | 'center' | 'right';
+  size?:  | 'xs' | 's' | 'm' | 'l' | 'xl';
+  width?: string;
+  rounded?: boolean;
+  // icon
+  icon?: string | [string, string];
+  iconRight?: string | [string, string];
+  iconPack?: 'font-awesome' | 'feather';
+  // label
+  label?: string;
+  labelAlign?: 'left' | 'center' | 'right';
+  // group
+  widthBreaks?: [number, string][];
+  group?: 'left' | 'right' | 'center';
+  groupVertical?: 'top' | 'bottom' | 'center';
+}>();
+
+const emits = defineEmits<{
+  (e: 'click', event: Event): void;
+}>();
 
 const { windowWidth } = useWindowWidth();
 
 const defaultButtonType = 'outlined';
+const defaultColor = 'primary';
+const defaultAlign = 'left';
 
-const props = defineProps({
-  // html
-  title: { type: String, default: undefined },
-  disabled: { type: Boolean, default: false },
-  // style
-  type: { type: String, default: undefined, validator: validators.buttonType },
-  color: { type: String, default: 'primary' },
-  align: { type: String, default: 'left', validator: validators.align },
-  size: { type: String, default: 'm', validator: validators.size },
-  width: { type: String, default: '' },
-  rounded: { type: Boolean, default: false },
-  // icon
-  icon: { type: [String, Array], default: undefined },
-  iconPack: { type: String, default: undefined },
-  iconRight: { type: String, default: undefined },
-  // label
-  label: { type: String, default: undefined },
-  labelAlign: { type: String, default: undefined },
-  // group
-  group: { type: String, default: undefined, validator: validators.group },
-  widthBreaks: { type: Array, default: undefined },
-  groupVertical: { type: String, default: undefined, validator: validators.groupVertical  },
-});
-
-let $cleekOptions;
+let $cleekOptions: CleekOptions;
 const isMounted = ref(false);
 
-const emits = defineEmits(['click']);
 
 const realButtonType = computed(() => {
-  // if (!validators.buttonType(props.type)) type = 'outlined';
   if (props.type) return props.type;
   if (isMounted.value) {
     if ($cleekOptions) return $cleekOptions.button.type;
@@ -77,7 +58,8 @@ const computedClass = computed(() => {
   // group
   list.push(functions.getGroupClass(props, windowWidth.value));
   // color
-  if (props.color !== 'primary') {
+  const color = props.color || defaultColor;
+  if (color !== defaultColor) {
     if (realButtonType.value === 'filled') {
       list.push(`ck-component__bg-color--${props.color}`);
     } else {
@@ -85,7 +67,8 @@ const computedClass = computed(() => {
     }
   }
   // align
-  if (props.align === 'center' || props.align === 'right') {
+  const align = props.align || defaultAlign;
+  if (align === 'center' || align === 'right') {
     list.push(`ck-button__align--${props.align}`);
   }
   // rounded
@@ -113,7 +96,7 @@ const computedStyle = computed(() => {
   return list;
 });
 
-function onClick(event) {
+function onClick(event: Event) {
   emits('click', event)
 }
 
@@ -121,7 +104,38 @@ onMounted(() => {
   $cleekOptions = functions.getCleekOptions(getCurrentInstance);
   isMounted.value = true;
 });
+
+functions.preventUnusedError([
+  onClick,
+  computedStyle,
+  computedClass,
+]);
 </script>
+
+<template lang="pug">
+button(
+type="button"
+:class="computedClass"
+:title="title"
+:aria-label="title"
+:disabled="disabled"
+:style="computedStyle"
+@click="onClick($event)"
+)
+  ck-icon.ck-button__icon-left(
+  v-if="icon"
+  :icon="icon"
+  :icon-pack="iconPack"
+  :class="{ 'just-icon': !$slots.default }"
+  )
+  slot
+  ck-icon.ck-button__icon-right(
+  v-if="iconRight"
+  :icon="iconRight"
+  :icon-pack="iconPack"
+  :class="{ 'just-icon': !$slots.default }"
+  )
+</template>
 
 <style lang="stylus" scoped>
 @import '../styles/.variables.styl'

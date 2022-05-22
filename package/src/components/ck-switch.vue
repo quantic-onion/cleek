@@ -1,3 +1,59 @@
+<script setup lang="ts">
+import { computed } from 'vue';
+// computed
+import CkIcon from './ck-icon.vue';
+
+type ModelValue = boolean | 1 | 0;
+
+const props = defineProps<{
+  modelValue: ModelValue;
+  disabled?: boolean;
+  outlined?: boolean;
+  squared?: boolean;
+  size?: string;
+  // icon
+  icon?: string | [string, string];
+  iconPack?: string;
+}>();
+
+const emits = defineEmits<{
+  (e: 'update:modelValue', value: ModelValue): void;
+}>();
+
+const defaultSize = 's';
+
+const value = computed({
+  get() { return props.modelValue; },
+  set(val: ModelValue) { emits('update:modelValue', val); },
+});
+const computedClass = computed(() => {
+  const list = [];
+  if (props.squared) list.push('is-squared');
+  if (props.outlined) list.push('is-outlined');
+  // size
+  let size = props.size || defaultSize;
+  list.push(`ck-switch--size-${size}`);
+  return list;
+});
+const computedAttributes = computed(() => {
+  return {
+    'aria-disabled': props.disabled,
+    tabindex: props.disabled ? undefined : '0',
+  }
+});
+const iconClass = computed(() => {
+  const list = [];
+  if (props.size && props.size !== defaultSize) {
+    list.push(`ck-switch__icon-size--${props.size}`)
+  }
+  return list;
+});
+
+function onTrigger() {
+  value.value = !value.value;
+}
+</script>
+
 <template lang="pug">
 label.ck-switch(
 v-bind="computedAttributes"
@@ -34,55 +90,6 @@ v-bind="computedAttributes"
     slot
 </template>
 
-<script setup lang="ts">
-import { computed } from 'vue';
-import CkIcon from './ck-icon.vue';
-
-const props = defineProps({
-  modelValue: { type: [Boolean, Number], default: false },    
-  disabled: { type: Boolean, default: false },
-  outlined: { type: Boolean, default: false },
-  squared: { type: Boolean, default: false },
-  size: { type: String, default: 's' },
-  // icon
-  icon: { type: String, default: undefined },
-  iconPack: { type: String, default: undefined },
-});
-
-const emits = defineEmits(['update:modelValue']);
-
-const value = computed({
-  get() { return props.modelValue; },
-  set(val) { emits('update:modelValue', val); },
-});
-const computedClass = computed(() => {
-  const list = [];
-  if (props.squared) list.push('is-squared');
-  if (props.outlined) list.push('is-outlined');
-  // size
-  let size = 's';
-  if (props.size === 'xs' || props.size === 'm' || props.size === 'l') size = props.size;
-  list.push(`ck-switch--size-${size}`);
-  return list;
-});
-const computedAttributes = computed(() => {
-  return {
-    'aria-disabled': props.disabled,
-    tabindex: props.disabled ? undefined : '0',
-  }
-});
-const iconClass = computed(() => {
-  const list = [];
-  if (props.size && props.size !== 'm') {
-    list.push(`ck-switch__icon-size--${props.size}`)
-  }
-  return list;
-});
-
-function onTrigger() {
-  value.value = !value.value;
-}
-</script>
 <style lang="stylus" scoped>
 @import '../styles/.variables.styl'
 $transitionTime = 0.4s

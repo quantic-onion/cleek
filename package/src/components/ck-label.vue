@@ -1,18 +1,13 @@
-<template lang="pug">
-label.ck-label(
-:for="for"
-:class="computedClass"
-)
-  slot
-</template>
-
 <script setup lang="ts">
 import { computed } from 'vue';
-const props = defineProps({
-  for: { type: String, default: '' },
-  align: { type: String, default: '' },
-  size: { type: String, default: 'm' },
-});
+
+const props = defineProps<{
+  for: string;
+  align: string;
+  size: 's' | 'm' | 'l' | 'xl';
+}>();
+
+const defaultSize = 'm';
 
 const computedClass = computed(() => {
   const list = [];
@@ -21,10 +16,18 @@ const computedClass = computed(() => {
   if (props.align === 'center' || props.align === 'right') align = props.align;
   list.push(`ck-align--${align}`);
   // size
-  list.push(`ck-size--${props.size}`);
+  list.push(`ck-size--${props.size || defaultSize}`);
   return list;
 });
 </script>
+
+<template lang="pug">
+label.ck-label(
+:for="for"
+:class="computedClass"
+)
+  slot
+</template>
 
 <style lang="stylus" scoped>
 @require '../styles/index'

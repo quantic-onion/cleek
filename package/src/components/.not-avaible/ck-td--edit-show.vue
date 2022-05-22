@@ -30,7 +30,6 @@ v-if="isColumnDisplayed"
 <script setup lang="ts">
 import { computed } from 'vue';
 import functions from '../../utils/functions';
-import validators from '../../utils/validators';
 
 const props = defineProps({
   col: { type: Object, default: undefined },
@@ -39,7 +38,7 @@ const props = defineProps({
   block: { type: Boolean, default: false },
   autoWidth: { type: Boolean, default: false },
   overflowAuto: { type: Boolean, default: false },
-  align: { type: String, default: undefined, validator: validators.align },
+  align: { type: String, default: undefined },
   fixedWidth: { type: String, default: '' }, // min and max width
   minWidth: { type: String, default: '' },
   maxWidth: { type: String, default: '' },

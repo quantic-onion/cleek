@@ -69,6 +69,5 @@ function getComponents() {
     { text: 'Switch Options', link: '/guide/ck-switch-options/ck-switch-options' },
     { text: 'Table', link: '/guide/ck-table/ck-table' },
     { text: 'Textarea', link: '/guide/ck-textarea/ck-textarea' },
-    { text: 'Tooltip', link: '/guide/ck-tooltip/ck-tooltip' },
   ]
 }

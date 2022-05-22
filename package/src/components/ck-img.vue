@@ -1,48 +1,34 @@
-<template lang="pug">
-.ck-img(
-:class="computedClass"
-:style="computedStyle"
-@click="clickImg()"
-)
-  img(
-  :src="imageUrl"
-  :style="computedImgStyle"
-  :alt="alt"
-  @error="altNeeded = true"
-  )
-</template>
-
 <script setup lang="ts">
 import { computed, getCurrentInstance, onMounted, ref } from 'vue';
+// hooks
 import functions from '../utils/functions';
 import globalVariables from '../utils/globalVariables';
-import validators from '../utils/validators';
+// types
+import type { CleekOptions } from '../types/cleek-options';
 
-const altNeeded = ref(false);
-
-const props = defineProps({
+const props = defineProps<{
   // src
-  src: { type: String, default: '' },
-  failImgSrc: { type: String, default: '' },
-  alt: { type: String, default: '' },
+  src: string;
+  failImgSrc?: string;
+  alt?: string;
   // size
-  size: { type: String, default: '', validator: validators.size },
-  sizeAbsolute: { type: String, default: '' },
-  width: { type: String, default: '' },
-  height: { type: String, default: '' },
+  size?: 'xs' | 's' | 'm' | 'l' | 'xl';
+  sizeAbsolute?: string;
+  width?: string;
+  height?: string;
   // zoom
-  zoom: { type: Boolean, default: false }, // check
-  zoomTitle: { type: String, default: '' }, // check
+  zoom: boolean; // check
+  zoomTitle: string; // check
   // border
-  hasBorder: { type: Boolean, default: false },
-  radius: { type: String, default: '' },
-  borderColor: { type: String, default: '' }, // check
+  hasBorder?: boolean;
+  radius?: string;
+  borderColor: string // check
   // style
-  rounded: { type: Boolean, default: false },
-});
+  rounded?: boolean;
+}>();
 
-let context;
-let $cleekOptions;
+let $cleekOptions: CleekOptions;
+const altNeeded = ref(false);
 const isMounted = ref(false);
 
 const isFullPath = computed(() => {
@@ -119,7 +105,7 @@ function clickImg() {
     // }
   }
 }
-function getImg(src) {
+function getImg(src: string) {
   let path = '';
   if ($cleekOptions) {
     path = $cleekOptions.img.basePath;
@@ -128,11 +114,30 @@ function getImg(src) {
 }
 
 onMounted(() => {
-  context = getCurrentInstance().ctx;
   $cleekOptions = functions.getCleekOptions(getCurrentInstance);
   isMounted.value = true;
 });
+functions.preventUnusedError([
+  computedImgStyle,
+  computedStyle,
+  computedClass,
+  clickImg,
+]);
 </script>
+
+<template lang="pug">
+.ck-img(
+:class="computedClass"
+:style="computedStyle"
+@click="clickImg()"
+)
+  img(
+  :src="imageUrl"
+  :style="computedImgStyle"
+  :alt="alt"
+  @error="altNeeded = true"
+  )
+</template>
 
 <style lang="stylus" scoped>
 @require '../styles/index'

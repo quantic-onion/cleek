@@ -1,88 +1,63 @@
-<template lang="pug">
-.ck-input(
-:style="computedStyle"
-)
-  //- label
-  ck-label(v-if="label" :align="realLabelAlign" for="ck-input" :size="size") {{ label }}
-  //- icon left
-  ck-icon.ck-input__icon-left(
-  v-if="icon"
-  color="lightgrey"
-  :icon="icon"
-  :icon-pack="iconPack"
-  )
-  //- input
-  //- :id="label ? 'ck-input' : ''"
-  input(
-  ref="realInput"
-  v-model="value"
-  :autocomplete="autocomplete ? 'on' : 'off'"
-  :type="type"
-  :placeholder="placeholder"
-  :class="computedClassInput"
-  :disabled="disabled"
-  @change="onChange($event)"
-  @input="onInput($event)"
-  @click="onClick($event)"
-  )
-  //- icon right
-  ck-icon.ck-input__icon-right(
-  v-if="iconRight"
-  color="lightgrey"
-  :icon="iconRight"
-  :icon-pack="iconPack"
-  )
-</template>
-
 <script setup lang="ts">
 import { computed, ref } from 'vue';
-import functions from '../utils/functions';
-import validators from '../utils/validators';
+import type { Ref } from 'vue';
+// components
 import CkLabel from './ck-label.vue';
 import CkIcon from './ck-icon.vue';
+// hooks
+import functions from '../utils/functions';
 import useWindowWidth from '../hooks/windowWidth';
 
-const { windowWidth } = useWindowWidth(); 
+const props = defineProps<{
+  modelValue: string | number;
+  type?: 'text' | 'number' | 'date' | 'time' | 'password';
+  autocomplete?: boolean;
+  disabled?: boolean;
+  placeholder?: string;
+  // label
+  label?: string;
+  labelAlign?: 'left' | 'center' | 'right';
+  // icon
+  icon?: string | [string, string];
+  iconRight?: string | [string, string];
+  iconPack?: string;
+  // group
+  group?: 'left' | 'right' | 'center';
+  groupVertical?: 'top' | 'bottom' | 'center';
+  widthBreaks?: [number, string][];
+  // style
+  size?: 's' | 'm' | 'l' | 'xl'; // default m
+  hideBorder?: boolean;
+  width?: string;
+  align?: 'left' | 'center' | 'right';
+  rounded?: boolean;
+  // functions
+  autoSelect?: boolean;
+  delayChangeTime?: number;
+}>();
+
+const emits = defineEmits<{
+  (e: 'update:modelValue', value: string | number): void;
+  (e: 'click', event: Event): void;
+  (e: 'input', event: Event): void;
+  (e: 'change', event: Event): void;
+  (e: 'delayChange', value: string | number): void;
+}>();
 
 defineExpose({ setFocus, setSelect });
 
-const props = defineProps({
-  modelValue: {  },
-  type: { type: String, validator: validators.inputType, default: 'text' },
-  autocomplete: { type: Boolean, default: false },
-  disabled: { type: Boolean, default: false },
-  placeholder: { type: String, default: undefined },
-  // label
-  label: { type: String, default: undefined },
-  labelAlign: { type: String, validator: validators.align, default: undefined },
-  // icon
-  icon: { type: [String, Array], default: undefined },
-  iconPack: { type: String, default: undefined },
-  iconRight: { type: String, default: undefined },
-  // group
-  group: { type: String, default: undefined },
-  groupVertical: { type: String, default: undefined },
-  widthBreaks: { type: Array, default: undefined },
-  // style
-  size: { type: String, default: 'm', validator: validators.size },
-  hideBorder: { type: Boolean, default: false },
-  width: { type: String, default: undefined },
-  align: { type: String, validator: validators.align, default: undefined },
-  rounded: { type: Boolean, default: false },
-  // functions
-  autoSelect: { type: Boolean, default: false },
-  delayChangeTime: { type: [Number, String], default: 300 }
-});
+const defaultType = 'text';
+const defaultDelayChangeTime = 300;
 
-const realInput = ref(null);
+const realInput: Ref<null | HTMLInputElement> = ref(null);
 
-const emits = defineEmits(['update:modelValue', 'click', 'input', 'change', 'delayChange']);
+const { windowWidth } = useWindowWidth(); 
 
 const value = computed({
   get() {
     return props.modelValue;
   },
-  set(val) {
+  set(val: string | number) {
     emits('update:modelValue', val);
     checkSearchTime(val);
   },
@@ -95,14 +70,14 @@ const realLabelAlign = computed(() => {
 })
 
 // events
-const onClick = (event) => {
-  if (props.autoSelect) event.target.select();
+const onClick = (event: Event) => {
+  if (props.autoSelect) realInput.value?.select();
   emits('click', event);
 };
-const onInput = (event) => {
+const onInput = (event: Event) => {
   emits('input', event);
 };
-const onChange = (event) => {
+const onChange = (event: Event) => {
   emits('change', event);
 };
 
@@ -138,20 +113,66 @@ const computedStyle = computed(() => {
 });
 
 function setFocus() {
-  realInput.value.focus();
+  realInput.value?.focus();
 }
 function setSelect() {
-  realInput.value.select();
+  realInput.value?.select();
 }
 
-function checkSearchTime(oldValue) {
+function checkSearchTime(oldValue: string | number) {
   setTimeout(() => {
     if (value.value === oldValue) {
       emits('delayChange', oldValue);
     }
-  }, +props.delayChangeTime);
+  }, props.delayChangeTime || defaultDelayChangeTime);
 }
+
+functions.preventUnusedError([
+  computedStyle,
+  computedClassInput,
+  realLabelAlign,
+  defaultType,
+  onChange,
+  onInput,
+  onClick,
+]);
 </script>
+
+<template lang="pug">
+.ck-input(
+:style="computedStyle"
+)
+  //- label
+  ck-label(v-if="label" :align="realLabelAlign" for="ck-input" :size="size") {{ label }}
+  //- icon left
+  ck-icon.ck-input__icon-left(
+  v-if="icon"
+  color="lightgrey"
+  :icon="icon"
+  :icon-pack="iconPack"
+  )
+  //- input
+  //- :id="label ? 'ck-input' : ''"
+  input(
+  ref="realInput"
+  v-model="value"
+  :autocomplete="autocomplete ? 'on' : 'off'"
+  :type="type || defaultType"
+  :placeholder="placeholder"
+  :class="computedClassInput"
+  :disabled="disabled"
+  @change="onChange($event)"
+  @input="onInput($event)"
+  @click="onClick($event)"
+  )
+  //- icon right
+  ck-icon.ck-input__icon-right(
+  v-if="iconRight"
+  color="lightgrey"
+  :icon="iconRight"
+  :icon-pack="iconPack"
+  )
+</template>
 
 <style lang="stylus" scoped>
 @import '../styles/.variables.styl'

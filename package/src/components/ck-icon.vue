@@ -1,51 +1,25 @@
-<template lang="pug">
-.ck-icon(
-:class="computedClass"
-:style="computedStyle"
-@click="onClick($event)"
-)
-  font-awesome-icon(
-  v-if="computediconPack === 'font-awesome'"
-  :icon="icon"
-  :size="size"
-  :rotation="rotation"
-  :flip="flip"
-  :pull="pull"
-  :spin="spin"
-  :pulse="pulse"
-  :inverse="inverse"
-  :fixed-width="fixedWidth"
-  :swap-opacity="swapOpacity"
-  )
-</template>
-
 <script setup lang="ts">
 import { computed } from 'vue';
-import { library } from '@fortawesome/fontawesome-svg-core';
-import { fas } from '@fortawesome/free-solid-svg-icons';
-import { far } from '@fortawesome/free-regular-svg-icons';
-import { fab } from '@fortawesome/free-brands-svg-icons';
+// libraries
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
+
+// hooks
 import functions from '../utils/functions';
 
-library.add(fas);
-library.add(far);
-library.add(fab);
-
-const props = defineProps({
-  icon: { type: [String, Array], default: '' },
-  color: { type: String, default: '' },
-  iconPack: { type: String, default: '' },
-  size: { type: String, default: null }, // xs || lg || 6x
-  rotation: { type: String, default: null }, // 90 || 180 || 270
-  flip: { type: String, default: null }, // horizontal || vertical || both
-  pull: { type: String, default: null }, // left || right
-  spin: { type: Boolean, default: false }, // true actives animation
-  pulse: { type: Boolean, default: false }, // true actives animation
-  inverse: { type: Boolean, default: false },
-  fixedWidth: { type: Boolean, default: false },
-  swapOpacity: { type: Boolean, default: false },
-});
+const props = defineProps<{
+  icon: string | [string, string];
+  color?: string;
+  iconPack?: string;
+  size?: string; // xs || lg || 6x
+  rotation?: string; // 90 || 180 || 270
+  flip?: 'horizontal' | 'vertical' | 'both';
+  pull?: 'left' | 'right';
+  spin?: boolean; // true actives animation
+  pulse?: boolean; // true actives animation
+  inverse?: boolean;
+  fixedWidth?: boolean;
+  swapOpacity?: boolean;
+}>();
 
 const emits = defineEmits(['click']);
 
@@ -72,10 +46,36 @@ const computedStyle = computed(() => {
   return list;
 });
 
-function onClick(event) {
+function onClick(event: Event) {
   emits('click', event)
 }
+
+functions.preventUnusedError([
+  onClick,
+  computedStyle,
+]);
 </script>
+
+<template lang="pug">
+.ck-icon(
+:class="computedClass"
+:style="computedStyle"
+@click="onClick($event)"
+)
+  font-awesome-icon(
+  v-if="computediconPack === 'font-awesome'"
+  :icon="icon"
+  :size="size"
+  :rotation="rotation"
+  :flip="flip"
+  :pull="pull"
+  :spin="spin"
+  :pulse="pulse"
+  :inverse="inverse"
+  :fixed-width="fixedWidth"
+  :swap-opacity="swapOpacity"
+  )
+</template>
 
 <style lang="stylus" scoped>
 .ck-icon

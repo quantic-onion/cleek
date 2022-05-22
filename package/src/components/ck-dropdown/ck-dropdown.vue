@@ -1,3 +1,37 @@
+<script setup lang="ts">
+import { computed, ref } from 'vue';
+
+const props = defineProps<{
+  // triggerType?: string; // hover
+  dark?: boolean;
+  align?: 'left' | 'center' | 'right';
+}>();
+
+// const defaultTriggerType = 'click';
+
+const isOpen = ref(false);
+const popperRef = ref(null);
+
+const computedClass = computed(() => {
+  const list = [];
+  if (props.align) list.push(`align-${props.align}`)
+  return list;
+})
+
+function openClose() {
+  if (isOpen.value) return; // always is closed by event listener
+  // check next click, to close
+  const closeListerner = (event: Event) => {
+    if (popperRef.value != event.target) isOpen.value = false;
+    window.removeEventListener('click', closeListerner);
+  }
+  setTimeout(() => {
+    window.addEventListener('click', closeListerner);
+  });
+  isOpen.value = true;
+}
+</script>
+
 <template lang="pug">
 .ck-dropdown(:class="computedClass")
   //- button
@@ -17,38 +51,6 @@
       )
       slot(name="popper")
 </template>
-
-<script setup lang="ts">
-import { computed, ref } from 'vue';
-
-const props = defineProps({
-  triggerType: { type: String, default: 'click' }, // hover
-  dark: { type: Boolean, default: false },
-  align: { type: String, default: undefined },
-});
-
-const isOpen = ref(false);
-const popperRef = ref(null);
-
-const computedClass = computed(() => {
-  const list = [];
-  if (props.align) list.push(`align-${props.align}`)
-  return list;
-})
-
-function openClose() {
-  if (isOpen.value) return; // always is closed by event listener
-  // check next click, to close
-  const closeListerner = (event) => {
-    if (popperRef.value != event.target) isOpen.value = false;
-    window.removeEventListener('click', closeListerner);
-  }
-  setTimeout(() => {
-    window.addEventListener('click', closeListerner);
-  });
-  isOpen.value = true;
-}
-</script>
 
 <style lang="stylus" scoped>
 .ck-dropdown

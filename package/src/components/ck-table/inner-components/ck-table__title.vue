@@ -1,3 +1,14 @@
+<script setup lang="ts">
+// components
+import CkTh from '../ck-th.vue';
+// types
+import type { ColumnItem } from '../../../types/table';
+
+defineProps<{
+  col: ColumnItem;
+}>();
+</script>
+
 <template lang="pug">
 ck-th(
 :align="col.align"
@@ -5,11 +16,3 @@ ck-th(
 )
   | {{ col.title }}
 </template>
-
-<script setup lang="ts">
-import CkTh from '../ck-th.vue';
-
-const props = defineProps({
-  col: { type: Object, required: true },
-});
-</script>

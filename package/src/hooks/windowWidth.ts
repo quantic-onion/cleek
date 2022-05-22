@@ -3,7 +3,7 @@ import { nextTick, onBeforeUnmount, onMounted, ref } from 'vue';
 export default function useWindowWidth() {
   const windowWidth = ref(0);
 
-  function handleWindowResize(event) {
+  function handleWindowResize(event: Event) {
     windowWidth.value = event.currentTarget.innerWidth;
   }
   onMounted(() => {

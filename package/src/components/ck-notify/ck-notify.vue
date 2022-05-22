@@ -1,21 +1,10 @@
-<template lang="pug">
-Teleport(to="body" v-if="isActive")
-  .ck-notify__container
-    .ck-notify(
-    :style="{ 'background-color': globalColor }"
-    @click="closeNotification()"
-    )
-      .ck-notify__title
-        .close-btn
-          ck-icon(icon="times")
-        | {{ globalTitle }}
-      .ck-notify__text {{ globalText }}
-</template>
-
 <script setup lang="ts">
-import { getCurrentInstance, ref } from 'vue';
-import functions from '../../utils/functions';
+import { ref } from 'vue';
+// import { getCurrentInstance, ref } from 'vue';
+// components
 import CkIcon from '../ck-icon.vue';
+// hooks
+// import functions from '../../utils/functions';
 
 defineExpose({
   CkNotify,
@@ -64,6 +53,20 @@ function ckNotifyWarning(text: string = '', title: string = 'Atención') {
   CkNotify({ text, title, color: '#FFDD33'});
 }
 </script>
+
+<template lang="pug">
+Teleport(to="body" v-if="isActive")
+  .ck-notify__container
+    .ck-notify(
+    :style="{ 'background-color': globalColor }"
+    @click="closeNotification()"
+    )
+      .ck-notify__title
+        .close-btn
+          ck-icon(icon="times")
+        | {{ globalTitle }}
+      .ck-notify__text {{ globalText }}
+</template>
 
 <style lang="stylus" scoped>
 $text-color = white

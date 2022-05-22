@@ -1,30 +1,29 @@
-<template lang="pug">
-td.ck-td(
-v-if="isColumnDisplayed"
-:class="computedTdClass"
-)
-  span(:class="computedSpanClass" :style="computedStyle")
-    slot
-</template>
-
 <script setup lang="ts">
 import { computed } from 'vue';
+// hooks
 import functions from '../../utils/functions';
-import validators from '../../utils/validators';
 
-const props = defineProps({
-  col: { type: Object, default: undefined },
-  nowrap: { type: Boolean, default: false },
-  block: { type: Boolean, default: false },
-  autoWidth: { type: Boolean, default: false },
-  overflowAuto: { type: Boolean, default: false },
-  align: { type: String, default: undefined, validator: validators.align },
-  verticalAlign: { type: String, default: undefined, validator: validators.verticalAlign },
-  fixedWidth: { type: String, default: '' }, // min and max width
-  minWidth: { type: String, default: '' },
-  maxWidth: { type: String, default: '' },
-  maxHeight: { type: String, default: '' },
-});
+type ColumnItem = {
+  align?: 'left' | 'center' | 'right';
+  isDisplayed?: boolean;
+  unchangeable?: boolean;
+}
+
+const props = defineProps<{
+  col?: ColumnItem;
+  nowrap?: boolean;
+  block?: boolean;
+  overflowAuto?: boolean;
+  // align
+  align?: 'left' | 'center' | 'right';
+  verticalAlign?: 'top' | 'center' | 'bottom';
+  // width
+  fixedWidth?: string; // min and max width
+  autoWidth?: boolean;
+  minWidth?: string;
+  maxWidth?: string;
+  maxHeight?: string;
+}>();
 
 const computedTdClass = computed(() => {
   const list = [];
@@ -50,22 +49,44 @@ const computedSpanClass = computed(() => {
   return list;
 });
 const computedStyle = computed(() => {
-  const list = {};
+  const list: {
+    minWidth?: string;
+    maxWidth?: string;
+    maxHeight?: string;
+  } = {};
   // min-width
-  if (props.minWidth) list['min-width'] = props.minWidth;
-  if (props.fixedWidth) list['min-width'] = props.fixedWidth;
+  let minWidth = '';
+  if (props.minWidth) minWidth = props.minWidth;
+  if (props.fixedWidth) minWidth = props.fixedWidth;
+  if (minWidth) list.minWidth = minWidth;
   // max-width
-  if (props.maxWidth) list['max-width'] = props.maxWidth;
-  if (props.fixedWidth) list['max-width'] = props.fixedWidth;
+  let maxWidth = '';
+  if (props.maxWidth) maxWidth = props.maxWidth;
+  if (props.fixedWidth) maxWidth = props.fixedWidth;
+  if (maxWidth) list.maxWidth = maxWidth;
   // max-height
-  if (props.maxHeight) list['max-height'] = props.maxHeight;
+  if (props.maxHeight) list.maxHeight = props.maxHeight;
   return list;
 });
 const isColumnDisplayed = computed(() => {
   if (!props.col) return true;
   return functions.isColumnDisplayed(props.col);
 });
+
+functions.preventUnusedError([
+  isColumnDisplayed,
+  computedStyle,
+]);
 </script>
+
+<template lang="pug">
+td.ck-td(
+v-if="isColumnDisplayed"
+:class="computedTdClass"
+)
+  span(:class="computedSpanClass" :style="computedStyle")
+    slot
+</template>
 
 <style lang="stylus" scoped>
 .ck-td

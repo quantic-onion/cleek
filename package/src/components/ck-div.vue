@@ -1,18 +1,18 @@
 <script setup lang="ts">
 import { computed } from 'vue';
-import type { PropType } from 'vue';
+// hooks
 import functions from '../utils/functions';
 import useWindowWidth from '../hooks/windowWidth';
 
-type widthBreakItem = [windowBreak: number, width: string]
+const props = defineProps<{
+  widthBreaks?: [number, string][];
+}>();
+
+const emits = defineEmits<{
+  (e: 'click', event: Event): void;
+}>();
 
 const { windowWidth } = useWindowWidth();
-
-const props = defineProps({
-  widthBreaks: { type: Array as PropType<widthBreakItem | widthBreakItem[]>, default: undefined },
-});
-
-const emits = defineEmits(['click']);
 
 const computedStyle = computed(() => {
   const list = [];

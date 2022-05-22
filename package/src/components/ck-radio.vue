@@ -1,43 +1,23 @@
-<template lang="pug">
-template(
-v-for="(item, index) in options"
-:key="`radio-${index}`"
-)
-  label.c-Radio(
-  v-bind="radioAttributes"
-  @keydown.space.prevent
-  @keyup.enter="handleChange(item.value)"
-  @keyup.space="handleChange(item.value)"
-  )
-    input(
-      v-model="value"
-      aria-hidden="true"
-      class="c-Radio__input"
-      type="radio"
-      :name="name"
-      :value="item.value"
-      :disabled="disabled"
-    )
-    .c-Radio__element
-    span.c-Radio__label(v-if="item.label")
-      | {{ item.label }}
-</template>
-
 <script setup lang="ts">
 import { computed } from 'vue';
-import validators from '../utils/validators';
-const props = defineProps({
-  modelValue: { type: String, default: undefined },
-  name: { type: String, required: true },
-  options: { type: Array, required: true, validator: validators.radioOptions },
-  disabled: { type: Boolean, default: false },
-});
 
-const emits = defineEmits(['update:modelValue', 'change']);
+type Option = { value: any, label: string };
+
+const props = defineProps<{
+  modelValue: string;
+  name?: string;
+  options?: Option[];
+  disabled?: boolean;
+}>();
+
+const emits = defineEmits<{
+  (e: 'update:modelValue', value: string): void;
+  (e: 'change', event: Event): void;
+}>();
 
 const value = computed({
   get() { return props.modelValue; },
-  set(val) { emits('update:modelValue', val); },
+  set(val: string) { emits('update:modelValue', val); },
 });
 const radioAttributes = computed(() => {
   return {
@@ -46,11 +26,36 @@ const radioAttributes = computed(() => {
   }
 });
 
-function handleChange(value) {
-  value.value = value
-  emits('change', value);
+function handleChange(option: Option, event: Event) {
+  option.value = value
+  emits('change', event);
 }
 </script>
+
+<template lang="pug">
+template(
+v-for="(option, index) in options"
+:key="`radio-${index}`"
+)
+  label.c-Radio(
+  v-bind="radioAttributes"
+  @keydown.space.prevent
+  @keyup.enter="handleChange(option, $event)"
+  @keyup.space="handleChange(option, $event)"
+  )
+    input(
+      v-model="value"
+      aria-hidden="true"
+      class="c-Radio__input"
+      type="radio"
+      :name="name"
+      :value="option.value"
+      :disabled="disabled"
+    )
+    .c-Radio__element
+    span.c-Radio__label(v-if="option.label")
+      | {{ option.label }}
+</template>
 
 <style lang="stylus" scoped>
 .c-Radio

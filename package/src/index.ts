@@ -3,7 +3,14 @@ import { store } from './store'
 import FloatingVue from 'floating-vue'
 import ckNotifyComponent from './components/ck-notify/ck-notify.vue';
 import defaultCleekOptions from './default-cleek-options';
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { fas } from '@fortawesome/free-solid-svg-icons';
+import { far } from '@fortawesome/free-regular-svg-icons';
+import { fab } from '@fortawesome/free-brands-svg-icons';
 
+library.add(fas);
+library.add(far);
+library.add(fab);
 import 'floating-vue/dist/style.css'
 
 // vue components

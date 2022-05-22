@@ -1,50 +1,45 @@
-<template lang="pug">
-.ck-switch-options__container-exterior
-  //- label
-  ck-label(v-if="label" :align="labelAlign") {{ label }}
-  //- switch options
-  .ck-switch-options__container(:class="computedClass")
-    .ck-switch-options__option(
-    v-for="(Option, index) in options"
-    :key="`ck-switch-options${index}`"
-    :class="{ selected: selectedOption == getOptionValue(Option)}"
-    :style="computedItemStyle"
-    @click="selectedOption = getOptionValue(Option)"
-    )
-      | {{ Option[prop] }}
-</template>
-
 <script setup lang="ts">
 import { computed } from 'vue';
-import functions from '../utils/functions.ts';
+// components
 import CkLabel from './ck-label.vue';
+// hooks
+import functions from '../utils/functions';
 import useWindowWidth from '../hooks/windowWidth';
+
+type Option = boolean | number | object;
+
+const defaultProp = 'name';
+// @ts-ignore
+const defaultReduceFunction = (option) => option.id;
+
+const props = defineProps<{
+  modelValue: Option;
+  options?: Option[];
+  // reduce functions
+  prop?: string;
+  notReduce?: boolean;
+  reduceFunction?: (option: Option) => any;
+  // label
+  label?: string;
+  labelAlign?: string;
+  // group
+  widthBreaks?: [number, string][];
+  group?: 'left' | 'right' | 'center';
+  groupVertical?: 'top' | 'bottom' | 'center';
+  // style
+  sameWidthOptions?: boolean;
+}>();
+
+const emits = defineEmits<{
+  (e: 'update:modelValue', value: Option): void;
+  (e: 'change', value: Option): void;
+}>();
 
 const { windowWidth } = useWindowWidth(); 
 
-const props = defineProps({
-  modelValue: { type: [Boolean, Number, Object], default: 0 },
-  options: { type: Array, required: true },
-  // reduce functions
-  prop: { type: String, default: 'name' },
-  notReduce: { type: Boolean, default: false },
-  reduceFunction: { type: Function, default: Option => Option.id },
-  // label
-  label: { type: String, default: '' },
-  labelAlign: { type: String, default: '' },
-  // group
-  group: { type: String, default: '' },
-  widthBreaks: { type: Array, default: undefined },
-  groupVertical: { type: String, default: '' },
-  // style
-  sameWidthOptions: { type: Boolean, default: false },
-});
-
-const emits = defineEmits(['update:modelValue', 'change']);
-
 const selectedOption = computed({
   get() { return props.modelValue; },
-  set(val) {
+  set(val: Option) {
     emits('update:modelValue', val);
     emits('change', val);
   },
@@ -57,15 +52,38 @@ const computedClass = computed(() => {
 });
 const computedItemStyle = computed(() => {
   const list = [];
-  if (props.sameWidthOptions) list.push({ width: `${100 / props.options.length}%` });
+  if (props.sameWidthOptions) list.push({ width: `${100 / (props.options || []).length}%` });
   return list;
 });
 
-function getOptionValue(Option) {
-  if (props.notReduce) return Option;
-  return props.reduceFunction(Option);
+function getOptionValue(option: Option) {
+  if (props.notReduce) return option;
+  if (props.reduceFunction) {
+    return props.reduceFunction(option);
+  }
+  return defaultReduceFunction(option)
 }
+
+functions.preventUnusedError([
+  getOptionValue,
+]);
 </script>
+
+<template lang="pug">
+.ck-switch-options__container-exterior
+  //- label
+  ck-label(v-if="label" :align="labelAlign") {{ label }}
+  //- switch options
+  .ck-switch-options__container(:class="computedClass")
+    .ck-switch-options__option(
+    v-for="(option, index) in options"
+    :key="`ck-switch-options${index}`"
+    :class="{ selected: selectedOption == getOptionValue(option)}"
+    :style="computedItemStyle"
+    @click="selectedOption = getOptionValue(option)"
+    )
+      | {{ option[prop || defaultProp] }}
+</template>
 
 <style lang="stylus" scoped>
 @require '../styles/index'

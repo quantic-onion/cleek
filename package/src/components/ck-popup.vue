@@ -1,3 +1,58 @@
+<script setup lang="ts">
+import { computed } from 'vue';
+// components
+// import VuePerfectScrollbar from 'vue-perfect-scrollbar';
+import CkButton from './ck-button.vue';
+import CkIcon from './ck-icon.vue';
+
+const props = defineProps<{
+  modelValue: boolean;
+  title?: string;
+  confirmButtons?: boolean;
+  notClose?: boolean;
+  notCloseBtn?: boolean;
+  notCloseByBg?: boolean;
+  preventCloseOnCancel?: boolean;
+  width?: string;
+  maxWidth?: string;
+}>();
+
+const emits = defineEmits<{
+  (e: 'update:modelValue', value: boolean): void;
+  (e: 'cancel'): void;
+  (e: 'accept'): void;
+}>();
+
+// const perfectScrollbarSettings = { // perfectscrollbar settings
+//   maxScrollbarLength: 60,
+//   wheelSpeed: 0.60,
+// };
+
+const isActive = computed({
+  get() { return props.modelValue; },
+  set(val: boolean) { emits('update:modelValue', val); },
+});
+const computedStyleContent = computed(() => {
+  const list = [];
+  if (props.maxWidth) list.push({ maxWidth: props.maxWidth });
+  if (props.width) list.push({ width: props.width });
+  return list;
+});
+
+function onCancel() {
+  emits('cancel');
+  if (!props.preventCloseOnCancel) isActive.value = false;
+}
+function onAccept() {
+  emits('accept');
+}
+function onBgClick() {
+  // hacerle un movimiento de rebote como en vuesax
+  if (props.notCloseByBg || props.notClose) return;
+  isActive.value = false;
+}
+</script>
+
 <template lang="pug">
 .ck-popup(v-if="isActive")
   .blackout
@@ -29,56 +84,6 @@
           ck-button(@click="onAccept()")
             | Aceptar
 </template>
-
-<script setup lang="ts">
-import { computed } from 'vue';
-import VuePerfectScrollbar from 'vue-perfect-scrollbar';
-import CkButton from './ck-button.vue';
-import CkIcon from './ck-icon.vue';
-
-const props = defineProps({
-  modelValue: { type: Boolean },
-  title: { type: String, default: undefined },
-  confirmButtons: { type: Boolean, default: false },
-  notClose: { type: Boolean, default: false },
-  notCloseBtn: { type: Boolean, default: false },
-  notCloseByBg: { type: Boolean, default: false },
-  preventCloseOnCancel: { type: Boolean, default: false },
-  width: { type: String, default: undefined },
-  maxWidth: { type: String, default: undefined },
-});
-
-const emits = defineEmits(['update:modelValue', 'cancel', 'accept']);
-
-// const perfectScrollbarSettings = { // perfectscrollbar settings
-//   maxScrollbarLength: 60,
-//   wheelSpeed: 0.60,
-// };
-
-const isActive = computed({
-  get() { return props.modelValue; },
-  set(val) { emits('update:modelValue', val); },
-});
-const computedStyleContent = computed(() => {
-  const list = [];
-  if (props.maxWidth) list.push({ maxWidth: props.maxWidth });
-  if (props.width) list.push({ width: props.width });
-  return list;
-});
-
-function onCancel() {
-  emits('cancel');
-  if (!props.preventCloseOnCancel) isActive.value = false;
-}
-function onAccept() {
-  emits('accept');
-}
-function onBgClick() {
-  // hacerle un movimiento de rebote como en vuesax
-  if (props.notCloseByBg || props.notClose) return;
-  isActive.value = false;
-}
-</script>
 
 <style lang="stylus">
 @require '../styles/index'
