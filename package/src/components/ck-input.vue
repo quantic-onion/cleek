@@ -1,36 +1,49 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue';
+import { computed, getCurrentInstance, onMounted, ref } from 'vue';
 import type { Ref } from 'vue';
 // components
 import CkLabel from './ck-label.vue';
 import CkIcon from './ck-icon.vue';
 // hooks
-import functions from '../utils/functions';
+import hooks from '../utils/functions';
 import useWindowWidth from '../hooks/windowWidth';
+// types
+import type {
+Align,
+AlignVertical,
+Color,
+CleekOptions,
+Icon,
+IconPack,
+InputType,
+Layout,
+WidthBreaks,
+} from '../types/cleek-options';
 
 const props = defineProps<{
   modelValue: string | number;
-  type?: 'text' | 'number' | 'date' | 'time' | 'password';
+  type?: InputType;
   autocomplete?: boolean;
   disabled?: boolean;
   placeholder?: string;
   // label
   label?: string;
-  labelAlign?: 'left' | 'center' | 'right';
+  labelAlign?: Align;
   // icon
-  icon?: string | [string, string];
-  iconRight?: string | [string, string];
-  iconPack?: string;
+  icon?: Icon;
+  iconRight?: Icon;
+  iconPack?: IconPack;
   // group
-  group?: 'left' | 'right' | 'center';
-  groupVertical?: 'top' | 'bottom' | 'center';
-  widthBreaks?: [number, string][];
+  group?: Align;
+  groupVertical?: AlignVertical;
+  widthBreaks?: WidthBreaks;
   // style
   size?: 's' | 'm' | 'l' | 'xl'; // default m
   hideBorder?: boolean;
   width?: string;
-  align?: 'left' | 'center' | 'right';
-  rounded?: boolean;
+  align?: Align;
+  layout?: Layout;
+  borderColor?: Color;
   // functions
   autoSelect?: boolean;
   delayChangeTime?: number;
@@ -45,6 +58,8 @@ const emits = defineEmits<{
 }>();
 
 defineExpose({ setFocus, setSelect });
+
+let cleekOptions: Ref<undefined | CleekOptions> = ref();
 
 const defaultType = 'text';
 const defaultDelayChangeTime = 300;
@@ -85,7 +100,7 @@ const onChange = (event: Event) => {
 const computedClassInput = computed(() => {
   const list = [];
   // group
-  list.push(functions.getGroupClass(props, windowWidth.value));
+  list.push(hooks.getGroupClass(props, windowWidth.value));
   // icon
   if (props.icon) list.push('has-icon-left');
   if (props.iconRight) list.push('has-icon-right');
@@ -93,10 +108,25 @@ const computedClassInput = computed(() => {
   if (props.align) list.push(`align--${props.align}`);
   // hideBorder
   if (props.hideBorder) list.push('no-border');
-  // rounded
-  if (props.rounded) list.push('rounded');
+  // layout
+  const layout = props.layout || cleekOptions.value?.styles.layout;
+  if (layout) list.push(layout);
   // size
   if (props.size) list.push(`ck-input-size__${props.size}`);
+  // border-color
+  const borderColor = props.borderColor || cleekOptions.value?.styles.borderColor;
+  if (borderColor && hooks.isColorTemplateVariable(borderColor)) {
+    list.push(`ck-component__border-color--${borderColor}`);
+  }
+  return list;
+});
+const computedStyleInput = computed(() => {
+  const list = [];
+  // border-color
+  const borderColor = props.borderColor || cleekOptions.value?.styles.borderColor;
+  if (borderColor && !hooks.isColorTemplateVariable(borderColor)) {
+    list.push({ 'border-color': borderColor });
+  }
   return list;
 });
 
@@ -106,7 +136,7 @@ const computedStyle = computed(() => {
   list.push({ width: props.width });
   // width-break
   if (props.widthBreaks) {
-    const width = functions.getWidthByWidthBreaks(props.widthBreaks, windowWidth.value )
+    const width = hooks.getWidthByWidthBreaks(props.widthBreaks, windowWidth.value )
     if (width) list.push({ width });
   }
   return list;
@@ -127,7 +157,7 @@ function checkSearchTime(oldValue: string | number) {
   }, props.delayChangeTime || defaultDelayChangeTime);
 }
 
-functions.preventUnusedError([
+hooks.preventUnusedError([
   computedStyle,
   computedClassInput,
   realLabelAlign,
@@ -136,6 +166,10 @@ functions.preventUnusedError([
   onInput,
   onClick,
 ]);
+
+onMounted(() => {
+  cleekOptions.value = hooks.getCleekOptions(getCurrentInstance);
+});
 </script>
 
 <template lang="pug">
@@ -160,6 +194,7 @@ functions.preventUnusedError([
   :type="type || defaultType"
   :placeholder="placeholder"
   :class="computedClassInput"
+  :style="computedStyleInput"
   :disabled="disabled"
   @change="onChange($event)"
   @input="onInput($event)"
@@ -192,12 +227,14 @@ functions.preventUnusedError([
       outline-color var(--primary)
     &.rounded
       border-radius 10rem
+    &.squared
+      border-radius 0
     &.align--center
       text-align center
     &.align--right
       text-align right
     &.no-border
-      border-color transparent
+      border-color transparent !important
     &.has-icon-left
       padding-left 14px + (3 * $globalPadding)
     &.has-icon-right

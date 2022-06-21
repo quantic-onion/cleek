@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { computed, onMounted, ref } from 'vue';
+import { computed, getCurrentInstance, onMounted, ref } from 'vue'
+import type { Ref } from 'vue'
 // components
 import CkTr from './ck-tr.vue';
 import CkTd from './ck-td.vue';
@@ -10,11 +11,13 @@ import TablePagination from './inner-components/ck-table__pagination.vue';
 import TableColumnsManager from './inner-components/ck-table__columns-manager.vue';
 // types
 import type { ColumnItem } from '../../types/table';
+import { Align, CleekOptions, Layout } from '../../types/cleek-options';
 // hooks
-import functions from '../../utils/functions';
+import hooks from '../../utils/functions';
 import useWindowWidth from '../../hooks/windowWidth';
 
 type Columns = ColumnItem[] | object;
+type CellPadding = 's' | 'm' | 'l' | 'none';
 
 const props = defineProps<{
   columns?: Columns,
@@ -23,7 +26,7 @@ const props = defineProps<{
   currentPage?: number;
   itemsPerPage?: number;
   listLength?: number;
-  paginationAlign?: 'left' | 'center' | 'right';
+  paginationAlign?: Align;
   // header items
   search?: string;
   hideHeaderActions?: boolean;
@@ -31,10 +34,11 @@ const props = defineProps<{
   hideItemsPerPage?: boolean;
   // style
   notFullWidth?: boolean;
-  cellPadding?: 's' | 'm' | 'l' | 'none';
-  cellPaddingY?: 's' | 'm' | 'l' | 'none';
+  cellPadding?: CellPadding;
+  cellPaddingY?: CellPadding;
   noResultsText?: string;
   notOverflow?: boolean;
+  layout?: Layout;
   // mobile
   mobileMaxWidth?: Number,
 }>();
@@ -45,7 +49,8 @@ const emits = defineEmits<{
   (e: 'update:currentPage', value: number): void;
 }>();
 
-const defaultNoResultsText = 'No se encontraron resultados';
+let cleekOptions: Ref<undefined | CleekOptions> = ref();
+
 const defaultItemsPerPage = 40;
 
 const { windowWidth } = useWindowWidth();
@@ -53,7 +58,10 @@ const { windowWidth } = useWindowWidth();
 const isPopupActive = ref({
   columnsManager: false,
 });
-
+const defaultNoResultsText = computed(() => {
+  if (cleekOptions.value?.lang === 'es') return 'No se encontraron resultados'; 
+  return 'No results found';
+});
 const columnsAreObj = computed(() => !qmObj.isArray(props.columns || []));
 const columnsArray = computed(() => {
   // object
@@ -82,11 +90,11 @@ const columnsArray = computed(() => {
 
 // filter
 const filteredColumnsList = computed(() => {
-  return columnsArray.value.filter(functions.isColumnDisplayed);
+  return columnsArray.value.filter(hooks.isColumnDisplayed);
 });
 
 const searchLocal = computed({
-  get() { return props.search || ''; },
+  get() { return props.search; },
   set(val: string) { emits('update:search', val); }
 });
 const currentPageLocal = computed({
@@ -95,7 +103,7 @@ const currentPageLocal = computed({
     emits('update:currentPage', val);
   },
 });
-
+const realLayout = computed(() => props.layout || cleekOptions.value?.styles.layout);
 // isMobileVisible
 const isMobileVisible = computed(() => {
   return windowWidth.value <= (props.mobileMaxWidth || 0);
@@ -122,7 +130,11 @@ const computedClassTable = computed(() => {
 //   this.emits('update:currentPage', cosito);
 // }
 
-functions.preventUnusedError([
+onMounted(() => {
+  cleekOptions.value = hooks.getCleekOptions(getCurrentInstance);
+});
+
+hooks.preventUnusedError([
   computedClassTable,
   defaultNoResultsText,
   isMobileVisible,
@@ -159,6 +171,7 @@ v-model="isPopupActive.columnsManager"
     :listLength="listLength"
     :showRefreshBtn="showRefreshBtn"
     :hideItemsPerPage="hideItemsPerPage"
+    :layout="realLayout"
     @refreshList="refreshList($event)"
     @openColumnsManager="openColumnsManager()"
     )
@@ -176,7 +189,7 @@ v-model="isPopupActive.columnsManager"
     )
       //- header
       thead(v-if="filteredColumnsList.length && !($slots.mobile && isMobileVisible)")
-        ck-tr
+        ck-tr.header-row
           ck-table-title(
           v-for="col in filteredColumnsList"
           :key="col.title"
@@ -206,11 +219,14 @@ v-model="isPopupActive.columnsManager"
   :itemsPerPage="itemsPerPage"
   :listLength="listLength"
   :align="paginationAlign"
+  :layout="realLayout"
   @refreshList="refreshList(true)"
   )
 </template>
 
 <style lang="stylus">
+.header-row
+  background-color transparent !important
 .ck-table__table-container .ck-table__table
   &.table__cell-padding--none
     td
@@ -221,6 +237,11 @@ v-model="isPopupActive.columnsManager"
   &.table__cell-padding-y--s
     td
       padding-bottom .5rem
+
+tr
+  background-color white
+  &:nth-child(even)
+    background-color #eee
 </style>
 
 <style lang="stylus" scoped>

@@ -2,8 +2,8 @@
 import { computed } from 'vue';
 
 const props = defineProps<{
-  padding: string;
-  position: string;
+  padding?: string;
+  position?: string;
 }>();
 
 const defaultPosition = 'fixed';

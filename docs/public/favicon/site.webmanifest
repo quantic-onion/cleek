@@ -1,0 +1,14 @@
+{
+    "name": "Cleek",
+    "short_name": "Cleek",
+    "icons": [
+        {
+            "src": "/favicon/android-chrome-144x144.png",
+            "sizes": "144x144",
+            "type": "image/png"
+        }
+    ],
+    "theme_color": "#9c3587",
+    "background_color": "#9c3587",
+    "display": "standalone"
+}

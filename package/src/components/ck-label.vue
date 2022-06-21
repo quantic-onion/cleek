@@ -1,10 +1,11 @@
 <script setup lang="ts">
 import { computed } from 'vue';
+import { Align } from '../types/cleek-options';
 
 const props = defineProps<{
   for: string;
-  align: string;
-  size: 's' | 'm' | 'l' | 'xl';
+  align: Align;
+  size?: 's' | 'm' | 'l' | 'xl';
 }>();
 
 const defaultSize = 'm';
@@ -38,6 +39,7 @@ label.ck-label(
   display flex
   font-size .9rem
   color #626262
+  box-sizing border-box
   &.ck-align--left
     justify-content flex-start
   &.ck-align--right

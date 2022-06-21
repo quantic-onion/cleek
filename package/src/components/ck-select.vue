@@ -1,12 +1,24 @@
 <script setup lang="ts">
-import { ref, computed } from 'vue';
+import { computed, getCurrentInstance, onMounted, ref } from 'vue';
+import type { Ref } from 'vue';
 import { qmStr} from 'quantic-methods';
 // components
 import CkLabel from './ck-label.vue';
 import CkIcon from './ck-icon.vue';
 // hooks
-import functions from '../utils/functions';
+import hooks from '../utils/functions';
 import useWindowWidth from '../hooks/windowWidth';
+// types
+import type {
+Align,
+AlignVertical,
+Color,
+CleekOptions,
+Icon,
+IconPack,
+Layout,
+WidthBreaks,
+} from '../types/cleek-options';
 
 type SelectOption = any;
 
@@ -22,19 +34,26 @@ const props = defineProps<{
   reduceNameFunction?: (option: SelectOption) => string; // ej: (option) => option.name
   reduceValueFunction?: (option: SelectOption) => any; // ej: (option) => option.id
   notClearable?: boolean;
-  clearValue?: boolean | string;
-  searchable?: boolean | string;
+  clearValue?: any;
+  searchable?: boolean | string; // TODO
+  width?: string;
   minWidth?: string;
+  layout?: Layout;
   noBorder?: boolean;
+  borderColor?: Color;
   bgTransparent?: boolean;
   disabled?: boolean;
   // group
-  group?: 'left' | 'right' | 'center';
-  groupVertical?: 'top' | 'bottom' | 'center';
-  widthBreaks?: [number, string][];
+  group?: Align;
+  groupVertical?: AlignVertical;
+  widthBreaks?: WidthBreaks;
+  // icon
+  icon?: Icon;
+  iconRight?: Icon;
+  iconPack?: IconPack;
   // label
   label?: string;
-  labelAlign?: 'left' | 'center' | 'right';
+  labelAlign?: Align;
 }>();
 
 const emits = defineEmits<{
@@ -46,6 +65,8 @@ const emits = defineEmits<{
 defineExpose({
   setFocus,
 });
+
+let cleekOptions: Ref<undefined | CleekOptions> = ref();
 
 const defaultMinWidth = '180px';
 const defaultClearValue = 'auto';
@@ -60,7 +81,7 @@ const search = ref('');
 const value = computed({
   get() { return props.modelValue; },
   set(val) {
-    if (val === null) val = realClearValue;
+    // if (val === null) val = realClearValue;
     emits('update:modelValue', val);
   },
 });
@@ -88,9 +109,29 @@ const isClearBtnVisible = computed(() => {
 const computedClassSelect = computed(() => {
   const list = [];
   // group
-  list.push(functions.getGroupClass(props, windowWidth.value));
+  list.push(hooks.getGroupClass(props, windowWidth.value));
+  // icon
+  if (props.icon) list.push('has-icon-left');
+  if (props.iconRight) list.push('has-icon-right');
+  // layout
+  const layout = props.layout || cleekOptions.value?.styles.layout;
+  if (layout) list.push(layout);
   // clear able
   if (isClearBtnVisible.value) list.push('clear-able')
+  // border-color
+  const borderColor = props.borderColor || cleekOptions.value?.styles.borderColor;
+  if (borderColor && hooks.isColorTemplateVariable(borderColor)) {
+    list.push(`ck-component__border-color--${borderColor}`);
+  }
+  return list;
+});
+const computedStyleSelect = computed(() => {
+  const list = [];
+  // border-color
+  const borderColor = props.borderColor || cleekOptions.value?.styles.borderColor;
+  if (borderColor && !hooks.isColorTemplateVariable(borderColor)) {
+    list.push({ 'border-color': borderColor });
+  }
   return list;
 });
 const computedStyle = computed(() => {
@@ -98,7 +139,7 @@ const computedStyle = computed(() => {
   // width-break
   let isWidthDefined = false;
   if (props.widthBreaks) {
-    const width = functions.getWidthByWidthBreaks(props.widthBreaks, windowWidth.value )
+    const width = hooks.getWidthByWidthBreaks(props.widthBreaks, windowWidth.value )
     if (width) {
       list.push({ width });
       isWidthDefined = true;
@@ -109,6 +150,8 @@ const computedStyle = computed(() => {
   if (!isWidthDefined && minWidth) {
     list.push({ 'min-width': minWidth });
   }
+  // width
+  if (props.width) list.push({ 'width': props.width });
   return list;
 });
 // const realSearchable = computed(() => {
@@ -119,9 +162,13 @@ const computedStyle = computed(() => {
 //   }
 //   return searchable;
 // });
+const logicClearValue = computed(() => {
+  if (typeof props.clearValue !== 'undefined') return props.clearValue;
+  if (typeof cleekOptions.value?.select?.clearValue !== 'undefined') return cleekOptions.value.select.clearValue;
+  return defaultClearValue;
+});
 const realClearValue = computed(() => {
-  const clearValue = props.clearValue || defaultClearValue;
-  if (clearValue !== 'auto') return clearValue;
+  if (logicClearValue.value !== 'auto') return logicClearValue.value;
   switch (typeof props.modelValue) {
     case 'number': return 0;
     case 'string': return '';
@@ -133,8 +180,7 @@ const realClearValue = computed(() => {
   }
 });
 const valueIsDefault = computed(() => {
-  const clearValue = props.clearValue || defaultClearValue;
-  if (clearValue !== 'auto') return value.value === clearValue;
+  if (logicClearValue.value !== 'auto') return value.value === logicClearValue.value;
   switch (typeof props.modelValue) {
     case 'number': return props.modelValue === 0;
     case 'string': return props.modelValue === '';
@@ -182,6 +228,9 @@ function getOptionName(option: SelectOption) {
   const reduceNameProp = props.reduceNameProp || defaultReduceNameProp;
   return option[props.prop || reduceNameProp];
 }
+function setClearValue() {
+  value.value = realClearValue.value
+}
 
 function setFocus() {
   // const el = this.$refs.vSelect.$el.children[0].children[0].children[1];
@@ -190,7 +239,11 @@ function setFocus() {
   // }, 100);
 }
 
-functions.preventUnusedError([
+onMounted(() => {
+  cleekOptions.value = hooks.getCleekOptions(getCurrentInstance);
+});
+
+hooks.preventUnusedError([
   computedStyle,
   computedClassSelect,
   getOptionValue,
@@ -204,19 +257,37 @@ functions.preventUnusedError([
 .ck-select(
 :style="computedStyle"
 ) 
-  .ck-select__clear-btn(v-if="isClearBtnVisible" @click="value = realClearValue")
+  //- icon left
+  ck-icon.ck-select__icon-left(
+  v-if="icon"
+  color="lightgrey"
+  :icon="icon"
+  :icon-pack="iconPack"
+  )
+  //- icon right
+  ck-icon.ck-select__icon-right(
+  v-if="iconRight"
+  color="lightgrey"
+  :icon="iconRight"
+  :icon-pack="iconPack"
+  )
+  .ck-select__clear-btn(
+  v-if="isClearBtnVisible"
+  @click="setClearValue()"
+  )
     ck-icon(icon="times")
+  //- label
   ck-label(v-if="label" :align="labelAlign" for="ck-input") {{ label }}
-  //- input(
-  //- v-model="search"
-  //- )
+  //- select
   select(
   v-model="value"
   :class="computedClassSelect"
+  :style="computedStyleSelect"
   :disabled="disabled"
   @click="onClick($event)"
   @change="onChange($event)"
   )
+    //- option
     option(
     v-for="option in filteredOptions"
     :value="getOptionValue(option)"
@@ -239,16 +310,35 @@ functions.preventUnusedError([
     font-size $globalFontSize
     padding $globalPadding
     box-sizing border-box
+    &.rounded
+      border-radius 10rem
+    &.squared
+      border-radius 0
     &.clear-able
-      padding-right 2rem
+      padding-right 3rem
     &:focus
       border-color var(--primary)
       outline 0
+      border-radius-bottom(1px)
+    &.has-icon-left
+      padding-left 14px + (3 * $globalPadding)
+    &.has-icon-right
+      padding-right 14px + (3 * $globalPadding)
     option
       color #333
       font-size .9rem
       // cursor pointer // NOT WORKING
       // padding .25rem // NOT WORKING
+  // icon
+  > .ck-select__icon-left,
+  > .ck-select__icon-right
+    position absolute
+    bottom 13px
+    z-index 1
+  > .ck-select__icon-left
+    left 1.5 * $globalPadding
+  > .ck-select__icon-right
+    right 1.5 * $globalPadding
   .ck-select__clear-btn
     position absolute
     right 0

@@ -74,10 +74,14 @@ title="Administrador de columnas"
 <style lang="stylus" scoped>
 .columns-manger-container
   padding-top 1.5rem
-  padding-left 2rem
+  padding-x 2rem
   padding-bottom 1rem
+  max-height 60vh
+  overflow-y auto
   .columns-manger__item
     display flex
     align-items center
     margin-bottom 1rem
+  @media(max-width 600px)
+    max-height 68vh
 </style>

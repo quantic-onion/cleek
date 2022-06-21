@@ -1,35 +1,46 @@
 <script setup lang="ts">
 import { computed, getCurrentInstance, onMounted, ref } from 'vue';
+import type { Ref } from 'vue';
 // components
 import CkIcon from './ck-icon.vue';
 // hooks
-import functions from '../utils/functions';
+import hooks from '../utils/functions';
 import useWindowWidth from '../hooks/windowWidth';
 // types
-import type { CleekOptions } from '../types/cleek-options';
+import type {
+Align,
+AlignVertical,
+Color,
+CleekOptions,
+Icon,
+IconPack,
+Layout,
+ButtonType,
+WidthBreaks,
+} from '../types/cleek-options';
 
 const props = defineProps<{
   // html
   title?: string;
   disabled?: boolean;
   // style
-  type?: 'filled' | 'outlined' | 'flat'
-  color?: string;
-  align?: 'left' | 'center' | 'right';
-  size?:  | 'xs' | 's' | 'm' | 'l' | 'xl';
+  type?: ButtonType;
+  color?: Color;
+  align?: Align;
+  size?: 'xs' | 's' | 'm' | 'l' | 'xl';
   width?: string;
-  rounded?: boolean;
+  layout?: Layout;
   // icon
-  icon?: string | [string, string];
-  iconRight?: string | [string, string];
-  iconPack?: 'font-awesome' | 'feather';
+  icon?: Icon;
+  iconRight?: Icon;
+  iconPack?: IconPack;
   // label
   label?: string;
-  labelAlign?: 'left' | 'center' | 'right';
+  labelAlign?: Align;
   // group
-  widthBreaks?: [number, string][];
-  group?: 'left' | 'right' | 'center';
-  groupVertical?: 'top' | 'bottom' | 'center';
+  widthBreaks?: WidthBreaks;
+  group?: Align;
+  groupVertical?: AlignVertical;
 }>();
 
 const emits = defineEmits<{
@@ -38,25 +49,21 @@ const emits = defineEmits<{
 
 const { windowWidth } = useWindowWidth();
 
-const defaultButtonType = 'outlined';
-const defaultColor = 'primary';
-const defaultAlign = 'left';
+const defaultButtonType = 'outlined'; // move to default file
+const defaultColor = 'primary'; // move to default file
+const defaultAlign = 'left'; // move to default file
 
-let $cleekOptions: CleekOptions;
-const isMounted = ref(false);
-
+let cleekOptions: Ref<undefined | CleekOptions> = ref();
 
 const realButtonType = computed(() => {
   if (props.type) return props.type;
-  if (isMounted.value) {
-    if ($cleekOptions) return $cleekOptions.button.type;
-  }
+  if (cleekOptions.value) return cleekOptions.value.button.type;
   return defaultButtonType;
 });
 const computedClass = computed(() => {
   const list = [];
   // group
-  list.push(functions.getGroupClass(props, windowWidth.value));
+  list.push(hooks.getGroupClass(props, windowWidth.value));
   // color
   const color = props.color || defaultColor;
   if (color !== defaultColor) {
@@ -71,9 +78,9 @@ const computedClass = computed(() => {
   if (align === 'center' || align === 'right') {
     list.push(`ck-button__align--${props.align}`);
   }
-  // rounded
-  if (props.rounded) console.log('rounded');
-  if (props.rounded) list.push('rounded');
+  // layout
+  const layout = props.layout || cleekOptions.value?.styles.layout;
+  if (layout) list.push(layout);
   // type
   list.push(`type-${realButtonType.value}`);
   // size
@@ -85,7 +92,7 @@ const computedStyle = computed(() => {
   // width-break
   let isWidthDefined = false;
   if (props.widthBreaks) {
-    const width = functions.getWidthByWidthBreaks(props.widthBreaks, windowWidth.value )
+    const width = hooks.getWidthByWidthBreaks(props.widthBreaks, windowWidth.value )
     if (width) {
       isWidthDefined = true;
       list.push({ width });
@@ -101,11 +108,10 @@ function onClick(event: Event) {
 }
 
 onMounted(() => {
-  $cleekOptions = functions.getCleekOptions(getCurrentInstance);
-  isMounted.value = true;
+  cleekOptions.value = hooks.getCleekOptions(getCurrentInstance);
 });
 
-functions.preventUnusedError([
+hooks.preventUnusedError([
   onClick,
   computedStyle,
   computedClass,
@@ -179,6 +185,10 @@ button
     border-radius 10rem
     &::before
       border-radius 10rem
+  &.squared
+    border-radius 0
+    &::before
+      border-radius 0
   &.type-outlined
     // background-color transparent
     border 1px solid var(--primary)

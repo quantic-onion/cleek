@@ -1,4 +1,7 @@
-export default {
+import { CleekOptions } from './types/cleek-options';
+
+const cleekOptions: CleekOptions = {
+  lang: 'en',
   colors: {
     primary: '#559933',
     secondary: '#559933',
@@ -10,8 +13,24 @@ export default {
   },
   button: {
     type: 'outlined',
+    layout: 'base',
   },
   img: {
     basePath: '',
   },
+  popup: {
+    textColor: '',
+    headerAlign: '',
+    headerColor: '',
+    acceptBtnType: '',
+    cancelBtnType: '',
+    maxWidth: '',
+    fontSize: '',
+  },
+  styles: {
+    layout: 'base',
+    borderColor: '#dae1e7'
+  },
 };
+
+export default cleekOptions;

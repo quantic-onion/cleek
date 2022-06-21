@@ -15,7 +15,6 @@ export default function useRainbow() {
   ];
 
   function changeColor() {
-    console.log('changeColor');
     colorIndex++;
     if (colorIndex >= colors.length) colorIndex = 0;
     setTimeout(() => {

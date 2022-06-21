@@ -1,33 +1,34 @@
 <script setup lang="ts">
 import { computed, getCurrentInstance, onMounted, ref } from 'vue';
+import type { Ref } from 'vue';
 // hooks
-import functions from '../utils/functions';
+import hooks from '../utils/functions';
 import globalVariables from '../utils/globalVariables';
 // types
-import type { CleekOptions } from '../types/cleek-options';
+import type { CleekOptions, Color, Size, SizeInCSS } from '../types/cleek-options';
 
 const props = defineProps<{
   // src
   src: string;
-  failImgSrc?: string;
+  // failImgSrc?: string; // TODO
   alt?: string;
   // size
-  size?: 'xs' | 's' | 'm' | 'l' | 'xl';
-  sizeAbsolute?: string;
-  width?: string;
-  height?: string;
+  size?: Size;
+  sizeAbsolute?: SizeInCSS;
+  width?: SizeInCSS;
+  height?: SizeInCSS;
   // zoom
-  zoom: boolean; // check
-  zoomTitle: string; // check
+  zoom: boolean; // TODO
+  zoomTitle: string; // TODO
   // border
   hasBorder?: boolean;
-  radius?: string;
-  borderColor: string // check
+  borderColor: Color;
   // style
   rounded?: boolean;
+  radius?: SizeInCSS;
 }>();
 
-let $cleekOptions: CleekOptions;
+let cleekOptions: Ref<undefined | CleekOptions> = ref();
 const altNeeded = ref(false);
 const isMounted = ref(false);
 
@@ -60,7 +61,7 @@ const computedClass = computed(() => {
   // border
   if (props.hasBorder) {
     classList.push('ck-img__has-border');
-    if (functions.isColorTemplateVariable(realBorderColor.value)) {
+    if (hooks.isColorTemplateVariable(realBorderColor.value)) {
       classList.push(`ck-component__border-color--${realBorderColor.value}`);
     }
   }
@@ -79,7 +80,7 @@ const computedStyle = computed(() => {
   if (props.radius) styleList.push({ 'border-radius': props.radius });
   // border
   if (props.hasBorder) {
-    if (!functions.isColorTemplateVariable(realBorderColor.value)) {
+    if (!hooks.isColorTemplateVariable(realBorderColor.value)) {
       styleList.push({ 'border-color': realBorderColor.value });
     }
   }
@@ -106,18 +107,15 @@ function clickImg() {
   }
 }
 function getImg(src: string) {
-  let path = '';
-  if ($cleekOptions) {
-    path = $cleekOptions.img.basePath;
-  }
+  let path = cleekOptions.value?.img.basePath || '';
   return `${path}${src}`;
 }
 
 onMounted(() => {
-  $cleekOptions = functions.getCleekOptions(getCurrentInstance);
+  cleekOptions.value = hooks.getCleekOptions(getCurrentInstance);
   isMounted.value = true;
 });
-functions.preventUnusedError([
+hooks.preventUnusedError([
   computedImgStyle,
   computedStyle,
   computedClass,
@@ -159,7 +157,7 @@ functions.preventUnusedError([
     &:hover
       border-color primary
   &.is-rounded img
-    border-radius 50%
+    border-radius 5000px
   img
     display block
     width auto

@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { computed } from 'vue';
+import { Icon, IconPack, Size } from '../types/cleek-options';
 // computed
 import CkIcon from './ck-icon.vue';
 
@@ -10,10 +11,10 @@ const props = defineProps<{
   disabled?: boolean;
   outlined?: boolean;
   squared?: boolean;
-  size?: string;
+  size?: Size;
   // icon
-  icon?: string | [string, string];
-  iconPack?: string;
+  icon?: Icon;
+  iconPack?: IconPack;
 }>();
 
 const emits = defineEmits<{

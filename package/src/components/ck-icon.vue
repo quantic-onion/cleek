@@ -4,21 +4,19 @@ import { computed } from 'vue';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
 // hooks
-import functions from '../utils/functions';
+import hooks from '../utils/functions';
+import type { Color, Icon, IconPack, SizeInCSS } from '../types/cleek-options';
 
 const props = defineProps<{
-  icon: string | [string, string];
-  color?: string;
-  iconPack?: string;
-  size?: string; // xs || lg || 6x
-  rotation?: string; // 90 || 180 || 270
+  icon: Icon;
+  iconPack?: IconPack;
+  color?: Color;
+  size?: string; // SizeInCSS || 6x
   flip?: 'horizontal' | 'vertical' | 'both';
-  pull?: 'left' | 'right';
+  fixedWidth?: SizeInCSS;
+  rotation?: 90 | 180 | 270 | '90' | '180' | '270';
   spin?: boolean; // true actives animation
   pulse?: boolean; // true actives animation
-  inverse?: boolean;
-  fixedWidth?: boolean;
-  swapOpacity?: boolean;
 }>();
 
 const emits = defineEmits(['click']);
@@ -32,7 +30,7 @@ const computediconPack = computed(() => {
 const computedClass = computed(() => {
   const list = [];
   // group
-  if (props.color && functions.isColorTemplateVariable(props.color)) {
+  if (props.color && hooks.isColorTemplateVariable(props.color)) {
     list.push(`ck-component__color--${props.color}`);
   }
   return list;
@@ -40,7 +38,7 @@ const computedClass = computed(() => {
 const computedStyle = computed(() => {
   const list = [];
   // group
-  if (props.color && !functions.isColorTemplateVariable(props.color)) {
+  if (props.color && !hooks.isColorTemplateVariable(props.color)) {
     list.push({ color: props.color })
   }
   return list;
@@ -50,7 +48,7 @@ function onClick(event: Event) {
   emits('click', event)
 }
 
-functions.preventUnusedError([
+hooks.preventUnusedError([
   onClick,
   computedStyle,
 ]);
@@ -68,12 +66,9 @@ functions.preventUnusedError([
   :size="size"
   :rotation="rotation"
   :flip="flip"
-  :pull="pull"
   :spin="spin"
   :pulse="pulse"
-  :inverse="inverse"
   :fixed-width="fixedWidth"
-  :swap-opacity="swapOpacity"
   )
 </template>
 

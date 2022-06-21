@@ -96,19 +96,14 @@ const valueIsDefault = computed(() => {
 
 const onBlur = (event) => {
   const isValid = checkOptionsIsValid(event.target.value);
-  // console.log('event', event);
-  // console.log('event.target', event.target);
-  // console.log('event.target.value', event.target.value);
   if (!isValid) event.target.value = lastSelectedValue.value;
   lastSelectedValue.value = null;
 };
 const onFocus = (event) => {
-  console.log('event', event);
   lastSelectedValue.value = search.value;
   search.value = '';
 };
 const onChangeOption = (event) => {
-  console.log('option', search.value);
   const selected = props.options.find(i => getOptionName(i) === search.value);
   value.value = getOptionKey(selected)
   event.target.blur();

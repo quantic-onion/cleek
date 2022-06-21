@@ -7,3 +7,10 @@ AGREGAR
 CK-SELECT
 clearable
 :clearableDefault="1"
+
+popup paddin-bottom 2rem if not footer
+
+cleek-config:
+languaje: update default confirm, notify and popup values
+
+si el popup no tiene header, no tiene título y tiene hiddenCross sacar el header y redondear el borde

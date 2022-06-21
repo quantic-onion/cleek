@@ -2,14 +2,17 @@
 import { computed } from 'vue';
 // components
 import CkIcon from './ck-icon.vue';
+// types
+import { Color, Icon, IconPack, Size } from '../types/cleek-options';
 
 const props = defineProps<{
-  size?: 'xs' | 's' | 'm' | 'l' | 'xl'; // default s
-  color?: string;
-  textColor?: string;
+  size?: Size; // default s
+  color?: Color;
+  textColor?: Color;
+  align?: Align;
   // icon
-  icon?: string;
-  iconPack?: 'font-awesome' | 'feather';
+  icon?: Icon;
+  iconPack?: IconPack;
 }>();
 
 const defaultColor = 'primary';
@@ -20,10 +23,11 @@ const emits = defineEmits<{
 }>();
 
 const computedClass = computed(() => {
-  return [
-    `size-${props.size || defaultSize}`,
-    `ck-component__bg-color--${props.color || defaultColor}`,
-  ];
+  const list = [];
+  list.push(`size-${props.size || defaultSize}`);
+  list.push(`ck-component__bg-color--${props.color || defaultColor}`);
+  if (props.align) list.push(`align--${props.align}`)
+  return list;
 });
 const computedStyle = computed(() => {
   // const list = [];
@@ -74,4 +78,8 @@ const computedStyle = computed(() => {
   &.size-xl
     padding-x 1.5rem
     font-size 2rem
+  &.align--left
+    justify-content flex-start
+  &.align--right
+    justify-content flex-end
 </style>

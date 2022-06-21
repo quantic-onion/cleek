@@ -1,22 +1,38 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue';
+import { computed, getCurrentInstance, onMounted, ref } from 'vue';
+import type { Ref } from 'vue';
+// types
+import { Align, CleekOptions, Layout } from '../../types/cleek-options';
+// hooks
+import hooks from '../../utils/functions';
 
 const props = defineProps<{
   // triggerType?: string; // hover
   dark?: boolean;
-  align?: 'left' | 'center' | 'right';
+  align?: Align;
+  layout?: Layout;
 }>();
 
 // const defaultTriggerType = 'click';
+let cleekOptions: Ref<undefined | CleekOptions> = ref();
 
 const isOpen = ref(false);
 const popperRef = ref(null);
 
 const computedClass = computed(() => {
   const list = [];
-  if (props.align) list.push(`align-${props.align}`)
+  if (props.align) list.push(`align-${props.align}`);
   return list;
-})
+});
+const computedClassPopper = computed(() => {
+  const list = [];
+  // dark
+  if (props.dark) list.push('ck-dropdown__popper--dark');
+  // layout
+  const layout = props.layout || cleekOptions.value?.styles.layout;
+  if (layout) list.push(`layout--${layout}`);
+  return list;
+});
 
 function openClose() {
   if (isOpen.value) return; // always is closed by event listener
@@ -30,6 +46,10 @@ function openClose() {
   });
   isOpen.value = true;
 }
+
+onMounted(() => {
+  cleekOptions.value = hooks.getCleekOptions(getCurrentInstance);
+});
 </script>
 
 <template lang="pug">
@@ -44,7 +64,7 @@ function openClose() {
     section.ck-dropdown__popper(
     ref="popperRef"
     v-if="isOpen"
-    :class="{ 'ck-dropdown__popper--dark': dark }"
+    :class="computedClassPopper"
     )
       .ck-dropdown__popper--arrow(
       :class="{ 'ck-dropdown__popper--arrow--dark': dark }"
@@ -57,6 +77,7 @@ function openClose() {
   position relative
   .ck-dropdown__trigger
     cursor pointer
+    height 100%
   .ck-dropdown__popper-container
     width 100%
     z-index 999
@@ -75,6 +96,15 @@ function openClose() {
       background white
       padding .5rem
       animation menu 0.3s ease forwards
+      &.layout--rounded
+        border-radius 1.75rem
+      &.layout--squared
+        border-radius 0
+      // dark
+      &.ck-dropdown__popper--dark
+        background #333
+        border none
+        color #eee
     .ck-dropdown__popper--arrow
       width 20px
       height 20px
@@ -89,11 +119,6 @@ function openClose() {
       &.ck-dropdown__popper--arrow--dark
         background #333
         border none
-  // dark
-  .ck-dropdown__popper--dark
-    background #333
-    border none
-    color #eee
 
   @keyframes menu
     from
@@ -108,4 +133,19 @@ function openClose() {
         .ck-dropdown__popper--arrow
           left unset
           right 20px
+  &.align-center
+    .ck-dropdown__popper-container
+      top 0
+      .ck-dropdown__popper
+        left 0
+        right 0
+        margin-left auto
+        margin-right auto
+        display flex
+        justify-content center
+        .ck-dropdown__popper--arrow
+          left 0
+          right 0
+          margin-left auto
+          margin-right auto
 </style>

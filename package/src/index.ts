@@ -7,6 +7,8 @@ import { library } from '@fortawesome/fontawesome-svg-core';
 import { fas } from '@fortawesome/free-solid-svg-icons';
 import { far } from '@fortawesome/free-regular-svg-icons';
 import { fab } from '@fortawesome/free-brands-svg-icons';
+// types
+import { CleekOptions } from './types/cleek-options';
 
 library.add(fas);
 library.add(far);
@@ -16,10 +18,6 @@ import 'floating-vue/dist/style.css'
 // vue components
 import * as components from './components/index.js';
 
-function setDefaultConfig(options) {
-  globalVariables.imagesFolderPath = options.imgPath;
-}
-
 function setRootColors(colors) {
   var r = document.querySelector(':root');
   for (const key in colors) {
@@ -28,18 +26,23 @@ function setRootColors(colors) {
   }
 }
 
-function getCleekOptions(userOptions) {
+function getCleekOptions(userOptions: CleekOptions) {
   const options = defaultCleekOptions;
-  for (const category in defaultCleekOptions) {
-    if (userOptions[category]) {
-      for (const key in userOptions[category]) {
-        const value = userOptions[category][key];
-        if (value) options[category][key] = value;
+  for (const categoryName in defaultCleekOptions) {
+    if (userOptions[categoryName]) {
+      if (typeof userOptions[categoryName] === 'string') {
+        // set string
+        options[categoryName] = userOptions[categoryName];
+      } else {
+        // set array
+        for (const key in userOptions[categoryName]) {
+          const value = userOptions[categoryName][key];
+          if (value) options[categoryName][key] = value;
+        }
       }
     }
   }
   setRootColors(options.colors);
-  // console.log('finalOptions', options);
   return options;
 }
 
@@ -61,9 +64,9 @@ const cleekGlobalComponent = {
 };
 
 // install function executed by Vue.use()
-const install: Exclude<Plugin['install'], undefined> = function installCleek(app: App, options: any) {
+const install: Exclude<Plugin['install'], undefined> = function installCleek(app: App, options: CleekOptions) {
   app.config.globalProperties.$cleekOptions = getCleekOptions(options);
-  app.use(FloatingVue)
+  app.use(FloatingVue);
   // app.config.globalProperties.$cleek = ckNotifyComponent;
   // app.config.globalProperties.$cleek = cleekGlobalComponent;
   // vue components

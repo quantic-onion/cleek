@@ -1,14 +1,15 @@
 // types
 import type { ColumnItem } from '../types/table';
+import type {
+Align,
+AlignVertical,
+Color,
+CleekOptions,
+Layout,
+WidthBreaks,
+} from '../types/cleek-options';
 
 export default {
-  // getCleekOptions
-  // getGroupClass
-  // getWidthByWidthBreaks
-  // isColorTemplateVariable
-  // isColumnDisplayed
-  // preventUnusedError
-
   getCleekOptions(getCurrentInstance: ComponentInternalInstance ) {
     return getCurrentInstance().appContext.app.config.globalProperties.$cleekOptions;
   },
@@ -18,9 +19,9 @@ export default {
       groupVertical,
       widthBreaks = [],
     }: {
-      group?: 'left' | 'right' | 'center';
-      groupVertical?: 'top' | 'bottom' | 'center';
-      widthBreaks?: [number, string][];
+      group?: Align;
+      groupVertical?: AlignVertical;
+      widthBreaks?: WidthBreaks;
     } = {},
     windowWidth: number,
   ) {
@@ -44,6 +45,13 @@ export default {
         && typeof realWidthBreaks[1] === 'string'
       ) {
         realWidthBreaks = [realWidthBreaks];
+      }
+      // add [0, '100%']
+      if (realWidthBreaks.length) {
+        const first = realWidthBreaks[0];
+        if (first[0] !== 0) {
+          realWidthBreaks.unshift([0, '100%']);
+        }
       }
       // ordernarlos del más grande al más chico
       let finalWidth = '';

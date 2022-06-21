@@ -1,13 +1,15 @@
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed } from 'vue';
 // components
 import CkButton from '../../ck-button.vue';
 import CkInput from '../../ck-input.vue';
+// types
+import { Layout } from '../../../types/cleek-options';
 // hooks
-import functions from '../../../utils/functions';
+import hooks from '../../../utils/functions';
 
 const props = defineProps<{
-  search: string;
+  search?: string;
   hasColumnsManager: boolean;
   showRefreshBtn: boolean;
   hideItemsPerPage: boolean;
@@ -15,20 +17,21 @@ const props = defineProps<{
   itemsPerPage: number;
   hideHeaderActions: boolean;
   listLength: number;
+  layout: Layout;
 }>();
+
 const emits = defineEmits<{
   (e: 'update:search', value: string): void;
   (e: 'refreshList', idk: false): void;
   (e: 'openColumnsManager'): void;
 }>();
 
-
 const searchLocal = computed({
   get() { return props.search; },
   set(val: string) { emits('update:search', val); }
 });
-const hideSearch = computed(() => {
-  return typeof searchLocal.value === 'undefined';
+const isSearchVisible = computed(() => {
+  return typeof searchLocal.value !== 'undefined';
 });
 const itemsPerPageStart = computed(() => {
   return (props.currentPage -1) * props.itemsPerPage + 1;
@@ -52,6 +55,12 @@ const searchGroupValue = computed(() => {
   if (props.hasColumnsManager) return 'left';
   return '';
 });
+const computedClass = computed(() => {
+  const list = [];
+  // layout
+  if (props.layout) list.push(props.layout);
+  return list;
+});
 
 function checkRefresh() {
   const search = searchLocal.value;
@@ -60,14 +69,15 @@ function checkRefresh() {
     emits('refreshList', false);
   }, 1000);
 }
-functions.preventUnusedError([
+
+hooks.preventUnusedError([
   searchGroupValue,
   checkRefresh,
 ]);
 </script>
 
 <template lang="pug">
-.ck-table__header-items
+.ck-table__header-items(:class="computedClass")
   template(v-if="!hideHeaderActions")
     //- refresh btn
     ck-button(
@@ -75,21 +85,23 @@ functions.preventUnusedError([
     type="flat"
     icon="rotate-right"
     title="Recargar lista"
+    :layout="layout"
     @click="emits('refreshList', false)"
     )
     //- pages
     .items-per-page(
     v-if="itemsPerPageIsVisible"
-    :class="{ 'ck-component__group--left': (!hideSearch) }"
+    :class="{ 'ck-component__group--left': (isSearchVisible) }"
     )
       | {{ itemsPerPageStart }} - {{ itemsPerPageEnd }} de {{ listLength }}
     //- search
     ck-input(
-    v-if="!hideSearch"
+    v-if="isSearchVisible"
     v-model="searchLocal"
     icon="magnifying-glass"
     placeholder="Buscar..."
     :group="searchGroupValue"
+    :layout="layout"
     @input="checkRefresh()"
     )
     //- columns manager
@@ -98,7 +110,8 @@ functions.preventUnusedError([
     type="filled"
     title="Administrador de columnas"
     v-if="hasColumnsManager"
-    :group="itemsPerPageIsVisible || !hideSearch ? 'right' : ''"
+    :group="itemsPerPageIsVisible || isSearchVisible ? 'right' : ''"
+    :layout="layout"
     @click="emits('openColumnsManager')"
     )
 </template>
@@ -116,4 +129,11 @@ functions.preventUnusedError([
     // background-color rgba($globalBorderColor, .15) FIXRGBA
     border 1px solid $globalBorderColor
     border-radius:  $globalBorderRadius
+  &.rounded
+    .items-per-page
+      border-radius-left 2rem
+      padding-left 1rem
+  &.squared
+    .items-per-page
+      border-radius 0
 </style>

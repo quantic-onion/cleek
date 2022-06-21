@@ -1,13 +1,9 @@
 <script setup lang="ts">
 import { computed } from 'vue';
+import { Align, AlignVertical } from '../../types/cleek-options';
+import { ColumnItem } from '../../types/table';
 // hooks
-import functions from '../../utils/functions';
-
-type ColumnItem = {
-  align?: 'left' | 'center' | 'right';
-  isDisplayed?: boolean;
-  unchangeable?: boolean;
-}
+import hooks from '../../utils/functions';
 
 const props = defineProps<{
   col?: ColumnItem;
@@ -15,8 +11,8 @@ const props = defineProps<{
   block?: boolean;
   overflowAuto?: boolean;
   // align
-  align?: 'left' | 'center' | 'right';
-  verticalAlign?: 'top' | 'center' | 'bottom';
+  align?: Align;
+  verticalAlign?: AlignVertical;
   // width
   fixedWidth?: string; // min and max width
   autoWidth?: boolean;
@@ -27,25 +23,27 @@ const props = defineProps<{
 
 const computedTdClass = computed(() => {
   const list = [];
-  if (props.autoWidth) list.push('auto-width');
-  if (props.overflowAuto) list.push('overflow-auto');
-  if (props.verticalAlign) list.push(`vertical-align--${props.verticalAlign}`)
+  // autoWidth
+  if (props.autoWidth || props.col?.autoWidth) list.push('auto-width');
+  // overflowAuto
+  if (props.overflowAuto || props.col?.overflowAuto) list.push('overflow-auto');
+  // verticalAlign
+  const verticalAlign = props.verticalAlign || props.col?.verticalAlign;
+  if (verticalAlign) list.push(`vertical-align--${verticalAlign}`)
   return list;
 });
 const computedSpanClass = computed(() => {
   const list = [];
   // align
-  let align;
-  if (props.col) align = props.col.align;
-  if (props.align) align = props.align;
+  const align = props.align || props.col?.align;
   if (align) {
     if (align === 'center') list.push('align-center');
     if (align === 'right') list.push('align-right');
   }
   // block
-  if (props.block) list.push('block');
+  if (props.block || props.col?.block) list.push('block');
   // nowrap
-  if (props.block) list.push('no-wrap-text');
+  if (props.nowrap || props.col?.nowrap) list.push('no-wrap-text');
   return list;
 });
 const computedStyle = computed(() => {
@@ -55,25 +53,25 @@ const computedStyle = computed(() => {
     maxHeight?: string;
   } = {};
   // min-width
-  let minWidth = '';
-  if (props.minWidth) minWidth = props.minWidth;
-  if (props.fixedWidth) minWidth = props.fixedWidth;
+  let minWidth;
+  if (props.minWidth || props.col?.minWidth) minWidth = props.minWidth || props.col?.minWidth;
+  if (props.fixedWidth || props.col?.fixedWidth) minWidth = props.fixedWidth || props.col?.fixedWidth;
   if (minWidth) list.minWidth = minWidth;
   // max-width
-  let maxWidth = '';
-  if (props.maxWidth) maxWidth = props.maxWidth;
-  if (props.fixedWidth) maxWidth = props.fixedWidth;
+  let maxWidth;
+  if (props.maxWidth || props.col?.maxWidth) maxWidth = props.maxWidth || props.col?.maxWidth;
+  if (props.fixedWidth || props.col?.fixedWidth) maxWidth = props.fixedWidth || props.col?.fixedWidth;
   if (maxWidth) list.maxWidth = maxWidth;
   // max-height
-  if (props.maxHeight) list.maxHeight = props.maxHeight;
+  if (props.maxHeight || props.col?.maxHeight) list.maxHeight = props.maxHeight;
   return list;
 });
 const isColumnDisplayed = computed(() => {
   if (!props.col) return true;
-  return functions.isColumnDisplayed(props.col);
+  return hooks.isColumnDisplayed(props.col);
 });
 
-functions.preventUnusedError([
+hooks.preventUnusedError([
   isColumnDisplayed,
   computedStyle,
 ]);
@@ -92,7 +90,6 @@ v-if="isColumnDisplayed"
 .ck-td
   padding .5rem
   border-bottom 1px solid $globalBorderColor
-  background #fff
   &:last-of-type
     border none
   &.overflow-auto
