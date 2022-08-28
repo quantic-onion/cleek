@@ -1,6 +1,9 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue';
+// components
 import ComponentShower from '@/components/ComponentShower.vue';
+import ComponentShowerRow from '@/components/ComponentShowerRow.vue';
+
 // helicopter
 const selectedHelicopter = ref('');
 const optionsHelicopter = [
@@ -55,6 +58,13 @@ const options = ref([
   { id: 5, name: 'Ernesto Laprida' },
   { id: 6, name: 'Lautaro Dalla Costa' },
 ]);
+const selectedEmployeeRoleId = ref(0);
+const optionsEmployeeRoles = ref([
+  { id: 1, role: 'Admin' },
+  { id: 2, role: 'Manager' },
+  { id: 3, role: 'Seller' },
+  { id: 4, role: 'Employee' },
+]);
 const selectedOptionNestedId = ref(0);
 const selectedOptionNested = ref({});
 const selectedOptionNested2 = ref({});
@@ -76,6 +86,32 @@ ComponentShower(title="Default" noGap)
   label="Helicóptero"
   icon="helicopter"
   :options="optionsHelicopter"
+  )
+
+ComponentShower(title="Label / placeholder")
+  //- helicopter
+  ck-select(
+  v-model="selectedHelicopter"
+  notReduce
+  label="Helicóptero"
+  icon="city"
+  placeholder="Write the model or year"
+  :options="optionsHelicopter"
+  )
+  //- user
+  ck-select(
+  v-model="selectedUser"
+  notReduce
+  placeholder="Usuario"
+  :options="optionsUser"
+  )
+  //- city
+  ck-select(
+  v-model="selectedCity"
+  notReduce
+  label="Ciudad"
+  icon="city"
+  :options="optionsCity"
   )
 
 //- icon
@@ -108,40 +144,47 @@ ComponentShower(title="Icon" noGap)
   :options="optionsCity"
   )
 
-ComponentShower(title="Reductors    ")
-  div
-    div Selected option: {{ selectedOption }}
+ComponentShower(title="Reductors")
+  ComponentShowerRow(title="default")
+    ck-select(
+    label="¿Quién es el más lindo?"
+    v-model="selectedId"
+    :options="options"
+    )
+    div Selected ID: {{ selectedId }}
+  ComponentShowerRow(title="notReduce")
     ck-select(
     notReduce
     label="El mejor jugador de fútbol"
     v-model="selectedOption"
     :options="optionsSoccer"
     )
-  div
-    div Selected ID: {{ selectedId }}
+    div Selected option: {{ selectedOption }}
+  ComponentShowerRow(title="reduceNameProp")
     ck-select(
-    label="¿Quién es el más lindo?"
-    v-model="selectedId"
-    :options="options"
+    v-model="selectedEmployeeRoleId"
+    label="Employee role"
+    reduceNameProp="role"
+    :options="optionsEmployeeRoles"
     )
-  div
-    div Selected option obj: {{ selectedOptionObj }}
+    div Selected ID {{ selectedEmployeeRoleId }}
+  ComponentShowerRow(title="notReduceValue")
     ck-select(
     notReduceValue
     label="¿Quién es el más lindo?"
     v-model="selectedOptionObj"
     :options="options"
     )
-  div
-    div Selected option nested ID: {{ selectedOptionNestedId }}
+    div Selected option obj: {{ selectedOptionObj }}
+  ComponentShowerRow(title="reduceNameFunction")
     ck-select(
     :reduceNameFunction="(customer) => customer.address.fullAddress"
     label="¿Quién es el más lindo?"
     v-model="selectedOptionNestedId"
     :options="customers"
     )
-  div
-    div Selected option nested: {{ selectedOptionNested }}
+    div Selected option nested ID: {{ selectedOptionNestedId }}
+  ComponentShowerRow(title="notReduceValue & reduceNameFunction")
     ck-select(
     notReduceValue
     :reduceNameFunction="(customer) => customer.address.fullAddress"
@@ -149,8 +192,8 @@ ComponentShower(title="Reductors    ")
     v-model="selectedOptionNested"
     :options="customers"
     )
-  div
-    div Selected option nested 2: {{ selectedOptionNested2 }}
+    div Selected option nested: {{ selectedOptionNested }}
+  ComponentShowerRow(title="reduceValueFunction & reduceNameFunction")
     ck-select(
     :reduceNameFunction="(customer) => customer.address.fullAddress"
     :reduceValueFunction="(customer) => customer.address"
@@ -158,6 +201,7 @@ ComponentShower(title="Reductors    ")
     v-model="selectedOptionNested2"
     :options="customers"
     )
+    div Selected option nested 2: {{ selectedOptionNested2 }}
   //- div
   //-   div Selected option: {{ selectedSoccer2 }} | clearable default
   //-   ck-select(

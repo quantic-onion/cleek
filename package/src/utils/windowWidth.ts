@@ -12,7 +12,6 @@ export default {
   },
   methods: {
     handleWindowResize(event) {
-      // console.log('handleWindowResize', event.currentTarget.innerWidth);
       this.windowWidth = event.currentTarget.innerWidth;
     },
   },

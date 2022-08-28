@@ -836,10 +836,33 @@ clean-stack@^2.0.0:
   resolved "https://registry.yarnpkg.com/clean-stack/-/clean-stack-2.2.0.tgz#ee8472dbb129e727b31e8a10a427dee9dfe4008b"
   integrity sha512-4diC9HaTE+KRAMWhDhrGOECgWZxoevMc5TlkObMqNSsVU62PYzXZ/SMTjzyGAFF1YusgxGcSWTEXBhp0CPwQ1A==
 
-cleek@^2.4.33, cleek@^2.4.45:
+cleek@^2.4.33:
   version "2.4.45"
   resolved "https://registry.yarnpkg.com/cleek/-/cleek-2.4.45.tgz#1e1ae9bfac425f588047c2e157ae2ff081cbae1d"
   integrity sha512-cSH+jMsT5nuFpYljOmJLD7mMRd0QeiEe2kHEvy+CtvTSFN4t3uX1fUjkr0Lkkobx9LNTfWfwpo1rDsBpa333eg==
+  dependencies:
+    "@fortawesome/fontawesome-svg-core" "^6.1.1"
+    "@fortawesome/free-brands-svg-icons" "^6.1.1"
+    "@fortawesome/free-regular-svg-icons" "^6.1.1"
+    "@fortawesome/free-solid-svg-icons" "^6.1.1"
+    "@fortawesome/vue-fontawesome" "^3.0.0-5"
+    floating-vue "^2.0.0-beta.16"
+    mitt "^3.0.0"
+    pug "^3.0.2"
+    quantic-methods "^1.6.3"
+    rollup-plugin-typescript2 "^0.31.2"
+    stylus "^0.56.0"
+    tabbable "^5.2.0"
+    tippy.js "^6.3.1"
+    typescript "^4.6.4"
+    vue "^3.2.31"
+    vue-perfect-scrollbar "^0.2.1"
+    vuex "^4.0.2"
+
+cleek@^2.4.79:
+  version "2.4.79"
+  resolved "https://registry.yarnpkg.com/cleek/-/cleek-2.4.79.tgz#8f794e1eadc1075a6a23772368a89ad439970c64"
+  integrity sha512-RSBsMYFF27vcSB6R/oKnpcYDtTtz3Jjm8PQ1nSgoS8/1BsgQaqhKvf0Fjsl7AjqXxiEE/IFAx7eYEPqVjOjyhQ==
   dependencies:
     "@fortawesome/fontawesome-svg-core" "^6.1.1"
     "@fortawesome/free-brands-svg-icons" "^6.1.1"

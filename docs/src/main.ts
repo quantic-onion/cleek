@@ -1,12 +1,15 @@
 import { createApp } from 'vue';
 import { createPinia } from 'pinia';
-import Cleek from 'cleek';;
+import Cleek from 'cleek';
 
 import App from './App.vue'
 import router from './router'
 import cleekConfig from './cleek-config';
 
-import '@/../node_modules/cleek/dist/style.css';
+// comment for build
+import 'cleek-style';
+// unccoment for build
+// import '@/../node_modules/cleek/dist/style.css';
 
 const app = createApp(App)
 

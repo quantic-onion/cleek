@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { computed, getCurrentInstance, onMounted, ref } from 'vue';
+import { qmStr } from 'quantic-methods';
 import type { Ref } from 'vue';
 // components
 import CkLabel from './ck-label.vue';
@@ -17,6 +18,7 @@ Icon,
 IconPack,
 InputType,
 Layout,
+SizeInCSS,
 WidthBreaks,
 } from '../types/cleek-options';
 
@@ -38,15 +40,20 @@ const props = defineProps<{
   groupVertical?: AlignVertical;
   widthBreaks?: WidthBreaks;
   // style
+  fontSize: SizeInCSS;
   size?: 's' | 'm' | 'l' | 'xl'; // default m
   hideBorder?: boolean;
   width?: string;
   align?: Align;
   layout?: Layout;
   borderColor?: Color;
+  textColor?: Color;
   // functions
+  autofocus?: boolean;
+  capitalize?: boolean;
   autoSelect?: boolean;
   delayChangeTime?: number;
+  justInteger?: boolean;
 }>();
 
 const emits = defineEmits<{
@@ -54,6 +61,8 @@ const emits = defineEmits<{
   (e: 'click', event: Event): void;
   (e: 'input', event: Event): void;
   (e: 'change', event: Event): void;
+  (e: 'focus', event: Event): void;
+  (e: 'blur', event: Event): void;
   (e: 'delayChange', value: string | number): void;
 }>();
 
@@ -65,6 +74,7 @@ const defaultType = 'text';
 const defaultDelayChangeTime = 300;
 
 const realInput: Ref<null | HTMLInputElement> = ref(null);
+const isShowingPassword = ref(false);
 
 const { windowWidth } = useWindowWidth(); 
 
@@ -73,6 +83,8 @@ const value = computed({
     return props.modelValue;
   },
   set(val: string | number) {
+    if (props.capitalize) val = qmStr.capitalize(`${val}`);
+    if (props.justInteger) val = parseInt(+val);
     emits('update:modelValue', val);
     checkSearchTime(val);
   },
@@ -122,6 +134,10 @@ const computedClassInput = computed(() => {
 });
 const computedStyleInput = computed(() => {
   const list = [];
+  // font-size
+  if (props.fontSize) list.push({ 'font-size': props.fontSize });
+  // font-size
+  if (props.textColor) list.push({ 'color': props.textColor });
   // border-color
   const borderColor = props.borderColor || cleekOptions.value?.styles.borderColor;
   if (borderColor && !hooks.isColorTemplateVariable(borderColor)) {
@@ -169,6 +185,9 @@ hooks.preventUnusedError([
 
 onMounted(() => {
   cleekOptions.value = hooks.getCleekOptions(getCurrentInstance);
+  if (props.autofocus) {
+    setFocus();
+  }
 });
 </script>
 
@@ -188,8 +207,25 @@ onMounted(() => {
   //- input
   //- :id="label ? 'ck-input' : ''"
   input(
-  ref="realInput"
+  v-if="isShowingPassword"
   v-model="value"
+  ref="realInput"
+  type="text"
+  :autocomplete="autocomplete ? 'on' : 'off'"
+  :placeholder="placeholder"
+  :class="computedClassInput"
+  :style="computedStyleInput"
+  :disabled="disabled"
+  @change="onChange($event)"
+  @input="onInput($event)"
+  @click="onClick($event)"
+  @focus="emits('focus', $event)"
+  @blur="emits('blur', $event)"
+  )
+  input(
+  v-else
+  v-model="value"
+  ref="realInput"
   :autocomplete="autocomplete ? 'on' : 'off'"
   :type="type || defaultType"
   :placeholder="placeholder"
@@ -199,10 +235,18 @@ onMounted(() => {
   @change="onChange($event)"
   @input="onInput($event)"
   @click="onClick($event)"
+  @focus="emits('focus', $event)"
+  @blur="emits('blur', $event)"
   )
+  .show-password(
+  v-if="type === 'password'"
+  :class="layout || cleekOptions?.styles.layout"
+  @click="isShowingPassword = !isShowingPassword"
+  )
+    ck-icon(:icon="isShowingPassword ? 'eye-slash' : 'eye'")
   //- icon right
   ck-icon.ck-input__icon-right(
-  v-if="iconRight"
+  v-if="iconRight && type !== 'password'"
   color="lightgrey"
   :icon="iconRight"
   :icon-pack="iconPack"
@@ -223,6 +267,12 @@ onMounted(() => {
     border 1px solid $globalBorderColor
     min-height 40px
     box-sizing border-box
+    &::placeholder
+      color $color-placeholder
+    &:-ms-input-placeholder
+      color $color-placeholder
+    &::-ms-input-placeholder
+      color $color-placeholder
     &:focus-visible
       outline-color var(--primary)
     &.rounded
@@ -261,6 +311,26 @@ onMounted(() => {
     position absolute
     bottom 13px
     z-index 1
+  > .show-password
+    background-color #eee
+    color #666
+    cursor pointer
+    position absolute
+    right 1px
+    bottom 1px
+    height 38px
+    width @height
+    display flex
+    align-items center
+    justify-content center
+    transition .3s
+    border-left 1px solid $globalBorderColor
+    &:hover
+      background-color #f0f0f0
+    &.rounded
+      border-radius 10rem
+    &.squared
+      border-radius 0
   > .ck-input__icon-left
     left 1.5 * $globalPadding
   > .ck-input__icon-right

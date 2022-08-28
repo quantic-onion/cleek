@@ -6,7 +6,7 @@ import CkLabel from './ck-label.vue';
 import functions from '../utils/functions';
 import useWindowWidth from '../hooks/windowWidth';
 
-type Option = boolean | number | object;
+type Option = boolean | number | object | string;
 
 const defaultProp = 'name';
 // @ts-ignore

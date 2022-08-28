@@ -1,7 +1,7 @@
 import { App, Plugin } from 'vue';
 import { store } from './store'
 import FloatingVue from 'floating-vue'
-import ckNotifyComponent from './components/ck-notify/ck-notify.vue';
+// import ckNotifyComponent from './components/ck-notify/ck-notify.vue';
 import defaultCleekOptions from './default-cleek-options';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { fas } from '@fortawesome/free-solid-svg-icons';

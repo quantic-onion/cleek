@@ -77,7 +77,11 @@ const computedStyle = computed(() => {
     styleList.push({ height: props.sizeAbsolute });
   }
   // radius
-  if (props.radius) styleList.push({ 'border-radius': props.radius });
+  let radius = props.radius;
+  if (typeof props.radius === 'undefined' && cleekOptions.value?.styles.layout === 'squared') {
+    radius = '0px';
+  }
+  if (radius) styleList.push({ 'border-radius': radius });
   // border
   if (props.hasBorder) {
     if (!hooks.isColorTemplateVariable(realBorderColor.value)) {

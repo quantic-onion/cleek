@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, getCurrentInstance, onMounted, ref } from 'vue';
+import { computed, getCurrentInstance, onMounted, ref, watch } from 'vue';
 import type { Ref } from 'vue';
 // components
 import CkInput from '../../ck-input.vue';
@@ -28,18 +28,18 @@ const itemsShowed = 5;
 
 const currentPageLocal = computed({
   get() { return props.currentPage; },
-  set() {  },
+  set(val: number) { emits('update:currentPage', val); },
+});
+const currentPageInputValue = computed({
+  get() { return props.currentPage; },
+  set() { },
 });
 const hasArrowLeft = computed(() => {
   return props.currentPage !== 1;
 //   if (!listLeft.value.length) return false;
 //   return listLeft.value[0] !== 1;
 });
-const hasArrowRight = computed(() => {
-  return props.currentPage !== listRight.value[listRight.value.length -1];
-//   if (!listRight.value.length) return false;
-//   return listRight.value[listRight.value.length -1] !== totalPages.value;
-});
+const hasArrowRight = computed(() => !!listRight.value.length);
 const totalPages = computed(() => {
   return Math.ceil(props.listLength / props.itemsPerPage);
 });
@@ -74,29 +74,30 @@ const computedClass = computed(() => {
   return list;
 });
 
-// updateCurrentPage
-// validateInputNumber
-function updateCurrentPage(val: number, validator = true) {
-  if (!validator) return;
-  emits('update:currentPage', val);
+watch(() => currentPageLocal.value, () => {
   emits('refreshList');
+});
+
+function updatePageByInput(eventTarget: HTMLInputElement) {
+  let newValue = +eventTarget.value;
+  // validate
+  if (newValue > totalPages.value) newValue = totalPages.value; 
+  if (newValue < 1) newValue = 1; 
+  // set value
+  if (props.currentPage === newValue) {
+    eventTarget.value = `${newValue}`;
+  } else {
+    currentPageLocal.value = newValue;
+  }
 }
-function validateInputNumber(val: number) {
-  console.log('valido', val);
-  val = +val;
-  if (val > totalPages.value) val = totalPages.value; 
-  if (val < 1) val = 1; 
-  if (val === props.currentPage) return;
-  updateCurrentPage(val);
+function onClickArrowRight() {
+  if (!hasArrowRight.value) return;
+  currentPageLocal.value = props.currentPage + 1
 }
 
 onMounted(() => {
   cleekOptions.value = hooks.getCleekOptions(getCurrentInstance);
 });
-
-hooks.preventUnusedError([
-  validateInputNumber,
-]);
 </script>
 
 <template lang="pug">
@@ -108,14 +109,14 @@ v-if="currentPage && totalPages > 1"
     //- arrow left
     .ck-table__pagination--arrow-left(
     :class="{ disabled: !hasArrowLeft }"
-    @click="updateCurrentPage(currentPage - 1, hasArrowLeft)"
+    @click="currentPageLocal = currentPage - 1"
     )
       ck-icon(:icon="hasArrowLeft ? 'angle-left' : 'grip-lines-vertical'")
     .ck-table__pagination--numbers-container
       //- list left
       .ck-table__pagination-item--left(
       v-for="num in listLeft"
-      @click="updateCurrentPage(num)"
+      @click="currentPageLocal = num"
       )
         | {{ num }}
       //- input
@@ -125,21 +126,21 @@ v-if="currentPage && totalPages > 1"
       .ck-table__pagination-input-container
         input.ck-table__pagination-input(
         type="number"
-        v-model="currentPageLocal"
+        v-model="currentPageInputValue"
         @click="$event.target.select()"
-        @change="validateInputNumber($event.target.value)"
+        @change="updatePageByInput($event.target)"
         )
         .ck-table__pagination--input-pointer
       //- list right
       .ck-table__pagination-item--right(
       v-for="num in listRight"
-      @click="updateCurrentPage(num)"
+      @click="currentPageLocal = num"
       )
         | {{ num }}
     //- arrow right
     .ck-table__pagination--arrow-right(
     :class="{ disabled: !hasArrowRight }"
-    @click="updateCurrentPage(currentPage + 1, hasArrowRight)"
+    @click="onClickArrowRight()"
     )
       ck-icon(:icon="hasArrowRight ? 'angle-right' : 'grip-lines-vertical'")
 </template>
@@ -206,6 +207,7 @@ $border-color = #aaa
     .ck-table__pagination--numbers-container
       display flex
       align-items flex-end
+      unselectable()
     //   background-color white
     //   flex-center()
     //   border 1px solid $border-color

@@ -3,7 +3,7 @@ import { computed } from 'vue';
 // components
 import CkIcon from './ck-icon.vue';
 // types
-import { Color, Icon, IconPack, Size } from '../types/cleek-options';
+import { Align, Color, Icon, IconPack, Size } from '../types/cleek-options';
 
 const props = defineProps<{
   size?: Size; // default s
@@ -12,6 +12,7 @@ const props = defineProps<{
   align?: Align;
   // icon
   icon?: Icon;
+  iconRight?: Icon;
   iconPack?: IconPack;
 }>();
 
@@ -49,12 +50,18 @@ const computedStyle = computed(() => {
 :style="computedStyle"
 @click="emits('click', $event)"
 )
-  ck-icon(
-  v-if="icon"
+  ck-icon.pr-2(
+  v-if="icon && !iconRight"
   :icon="icon"
   :icon-pack="iconPack"
   )
-  slot
+  span
+    slot
+  ck-icon.pl-2(
+  v-if="icon && iconRight"
+  :icon="icon"
+  :icon-pack="iconPack"
+  )
 </template>
 
 <style lang="stylus" scoped>

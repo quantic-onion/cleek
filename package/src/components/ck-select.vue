@@ -54,12 +54,14 @@ const props = defineProps<{
   // label
   label?: string;
   labelAlign?: Align;
+  // placeholder
+  placeholder?: string;
 }>();
 
 const emits = defineEmits<{
   (e: 'update:modelValue', value: any): void;
   (e: 'click', event: Event): void;
-  (e: 'change', event: Event): void;
+  (e: 'change', event?: Event): void;
 }>(); // TERMINAR CLICK / CHANGE
 
 defineExpose({
@@ -83,6 +85,7 @@ const value = computed({
   set(val) {
     // if (val === null) val = realClearValue;
     emits('update:modelValue', val);
+    emits('change');
   },
 });
 const filteredOptions = computed(() => {
@@ -110,9 +113,6 @@ const computedClassSelect = computed(() => {
   const list = [];
   // group
   list.push(hooks.getGroupClass(props, windowWidth.value));
-  // icon
-  if (props.icon) list.push('has-icon-left');
-  if (props.iconRight) list.push('has-icon-right');
   // layout
   const layout = props.layout || cleekOptions.value?.styles.layout;
   if (layout) list.push(layout);
@@ -134,6 +134,13 @@ const computedStyleSelect = computed(() => {
   }
   return list;
 });
+const computedClass = computed(() => {
+  const list = [];
+  // icon
+  if (props.icon) list.push('has-icon-left');
+  if (props.iconRight) list.push('has-icon-right');
+  return list;
+})
 const computedStyle = computed(() => {
   const list = [];
   // width-break
@@ -193,6 +200,10 @@ const valueIsDefault = computed(() => {
     default: return props.modelValue === null;
   }
 });
+const isPlaceholderVisible = computed(() => {
+  if (!props.placeholder) return;
+  return valueIsDefault.value;
+});
 
 // function onBlur(event: Event) {
 //   const isValid = checkOptionsIsValid(event.target.value);
@@ -206,12 +217,6 @@ const valueIsDefault = computed(() => {
 // }
 function onClick(event: Event) {
   emits('click', event);
-}
-function onChange(event: Event) {
-  emits('change', event);
-  // const selected = props.options.find(i => getOptionName(i) === search.value);
-  // value.value = getOptionValue(selected)
-  // event.target.blur();
 }
 // function checkOptionsIsValid(optionName) {
 //   if (!optionName) return false;
@@ -247,7 +252,6 @@ hooks.preventUnusedError([
   computedStyle,
   computedClassSelect,
   getOptionValue,
-  onChange,
   onClick,
   filteredOptions,
 ]);
@@ -256,6 +260,7 @@ hooks.preventUnusedError([
 <template lang="pug">
 .ck-select(
 :style="computedStyle"
+:class="computedClass"
 ) 
   //- icon left
   ck-icon.ck-select__icon-left(
@@ -285,7 +290,6 @@ hooks.preventUnusedError([
   :style="computedStyleSelect"
   :disabled="disabled"
   @click="onClick($event)"
-  @change="onChange($event)"
   )
     //- option
     option(
@@ -294,6 +298,8 @@ hooks.preventUnusedError([
     :key="(option)"
     )
       | {{ getOptionName(option) }}
+  span.ck-select--placeholder(v-if="isPlaceholderVisible")
+    | {{ placeholder }}
 </template>
 
 <style lang="stylus" scoped>
@@ -320,10 +326,6 @@ hooks.preventUnusedError([
       border-color var(--primary)
       outline 0
       border-radius-bottom(1px)
-    &.has-icon-left
-      padding-left 14px + (3 * $globalPadding)
-    &.has-icon-right
-      padding-right 14px + (3 * $globalPadding)
     option
       color #333
       font-size .9rem
@@ -356,6 +358,25 @@ hooks.preventUnusedError([
     transition .3s
     &:hover
       background-color rgba(black, .025)
+  .ck-select--placeholder
+    position absolute
+    color $color-placeholder
+    left 12px
+    bottom 12px
+    font-size .9rem
+    pointer-events none
+
+.ck-select
+  &.has-icon-left
+    select
+      padding-left 14px + (3 * $globalPadding)
+    .ck-select--placeholder
+      padding-left  28px
+  &.has-icon-right
+    select
+      padding-right 14px + (3 * $globalPadding)
+    .ck-select--placeholder
+      padding-right 28px
   // .ck-select__chevron-icon
   //   position absolute
   //   right 10px

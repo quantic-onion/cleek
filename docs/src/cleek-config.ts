@@ -8,4 +8,7 @@ export default {
   img: {
     basePath: `${serverUrl}images/`,
   },
+  table: {
+    striped: true,
+  },
 };

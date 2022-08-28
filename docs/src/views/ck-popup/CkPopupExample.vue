@@ -115,7 +115,7 @@ PropsAndEmitsShower(
 )
 </template>
 
-<style lang="stylus">
+<style lang="stylus" scoped>
 .happy-birthday
   font-size 1.5rem
   font-weight 600

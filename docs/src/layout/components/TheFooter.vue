@@ -5,7 +5,7 @@
     ck-img(src="https://img.quanticonion.com/quantic-onion/logos/logo-white.svg" alt="Quantic Onion" height="2.75rem")
 </template>
 
-<style lang="stylus">
+<style lang="stylus" scoped>
 .the-footer
   font-family 'Pompiere', cursive
   color white

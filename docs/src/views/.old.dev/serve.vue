@@ -51,7 +51,7 @@ export default defineComponent({
 </style>
 
 
-<style lang="stylus">
+<style lang="stylus" scoped>
 html
   font-size 14px !important
   font-family Montserrat, Helvetica, Arial, sans-serif

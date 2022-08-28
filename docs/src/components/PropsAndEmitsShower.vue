@@ -51,7 +51,7 @@ h1.mt-10.pb-2.pl-12 API
         | {{ emitItem }}
 </template>
 
-<style lang="stylus">
+<style lang="stylus" scoped>
 .props-and-emits-shower
   background-color white
   padding 1.5rem 2rem

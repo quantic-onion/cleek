@@ -13,6 +13,7 @@ type CkInput = {
   setSelect: () => void;
 }; // import { CkInput } from 'cleek';
 
+const autofocusPopup = ref(false);
 const refInputTestFocus: Ref<null | CkInput> = ref(null);
 const refInputTestSelect: Ref<null | CkInput> = ref(null);
 
@@ -153,6 +154,15 @@ ComponentShower(title="Emits")
   ck-input(label="change" @change="ckNotify.notifySuccess('change')")
   ck-input(v-model="delayChange1" label="delayChange" @delayChange="ckNotify.notifySuccess('delayChange')")
   ck-input(v-model="delayChange2" label="delayChange (custom time 1s)" :delayChangeTime="1000" @delayChange="ckNotify.notifySuccess('delayChange (custom time 1s)')")
+  ck-input(label="click" @click="ckNotify.notifySuccess('click')")
+  ck-input(label="focus" @focus="ckNotify.notifySuccess('focus')")
+  ck-input(label="blur" @blur="ckNotify.notifySuccess('blur')")
+  ck-button(@click="autofocusPopup = true")
+    | Autofocus
+
+ck-popup(v-model="autofocusPopup" title="Test autofocus")
+  p On mounted, automatically set focus
+  ck-input(autofocus)
 
 PropsAndEmitsShower(
 :propsList="propsAndEmits.input.props"

@@ -8,7 +8,7 @@ const router = createRouter({
       component: () => import('@/layout/MainPage.vue'),
       children: [
         {
-          path: 'home', name: 'home', meta: { title: 'Home' },
+          path: '/', name: 'home', meta: { title: 'Home' },
           component: () => import('@/views/TheHome.vue'),
         },
         {

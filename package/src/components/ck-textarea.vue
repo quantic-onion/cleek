@@ -4,32 +4,53 @@ import type { Ref } from 'vue';
 // components
 import CkLabel from './ck-label.vue';
 // types
-import type { Align, Color, CleekOptions, Layout } from '../types/cleek-options';
+import type { Align, AlignVertical, Color, CleekOptions, Layout, SizeInCSS } from '../types/cleek-options';
 // hooks
 import hooks from '../utils/functions';
+import useWindowWidth from '../hooks/windowWidth';
+import { qmStr } from 'quantic-methods';
 
 const props = defineProps<{
   modelValue: string;
+  disabled?: boolean;
+  placeholder?: string;
+  resize?: true | 'none' | 'vertical' | 'horizontal';
+  // style
+  layout?: Layout;
+  borderColor?: Color;
+  align?: Align;
+  group?: Align;
+  groupVertical?: AlignVertical;
+  borderRadius?: SizeInCSS;
+  fontSize?: SizeInCSS;
+  textColor?: Color;
+  width?: SizeInCSS;
+  height?: SizeInCSS;
+  // functions
+  capitalize?: boolean;
+  autoSelect?: boolean;
   // label
   label?: string;
   labelAlign?: Align;
-  layout?: Layout;
-  borderColor?: Color;
-  placeholder?: string;
-  disabled?: boolean;
-  preventResize?: boolean;
-  resize?: 'vertical' | 'horizontal';
 }>();
 
 const emits = defineEmits<{
   (e: 'update:modelValue', value: string): void;
+  (e: 'input', event: Event): void;
+  (e: 'change', event: Event): void;
+  (e: 'click', event: Event): void;
 }>();
 
 let cleekOptions: Ref<undefined | CleekOptions> = ref();
+const refTextarea: Ref<null | HTMLTextAreaElement> = ref(null);
+const { windowWidth } = useWindowWidth();
 
-const value = computed({
+const inputValue = computed({
   get() { return props.modelValue; },
-  set(val: string) { emits('update:modelValue', val); },
+  set(val: string) {
+    if (props.capitalize) val = qmStr.capitalize(val);
+    emits('update:modelValue', val);
+  },
 });
 const computedClassTextarea = computed(() => {
   const list = [];
@@ -41,6 +62,8 @@ const computedClassTextarea = computed(() => {
   if (borderColor && hooks.isColorTemplateVariable(borderColor)) {
     list.push(`ck-component__border-color--${borderColor}`);
   }
+  // group
+  list.push(hooks.getGroupClass(props, windowWidth.value));
   return list;
 });
 const computedStyleTextarea = computed(() => {
@@ -50,10 +73,35 @@ const computedStyleTextarea = computed(() => {
   if (borderColor && !hooks.isColorTemplateVariable(borderColor)) {
     list.push({ 'border-color': borderColor });
   }
+  // align
+  if (props.align) list.push(`align--${props.align}`);
+  // font-size
+  if (props.fontSize) list.push({ 'font-size': props.fontSize });
+  // border-radius
+  if (props.borderRadius) list.push({ 'border-radius': props.borderRadius });
+  // text-color
+  if (props.textColor) list.push({ 'color': props.textColor });
+  // width
+  if (props.width) list.push({ 'width': props.width });
+  // height
+  if (props.height) list.push({ 'height': props.height });
   // resize
-  if (props.resize) list.push({ resize: props.resize || 'both' })
+  const resize = props.resize ? props.resize : 'none';
+  if (resize)  list.push({ resize: resize || 'both' })
   return list;
 });
+
+// events
+const onClick = (event: Event) => {
+  if (props.autoSelect) refTextarea.value?.select();
+  emits('click', event);
+};
+const onInput = (event: Event) => {
+  emits('input', event);
+};
+const onChange = (event: Event) => {
+  emits('change', event);
+};
 
 onMounted(() => {
   cleekOptions.value = hooks.getCleekOptions(getCurrentInstance);
@@ -64,11 +112,15 @@ onMounted(() => {
 .ck-textarea
   ck-label(v-if="label" :label-align="labelAlign") {{ label }}
   textarea(
-  v-model="value"
+  v-model="inputValue"
+  ref="refTextarea"
   :placeholder="placeholder"
   :disabled="disabled"
   :class="computedClassTextarea"
   :style="computedStyleTextarea"
+  @click="onClick($event)"
+  @input="onInput($event)"
+  @change="onChange($event)"
   )
 </template>
 
@@ -76,20 +128,28 @@ onMounted(() => {
 @import '../styles/.variables.styl'
 
 .ck-textarea
-  > textarea
-    min-width 100%
+  display flex
+  flex-direction column
+  textarea
+    color #333
+    min-height 2.25rem
+    width 100%
     max-width 100%
-    min-height 6rem
+    height 6rem
     box-sizing border-box
     font-family inherit
     padding $globalPadding
     // font-size $globalFontSize * (85/100)
     border-radius $globalBorderRadius
     border 1px solid $globalBorderColor
-    &:focus-visible
+    &:focus
       outline-color var(--primary)
     &.rounded
       border-radius 1.25rem
     &.squared
       border-radius 0
+    &.align--left
+      text-align left
+    &.align--right
+      text-align right
 </style>

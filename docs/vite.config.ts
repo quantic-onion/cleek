@@ -9,8 +9,10 @@ export default defineConfig({
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url)),
-      // __cleek__: fileURLToPath(new URL('./node_modules/cleek/dist', import.meta.url)),
-    //   __cleek__: fileURLToPath(new URL('../package/dist/cleek.es.js', import.meta.url)),
+      // comment this line to build
+      cleek: fileURLToPath(new URL('../package/dist/cleek.es.js', import.meta.url)),
+      // comment this line to build, and update the lines where is used
+      'cleek-style': fileURLToPath(new URL('../package/dist/style.css', import.meta.url)),
     }
   },
   css: {

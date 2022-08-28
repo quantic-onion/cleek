@@ -53,7 +53,7 @@ const allRoutes = [
       | {{ routeItem.title }}
 </template>
 
-<style lang="stylus">
+<style lang="stylus" scoped>
 .components-sidebar
   position fixed
   width 250px

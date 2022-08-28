@@ -64,14 +64,14 @@ const computedClassContent = computed(() => {
 });
 const computedStyleContent = computed(() => {
   const list = [];
-  // max-width
-  const maxWidth = props.maxWidth || cleekOptions.value?.popup.maxWidth;
-  if (maxWidth) list.push({ 'max-width': maxWidth });
   // font-size
   const fontSize = props.fontSize || cleekOptions.value?.popup.fontSize;
   if (fontSize) list.push({ 'font-size': fontSize });
   // width
   if (props.width) list.push({ width: props.width });
+  // max-width
+  const maxWidth = props.width ? '95%' : props.maxWidth || cleekOptions.value?.popup.maxWidth;
+  if (maxWidth) list.push({ 'max-width': maxWidth });
   // text-color
   const textColor = props.textColor || cleekOptions.value?.popup.textColor;
   if (textColor && !hooks.isColorTemplateVariable(textColor)) {
@@ -148,48 +148,49 @@ onMounted(() => {
 </script>
 
 <template lang="pug">
-.ck-popup(v-if="isActive")
-  .blackout
-  .popup-container(@click="onBgClick()")
-    .ck-popup__content(
-    @click.stop=""
-    :style="computedStyleContent"
-    :class="computedClassContent"
-    )
-      .ck-popup__slot-header(
-      :style="computedStyleHeader"
-      :class="computedClassHeader"
+teleport(v-if="isActive" to="body")
+  .ck-popup
+    .blackout
+    .popup-container(@click="onBgClick()")
+      .ck-popup__content(
+      @click.stop=""
+      :style="computedStyleContent"
+      :class="computedClassContent"
       )
-        //- title
-        h3.ck-popup__title(v-if="title")
-          | {{ title }}
-        //- header slot
-        slot(name="header")
-        //- close btn
-        ck-icon.icon-close(
-        icon="times"
-        v-if="isCloseBtnVisible"
-        @click="isActive = false"
+        .ck-popup__slot-header(
+        :style="computedStyleHeader"
+        :class="computedClassHeader"
         )
-      //- VuePerfectScrollbar.ck-popup__slot-body
-      .ck-popup__slot-body
-        slot
-      .ck-popup__slot-footer(v-if="$slots.footer || confirmButtons || acceptButton || cancelButton")
-        slot(name="footer")
-        .ck-popup-slot-footer__confirm-buttons(v-if="confirmButtons || acceptButton || cancelButton")
-          ck-button.cancel-button(
-          v-if="confirmButtons || cancelButton"
-          color="danger"
-          :type="realCancelBtnType"
-          @click="onCancel()"
+          //- title
+          h3.ck-popup__title(v-if="title")
+            | {{ title }}
+          //- header slot
+          slot(name="header")
+          //- close btn
+          ck-icon.icon-close(
+          icon="times"
+          v-if="isCloseBtnVisible"
+          @click="isActive = false"
           )
-            | {{ realCancelBtnText }}
-          ck-button(
-          v-if="confirmButtons || acceptButton"
-          :type="realAcceptBtnType"
-          @click="onAccept()"
-          )
-            | {{ realAcceptBtnText }}
+        //- VuePerfectScrollbar.ck-popup__slot-body
+        .ck-popup__slot-body
+          slot
+        .ck-popup__slot-footer(v-if="$slots.footer || confirmButtons || acceptButton || cancelButton")
+          slot(name="footer")
+          .ck-popup-slot-footer__confirm-buttons(v-if="confirmButtons || acceptButton || cancelButton")
+            ck-button.cancel-button(
+            v-if="confirmButtons || cancelButton"
+            color="danger"
+            :type="realCancelBtnType"
+            @click="onCancel()"
+            )
+              | {{ realCancelBtnText }}
+            ck-button(
+            v-if="confirmButtons || acceptButton"
+            :type="realAcceptBtnType"
+            @click="onAccept()"
+            )
+              | {{ realAcceptBtnText }}
 </template>
 
 <style lang="stylus">
@@ -271,7 +272,6 @@ onMounted(() => {
       padding-y 2rem
       overflow-y auto
     .ck-popup__slot-footer
-      margin-top 1rem
       padding-top 1rem
       border-top 1px solid #CCC
       padding-x 1rem
@@ -288,7 +288,7 @@ onMounted(() => {
     padding-y 0
     .ck-popup__content
       width 100%
-      max-width 100%
+      max-width 100% !important
       min-height 100vh
       border-radius 0
     .ck-popup__slot-body

@@ -1,6 +1,7 @@
 <script setup lang="ts">
 const props = defineProps<{
   noGap?: boolean;
+  block?: boolean;
   title?: string;
 }>();
 </script>
@@ -10,7 +11,7 @@ const props = defineProps<{
   :class="{ 'no-gap': noGap }"
 )
   .component-shower-row--title {{ title }}
-  .component-shower-row--content
+  .component-shower-row--content(:class="{ 'block-row': block }")
     slot
 </template>
 
@@ -28,6 +29,8 @@ const props = defineProps<{
     align-items flex-end
     flex-wrap wrap
     gap .5rem
+    &.block-row
+      display block
   &.no-gap
     .component-shower-row--content
       gap 0

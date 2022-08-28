@@ -6,8 +6,13 @@ type Option = { value: any, label: string };
 const props = defineProps<{
   modelValue: string;
   name?: string;
+  vertical?: boolean;
+  classes?: string; // classes to add to any children
   options?: Option[];
   disabled?: boolean;
+  // if not options
+  value?: any;
+  label?: any;
 }>();
 
 const emits = defineEmits<{
@@ -25,6 +30,20 @@ const radioAttributes = computed(() => {
     tabindex: props.disabled ? undefined : '0',
   }
 });
+const computedOptions = computed(() => {
+  if (props.options) return props.options;
+  if (typeof props.value !== undefined) {
+    const label = props.label || props.value;
+    return [{ value: props.value, label: label }];
+  }
+  return [];
+});
+const computedClass = computed(() => {
+  const list = [];
+  if (props.vertical) list.push('vertical');
+  if (props.classes) list.push(props.classes);
+  return list;
+})
 
 function handleChange(option: Option, event: Event) {
   option.value = value
@@ -33,42 +52,41 @@ function handleChange(option: Option, event: Event) {
 </script>
 
 <template lang="pug">
-template(
-v-for="(option, index) in options"
+label.ck-radio(
+v-for="(option, index) in computedOptions"
 :key="`radio-${index}`"
+v-bind="radioAttributes"
+:class="computedClass"
+@keydown.space.prevent
+@keyup.enter="handleChange(option, $event)"
+@keyup.space="handleChange(option, $event)"
 )
-  label.c-Radio(
-  v-bind="radioAttributes"
-  @keydown.space.prevent
-  @keyup.enter="handleChange(option, $event)"
-  @keyup.space="handleChange(option, $event)"
+  input(
+    v-model="value"
+    aria-hidden="true"
+    class="c-Radio__input"
+    type="radio"
+    :name="name"
+    :value="option.value"
+    :disabled="disabled"
   )
-    input(
-      v-model="value"
-      aria-hidden="true"
-      class="c-Radio__input"
-      type="radio"
-      :name="name"
-      :value="option.value"
-      :disabled="disabled"
-    )
-    .c-Radio__element
-    span.c-Radio__label(v-if="option.label")
-      | {{ option.label }}
+  .c-Radio__element
+  span.c-Radio__label(v-if="option.label")
+    | {{ option.label }}
 </template>
 
 <style lang="stylus" scoped>
-.c-Radio
+.ck-radio
   cursor pointer
   position relative
-  display flex
+  display inline-flex
   align-items center
   width -moz-fit-content
   width fit-content
-.c-Radio + .c-Radio
-  margin-top 8px
-.c-Radio input
-  display none
+  &.vertical
+    width 100%
+  > input
+    display none
 .c-Radio__element
   position relative
   display block
@@ -97,11 +115,11 @@ v-for="(option, index) in options"
   margin-left 8px
 
 // Disabled
-.c-Radio[aria-disabled='true']
+.ck-radio[aria-disabled='true']
   cursor not-allowed
-.c-Radio[aria-disabled='true'] .c-Radio__element
+.ck-radio[aria-disabled='true'] .c-Radio__element
   border-color #757575
   background-color #e0e0e0
-.c-Radio[aria-disabled='true'] .c-Radio__element::after
+.ck-radio[aria-disabled='true'] .c-Radio__element::after
   background-color #757575
 </style>

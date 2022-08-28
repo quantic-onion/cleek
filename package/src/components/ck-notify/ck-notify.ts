@@ -1,10 +1,36 @@
 import { createApp } from 'vue';
 import CkConfirmComponent from './components/CkConfirm.vue';
+import CkAlertComponent from './components/CkAlert.vue';
 import CkNotifyComponent from './components/CkNotify.vue';
 
 const defaultDuration = 2000;
 
 export default {
+  alert(msg: string) {
+    this.alertOptions({
+      title: '',
+      msg,
+      acceptText: '',
+    });
+  },
+  alertOptions({
+    title = '',
+    msg = '',
+    acceptText = '',
+  }: {
+    title: string;
+    msg: string;
+    acceptText: string;
+  }) {
+    const tempDiv = document.createElement('div');
+    const instance = createApp(CkAlertComponent)
+    const instanceMounted = instance.mount(tempDiv);
+    // set variables
+    instanceMounted.title = title;
+    instanceMounted.msg = msg;
+    instanceMounted.acceptText = acceptText;
+    document.body.appendChild(instanceMounted.$el);
+  },
   confirmOptions(
     {
       title = '',
@@ -23,14 +49,22 @@ export default {
     }
   ) {
     const tempDiv = document.createElement('div');
-    const instance = createApp(CkConfirmComponent)
-    const instanceMounted = instance.mount(tempDiv);
+    const app = createApp(CkConfirmComponent)
+    const instance = app.mount(tempDiv);
     // set variables
-    instanceMounted.title = title;
-    instanceMounted.msg = msg;
-    instanceMounted.acceptText = acceptText;
-    instanceMounted.cancelText = cancelText;
-    document.body.appendChild(instanceMounted.$el);
+    instance.title = title;
+    instance.msg = msg;
+    instance.acceptText = acceptText;
+    instance.cancelText = cancelText;
+    instance.responseSuccess = () => {
+      app.unmount();
+      success();
+    }
+    instance.responseFailure = () => {
+      app.unmount();
+      failure();
+    }
+    document.body.appendChild(instance.$el);
   },
   confirm(
     msg: string,
@@ -53,7 +87,6 @@ export default {
     instance.duration = duration || defaultDuration;
     instance.closeCallback = () => {
       app.unmount();
-    //   instance.$el.remove();
     }
   },
   notifySuccess(text: string, title: string = '') {

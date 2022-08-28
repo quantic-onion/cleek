@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue';
+import TableEditable from './TableEditable.vue';
 
 const columns = ref(['Cant.', 'Precio', 'Nombre', 'Subtotal']);
 
@@ -12,10 +13,12 @@ const allSaleProducts = ref([
 </script>
 
 <template lang="pug">
-ck-table(:columns="columns")
+ck-table(:columns="columns" striped)
   template(v-slot:header)
     | An easy table, the simplest way
   ck-tr(v-for="(SaleProd, index) in allSaleProducts")
+    ck-td
+      TableEditable
     //- quantity
     ck-td
       | {{ SaleProd.quantity }}x

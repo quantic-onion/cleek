@@ -34,6 +34,7 @@ const props = defineProps<{
   hideItemsPerPage?: boolean;
   // style
   notFullWidth?: boolean;
+  striped?: boolean;
   cellPadding?: CellPadding;
   cellPaddingY?: CellPadding;
   noResultsText?: string;
@@ -124,6 +125,8 @@ const computedClassTable = computed(() => {
   if (props.cellPadding) list.push(`table__cell-padding--${props.cellPadding}`);
   if (props.cellPaddingY) list.push(`table__cell-padding-y--${props.cellPaddingY}`);
   if (props.notFullWidth) list.push('not-full-width');
+  const striped = props.striped || cleekOptions.value?.table?.striped;
+  if (striped) list.push('striped-table');
   return list;
 });
 // function testCurrentPage(cosito) {
@@ -231,17 +234,22 @@ v-model="isPopupActive.columnsManager"
   &.table__cell-padding--none
     td
       padding 0
+  &.table__cell-padding-y--none
+    td
+      padding-y .25rem
   &.table__cell-padding-y--xs
     td
-      padding-bottom .25rem
+      padding-y .25rem
   &.table__cell-padding-y--s
     td
-      padding-bottom .5rem
-
-tr
-  background-color white
-  &:nth-child(even)
-    background-color #eee
+      padding-y .5rem
+.ck-table__table
+  &.striped-table > tbody > tr
+    background-color white
+    &:nth-child(even)
+      background-color #f3f3f3
+      // border-bottom 1px solid #e1e1e1
+      // border-top 1px solid #e1e1e1
 </style>
 
 <style lang="stylus" scoped>

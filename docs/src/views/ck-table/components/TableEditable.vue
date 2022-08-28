@@ -14,6 +14,7 @@ const allSaleProducts = ref([
   { quantity: 1, price: 1800.00, name: 'Pantalón largo verde' },
   { quantity: 2, price: 2690.99, name: 'Campera de corderito' },
 ]);
+
 </script>
 
 <template lang="pug">

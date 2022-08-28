@@ -1,0 +1,6 @@
+FOR DOCS BUILD
+  yarn add cleek (in docs folder)
+  comments "cleek" and "cleek-style" aliases in vite.config
+  comment "import 'cleek-style';" in main.ts
+  uncomment "import '@/../node_modules/cleek/dist/style.css';" in main.ts
+  finished, roll back all comments and uncomments to continue the development

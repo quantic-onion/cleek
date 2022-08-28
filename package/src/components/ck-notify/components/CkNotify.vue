@@ -83,7 +83,7 @@ Teleport(to="body" v-if="isActive")
         .close-btn
           ck-icon(icon="times")
         | {{ title || defaultTitle }}
-      .ck-notify__text {{ text }}
+      .ck-notify__text(v-html="text")
 </template>
 
 <style lang="stylus" scoped>

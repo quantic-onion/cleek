@@ -1,13 +1,10 @@
 <script setup lang="ts">
-import { computed, getCurrentInstance, onMounted, ref } from 'vue';
+import { computed, ref } from 'vue';
 import { packageConfig } from '../../../package-config';
-import type { Ref } from 'vue';
 // types
-import { CleekOptions } from '../../../types/cleek-options';
 // hooks
 import hooks from '../../../utils/functions';
 
-let cleekOptions: Ref<undefined | CleekOptions> = ref();
 
 const title = ref('');
 const msg = ref('');
@@ -37,10 +34,6 @@ function onAccept() {
   responseSuccess.value();
 }
 
-onMounted(() => {
-  cleekOptions.value = hooks.getCleekOptions(getCurrentInstance);
-});
-
 defineExpose({
   title,
   msg,
@@ -54,7 +47,6 @@ defineExpose({
 <template lang="pug">
 .ck-confirm--background
   .ck-confirm
-    div cleekOptions {{ cleekOptions }}
     .ck-confirm__icon
       //- ck-img(src="cleek/hexagon-exclamation.png" height="7rem")
       img.ck-confirm__icon--img(src="https://img.quanticonion.com/icons/hexagon-exclamation.png" height="7rem")

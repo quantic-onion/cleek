@@ -1,6 +1,16 @@
+crear los archivos de
+  ck-card
+  ck-pagination
+  ck-datetime-shower
+
+ck-table
+  el refresh button te manda a la página 1 (corregir en imágenes ocupacionales)
+
 search "FIXRGBA"
 
 BORRAR TODOS LOS lineBreak & line-break de todos los proyectos (INCLUSO EN CLEEK)
+
+el confirm que le puedas pasar una variable que le diga si tiene que preguntar o no
 
 AGREGAR
 
@@ -14,3 +24,10 @@ cleek-config:
 languaje: update default confirm, notify and popup values
 
 si el popup no tiene header, no tiene título y tiene hiddenCross sacar el header y redondear el borde
+
+my-box-shadow -> ck-box-shadow
+ck-input passowrd en border rounded, no redondea bien
+
+ck-sidebar
+  Asegurarse de que el texto en el header nunca tapa la cruz para cerrar
+  Poner header como un slot

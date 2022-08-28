@@ -1,7 +1,11 @@
+// showers
+export { default as CkDatetimeShower }      from './showers/ck-datetime-shower.vue';
+
+// components
 export { default as CkDropdown }      from './ck-dropdown/ck-dropdown.vue';
 export { default as CkNavbar }        from './ck-navbar/ck-navbar.vue';
-// export { default as CkNotify }        from './ck-notify/ck-notify.vue';
 export { default as CkTable }         from './ck-table/ck-table.vue';
+export { default as CkPagination }    from './ck-table/ck-pagination/ck-pagination.vue';
 export { default as CkTd }            from './ck-table/ck-td.vue';
 export { default as CkTh }            from './ck-table/ck-th.vue';
 export { default as CkTr }            from './ck-table/ck-tr.vue';
@@ -9,6 +13,7 @@ export { default as CkTr }            from './ck-table/ck-tr.vue';
 // export { default as CkDropdownItem } from './ck-dropdown/ck-dropdown-item.vue';
 
 export { default as CkButton }        from './ck-button.vue';
+export { default as CkCard }      from './ck-card.vue'
 export { default as CkCheckbox }      from './ck-checkbox.vue'
 export { default as CkChip }          from './ck-chip.vue';
 export { default as CkDiv }           from './ck-div.vue';

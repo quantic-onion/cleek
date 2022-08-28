@@ -7,14 +7,15 @@ const emits = defineEmits<{
 <template lang="pug">
 ck-navbar
   //- ck-button(icon="bars" @click="emits('openSidebar')")
-  .flex.items-center
-    ck-img(src="logo/isologo.png" height="50px")
-    .logo Cleek
+  router-link(to="/")
+    .flex.items-center
+      ck-img(src="logo/isologo.png" height="50px")
+      .logo Cleek
 </template>
 
-<style lang="stylus">
+<style lang="stylus" scoped>
 .logo
-  font-family 'Pompiere', cursive
+  font-family $logo-font
   font-size 3.5rem
   color $color-primary
 </style>

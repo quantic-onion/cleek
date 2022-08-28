@@ -13,6 +13,9 @@ function testConfirm() {
     ckNotify.notifySuccess('Thanks god, you saved her');
   });
 }
+function testAlert() {
+  ckNotify.alert('¡You opened it!');
+}
 function testNotify() {
   ckNotify.notify({ text: text.value });
 }
@@ -24,6 +27,9 @@ function testNotifyDanger() {
 }
 function testNotifyWarning() {
   ckNotify.notifyWarning(text.value);
+}
+function testNotifyHTML() {
+  ckNotify.notifyError('html <b>HIGHLIGHTED</b> text');
 }
 </script>
 
@@ -47,7 +53,12 @@ ComponentShower(title="Notify")
       | Danger
     ck-button(@click="testNotifyWarning()" icon="minus" type="filled" color="warning")
       | Warning
+    ck-button(@click="testNotifyHTML()")
+      | Notify HTML
 ComponentShower(title="Confirm")
   ck-button(@click="testConfirm()" icon="circle-check" type="filled")
     | Warning
+ComponentShower(title="Alert")
+  ck-button(@click="testAlert()" icon="triangle-exclamation" type="filled")
+    | Alert
 </template>

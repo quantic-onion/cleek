@@ -6,8 +6,6 @@ import Cleek from '../src/index.ts';
 
 const app = createApp(Dev);
 
-console.log('ESTOY EN PACKAGE');
-
 import ElementsShower from './showers/_DefaultShower.vue';
 app.component('ElementsShower', ElementsShower);
 

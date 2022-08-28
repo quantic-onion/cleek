@@ -11,6 +11,10 @@ const cleekOptions: CleekOptions = {
     // dark: '#559933',
     // light: '#559933',
   },
+  styles: {
+    layout: 'base',
+    borderColor: '#dae1e7'
+  },
   button: {
     type: 'outlined',
     layout: 'base',
@@ -27,9 +31,11 @@ const cleekOptions: CleekOptions = {
     maxWidth: '',
     fontSize: '',
   },
-  styles: {
-    layout: 'base',
-    borderColor: '#dae1e7'
+  select: {
+    clearValue: 'auto',
+  },
+  table: {
+    striped: false,
   },
 };
 

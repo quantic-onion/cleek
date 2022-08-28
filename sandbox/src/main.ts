@@ -15,11 +15,9 @@ myApp.use(router);
 const CleekParams = {
   test: 'holis',
 };
-console.log('Cleek', Cleek);
 myApp.use(Cleek, CleekParams);
 myApp.mount('#app');
 
-console.log('ESTOY EN SANDBOX');
 
 // css
 require('cleek/dist/style.css');
