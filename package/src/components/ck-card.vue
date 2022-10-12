@@ -52,8 +52,8 @@ onMounted(() => {
 
 <template lang="pug">
 .ck-card(v-if="isActive" :class="computedClass")
-  .ck-card__header
-    .ck-card__header-title {{ title }}
+  .ck-card__header(v-if="title || !computedHideCloseBtn")
+    .ck-card__header-title(v-if="title") {{ title }}
     .ck-card__close-btn(v-if="!computedHideCloseBtn" @click="isActive = false")
       ck-icon(icon="times")
   .ck-card__body

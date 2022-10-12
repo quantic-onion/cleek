@@ -11,7 +11,7 @@ import TablePagination from './inner-components/ck-table__pagination.vue';
 import TableColumnsManager from './inner-components/ck-table__columns-manager.vue';
 // types
 import type { ColumnItem } from '../../types/table';
-import { Align, CleekOptions, Layout } from '../../types/cleek-options';
+import type { Align, CleekOptions, Layout } from '../../types/cleek-options';
 // hooks
 import hooks from '../../utils/functions';
 import useWindowWidth from '../../hooks/windowWidth';
