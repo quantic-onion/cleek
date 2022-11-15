@@ -5,6 +5,7 @@ import type { Ref } from 'vue';
 // components
 import CkLabel from './ck-label.vue';
 import CkIcon from './ck-icon.vue';
+import CkInputDate from './ck-input-date.vue';
 // hooks
 import hooks from '../utils/global-hooks';
 import useWindowWidth from '../hooks/windowWidth';
@@ -206,8 +207,22 @@ onMounted(() => {
   )
   //- input
   //- :id="label ? 'ck-input' : ''"
+  ck-input-date(
+  v-if="type === 'date'"
+  v-model="value"
+  :class="computedClassInput"
+  :style="computedStyleInput"
+  :autocomplete="autocomplete ? 'on' : 'off'"
+  :placeholder="placeholder"
+  :disabled="disabled"
+  @change="onChange($event)"
+  @input="onInput($event)"
+  @click="onClick($event)"
+  @focus="emits('focus', $event)"
+  @blur="emits('blur', $event)"
+  )
   input(
-  v-if="isShowingPassword"
+  v-else-if="isShowingPassword"
   v-model="value"
   ref="realInput"
   type="text"
