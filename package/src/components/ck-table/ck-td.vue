@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed } from 'vue';
-import { Align, AlignVertical } from '../../types/cleek-options';
-import { ColumnItem } from '../../types/table';
+import type { Align, AlignVertical } from '../../types/cleek-options';
+import type { ColumnItem } from '../../types/table';
 // hooks
 import hooks from '../../utils/functions';
 

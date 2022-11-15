@@ -6,6 +6,7 @@ import useWindowWidth from '../hooks/windowWidth';
 
 const props = defineProps<{
   widthBreaks?: [number, string][];
+  block?: boolean;
 }>();
 
 const emits = defineEmits<{
@@ -21,6 +22,8 @@ const computedStyle = computed(() => {
     const width = functions.getWidthByWidthBreaks(props.widthBreaks, windowWidth.value )
     if (width) list.push({ width });
   }
+  // block
+  if (props.block) list.push({ display: 'block' });
   return list;
 });
 </script>

@@ -1,4 +1,5 @@
 // types
+// @ts-ignore // FIXME
 import type { ColumnItem } from '../types/table';
 import type {
 Align,
@@ -10,7 +11,7 @@ WidthBreaks,
 } from '../types/cleek-options';
 
 export default {
-  getCleekOptions(getCurrentInstance: ComponentInternalInstance ) {
+  getCleekOptions(getCurrentInstance: any) {
     return getCurrentInstance().appContext.app.config.globalProperties.$cleekOptions;
   },
   getGroupClass(
@@ -44,6 +45,7 @@ export default {
         && typeof realWidthBreaks[0] === 'number'
         && typeof realWidthBreaks[1] === 'string'
       ) {
+        // @ts-ignore
         realWidthBreaks = [realWidthBreaks];
       }
       // add [0, '100%']

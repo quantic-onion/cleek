@@ -22,7 +22,7 @@
 
 {
   "extends": "@vue/tsconfig/tsconfig.web.json",
-  "include": ["./src/components/**/*"],
+  "include": ["./src/components/**/*", "./src/utils/**/*"],
   "exclude": ["./src/components/not-avaible/**/*"],
   "compilerOptions": {
     "composite": true,

@@ -11,7 +11,7 @@ import TablePagination from './inner-components/ck-table__pagination.vue';
 import TableColumnsManager from './inner-components/ck-table__columns-manager.vue';
 // types
 import type { ColumnItem } from '../../types/table';
-import { Align, CleekOptions, Layout } from '../../types/cleek-options';
+import type { Align, CleekOptions, Layout } from '../../types/cleek-options';
 // hooks
 import hooks from '../../utils/functions';
 import useWindowWidth from '../../hooks/windowWidth';
@@ -63,12 +63,15 @@ const defaultNoResultsText = computed(() => {
   if (cleekOptions.value?.lang === 'es') return 'No se encontraron resultados'; 
   return 'No results found';
 });
+// @ts-ignore
 const columnsAreObj = computed(() => !qmObj.isArray(props.columns || []));
 const columnsArray = computed(() => {
   // object
   if (columnsAreObj.value) {
+    // @ts-ignore
     const arr = Object.values(props.columns || []);
     const keys = Object.keys(props.columns || []);
+    // @ts-ignore
     arr.forEach((col, index) => {
       const key = keys[index];
       col.name = key;
@@ -95,6 +98,7 @@ const filteredColumnsList = computed(() => {
 });
 
 const searchLocal = computed({
+  // @ts-ignore
   get() { return props.search; },
   set(val: string) { emits('update:search', val); }
 });

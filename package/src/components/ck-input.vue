@@ -84,7 +84,7 @@ const value = computed({
   },
   set(val: string | number) {
     if (props.capitalize) val = qmStr.capitalize(`${val}`);
-    if (props.justInteger) val = parseInt(+val);
+    if (props.justInteger) val = parseInt(`${+val}`);
     emits('update:modelValue', val);
     checkSearchTime(val);
   },

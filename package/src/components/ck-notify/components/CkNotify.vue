@@ -6,7 +6,7 @@ import type { Ref } from 'vue';
 // components
 import CkIcon from '../../ck-icon.vue';
 // types
-import { CleekOptions } from '../../../types/cleek-options';
+import type { CleekOptions } from '../../../types/cleek-options';
 // hooks
 import hooks from '../../../utils/functions';
 

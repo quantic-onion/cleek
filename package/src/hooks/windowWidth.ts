@@ -4,7 +4,8 @@ export default function useWindowWidth() {
   const windowWidth = ref(0);
 
   function handleWindowResize(event: Event) {
-    windowWidth.value = event.currentTarget.innerWidth;
+    // @ts-ignore
+    windowWidth.value = event.currentTarget.innerWidth || 0;
   }
   onMounted(() => {
     nextTick(() => {

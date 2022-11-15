@@ -1,6 +1,6 @@
 {
   "name": "cleek",
-  "version": "2.4.79",
+  "version": "2.4.80",
   "description": "Complete UX Vue library",
   "repository": "",
   "author": "Quantic Onion",
@@ -50,6 +50,7 @@
     "@fortawesome/free-regular-svg-icons": "^6.1.1",
     "@fortawesome/free-solid-svg-icons": "^6.1.1",
     "@fortawesome/vue-fontawesome": "^3.0.0-5",
+    "@vuepic/vue-datepicker": "^3.5.3",
     "floating-vue": "^2.0.0-beta.16",
     "mitt": "^3.0.0",
     "pug": "^3.0.2",

@@ -4,7 +4,7 @@ import { computed } from 'vue';
 import CkButton from '../../ck-button.vue';
 import CkInput from '../../ck-input.vue';
 // types
-import { Layout } from '../../../types/cleek-options';
+import type { Layout } from '../../../types/cleek-options';
 // hooks
 import hooks from '../../../utils/functions';
 
@@ -27,6 +27,7 @@ const emits = defineEmits<{
 }>();
 
 const searchLocal = computed({
+  // @ts-ignore
   get() { return props.search; },
   set(val: string) { emits('update:search', val); }
 });

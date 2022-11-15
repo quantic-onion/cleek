@@ -3,7 +3,7 @@ import { computed } from 'vue';
 // components
 import CkIcon from './ck-icon.vue';
 // types
-import { Align, Color, Icon, IconPack, Size } from '../types/cleek-options';
+import type { Align, Color, Icon, IconPack, Size } from '../types/cleek-options';
 
 const props = defineProps<{
   size?: Size; // default s

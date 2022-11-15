@@ -26,8 +26,11 @@ export default {
     const instance = createApp(CkAlertComponent)
     const instanceMounted = instance.mount(tempDiv);
     // set variables
+    // @ts-ignore
     instanceMounted.title = title;
+    // @ts-ignore
     instanceMounted.msg = msg;
+    // @ts-ignore
     instanceMounted.acceptText = acceptText;
     document.body.appendChild(instanceMounted.$el);
   },
@@ -52,14 +55,20 @@ export default {
     const app = createApp(CkConfirmComponent)
     const instance = app.mount(tempDiv);
     // set variables
+    // @ts-ignore
     instance.title = title;
+    // @ts-ignore
     instance.msg = msg;
+    // @ts-ignore
     instance.acceptText = acceptText;
+    // @ts-ignore
     instance.cancelText = cancelText;
+    // @ts-ignore
     instance.responseSuccess = () => {
       app.unmount();
       success();
     }
+    // @ts-ignore
     instance.responseFailure = () => {
       app.unmount();
       failure();
@@ -81,10 +90,15 @@ export default {
     const tempDiv = document.createElement('div');
     const app = createApp(CkNotifyComponent);
     const instance = app.mount(tempDiv);
+    // @ts-ignore
     instance.title = title;
+    // @ts-ignore
     instance.text = text;
+    // @ts-ignore
     instance.color = color;
+    // @ts-ignore
     instance.duration = duration || defaultDuration;
+    // @ts-ignore
     instance.closeCallback = () => {
       app.unmount();
     }

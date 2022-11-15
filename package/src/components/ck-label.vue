@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed } from 'vue';
-import { Align } from '../types/cleek-options';
+import type { Align } from '../types/cleek-options';
 
 const props = defineProps<{
   for: string;

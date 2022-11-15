@@ -1,4 +1,5 @@
-import { Align, AlignVertical } from './cleek-options';
+// @ts-ignore // FIXME
+import type { Align, AlignVertical } from './cleek-options';
 
 export type ColumnItem = {
   // column

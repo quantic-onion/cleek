@@ -5,7 +5,7 @@ import type { Ref } from 'vue';
 import CkButton from './ck-button.vue';
 import CkIcon from './ck-icon.vue';
 // types
-import { Align, Color, Layout, CleekOptions, ButtonType } from '../types/cleek-options';
+import type { Align, Color, Layout, CleekOptions, ButtonType } from '../types/cleek-options';
 // hooks
 import hooks from '../utils/functions';
 

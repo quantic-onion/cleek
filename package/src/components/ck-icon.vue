@@ -4,7 +4,8 @@ import { computed } from 'vue';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
 // hooks
-import hooks from '../utils/functions';
+import hooks from './utils/functions';
+// @ts-ignore // fixme
 import type { Color, Icon, IconPack, SizeInCSS } from '../types/cleek-options';
 
 const props = defineProps<{
@@ -23,7 +24,7 @@ const emits = defineEmits(['click']);
 
 const computediconPack = computed(() => {
   const defaultPackage = 'font-awesome';
-  if (props.iconPack === '') return defaultPackage;
+  if (!props.iconPack) return defaultPackage;
   if (props.iconPack === 'feather') return props.iconPack;
   return defaultPackage;
 });
