@@ -3,7 +3,7 @@ import { computed } from 'vue';
 // components
 import CkLabel from './ck-label.vue';
 // hooks
-import functions from '../utils/functions';
+import functions from '../utils/global-hooks';
 import useWindowWidth from '../hooks/windowWidth';
 
 type Option = boolean | number | object | string;

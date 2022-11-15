@@ -29,7 +29,7 @@ v-if="isColumnDisplayed"
 
 <script setup lang="ts">
 import { computed } from 'vue';
-import functions from '../../utils/functions';
+import functions from '../../utils/global-hooks';
 
 const props = defineProps({
   col: { type: Object, default: undefined },

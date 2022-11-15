@@ -5,7 +5,7 @@ import type { Ref } from 'vue';
 import CkCheckbox from '../../ck-checkbox.vue';
 import CkPopup from '../../ck-popup.vue';
 // hooks
-import functions from '../../../utils/functions';
+import functions from '../../../utils/global-hooks';
 // types
 import type { ColumnItem } from '../../../types/table';
 

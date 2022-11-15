@@ -2,7 +2,7 @@
 import { computed, getCurrentInstance, onMounted, ref } from 'vue';
 import type { Ref } from 'vue';
 // hooks
-import hooks from '../utils/functions';
+import hooks from '../utils/global-hooks';
 import globalVariables from '../utils/globalVariables';
 // types
 import type { CleekOptions, Color, Size, SizeInCSS } from '../types/cleek-options';

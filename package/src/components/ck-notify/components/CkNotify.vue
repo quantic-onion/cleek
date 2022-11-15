@@ -8,7 +8,7 @@ import CkIcon from '../../ck-icon.vue';
 // types
 import type { CleekOptions } from '../../../types/cleek-options';
 // hooks
-import hooks from '../../../utils/functions';
+import hooks from '../../../utils/global-hooks';
 
 let cleekOptions: Ref<undefined | CleekOptions> = ref();
 

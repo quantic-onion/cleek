@@ -3,7 +3,7 @@ import { computed } from 'vue';
 // types
 import type { Color } from '../types/cleek-options';
 // hooks
-import hooks from '../utils/functions';
+import hooks from '../utils/global-hooks';
 
 const props = defineProps<{
   modelValue: boolean;

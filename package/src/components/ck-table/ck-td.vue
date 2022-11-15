@@ -3,7 +3,7 @@ import { computed } from 'vue';
 import type { Align, AlignVertical } from '../../types/cleek-options';
 import type { ColumnItem } from '../../types/table';
 // hooks
-import hooks from '../../utils/functions';
+import hooks from '../../utils/global-hooks';
 
 const props = defineProps<{
   col?: ColumnItem;

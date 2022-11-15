@@ -4,7 +4,7 @@ import type { Ref } from 'vue';
 // components
 import CkIcon from './ck-icon.vue';
 // hooks
-import hooks from '../utils/functions';
+import hooks from '../utils/global-hooks';
 import useWindowWidth from '../hooks/windowWidth';
 // types
 import type {

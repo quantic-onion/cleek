@@ -13,7 +13,7 @@ import TableColumnsManager from './inner-components/ck-table__columns-manager.vu
 import type { ColumnItem } from '../../types/table';
 import type { Align, CleekOptions, Layout } from '../../types/cleek-options';
 // hooks
-import hooks from '../../utils/functions';
+import hooks from '../../utils/global-hooks';
 import useWindowWidth from '../../hooks/windowWidth';
 
 type Columns = ColumnItem[] | object;

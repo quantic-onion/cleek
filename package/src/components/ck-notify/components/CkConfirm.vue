@@ -3,7 +3,7 @@ import { computed, ref } from 'vue';
 import { packageConfig } from '../../../package-config';
 // types
 // hooks
-import hooks from '../../../utils/functions';
+import hooks from '../../../utils/global-hooks';
 
 
 const title = ref('');

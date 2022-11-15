@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue';
 import { qmStr } from 'quantic-methods';
-import functions from '../utils/functions.ts';
+import functions from '../utils/global-hooks.ts';
 import CkLabel from './ck-label.vue';
 import CkIcon from './ck-icon.vue';
 // name: 'CkSelect',

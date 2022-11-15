@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 // hooks
-import functions from '../utils/functions';
+import functions from '../utils/global-hooks';
 import useWindowWidth from '../hooks/windowWidth';
 
 const props = defineProps<{

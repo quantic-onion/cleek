@@ -4,7 +4,7 @@ import type { Ref } from 'vue';
 // types
 import type { CleekOptions, Layout } from '@/types/cleek-options';
 // hooks
-import hooks from '../utils/functions';
+import hooks from '../utils/global-hooks';
 
 const props = defineProps<{
   modelValue?: boolean;

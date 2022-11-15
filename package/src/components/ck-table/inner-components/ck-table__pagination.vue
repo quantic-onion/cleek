@@ -7,7 +7,7 @@ import CkIcon from '../../ck-icon.vue';
 // types
 import type { Align, Layout, CleekOptions } from '../../../types/cleek-options';
 // hooks
-import hooks from '../../../utils/functions';
+import hooks from '../../../utils/global-hooks';
 
 const props = defineProps<{
   currentPage: number;

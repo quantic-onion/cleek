@@ -6,7 +6,7 @@ import { qmStr} from 'quantic-methods';
 import CkLabel from './ck-label.vue';
 import CkIcon from './ck-icon.vue';
 // hooks
-import hooks from '../utils/functions';
+import hooks from '../utils/global-hooks';
 import useWindowWidth from '../hooks/windowWidth';
 // types
 import type {

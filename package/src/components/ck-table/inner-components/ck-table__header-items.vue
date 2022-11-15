@@ -6,7 +6,7 @@ import CkInput from '../../ck-input.vue';
 // types
 import type { Layout } from '../../../types/cleek-options';
 // hooks
-import hooks from '../../../utils/functions';
+import hooks from '../../../utils/global-hooks';
 
 const props = defineProps<{
   search?: string;
