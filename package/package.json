@@ -1,6 +1,6 @@
 {
   "name": "cleek",
-  "version": "2.4.80",
+  "version": "2.4.89",
   "description": "Complete UX Vue library",
   "repository": "",
   "author": "Quantic Onion",
@@ -54,7 +54,7 @@
     "floating-vue": "^2.0.0-beta.16",
     "mitt": "^3.0.0",
     "pug": "^3.0.2",
-    "quantic-methods": "^1.6.3",
+    "quantic-methods": "^1.6.38",
     "rollup-plugin-typescript2": "^0.31.2",
     "stylus": "^0.56.0",
     "tabbable": "^5.2.0",

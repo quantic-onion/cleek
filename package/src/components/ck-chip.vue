@@ -4,12 +4,15 @@ import { computed } from 'vue';
 import CkIcon from './ck-icon.vue';
 // types
 import type { Align, Color, Icon, IconPack, Size } from '../types/cleek-options';
+// hooks
+import hooks from '../utils/global-hooks';
 
 const props = defineProps<{
   size?: Size; // default s
   color?: Color;
   textColor?: Color;
   align?: Align;
+  nowrap?: boolean;
   // icon
   icon?: Icon;
   iconRight?: Icon;
@@ -25,20 +28,24 @@ const emits = defineEmits<{
 
 const computedClass = computed(() => {
   const list = [];
+  // color
+  if (!props.color || hooks.isColorTemplateVariable(props.color)) {
+    list.push(`ck-component__bg-color--${props.color || defaultColor}`);
+  }
+  // size
   list.push(`size-${props.size || defaultSize}`);
-  list.push(`ck-component__bg-color--${props.color || defaultColor}`);
+  // align
   if (props.align) list.push(`align--${props.align}`)
+  if (props.nowrap) list.push(`ck-chip--${props.nowrap}`)
   return list;
 });
 const computedStyle = computed(() => {
-  // const list = [];
-  // if (props.color) {
-  //   // list.push({ backgroundColor: props.color });
-  //   // if (props.color !== 'light') {
-  //   //   list.push({ color: props.textColor || 'white' });
-  //   // }
-  // }
-  // return list;
+  const list = [];
+  if (props.color && !hooks.isColorTemplateVariable(props.color)) {
+    list.push({ backgroundColor: props.color });
+    list.push({ color: props.textColor || 'white' });
+  }
+  return list;
   return [];
 });
 </script>
@@ -75,6 +82,8 @@ const computedStyle = computed(() => {
   font-size .75rem
   padding .3rem .75rem
   border-radius 10rem
+  &.ck-chip--nowrap
+    white-space nowrap
   &.size-xs
     font-size .6rem
   &.size-m
