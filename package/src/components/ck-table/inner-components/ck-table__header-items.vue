@@ -21,8 +21,8 @@ const props = defineProps<{
 }>();
 
 const emits = defineEmits<{
-  (e: 'update:search', value: string): void;
-  (e: 'refreshList', idk: false): void;
+  (e: 'update:search', search: string): void;
+  (e: 'refreshList', pageChange: boolean): void;
   (e: 'openColumnsManager'): void;
 }>();
 
@@ -87,7 +87,7 @@ hooks.preventUnusedError([
     icon="rotate-right"
     title="Recargar lista"
     :layout="layout"
-    @click="emits('refreshList', false)"
+    @click="emits('refreshList', true)"
     )
     //- pages
     .items-per-page(
