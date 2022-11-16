@@ -11,7 +11,10 @@ const emits = defineEmits<{
 }>();
 
 const date = computed({
-  get() { return props.modelValue; },
+  get() {
+    const stringValue = `${props.modelValue}`;
+    return `${stringValue.substring(0, 10)}T00:00:00`;
+  },
   set(val: string) { emits('update:modelValue', val); },
 });
 </script>
