@@ -106,7 +106,7 @@ export default {
   notifySuccess(text: string, title: string = '') {
     this.notify({ text, title, color: 'success' });
   },
-  notifyError (text: string, title: string = '') {
+  notifyError(text: string, title: string = '') {
     this.notify({ text, title, color: 'danger'}); 
   },
   notifyWarning(text: string, title: string = '') {
