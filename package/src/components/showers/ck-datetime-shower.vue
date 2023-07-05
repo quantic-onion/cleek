@@ -46,7 +46,7 @@ const computedTime = computed(() => {
   return qmDate.presentTime(props.datetime);
 });
 const computedDate = computed(() => {
-  if (props.date) return props.date;
+  if (props.date) return qmDate.presentDate(props.date);
   return qmDate.presentDate(props.datetime);
 });
 </script>
