@@ -71,9 +71,10 @@ v-if="isActive"
   )
     //- header
     .sidebar-header(
-    @click="isActive = false"
+    v-if="title"
     :class="computedClassHeader"
     :style="computedStyleHeader"
+    @click="isActive = false"
     )
       .sidebar-header-title(v-if="title")
         | {{ title }}
