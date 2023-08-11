@@ -65,6 +65,7 @@ title="Administrador de columnas"
   .columns-manger-container
     .columns-manger__item(v-for="col in columnsCheckable")
       ck-checkbox(
+      v-if="!col.neverDisplay"
       v-model="col.value"
       @change="setColumnDisplayValue(col.name, col.value)"
       )
