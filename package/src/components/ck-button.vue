@@ -23,6 +23,7 @@ const props = defineProps<{
   // html
   title?: string;
   disabled?: boolean;
+  isLoading?: boolean;
   // style
   type?: ButtonType;
   color?: Color;
@@ -120,6 +121,7 @@ hooks.preventUnusedError([
 
 <template lang="pug">
 button(
+v-if="!isLoading"
 type="button"
 :class="computedClass"
 :title="title"
@@ -141,6 +143,16 @@ type="button"
   :icon-pack="iconPack"
   :class="{ 'just-icon': !$slots.default }"
   )
+button(
+v-else
+type="button"
+class="is-loading"
+:class="computedClass"
+:title="title"
+:aria-label="title"
+:style="computedStyle"
+)
+  ck-icon(icon="spinner" spin)
 </template>
 
 <style lang="stylus" scoped>
@@ -222,4 +234,7 @@ button
   &.ck-button-size__l
     font-size 1.2rem
     padding .75rem 1.5rem
+
+.is-loading
+  cursor initial // could be 'not-allowed' also
 </style>
