@@ -146,7 +146,7 @@ type="button"
 button(
 v-else
 type="button"
-class="is-loading"
+class="is-loading-btn"
 :class="computedClass"
 :title="title"
 :aria-label="title"
@@ -235,6 +235,6 @@ button
     font-size 1.2rem
     padding .75rem 1.5rem
 
-.is-loading
+.is-loading-btn
   cursor initial // could be 'not-allowed' also
 </style>
