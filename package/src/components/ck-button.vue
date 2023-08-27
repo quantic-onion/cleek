@@ -86,6 +86,8 @@ const computedClass = computed(() => {
   list.push(`type-${realButtonType.value}`);
   // size
   if (props.size) list.push(`ck-button-size__${props.size}`);
+  // isLoading
+  if (props.isLoading) list.push('is-loading-btn');
   return list;
 });
 const computedStyle = computed(() => {
@@ -121,7 +123,6 @@ hooks.preventUnusedError([
 
 <template lang="pug">
 button(
-v-if="!isLoading"
 type="button"
 :class="computedClass"
 :title="title"
@@ -130,29 +131,21 @@ type="button"
 :style="computedStyle"
 @click="onClick($event)"
 )
-  ck-icon.ck-button__icon-left(
-  v-if="icon"
-  :icon="icon"
-  :icon-pack="iconPack"
-  :class="{ 'just-icon': !$slots.default }"
-  )
-  slot
-  ck-icon.ck-button__icon-right(
-  v-if="iconRight"
-  :icon="iconRight"
-  :icon-pack="iconPack"
-  :class="{ 'just-icon': !$slots.default }"
-  )
-button(
-v-else
-type="button"
-class="is-loading-btn"
-:class="computedClass"
-:title="title"
-:aria-label="title"
-:style="computedStyle"
-)
-  ck-icon(icon="spinner" spin)
+  ck-icon(v-if="isLoading" icon="spinner" spin)
+  template(v-else)
+    ck-icon.ck-button__icon-left(
+    v-if="icon"
+    :icon="icon"
+    :icon-pack="iconPack"
+    :class="{ 'just-icon': !$slots.default }"
+    )
+    slot
+    ck-icon.ck-button__icon-right(
+    v-if="iconRight"
+    :icon="iconRight"
+    :icon-pack="iconPack"
+    :class="{ 'just-icon': !$slots.default }"
+    )
 </template>
 
 <style lang="stylus" scoped>
