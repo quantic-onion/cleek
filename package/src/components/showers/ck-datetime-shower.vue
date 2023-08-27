@@ -41,7 +41,7 @@ const emits = defineEmits<{
 const computedTime = computed(() => {
   if (props.time) {
     if (props.timeInMinutes) return qmDate.minToHour(+props.time);
-    return props.time;
+    return qmDate.minToHour(+props.time);
   }
   return qmDate.presentTime(props.datetime);
 });

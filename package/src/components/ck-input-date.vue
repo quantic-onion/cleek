@@ -19,6 +19,10 @@ const date = computed({
 });
 </script>
 
+2022-12-25
+
+25/12/2022
+
 <template lang="pug">
 Datepicker(
 v-model="date"

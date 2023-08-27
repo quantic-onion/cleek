@@ -6,6 +6,8 @@ Que el input del pagination, aparezca solo cuando hay alguna de las arrows
 
 button href (to)
 
+card no tiene página
+
 update font-awesome
 
 TERMINAR

@@ -69,7 +69,6 @@ onMounted(() => {
   my-box-shadow(.1)
   padding 1rem
   border-radius 1rem
-  margin-bottom .5rem
   width 100%
   .ck-card__header
     display flex

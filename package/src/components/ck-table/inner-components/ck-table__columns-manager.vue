@@ -13,6 +13,7 @@ type ColumnCheckableItem = {
   name: string;
   title: string;
   value: boolean;
+  neverDisplay?: boolean;
 }
 
 const props = defineProps<{
@@ -31,6 +32,9 @@ const isActive = computed({
   get() { return props.modelValue; },
   set(val: boolean) { emits('update:modelValue', val); },
 });
+const filteredColumnsCheckable = computed(() => {
+  return columnsCheckable.value.filter((col) => !col.neverDisplay);
+})
 
 watch(() => isActive.value, (val) => {
   if (!val) return;
@@ -63,9 +67,11 @@ v-model="isActive"
 title="Administrador de columnas"
 )
   .columns-manger-container
-    .columns-manger__item(v-for="col in columnsCheckable")
+    .columns-manger__item(
+    v-for="(col, colIndex) in filteredColumnsCheckable"
+    :key="colIndex"
+    )
       ck-checkbox(
-      v-if="!col.neverDisplay"
       v-model="col.value"
       @change="setColumnDisplayValue(col.name, col.value)"
       )
