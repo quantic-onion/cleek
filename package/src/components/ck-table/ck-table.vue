@@ -11,7 +11,7 @@ import TablePagination from './inner-components/ck-table__pagination.vue';
 import TableColumnsManager from './inner-components/ck-table__columns-manager.vue';
 // types
 import type { ColumnItem } from '../../types/table';
-import type { Align, CleekOptions, Layout } from '../../types/cleek-options';
+import type { Align, CleekOptions, Layout, TableVersion } from '../../types/cleek-options';
 // hooks
 import hooks from '../../utils/global-hooks';
 import useWindowWidth from '../../hooks/windowWidth';
@@ -40,6 +40,7 @@ const props = defineProps<{
   noResultsText?: string;
   notOverflow?: boolean;
   layout?: Layout;
+  version?: TableVersion;
   // mobile
   mobileMaxWidth?: Number,
 }>();
@@ -52,6 +53,7 @@ const emits = defineEmits<{
 
 let cleekOptions: Ref<undefined | CleekOptions> = ref();
 
+const defaultTableVersion = 'default'; // move to default file
 const defaultItemsPerPage = 40;
 
 const { windowWidth } = useWindowWidth();
@@ -62,6 +64,11 @@ const isPopupActive = ref({
 const defaultNoResultsText = computed(() => {
   if (cleekOptions.value?.lang === 'es') return 'No se encontraron resultados'; 
   return 'No results found';
+});
+const realTableVersion = computed(() => {
+  if (props.version) return props.version;
+  if (cleekOptions.value) return cleekOptions.value.table.version;
+  return defaultTableVersion;
 });
 // @ts-ignore
 const columnsAreObj = computed(() => !qmObj.isArray(props.columns || []));
@@ -179,6 +186,7 @@ v-model="isPopupActive.columnsManager"
     :showRefreshBtn="showRefreshBtn"
     :hideItemsPerPage="hideItemsPerPage"
     :layout="realLayout"
+    :version="realTableVersion"
     @refreshList="refreshList($event)"
     @openColumnsManager="openColumnsManager()"
     )
@@ -275,6 +283,7 @@ v-model="isPopupActive.columnsManager"
   justify-content space-between
   align-items flex-end
   flex-direction row-reverse
+  margin-bottom 0.5rem
   .ck-table__header--slot
     display flex
     align-items flex-end

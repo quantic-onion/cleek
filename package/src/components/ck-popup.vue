@@ -151,9 +151,9 @@ onMounted(() => {
 teleport(v-if="isActive" to="body")
   .ck-popup
     .blackout
-    .popup-container(@click="onBgClick()")
+    .popup-container(@mousedown="onBgClick()")
       .ck-popup__content(
-      @click.stop=""
+      @mousedown.stop=""
       :style="computedStyleContent"
       :class="computedClassContent"
       )

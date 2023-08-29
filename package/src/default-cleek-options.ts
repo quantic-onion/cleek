@@ -36,6 +36,7 @@ const cleekOptions: CleekOptions = {
   },
   table: {
     striped: false,
+    version: 'default',
   },
 };
 

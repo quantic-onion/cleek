@@ -10,6 +10,7 @@ export type WidthBreaks = [number, string][];
 export type InputType = 'text' | 'number' | 'date' | 'time' | 'password';
 export type Size = 'xs' | 's' | 'm' | 'l' | 'xl';
 export type SizeInCSS = string;
+export type TableVersion = 'default' | 'colored';
 
 export type CleekOptions = {
   lang: Lang;
@@ -42,5 +43,6 @@ export type CleekOptions = {
   };
   table: {
     striped: boolean;
+    version: TableVersion;
   }
 };

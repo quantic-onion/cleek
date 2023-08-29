@@ -9,6 +9,9 @@ export { default as CkPagination }    from './ck-table/ck-pagination/ck-paginati
 export { default as CkTd }            from './ck-table/ck-td.vue';
 export { default as CkTh }            from './ck-table/ck-th.vue';
 export { default as CkTr }            from './ck-table/ck-tr.vue';
+// input
+export { default as CkInputDate } from './ck-input/ck-input-date.vue';
+export { default as CkInputTime } from './ck-input/ck-input-time.vue';
 // export { default as CkDropdownContent } from './ck-dropdown/ck-dropdown-content.vue';
 // export { default as CkDropdownItem } from './ck-dropdown/ck-dropdown-item.vue';
 

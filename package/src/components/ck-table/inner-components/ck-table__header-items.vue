@@ -4,7 +4,7 @@ import { computed } from 'vue';
 import CkButton from '../../ck-button.vue';
 import CkInput from '../../ck-input.vue';
 // types
-import type { Layout } from '../../../types/cleek-options';
+import type { Layout, TableVersion } from '../../../types/cleek-options';
 // hooks
 import hooks from '../../../utils/global-hooks';
 
@@ -18,6 +18,7 @@ const props = defineProps<{
   hideHeaderActions: boolean;
   listLength: number;
   layout: Layout;
+  version: TableVersion;
 }>();
 
 const emits = defineEmits<{
@@ -60,6 +61,8 @@ const computedClass = computed(() => {
   const list = [];
   // layout
   if (props.layout) list.push(props.layout);
+  // version
+  if (props.version) list.push(`version-${props.version}`);
   return list;
 });
 
@@ -96,7 +99,7 @@ hooks.preventUnusedError([
     )
       | {{ itemsPerPageStart }} - {{ itemsPerPageEnd }} de {{ listLength }}
     //- search
-    ck-input(
+    ck-input.ck-table--search-input(
     v-if="isSearchVisible"
     v-model="searchLocal"
     icon="magnifying-glass"
@@ -137,4 +140,11 @@ hooks.preventUnusedError([
   &.squared
     .items-per-page
       border-radius 0
+  &.version--colored
+    .items-per-page
+      border-color var(--primary)
+      background-color var(--primary)
+      color #eee
+    .ck-table--search-input
+      border-color white
 </style>

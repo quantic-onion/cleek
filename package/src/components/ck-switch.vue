@@ -64,11 +64,11 @@ v-bind="computedAttributes"
 @keyup.space="onTrigger()"
 )
   input.ck-switch__input(
+  v-model="value"
   aria-hidden="true"  
   type="checkbox"
-  v-model="value"
   :disabled="disabled"
-  @click="onTrigger()"
+  @click.stop="onTrigger()"
   )
   .ck-switch__slider-container
     //- slider

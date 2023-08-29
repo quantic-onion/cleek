@@ -6,6 +6,8 @@ Que el input del pagination, aparezca solo cuando hay alguna de las arrows
 
 button href (to)
 
+Hacer ck-input-date
+
 card no tiene página
 
 update font-awesome

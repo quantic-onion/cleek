@@ -40,4 +40,6 @@ const computedStyle = computed(() => {
 .ck-div
   display inline-flex
   align-items flex-end
+  flex-wrap wrap
+  row-gap 0.5rem
 </style>

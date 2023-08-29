@@ -97,6 +97,8 @@ $text-color = white
   padding-right 1rem
   padding-bottom 1rem
   z-index 999999
+  display flex
+  align-items flex-end
   .ck-notify
     font-family 'Nunito', sans-serif
     color $text-color
