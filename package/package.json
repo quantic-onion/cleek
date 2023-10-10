@@ -1,6 +1,6 @@
 {
   "name": "cleek",
-  "version": "2.6.3",
+  "version": "2.6.9",
   "description": "Complete UX Vue library",
   "repository": "",
   "author": "Quantic Onion",
@@ -23,7 +23,7 @@
     "dev": "vitepress dev docs",
     "build": "vite build && vue-tsc --declaration --emitDeclarationOnly",
     "typecheck": "vue-tsc --noEmit -p tsconfig.json --composite false",
-    "build:force": "vite build",
+    "build-only": "vite build",
     "build:docs": "vitepress build docs",
     "serve": "vitepress serve docs",
     "analyze": "vite build --config analyze.config.js",

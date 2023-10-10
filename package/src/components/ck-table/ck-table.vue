@@ -118,7 +118,7 @@ const currentPageLocal = computed({
 const realLayout = computed(() => props.layout || cleekOptions.value?.styles.layout);
 // isMobileVisible
 const isMobileVisible = computed(() => {
-  return windowWidth.value <= (props.mobileMaxWidth || 0);
+  return windowWidth.value <= (+props.mobileMaxWidth || 0);
 });
 function refreshList(pageChange: boolean = false) {
   emits('refreshList', pageChange);
@@ -284,6 +284,7 @@ v-model="isPopupActive.columnsManager"
   align-items flex-end
   flex-direction row-reverse
   margin-bottom 0.5rem
+  gap 0.5rem
   .ck-table__header--slot
     display flex
     align-items flex-end

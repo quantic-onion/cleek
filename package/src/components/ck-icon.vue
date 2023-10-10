@@ -2,9 +2,8 @@
 import { computed } from 'vue';
 // libraries
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
-
 // hooks
-// import hooks from './utils/global-hooks'; // FIXME
+import hooks from '../utils/global-hooks';
 // @ts-ignore // fixme
 import type { Color, Icon, IconPack, SizeInCSS } from '../types/cleek-options';
 
@@ -29,22 +28,20 @@ const computediconPack = computed(() => {
   return defaultPackage;
 });
 const computedClass = computed(() => {
-  const list = [];
-  // group
-  // FIXME
-  // if (props.color && hooks.isColorTemplateVariable(props.color)) {
-  //   list.push(`ck-component__color--${props.color}`);
-  // }
-  return list;
+  const classes = [];
+  // color
+  if (props.color && hooks.isColorTemplateVariable(props.color)) {
+    classes.push(`ck-component__color--${props.color}`);
+  }
+  return classes;
 });
 const computedStyle = computed(() => {
-  const list = [];
-  // group
-  // FIXME
-  // if (props.color && !hooks.isColorTemplateVariable(props.color)) {
-  //   list.push({ color: props.color })
-  // }
-  return list;
+  const styles = [];
+  // color
+  if (props.color && !hooks.isColorTemplateVariable(props.color)) {
+    styles.push({ color: props.color })
+  }
+  return styles;
 });
 
 function onClick(event: Event) {

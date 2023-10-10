@@ -62,7 +62,7 @@ const computedClass = computed(() => {
   // layout
   if (props.layout) list.push(props.layout);
   // version
-  if (props.version) list.push(`version-${props.version}`);
+  if (props.version) list.push(`version--${props.version}`);
   return list;
 });
 
@@ -106,6 +106,7 @@ hooks.preventUnusedError([
     placeholder="Buscar..."
     :group="searchGroupValue"
     :layout="layout"
+    :borderColor="version === 'colored' ? 'white' : ''"
     @input="checkRefresh()"
     )
     //- columns manager
@@ -145,6 +146,4 @@ hooks.preventUnusedError([
       border-color var(--primary)
       background-color var(--primary)
       color #eee
-    .ck-table--search-input
-      border-color white
 </style>

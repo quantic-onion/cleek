@@ -103,13 +103,13 @@ export default {
       app.unmount();
     }
   },
-  notifySuccess(text: string, title: string = '') {
-    this.notify({ text, title, color: 'success' });
+  notifySuccess(text: string, title: string = '', duration?: number) {
+    this.notify({ text, title, color: 'success', duration });
   },
-  notifyError(text: string, title: string = '') {
-    this.notify({ text, title, color: 'danger'}); 
+  notifyError(text: string, title: string = '', duration?: number) {
+    this.notify({ text, title, color: 'danger', duration}); 
   },
-  notifyWarning(text: string, title: string = '') {
-    this.notify({ text, title, color: 'warning'});
+  notifyWarning(text: string, title: string = '', duration?: number) {
+    this.notify({ text, title, color: 'warning', duration});
   },
 };

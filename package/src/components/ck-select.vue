@@ -56,6 +56,7 @@ const props = defineProps<{
   labelAlign?: Align;
   // placeholder
   placeholder?: string;
+  emptyOptionsMsg?: string;
 }>();
 
 const emits = defineEmits<{
@@ -204,6 +205,7 @@ const isPlaceholderVisible = computed(() => {
   if (!props.placeholder) return;
   return valueIsDefault.value;
 });
+const isEmptyOptionsMsgVisible = computed(() => !filteredOptions.value.length);
 
 // function onBlur(event: Event) {
 //   const isValid = checkOptionsIsValid(event.target.value);
@@ -298,7 +300,9 @@ hooks.preventUnusedError([
     :key="(option)"
     )
       | {{ getOptionName(option) }}
-  span.ck-select--placeholder(v-if="isPlaceholderVisible")
+  span.ck-select--placeholder(v-if="isEmptyOptionsMsgVisible")
+    | {{ emptyOptionsMsg }}
+  span.ck-select--placeholder(v-else-if="isPlaceholderVisible")
     | {{ placeholder }}
 </template>
 

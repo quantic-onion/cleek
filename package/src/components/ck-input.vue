@@ -5,7 +5,6 @@ import type { Ref } from 'vue';
 // components
 import CkLabel from './ck-label.vue';
 import CkIcon from './ck-icon.vue';
-import CkInputDate from './ck-input-date.vue';
 // hooks
 import hooks from '../utils/global-hooks';
 import useWindowWidth from '../hooks/windowWidth';
@@ -36,6 +35,7 @@ const props = defineProps<{
   icon?: Icon;
   iconRight?: Icon;
   iconPack?: IconPack;
+  iconColor?: Color;
   // group
   group?: Align;
   groupVertical?: AlignVertical;
@@ -201,25 +201,9 @@ onMounted(() => {
   //- icon left
   ck-icon.ck-input__icon-left(
   v-if="icon"
-  color="lightgrey"
+  :color="iconColor ? iconColor : 'lightgrey'"
   :icon="icon"
   :icon-pack="iconPack"
-  )
-  //- input
-  //- :id="label ? 'ck-input' : ''"
-  ck-input-date(
-  v-if="type === 'date'"
-  v-model="value"
-  :class="computedClassInput"
-  :style="computedStyleInput"
-  :autocomplete="autocomplete ? 'on' : 'off'"
-  :placeholder="placeholder"
-  :disabled="disabled"
-  @change="onChange($event)"
-  @input="onInput($event)"
-  @click="onClick($event)"
-  @focus="emits('focus', $event)"
-  @blur="emits('blur', $event)"
   )
   input(
   v-else-if="isShowingPassword"
