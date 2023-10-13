@@ -56,7 +56,7 @@ const iconClass = computed(() => {
 })
 
 function onTrigger() {
-  if (!props.preventAutoUpdate) value.value = !value.value;
+  if (!props.preventAutoUpdate) value.value = !value.value
 }
 </script>
 
