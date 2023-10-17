@@ -206,7 +206,7 @@ onMounted(() => {
   :icon-pack="iconPack"
   )
   input(
-  v-else-if="isShowingPassword"
+  v-if="isShowingPassword"
   v-model="value"
   ref="realInput"
   type="text"
