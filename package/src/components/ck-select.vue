@@ -205,7 +205,8 @@ const isPlaceholderVisible = computed(() => {
   if (!props.placeholder) return;
   return valueIsDefault.value;
 });
-const isEmptyOptionsMsgVisible = computed(() => !filteredOptions.value.length);
+const isOptionsListEmpty = computed(() => !filteredOptions.value.length);
+const isEmptyOptionsMsgVisible = computed(() => isOptionsListEmpty.value);
 
 // function onBlur(event: Event) {
 //   const isValid = checkOptionsIsValid(event.target.value);
@@ -290,7 +291,7 @@ hooks.preventUnusedError([
   v-model="value"
   :class="computedClassSelect"
   :style="computedStyleSelect"
-  :disabled="disabled"
+  :disabled="disabled || isOptionsListEmpty"
   @click="onClick($event)"
   )
     //- option
