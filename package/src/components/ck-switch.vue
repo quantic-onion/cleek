@@ -1,62 +1,62 @@
 <script setup lang="ts">
-import { computed } from 'vue'
-import type { Icon, IconPack, Size } from '../types/cleek-options'
+import { computed } from 'vue';
+import type { Icon, IconPack, Size } from '../types/cleek-options';
 // computed
-import CkIcon from './ck-icon.vue'
+import CkIcon from './ck-icon.vue';
 
-type ModelValue = boolean | 1 | 0
+type ModelValue = boolean | 1 | 0;
 
 const props = defineProps<{
-  modelValue: ModelValue
-  preventAutoUpdate?: boolean
-  disabled?: boolean
-  outlined?: boolean
-  squared?: boolean
-  size?: Size
+  modelValue: ModelValue;
+  preventAutoUpdate?: boolean;
+  disabled?: boolean;
+  outlined?: boolean;
+  squared?: boolean;
+  size?: Size;
   // icon
-  icon?: Icon
-  iconPack?: IconPack
-}>()
+  icon?: Icon;
+  iconPack?: IconPack;
+}>();
 
 const emits = defineEmits<{
-  (e: 'update:modelValue', value: ModelValue): void
-}>()
+  (e: 'update:modelValue', value: ModelValue): void;
+}>();
 
-const defaultSize = 's'
+const defaultSize = 's';
 
 const value = computed({
-  get() {
-    return props.modelValue
-  },
+  get() { return props.modelValue; },
   set(val: ModelValue) {
-    emits('update:modelValue', val)
+    console.log('test');
+    console.trace();
+    emits('update:modelValue', val);
   },
-})
+});
 const computedClass = computed(() => {
-  const list = []
-  if (props.squared) list.push('is-squared')
-  if (props.outlined) list.push('is-outlined')
+  const list = [];
+  if (props.squared) list.push('is-squared');
+  if (props.outlined) list.push('is-outlined');
   // size
-  let size = props.size || defaultSize
-  list.push(`ck-switch--size-${size}`)
-  return list
-})
+  let size = props.size || defaultSize;
+  list.push(`ck-switch--size-${size}`);
+  return list;
+});
 const computedAttributes = computed(() => {
   return {
     'aria-disabled': props.disabled,
     tabindex: props.disabled ? undefined : '0',
   }
-})
+});
 const iconClass = computed(() => {
-  const list = []
+  const list = [];
   if (props.size && props.size !== defaultSize) {
     list.push(`ck-switch__icon-size--${props.size}`)
   }
-  return list
-})
+  return list;
+});
 
 function onTrigger() {
-  if (!props.preventAutoUpdate) value.value = !value.value
+  // if (!props.preventAutoUpdate) value.value = !value.value;
 }
 </script>
 
@@ -183,7 +183,7 @@ $transitionTime = 0.4s
 
 
 
-
+      
 
 
 
@@ -221,7 +221,7 @@ $transitionTime = 0.4s
     .ck-switch__input:checked + .ck-switch__slider-container > .ck-switch__slider
       border-width $border-width
 
-
+      
 // size XS
 .ck-switch.ck-switch--size-xs
   $height = 14px
