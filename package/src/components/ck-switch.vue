@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed } from "vue";
+import { computed, ref, watch } from "vue";
 import type { Icon, IconPack, Size } from "../types/cleek-options";
 // computed
 import CkIcon from "./ck-icon.vue";
@@ -20,6 +20,7 @@ const props = defineProps<{
 
 const emits = defineEmits<{
   (e: "update:modelValue", value: ModelValue): void;
+  (e: "switchClick"): void;
 }>();
 
 const defaultSize = "s";
@@ -30,15 +31,6 @@ const value = computed({
   },
   set(val: ModelValue) {
     emits("update:modelValue", val);
-  },
-});
-const checkedValue = computed({
-  get() {
-    return value.value;
-  },
-  set(val) {
-    if (props.preventAutoUpdate) return;
-    value.value = val;
   },
 });
 
@@ -64,6 +56,17 @@ const iconClass = computed(() => {
   }
   return list;
 });
+
+function handleSwitchClick(e: {
+  preventDefault: () => void;
+  stopPropagation: () => void;
+}) {
+  emits("switchClick");
+  if (props.preventAutoUpdate) {
+    e.preventDefault();
+    e.stopPropagation();
+  }
+}
 </script>
 
 <template lang="pug">
@@ -74,10 +77,10 @@ v-bind="computedAttributes"
 )
   input.ck-switch__input(
   type="checkbox"
-  v-model="checkedValue"
-  :checked="value"
+  v-model="value"
   aria-hidden="true"  
   :disabled="disabled"
+  @click="handleSwitchClick($event)"
   )
   .ck-switch__slider-container
     //- slider
