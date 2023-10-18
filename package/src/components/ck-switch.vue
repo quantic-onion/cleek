@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { computed } from 'vue';
-import type { Icon, IconPack, Size } from '../types/cleek-options';
+import { computed } from "vue";
+import type { Icon, IconPack, Size } from "../types/cleek-options";
 // computed
-import CkIcon from './ck-icon.vue';
+import CkIcon from "./ck-icon.vue";
 
 type ModelValue = boolean | 1 | 0;
 
@@ -19,23 +19,33 @@ const props = defineProps<{
 }>();
 
 const emits = defineEmits<{
-  (e: 'update:modelValue', value: ModelValue): void;
+  (e: "update:modelValue", value: ModelValue): void;
 }>();
 
-const defaultSize = 's';
+const defaultSize = "s";
 
 const value = computed({
-  get() { return props.modelValue; },
+  get() {
+    return props.modelValue;
+  },
   set(val: ModelValue) {
-    console.log('test');
-    console.trace();
-    emits('update:modelValue', val);
+    emits("update:modelValue", val);
   },
 });
+const checkedValue = computed({
+  get() {
+    return value.value;
+  },
+  set(val) {
+    if (props.preventAutoUpdate) return;
+    value.value = val;
+  },
+});
+
 const computedClass = computed(() => {
   const list = [];
-  if (props.squared) list.push('is-squared');
-  if (props.outlined) list.push('is-outlined');
+  if (props.squared) list.push("is-squared");
+  if (props.outlined) list.push("is-outlined");
   // size
   let size = props.size || defaultSize;
   list.push(`ck-switch--size-${size}`);
@@ -43,21 +53,17 @@ const computedClass = computed(() => {
 });
 const computedAttributes = computed(() => {
   return {
-    'aria-disabled': props.disabled,
-    tabindex: props.disabled ? undefined : '0',
-  }
+    "aria-disabled": props.disabled,
+    tabindex: props.disabled ? undefined : "0",
+  };
 });
 const iconClass = computed(() => {
   const list = [];
   if (props.size && props.size !== defaultSize) {
-    list.push(`ck-switch__icon-size--${props.size}`)
+    list.push(`ck-switch__icon-size--${props.size}`);
   }
   return list;
 });
-
-function onTrigger() {
-  // if (!props.preventAutoUpdate) value.value = !value.value;
-}
 </script>
 
 <template lang="pug">
@@ -65,15 +71,13 @@ label.ck-switch(
 v-bind="computedAttributes"
 :class="computedClass"
 @keydown.space.prevent
-@keyup.enter="onTrigger()"
-@keyup.space="onTrigger()"
 )
   input.ck-switch__input(
-  v-model="value"
-  aria-hidden="true"  
   type="checkbox"
+  v-model="checkedValue"
+  :checked="value"
+  aria-hidden="true"  
   :disabled="disabled"
-  @click.stop="onTrigger()"
   )
   .ck-switch__slider-container
     //- slider
@@ -183,7 +187,7 @@ $transitionTime = 0.4s
 
 
 
-      
+
 
 
 
@@ -221,7 +225,7 @@ $transitionTime = 0.4s
     .ck-switch__input:checked + .ck-switch__slider-container > .ck-switch__slider
       border-width $border-width
 
-      
+
 // size XS
 .ck-switch.ck-switch--size-xs
   $height = 14px
