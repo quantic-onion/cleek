@@ -254,29 +254,29 @@ hooks.preventUnusedError([computedStyle, computedClassSelect, getOptionValue, on
 </script>
 
 <template lang="pug">
-.ck-select(:style='computedStyle', :class='computedClass') 
+.ck-select(:style="computedStyle" :class="computedClass") 
   //- icon left
-  ck-icon.ck-select__icon-left(v-if='icon', color='lightgrey', :icon='icon', :icon-pack='iconPack')
+  ck-icon.ck-select__icon-left(v-if="icon" color="lightgrey" :icon="icon" :icon-pack="iconPack")
   //- icon right
-  ck-icon.ck-select__icon-right(v-if='iconRight', color='lightgrey', :icon='iconRight', :icon-pack='iconPack')
-  .ck-select__clear-btn(v-if='isClearBtnVisible', @click='setClearValue()')
-    ck-icon(icon='times')
+  ck-icon.ck-select__icon-right(v-if="iconRight" color="lightgrey" :icon="iconRight" :icon-pack="iconPack")
+  .ck-select__clear-btn(v-if="isClearBtnVisible" @click="setClearValue()")
+    ck-icon(icon="times")
   //- label
-  ck-label(v-if='label', :align='labelAlign', for='ck-input') {{ label }}
+  ck-label(v-if="label" :align="labelAlign" for="ck-input") {{ label }}
   //- select
   select(
-    v-model='value',
-    :class='computedClassSelect',
-    :style='computedStyleSelect',
-    :disabled='disabled || isOptionsListEmpty',
-    @click='onClick($event)'
+    v-model="value"
+    :class="computedClassSelect"
+    :style="computedStyleSelect"
+    :disabled="disabled || isOptionsListEmpty"
+    @click="onClick($event)"
   )
     //- option
-    option(v-for='option in filteredOptions', :value='getOptionValue(option)', :key='option')
+    option(v-for="option in filteredOptions" :value="getOptionValue(option)" :key="option")
       | {{ getOptionName(option) }}
-  span.ck-select--placeholder(v-if='isEmptyOptionsMsgVisible')
+  span.ck-select--placeholder(v-if="isEmptyOptionsMsgVisible")
     | {{ emptyOptionsMsg }}
-  span.ck-select--placeholder(v-else-if='isPlaceholderVisible')
+  span.ck-select--placeholder(v-else-if="isPlaceholderVisible")
     | {{ placeholder }}
 </template>
 

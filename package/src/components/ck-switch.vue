@@ -67,22 +67,22 @@ function handleSwitchClick(e: Event) {
 </script>
 
 <template lang="pug">
-label.ck-switch(v-bind='computedAttributes', :class='computedClass', @keydown.space.prevent)
+label.ck-switch(v-bind="computedAttributes" :class="computedClass" @keydown.space.prevent)
   input.ck-switch__input(
-    type='checkbox',
-    v-model='value',
-    aria-hidden='true',
-    :disabled='disabled',
-    @click='handleSwitchClick($event)'
+    type="checkbox"
+    v-model="value"
+    aria-hidden="true"
+    :disabled="disabled"
+    @click="handleSwitchClick($event)"
   )
   .ck-switch__slider-container
     //- slider
     .ck-switch__slider
     //- icon-left
-    ck-icon.ck-switch__icon-left(v-if='icon && value', :icon='icon', :icon-pack='iconPack', :class='iconClass')
+    ck-icon.ck-switch__icon-left(v-if="icon && value" :icon="icon" :icon-pack="iconPack" :class="iconClass")
     //- icon-right
-    ck-icon.ck-switch__icon-right(v-if='icon && !value', :icon='icon', :icon-pack='iconPack', :class='iconClass')
-  span.ck-switch__content(v-if='$slots.default')
+    ck-icon.ck-switch__icon-right(v-if="icon && !value" :icon="icon" :icon-pack="iconPack" :class="iconClass")
+  span.ck-switch__content(v-if="$slots.default")
     slot
 </template>
 

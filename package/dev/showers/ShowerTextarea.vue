@@ -1,6 +1,6 @@
 <template lang="pug">
-ElementsShower(title='Área de texto', subtitle='ck-textarea')
-  ck-textarea(label='Area de texto con loren ipsum', v-model='textareaText')
+ElementsShower(title="Área de texto" subtitle="ck-textarea")
+  ck-textarea(label="Area de texto con loren ipsum" v-model="textareaText")
 </template>
 
 <script>

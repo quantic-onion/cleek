@@ -57,24 +57,17 @@ function handleChange(option: Option, event: Event) {
 
 <template lang="pug">
 label.ck-radio(
-  v-for='(option, index) in computedOptions',
-  :key='`radio-${index}`',
-  v-bind='radioAttributes',
-  :class='computedClass',
-  @keydown.space.prevent,
-  @keyup.enter='handleChange(option, $event)',
-  @keyup.space='handleChange(option, $event)'
+  v-for="(option, index) in computedOptions"
+  :key="`radio-${index}`"
+  v-bind="radioAttributes"
+  :class="computedClass"
+  @keydown.space.prevent
+  @keyup.enter="handleChange(option, $event)"
+  @keyup.space="handleChange(option, $event)"
 )
-  input.c-Radio__input(
-    v-model='value',
-    aria-hidden='true',
-    type='radio',
-    :name='name',
-    :value='option.value',
-    :disabled='disabled'
-  )
+  input.c-Radio__input(v-model="value" aria-hidden="true" type="radio" :name="name" :value="option.value" :disabled="disabled")
   .c-Radio__element
-  span.c-Radio__label(v-if='option.label')
+  span.c-Radio__label(v-if="option.label")
     | {{ option.label }}
 </template>
 

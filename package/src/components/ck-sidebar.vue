@@ -65,13 +65,13 @@ const computedStyleHeader = computed(() => {
 </script>
 
 <template lang="pug">
-.ck-sidebar-background(v-if='isActive', @click.self='isActive = false')
-  .sidebar-content(:class='computedClass', :style='computedStyle')
+.ck-sidebar-background(v-if="isActive" @click.self="isActive = false")
+  .sidebar-content(:class="computedClass" :style="computedStyle")
     //- header
-    .sidebar-header(v-if='title', :class='computedClassHeader', :style='computedStyleHeader', @click='isActive = false')
-      .sidebar-header-title(v-if='title')
+    .sidebar-header(v-if="title" :class="computedClassHeader" :style="computedStyleHeader" @click="isActive = false")
+      .sidebar-header-title(v-if="title")
         | {{ title }}
-      ck-icon.close-btn(icon='times')
+      ck-icon.close-btn(icon="times")
     //- content
     div
       slot

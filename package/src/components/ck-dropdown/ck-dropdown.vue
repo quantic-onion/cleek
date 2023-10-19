@@ -53,15 +53,15 @@ onMounted(() => {
 </script>
 
 <template lang="pug">
-.ck-dropdown(:class='computedClass')
+.ck-dropdown(:class="computedClass")
   //- button
-  .ck-dropdown__trigger(@click='openClose()')
-    slot(name='trigger')
+  .ck-dropdown__trigger(@click="openClose()")
+    slot(name="trigger")
   //- menu
   .ck-dropdown__popper-container
-    section.ck-dropdown__popper(ref='popperRef', v-if='isOpen', :class='computedClassPopper')
-      .ck-dropdown__popper--arrow(:class='{ "ck-dropdown__popper--arrow--dark": dark }')
-      slot(name='popper')
+    section.ck-dropdown__popper(ref="popperRef" v-if="isOpen" :class="computedClassPopper")
+      .ck-dropdown__popper--arrow(:class="{ 'ck-dropdown__popper--arrow--dark': dark }")
+      slot(name="popper")
 </template>
 
 <style lang="stylus" scoped>

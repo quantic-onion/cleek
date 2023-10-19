@@ -75,8 +75,8 @@ hooks.preventUnusedError([isColumnDisplayed, computedStyle]);
 </script>
 
 <template lang="pug">
-td.ck-td(v-if='isColumnDisplayed', :class='computedTdClass')
-  span(:class='computedSpanClass', :style='computedStyle')
+td.ck-td(v-if="isColumnDisplayed" :class="computedTdClass")
+  span(:class="computedSpanClass" :style="computedStyle")
     slot
 </template>
 

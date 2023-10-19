@@ -141,30 +141,25 @@ const setFocus = () => {
 </script>
 
 <template lang="pug">
-form.ck-select(action='/action_page.php', method='get')
+form.ck-select(action="/action_page.php" method="get")
   //- label
-  ck-label(v-if='label', :align='labelAlign', for='ck-select') {{ label }}
+  ck-label(v-if="label" :align="labelAlign" for="ck-select") {{ label }}
   //- chevron
   //- ck-icon.ck-select__chevron-icon(v-if="" icon="chevron-down")
   input(
-    autocomplete='off',
-    list='ck-select__list',
-    name='ck-select',
-    v-model='search',
-    :id='label ? "ck-select" : ""',
-    :placeholder='lastSelectedValue',
-    :class='computedClass',
-    @focus='onFocus($event)',
-    @blur='onBlur($event)',
-    @change='onChangeOption($event)'
+    autocomplete="off"
+    list="ck-select__list"
+    name="ck-select"
+    v-model="search"
+    :id="label ? 'ck-select' : ''"
+    :placeholder="lastSelectedValue"
+    :class="computedClass"
+    @focus="onFocus($event)"
+    @blur="onBlur($event)"
+    @change="onChangeOption($event)"
   )
   datalist#ck-select__list
-    option(
-      @click='onClickOption(option)',
-      :key='getOptionKey(option)',
-      :value='getOptionName(option)',
-      v-for='option in options'
-    )
+    option(@click="onClickOption(option)" :key="getOptionKey(option)" :value="getOptionName(option)" v-for="option in options")
 </template>
 
 <style lang="stylus" scoped>

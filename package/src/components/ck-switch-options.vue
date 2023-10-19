@@ -72,15 +72,15 @@ functions.preventUnusedError([getOptionValue]);
 <template lang="pug">
 .ck-switch-options__container-exterior
   //- label
-  ck-label(v-if='label', :align='labelAlign') {{ label }}
+  ck-label(v-if="label" :align="labelAlign") {{ label }}
   //- switch options
-  .ck-switch-options__container(:class='computedClass')
+  .ck-switch-options__container(:class="computedClass")
     .ck-switch-options__option(
-      v-for='(option, index) in options',
-      :key='`ck-switch-options${index}`',
-      :class='{ selected: selectedOption == getOptionValue(option) }',
-      :style='computedItemStyle',
-      @click='selectedOption = getOptionValue(option)'
+      v-for="(option, index) in options"
+      :key="`ck-switch-options${index}`"
+      :class="{ selected: selectedOption == getOptionValue(option) }"
+      :style="computedItemStyle"
+      @click="selectedOption = getOptionValue(option)"
     )
       | {{ option[prop || defaultProp] }}
 </template>

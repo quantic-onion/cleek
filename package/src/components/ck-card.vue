@@ -50,15 +50,15 @@ onMounted(() => {
 </script>
 
 <template lang="pug">
-.ck-card(v-if='isActive', :class='computedClass')
-  .ck-card__header(v-if='title || !computedHideCloseBtn')
-    .ck-card__header-title(v-if='title') {{ title }}
-    .ck-card__close-btn(v-if='!computedHideCloseBtn', @click='isActive = false')
-      ck-icon(icon='times')
+.ck-card(v-if="isActive" :class="computedClass")
+  .ck-card__header(v-if="title || !computedHideCloseBtn")
+    .ck-card__header-title(v-if="title") {{ title }}
+    .ck-card__close-btn(v-if="!computedHideCloseBtn" @click="isActive = false")
+      ck-icon(icon="times")
   .ck-card__body
-    .ck-card__header-subtitle(v-if='subtitle')
+    .ck-card__header-subtitle(v-if="subtitle")
       | {{ subtitle }}
-    .ck-card__content(:class='{ "content-block": block }')
+    .ck-card__content(:class="{ 'content-block': block }")
       slot
 </template>
 

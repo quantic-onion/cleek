@@ -152,33 +152,33 @@ onMounted(() => {
 </script>
 
 <template lang="pug">
-teleport(v-if='isActive', to='body')
+teleport(v-if="isActive" to="body")
   .ck-popup
     .blackout
-    .popup-container(@mousedown='onBgClick()')
-      .ck-popup__content(@mousedown.stop='', :style='computedStyleContent', :class='computedClassContent')
-        .ck-popup__slot-header(:style='computedStyleHeader', :class='computedClassHeader')
+    .popup-container(@mousedown="onBgClick()")
+      .ck-popup__content(@mousedown.stop="" :style="computedStyleContent" :class="computedClassContent")
+        .ck-popup__slot-header(:style="computedStyleHeader" :class="computedClassHeader")
           //- title
-          h3.ck-popup__title(v-if='title')
+          h3.ck-popup__title(v-if="title")
             | {{ title }}
           //- header slot
-          slot(name='header')
+          slot(name="header")
           //- close btn
-          ck-icon.icon-close(icon='times', v-if='isCloseBtnVisible', @click='isActive = false')
+          ck-icon.icon-close(icon="times" v-if="isCloseBtnVisible" @click="isActive = false")
         //- VuePerfectScrollbar.ck-popup__slot-body
         .ck-popup__slot-body
           slot
-        .ck-popup__slot-footer(v-if='$slots.footer || confirmButtons || acceptButton || cancelButton')
-          slot(name='footer')
-          .ck-popup-slot-footer__confirm-buttons(v-if='confirmButtons || acceptButton || cancelButton')
+        .ck-popup__slot-footer(v-if="$slots.footer || confirmButtons || acceptButton || cancelButton")
+          slot(name="footer")
+          .ck-popup-slot-footer__confirm-buttons(v-if="confirmButtons || acceptButton || cancelButton")
             ck-button.cancel-button(
-              v-if='confirmButtons || cancelButton',
-              color='danger',
-              :type='realCancelBtnType',
-              @click='onCancel()'
+              v-if="confirmButtons || cancelButton"
+              color="danger"
+              :type="realCancelBtnType"
+              @click="onCancel()"
             )
               | {{ realCancelBtnText }}
-            ck-button(v-if='confirmButtons || acceptButton', :type='realAcceptBtnType', @click='onAccept()')
+            ck-button(v-if="confirmButtons || acceptButton" :type="realAcceptBtnType" @click="onAccept()")
               | {{ realAcceptBtnText }}
 </template>
 

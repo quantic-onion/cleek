@@ -1,12 +1,12 @@
 <template lang="pug">
-ElementsShower(title='Selector', subtitle='ck-select')
+ElementsShower(title="Selector" subtitle="ck-select")
   .flex
     .w-half
       div Selected ID: {{ selectedId }}
-      ck-select(label='¿Quién es el más lindo?', v-model='selectedId', :options='options')
+      ck-select(label="¿Quién es el más lindo?" v-model="selectedId" :options="options")
     .w-half
       div Selected option: {{ selectedOption }}
-      ck-select(notReduce, label='¿Quién es el más lindo?', v-model='selectedOption', :options='options')
+      ck-select(notReduce label="¿Quién es el más lindo?" v-model="selectedOption" :options="options")
 </template>
 
 <script>

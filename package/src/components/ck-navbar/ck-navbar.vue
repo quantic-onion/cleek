@@ -25,8 +25,8 @@ const computedStyle = computed(() => {
 </script>
 
 <template lang="pug">
-.ck-navbar(:style='computedStyle')
-  .ck-navbar__content(:class='computedClassContent')
+.ck-navbar(:style="computedStyle")
+  .ck-navbar__content(:class="computedClassContent")
     slot
 </template>
 

@@ -22,7 +22,7 @@ const computedStyle = computed(() => {
 
 <template lang="pug">
 th.ck-th
-  span(:class='computedSpanClass', :style='computedStyle')
+  span(:class="computedSpanClass" :style="computedStyle")
     slot
 </template>
 

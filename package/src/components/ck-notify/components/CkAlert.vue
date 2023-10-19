@@ -28,17 +28,17 @@ defineExpose({
 </script>
 
 <template lang="pug">
-teleport(to='body')
+teleport(to="body")
   ck-popup(
-    v-model='isActive',
-    acceptButton,
-    notCloseBtn,
-    headerColor='primary',
-    headerAlign='center',
-    acceptBtnType='filled',
-    :title='title || defaultTitle',
-    :acceptBtnText='acceptText || defaultAcceptText',
-    @accept='isActive = false'
+    v-model="isActive"
+    acceptButton
+    notCloseBtn
+    headerColor="primary"
+    headerAlign="center"
+    acceptBtnType="filled"
+    :title="title || defaultTitle"
+    :acceptBtnText="acceptText || defaultAcceptText"
+    @accept="isActive = false"
   )
     .alert--msg {{ msg }}
 </template>

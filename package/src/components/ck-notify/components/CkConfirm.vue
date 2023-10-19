@@ -48,15 +48,15 @@ defineExpose({
   .ck-confirm
     .ck-confirm__icon
       //- ck-img(src="cleek/hexagon-exclamation.png" height="7rem")
-      img.ck-confirm__icon--img(src='https://img.quanticonion.com/icons/hexagon-exclamation.png', height='7rem')
+      img.ck-confirm__icon--img(src="https://img.quanticonion.com/icons/hexagon-exclamation.png" height="7rem")
     .ck-confirm__title {{ title || defaultTitle }}
     .ck-confirm__message {{ msg }}
     .ck-confirm__buttons-container
       //- ck-button.mr-2(@click="onCancel()" color="light" type="filled")
-      button.ck-confirm__button--cancel(@click='onCancel()')
+      button.ck-confirm__button--cancel(@click="onCancel()")
         | {{ cancelText || defaultCancelText }}
       //- ck-button(@click="onAccept()" type="filled" color="danger")
-      button.ck-confirm__button--accept(@click='onAccept()')
+      button.ck-confirm__button--accept(@click="onAccept()")
         | {{ acceptText || defaultAcceptText }}
 </template>
 

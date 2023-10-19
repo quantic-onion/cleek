@@ -29,7 +29,7 @@ const computedStyle = computed(() => {
 </script>
 
 <template lang="pug">
-.ck-div(:style='computedStyle', @click='emits("click", $event)')
+.ck-div(:style="computedStyle" @click="emits('click', $event)")
   slot
 </template>
 

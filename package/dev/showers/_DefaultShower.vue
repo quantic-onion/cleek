@@ -1,7 +1,7 @@
 <template lang="pug">
 .element-shower
-  h2(v-if='title') {{ title }}
-  h5(v-if='subtitle') {{ subtitle }}
+  h2(v-if="title") {{ title }}
+  h5(v-if="subtitle") {{ subtitle }}
   slot
 </template>
 

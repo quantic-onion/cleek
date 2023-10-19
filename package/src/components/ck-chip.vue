@@ -51,11 +51,11 @@ const computedStyle = computed(() => {
 </script>
 
 <template lang="pug">
-.ck-chip(:color='color', :class='computedClass', :style='computedStyle', @click='emits("click", $event)')
-  ck-icon.pr-2(v-if='icon && !iconRight', :icon='icon', :icon-pack='iconPack')
+.ck-chip(:color="color" :class="computedClass" :style="computedStyle" @click="emits('click', $event)")
+  ck-icon.pr-2(v-if="icon && !iconRight" :icon="icon" :icon-pack="iconPack")
   span
     slot
-  ck-icon.pl-2(v-if='icon && iconRight', :icon='icon', :icon-pack='iconPack')
+  ck-icon.pl-2(v-if="icon && iconRight" :icon="icon" :icon-pack="iconPack")
 </template>
 
 <style lang="stylus" scoped>

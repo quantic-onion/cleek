@@ -50,16 +50,16 @@ function onClick(event: Event) {
 </script>
 
 <template lang="pug">
-.ck-icon(:class='computedClass', :style='computedStyle', @click='onClick($event)')
+.ck-icon(:class="computedClass" :style="computedStyle" @click="onClick($event)")
   font-awesome-icon(
-    v-if='computediconPack === "font-awesome"',
-    :icon='icon',
-    :size='size',
-    :rotation='rotation',
-    :flip='flip',
-    :spin='spin',
-    :pulse='pulse',
-    :fixed-width='fixedWidth'
+    v-if="computediconPack === 'font-awesome'"
+    :icon="icon"
+    :size="size"
+    :rotation="rotation"
+    :flip="flip"
+    :spin="spin"
+    :pulse="pulse"
+    :fixed-width="fixedWidth"
   )
 </template>
 

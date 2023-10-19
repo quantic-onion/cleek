@@ -123,8 +123,8 @@ hooks.preventUnusedError([computedImgStyle, computedStyle, computedClass, clickI
 </script>
 
 <template lang="pug">
-.ck-img(:class='computedClass', :style='computedStyle', @click='clickImg()')
-  img(:src='imageUrl', :style='computedImgStyle', :alt='alt', @error='altNeeded = true')
+.ck-img(:class="computedClass" :style="computedStyle" @click="clickImg()")
+  img(:src="imageUrl" :style="computedImgStyle" :alt="alt" @error="altNeeded = true")
 </template>
 
 <style lang="stylus" scoped>

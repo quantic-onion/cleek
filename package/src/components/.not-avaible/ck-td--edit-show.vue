@@ -1,24 +1,24 @@
 <template lang="pug">
-td.ck-td(v-if='isColumnDisplayed', :class='computedTdClass')
+td.ck-td(v-if="isColumnDisplayed" :class="computedTdClass")
   //- default
-  span(v-if='$slots.default', :class='computedSpanClass', :style='computedStyle')
+  span(v-if="$slots.default" :class="computedSpanClass" :style="computedStyle")
     slot
   //- edit
   span.ck-td__slot-edit(
-    v-if='$slots.edit && isEditingCol',
-    :class='computedSpanClass',
-    :style='computedStyle',
-    @blur.capture='isEditingCol = false'
+    v-if="$slots.edit && isEditingCol"
+    :class="computedSpanClass"
+    :style="computedStyle"
+    @blur.capture="isEditingCol = false"
   )
-    slot(name='edit')
+    slot(name="edit")
   //- show
   span.ck-td__slot-show(
-    v-if='$slots.show && !isEditingCol',
-    :class='computedSpanClass',
-    :style='computedStyle',
-    @click='isEditingCol = true; setFocusChildren($event)'
+    v-if="$slots.show && !isEditingCol"
+    :class="computedSpanClass"
+    :style="computedStyle"
+    @click="isEditingCol = true; setFocusChildren($event)"
   )
-    slot(name='show')
+    slot(name="show")
 </template>
 
 <script setup lang="ts">

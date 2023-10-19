@@ -8,5 +8,8 @@
   "trailingComma": "all",
   "bracketSpacing": true,
   "arrowParens": "always",
-  "endOfLine": "auto"
+  "endOfLine": "auto",
+  "plugins": ["@prettier/plugin-pug", "prettier-plugin-stylus"],
+  "pugSingleQuote": false,
+  "pugAttributeSeparator": "none"
 }

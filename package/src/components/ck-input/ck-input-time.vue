@@ -35,11 +35,11 @@ const inputValue = computed({
 
 <template lang="pug">
 ck-input(
-  v-model='inputValue',
-  type='time',
-  :label='label',
-  :group='group',
-  :widthBreaks='widthBreaks',
-  @change='emits("change", inputValue)'
+  v-model="inputValue"
+  type="time"
+  :label="label"
+  :group="group"
+  :widthBreaks="widthBreaks"
+  @change="emits('change', inputValue)"
 )
 </template>

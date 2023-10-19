@@ -110,14 +110,14 @@ onMounted(() => {
 </script>
 
 <template lang="pug">
-.ck-table__pagination-container(v-if='currentPage && totalPages > 1', :class='computedClass')
+.ck-table__pagination-container(v-if="currentPage && totalPages > 1" :class="computedClass")
   .ck-table__pagination
     //- arrow left
-    .ck-table__pagination--arrow-left(:class='{ disabled: !hasArrowLeft }', @click='currentPageLocal = currentPage - 1')
-      ck-icon(:icon='hasArrowLeft ? "angle-left" : "grip-lines-vertical"')
+    .ck-table__pagination--arrow-left(:class="{ disabled: !hasArrowLeft }" @click="currentPageLocal = currentPage - 1")
+      ck-icon(:icon="hasArrowLeft ? 'angle-left' : 'grip-lines-vertical'")
     .ck-table__pagination--numbers-container
       //- list left
-      .ck-table__pagination-item--left(v-for='num in listLeft', @click='currentPageLocal = num')
+      .ck-table__pagination-item--left(v-for="num in listLeft" @click="currentPageLocal = num")
         | {{ num }}
       //- input
       //- autoSelect 
@@ -125,18 +125,18 @@ onMounted(() => {
       //- align="center"
       .ck-table__pagination-input-container
         input.ck-table__pagination-input(
-          type='number',
-          v-model='currentPageInputValue',
-          @click='$event.target.select()',
-          @change='updatePageByInput($event.target)'
+          type="number"
+          v-model="currentPageInputValue"
+          @click="$event.target.select()"
+          @change="updatePageByInput($event.target)"
         )
         .ck-table__pagination--input-pointer
       //- list right
-      .ck-table__pagination-item--right(v-for='num in listRight', @click='currentPageLocal = num')
+      .ck-table__pagination-item--right(v-for="num in listRight" @click="currentPageLocal = num")
         | {{ num }}
     //- arrow right
-    .ck-table__pagination--arrow-right(:class='{ disabled: !hasArrowRight }', @click='onClickArrowRight()')
-      ck-icon(:icon='hasArrowRight ? "angle-right" : "grip-lines-vertical"')
+    .ck-table__pagination--arrow-right(:class="{ disabled: !hasArrowRight }" @click="onClickArrowRight()")
+      ck-icon(:icon="hasArrowRight ? 'angle-right' : 'grip-lines-vertical'")
 </template>
 
 <style lang="stylus" scoped>

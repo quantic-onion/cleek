@@ -82,40 +82,40 @@ hooks.preventUnusedError([searchGroupValue, checkRefresh]);
 </script>
 
 <template lang="pug">
-.ck-table__header-items(:class='computedClass')
-  template(v-if='!hideHeaderActions')
+.ck-table__header-items(:class="computedClass")
+  template(v-if="!hideHeaderActions")
     //- refresh btn
     ck-button(
-      v-if='refreshBtnIsVisible',
-      type='flat',
-      icon='rotate-right',
-      title='Recargar lista',
-      :layout='layout',
-      @click='emits("refreshList", true)'
+      v-if="refreshBtnIsVisible"
+      type="flat"
+      icon="rotate-right"
+      title="Recargar lista"
+      :layout="layout"
+      @click="emits('refreshList', true)"
     )
     //- pages
-    .items-per-page(v-if='itemsPerPageIsVisible', :class='{ "ck-component__group--left": isSearchVisible }')
+    .items-per-page(v-if="itemsPerPageIsVisible" :class="{ 'ck-component__group--left': isSearchVisible }")
       | {{ itemsPerPageStart }} - {{ itemsPerPageEnd }} de {{ listLength }}
     //- search
     ck-input.ck-table--search-input(
-      v-if='isSearchVisible',
-      v-model='searchLocal',
-      icon='magnifying-glass',
-      placeholder='Buscar...',
-      :group='searchGroupValue',
-      :layout='layout',
-      :borderColor='version === "colored" ? "white" : ""',
-      @input='checkRefresh()'
+      v-if="isSearchVisible"
+      v-model="searchLocal"
+      icon="magnifying-glass"
+      placeholder="Buscar..."
+      :group="searchGroupValue"
+      :layout="layout"
+      :borderColor="version === 'colored' ? 'white' : ''"
+      @input="checkRefresh()"
     )
     //- columns manager
     ck-button(
-      icon='columns',
-      type='filled',
-      title='Administrador de columnas',
-      v-if='hasColumnsManager',
-      :group='itemsPerPageIsVisible || isSearchVisible ? "right" : ""',
-      :layout='layout',
-      @click='emits("openColumnsManager")'
+      icon="columns"
+      type="filled"
+      title="Administrador de columnas"
+      v-if="hasColumnsManager"
+      :group="itemsPerPageIsVisible || isSearchVisible ? 'right' : ''"
+      :layout="layout"
+      @click="emits('openColumnsManager')"
     )
 </template>
 

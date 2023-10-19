@@ -36,16 +36,16 @@ function onTrigger() {
 </script>
 
 <template lang="pug">
-label.ck-checkbox(v-bind='checkboxAttributes', @keydown.space.prevent, @keyup.enter='onTrigger()', @keyup.space='onTrigger()')
+label.ck-checkbox(v-bind="checkboxAttributes" @keydown.space.prevent @keyup.enter="onTrigger()" @keyup.space="onTrigger()")
   input.ck-checkbox__input(
-    aria-hidden='true',
-    type='checkbox',
-    :disabled='disabled',
-    :checked='value',
-    @change='value = $event.target.checked; onChange($event)'
+    aria-hidden="true"
+    type="checkbox"
+    :disabled="disabled"
+    :checked="value"
+    @change="value = $event.target.checked; onChange($event)"
   )
   .ck-checkbox__element
-  span.c-Checkbox__label(v-if='$slots.default')
+  span.c-Checkbox__label(v-if="$slots.default")
     slot
 </template>
 

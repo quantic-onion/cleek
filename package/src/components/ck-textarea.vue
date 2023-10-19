@@ -112,17 +112,17 @@ onMounted(() => {
 
 <template lang="pug">
 .ck-textarea
-  ck-label(v-if='label', :label-align='labelAlign') {{ label }}
+  ck-label(v-if="label" :label-align="labelAlign") {{ label }}
   textarea(
-    v-model='inputValue',
-    ref='refTextarea',
-    :placeholder='placeholder',
-    :disabled='disabled',
-    :class='computedClassTextarea',
-    :style='computedStyleTextarea',
-    @click='onClick($event)',
-    @input='onInput($event)',
-    @change='onChange($event)'
+    v-model="inputValue"
+    ref="refTextarea"
+    :placeholder="placeholder"
+    :disabled="disabled"
+    :class="computedClassTextarea"
+    :style="computedStyleTextarea"
+    @click="onClick($event)"
+    @input="onInput($event)"
+    @change="onChange($event)"
   )
 </template>
 

@@ -37,16 +37,16 @@ function goToNextStep() {
 }
 </script>
 <template lang="pug">
-.ck-pagination(:class='computedClass')
-  ck-button(group='left', icon='arrow-left', @click='goToPreviousStep()')
+.ck-pagination(:class="computedClass")
+  ck-button(group="left" icon="arrow-left" @click="goToPreviousStep()")
   ck-button(
-    v-for='stepNumber in maxStep',
-    group='center',
-    :type='currentStep === stepNumber ? "filled" : "outlined"',
-    @click='currentStep = stepNumber'
+    v-for="stepNumber in maxStep"
+    group="center"
+    :type="currentStep === stepNumber ? 'filled' : 'outlined'"
+    @click="currentStep = stepNumber"
   )
     | {{ stepNumber }}
-  ck-button(group='right', icon='arrow-right', @click='goToNextStep()')
+  ck-button(group="right" icon="arrow-right" @click="goToNextStep()")
 </template>
 
 <style lang="stylus">

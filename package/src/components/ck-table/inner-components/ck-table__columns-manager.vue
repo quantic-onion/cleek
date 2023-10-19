@@ -37,10 +37,13 @@ const isActive = computed({
   },
 });
 
-watch(() => isActive.value, (val) => {
-  if (!val) return;
-  setColumnsCheckable();
-});
+watch(
+  () => isActive.value,
+  (val) => {
+    if (!val) return;
+    setColumnsCheckable();
+  },
+);
 
 watch(
   () => isActive.value,
@@ -71,16 +74,10 @@ function setColumnDisplayValue(colName: string, value: any) {
 </script>
 
 <template lang="pug">
-ck-popup(v-model='isActive', title='Administrador de columnas')
+ck-popup(v-model="isActive" title="Administrador de columnas")
   .columns-manger-container
-    .columns-manger__item(
-    v-for="(col, colIndex) in columnsCheckable"
-    :key="colIndex"
-    )
-      ck-checkbox(
-      v-model="col.value"
-      @change="setColumnDisplayValue(col.name, col.value)"
-      )
+    .columns-manger__item(v-for="(col, colIndex) in columnsCheckable" :key="colIndex")
+      ck-checkbox(v-model="col.value" @change="setColumnDisplayValue(col.name, col.value)")
         | {{ col.title }}
 </template>
 

@@ -119,23 +119,23 @@ hooks.preventUnusedError([onClick, computedStyle, computedClass]);
 
 <template lang="pug">
 button(
-  type='button',
-  :class='computedClass',
-  :title='title',
-  :aria-label='title',
-  :disabled='disabled',
-  :style='computedStyle',
-  @click='onClick($event)'
+  type="button"
+  :class="computedClass"
+  :title="title"
+  :aria-label="title"
+  :disabled="disabled"
+  :style="computedStyle"
+  @click="onClick($event)"
 )
-  ck-icon(v-if='isLoading', icon='spinner', spin)
+  ck-icon(v-if="isLoading" icon="spinner" spin)
   template(v-else)
-    ck-icon.ck-button__icon-left(v-if='icon', :icon='icon', :icon-pack='iconPack', :class='{ "just-icon": !$slots.default }')
+    ck-icon.ck-button__icon-left(v-if="icon" :icon="icon" :icon-pack="iconPack" :class="{ 'just-icon': !$slots.default }")
     slot
     ck-icon.ck-button__icon-right(
-      v-if='iconRight',
-      :icon='iconRight',
-      :icon-pack='iconPack',
-      :class='{ "just-icon": !$slots.default }'
+      v-if="iconRight"
+      :icon="iconRight"
+      :icon-pack="iconPack"
+      :class="{ 'just-icon': !$slots.default }"
     )
 </template>
 
