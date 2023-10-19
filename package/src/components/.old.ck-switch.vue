@@ -1,34 +1,20 @@
 <template lang="pug">
 label.ck-switch(
-v-bind="computedAttributes"
-:class="computedClass"
-@keydown.space.prevent
-@keyup.enter="onTrigger()"
-@keyup.space="onTrigger()"
+  v-bind='computedAttributes',
+  :class='computedClass',
+  @keydown.space.prevent,
+  @keyup.enter='onTrigger()',
+  @keyup.space='onTrigger()'
 )
-  input.ck-switch__input(
-  aria-hidden="true"  
-  type="checkbox"
-  v-model="value"
-  :disabled="disabled"
-  @click="onTrigger()"
-  )
+  input.ck-switch__input(aria-hidden='true', type='checkbox', v-model='value', :disabled='disabled', @click='onTrigger()')
   .ck-switch__slider-container
     //- slider
     .ck-switch__slider
     //- icon-left
-    ck-icon.ck-switch__icon-left(
-    v-if="icon && value"
-    :icon="icon"
-    :icon-pack="iconPack"
-    )
+    ck-icon.ck-switch__icon-left(v-if='icon && value', :icon='icon', :icon-pack='iconPack')
     //- icon-right
-    ck-icon.ck-switch__icon-right(
-    v-if="icon && !value"
-    :icon="icon"
-    :icon-pack="iconPack"
-    )
-  span.ck-switch__content(v-if="$slots.default")
+    ck-icon.ck-switch__icon-right(v-if='icon && !value', :icon='icon', :icon-pack='iconPack')
+  span.ck-switch__content(v-if='$slots.default')
     slot
 </template>
 
@@ -37,7 +23,7 @@ import { computed } from 'vue';
 import CkIcon from './ck-icon.vue';
 
 const props = defineProps({
-  modelValue: { type: [Boolean, Number], default: false },    
+  modelValue: { type: [Boolean, Number], default: false },
   disabled: { type: Boolean, default: false },
   outlined: { type: Boolean, default: false },
   squared: { type: Boolean, default: false },
@@ -50,8 +36,12 @@ const props = defineProps({
 const emits = defineEmits(['update:modelValue']);
 
 const value = computed({
-  get() { return props.modelValue; },
-  set(val) { emits('update:modelValue', val); },
+  get() {
+    return props.modelValue;
+  },
+  set(val) {
+    emits('update:modelValue', val);
+  },
 });
 const computedClass = computed(() => {
   const list = [];
@@ -63,7 +53,7 @@ const computedAttributes = computed(() => {
   return {
     'aria-disabled': props.disabled,
     tabindex: props.disabled ? undefined : '0',
-  }
+  };
 });
 
 function onTrigger() {
@@ -81,7 +71,7 @@ $width = 70px
 $transitionTime = 0.4s
 $border-width = 2px // m
 // $border-width = 4px
-$ball-size = $height - (4 * $border-width)
+$ball-size = $height - 4 * $border-width
 .ck-switch
   cursor pointer
   position relative
@@ -118,7 +108,8 @@ $ball-size = $height - (4 * $border-width)
   .ck-switch__content
     user-select none
     margin-left 8px
-  .ck-switch__icon-left, .ck-switch__icon-right
+  .ck-switch__icon-left
+  .ck-switch__icon-right
     position absolute
     z-index 1
     top $border-width * 6

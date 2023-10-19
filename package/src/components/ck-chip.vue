@@ -35,8 +35,8 @@ const computedClass = computed(() => {
   // size
   list.push(`size-${props.size || defaultSize}`);
   // align
-  if (props.align) list.push(`align--${props.align}`)
-  if (props.nowrap) list.push(`ck-chip--${props.nowrap}`)
+  if (props.align) list.push(`align--${props.align}`);
+  if (props.nowrap) list.push(`ck-chip--${props.nowrap}`);
   return list;
 });
 const computedStyle = computed(() => {
@@ -51,24 +51,11 @@ const computedStyle = computed(() => {
 </script>
 
 <template lang="pug">
-.ck-chip(
-:color="color"
-:class="computedClass"
-:style="computedStyle"
-@click="emits('click', $event)"
-)
-  ck-icon.pr-2(
-  v-if="icon && !iconRight"
-  :icon="icon"
-  :icon-pack="iconPack"
-  )
+.ck-chip(:color='color', :class='computedClass', :style='computedStyle', @click='emits("click", $event)')
+  ck-icon.pr-2(v-if='icon && !iconRight', :icon='icon', :icon-pack='iconPack')
   span
     slot
-  ck-icon.pl-2(
-  v-if="icon && iconRight"
-  :icon="icon"
-  :icon-pack="iconPack"
-  )
+  ck-icon.pl-2(v-if='icon && iconRight', :icon='icon', :icon-pack='iconPack')
 </template>
 
 <style lang="stylus" scoped>
@@ -79,15 +66,15 @@ const computedStyle = computed(() => {
   display inline-flex
   align-items center
   justify-content center
-  font-size .75rem
-  padding .3rem .75rem
+  font-size 0.75rem
+  padding 0.3rem 0.75rem
   border-radius 10rem
   &.ck-chip--nowrap
     white-space nowrap
   &.size-xs
-    font-size .6rem
+    font-size 0.6rem
   &.size-m
-    font-size .95rem
+    font-size 0.95rem
   &.size-l
     padding-x 1rem
     font-size 1.5rem

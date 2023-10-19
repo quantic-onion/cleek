@@ -7,11 +7,7 @@ import type { Ref } from 'vue';
 import hooks from '../../utils/global-hooks';
 import useWindowWidth from '../../hooks/windowWidth';
 // types
-import type {
-  Align,
-  AlignVertical,
-  WidthBreaks,
-} from '../../types/cleek-options';
+import type { Align, AlignVertical, WidthBreaks } from '../../types/cleek-options';
 
 type stringDate = null | string;
 
@@ -33,7 +29,9 @@ const { windowWidth } = useWindowWidth();
 const refFocusAbsorber: Ref<HTMLInputElement | null> = ref(null);
 
 const inputValue = computed({
-  get() { return convertToDate(); },
+  get() {
+    return convertToDate();
+  },
   set(val: Date) {
     if (refFocusAbsorber.value) {
       refFocusAbsorber.value.style.display = 'block';
@@ -43,7 +41,7 @@ const inputValue = computed({
     emits('update:modelValue', dateToString(val));
   },
 });
-  
+
 const computedClass = computed(() => {
   const classes = [];
   // group
@@ -67,19 +65,13 @@ function dateToString(date: Date) {
 </script>
 
 <template lang="pug">
-ck-div(:widthBreaks="widthBreaks")
-  .ck-input-date(
-  :class="computedClass"
-  )
-    input.ck-input-date--focus-absorber(ref="refFocusAbsorber")
+ck-div(:widthBreaks='widthBreaks')
+  .ck-input-date(:class='computedClass')
+    input.ck-input-date--focus-absorber(ref='refFocusAbsorber')
     ck-label
       | {{ label }}
     //- typeable
-    Datepicker(
-    v-model="inputValue"
-    inputFormat="dd-MM-yyyy"
-    @change="emits('change', inputValue)"
-    )
+    Datepicker(v-model='inputValue', inputFormat='dd-MM-yyyy', @change='emits("change", inputValue)')
 </template>
 
 <style lang="stylus" scoped>

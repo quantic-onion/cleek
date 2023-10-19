@@ -10,9 +10,6 @@ defineProps<{
 </script>
 
 <template lang="pug">
-ck-th(
-:align="col.align"
-:min-width="col.minWidth"
-)
+ck-th(:align='col.align', :min-width='col.minWidth')
   | {{ col.title }}
 </template>

@@ -1,23 +1,16 @@
 <template lang="pug">
 //- no date
-span.help-text(v-if="!computedDate")
+span.help-text(v-if='!computedDate')
   | {{ noDateMsg }}
 
 //- date and time split
-.ck-datetime-shower--split(
-v-else-if="split || date"
-@click="emits('click', $event)"
-)
+.ck-datetime-shower--split(v-else-if='split || date', @click='emits("click", $event)')
   | {{ computedDate }}
-  span.pl-1(v-if="computedTime")
+  span.pl-1(v-if='computedTime')
     | | {{ computedTime }}
 
 //- date shower
-.ck-datetime-shower(
-v-else
-v-tooltip="computedTime"
-@click="emits('click', $event)"
-)
+.ck-datetime-shower(v-else, v-tooltip='computedTime', @click='emits("click", $event)')
   | {{ computedDate }}
 </template>
 
@@ -56,5 +49,4 @@ const computedDate = computed(() => {
   display flex
 .datetime-shower
   cursor pointer
-
 </style>

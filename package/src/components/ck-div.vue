@@ -19,7 +19,7 @@ const computedStyle = computed(() => {
   const list = [];
   // width-break
   if (props.widthBreaks) {
-    const width = functions.getWidthByWidthBreaks(props.widthBreaks, windowWidth.value )
+    const width = functions.getWidthByWidthBreaks(props.widthBreaks, windowWidth.value);
     if (width) list.push({ width });
   }
   // block
@@ -29,10 +29,7 @@ const computedStyle = computed(() => {
 </script>
 
 <template lang="pug">
-.ck-div(
-:style="computedStyle"
-@click="emits('click', $event)"
-)
+.ck-div(:style='computedStyle', @click='emits("click", $event)')
   slot
 </template>
 

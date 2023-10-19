@@ -1,8 +1,8 @@
 <template lang="pug">
-ElementsShower(title="Misma altura")
-  ck-input-text(group="left" v-model="text")
-  ck-button(group="center") Botón
-  ck-select(group="right" v-model="selectedValue" :options="options")
+ElementsShower(title='Misma altura')
+  ck-input-text(group='left', v-model='text')
+  ck-button(group='center') Botón
+  ck-select(group='right', v-model='selectedValue', :options='options')
 </template>
 
 <script>

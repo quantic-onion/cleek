@@ -1,6 +1,6 @@
 import { App, Plugin } from 'vue';
-import { store } from './store'
-import FloatingVue from 'floating-vue'
+import { store } from './store';
+import FloatingVue from 'floating-vue';
 // import ckNotifyComponent from './components/ck-notify/ck-notify.vue';
 import defaultCleekOptions from './default-cleek-options';
 import { library } from '@fortawesome/fontawesome-svg-core';
@@ -15,7 +15,7 @@ import { CleekOptions } from './types/cleek-options';
 library.add(fas);
 library.add(far);
 library.add(fab);
-import 'floating-vue/dist/style.css'
+import 'floating-vue/dist/style.css';
 
 // vue components
 import * as components from './components/index.js';
@@ -50,18 +50,10 @@ function getCleekOptions(userOptions: CleekOptions) {
 
 const cleekGlobalComponent = {
   notify: {
-    ckNotify() {
-
-    },
-    ckSuccess() {
-
-    },
-    ckDanger() {
-
-    },
-    ckWarning() {
-
-    },
+    ckNotify() {},
+    ckSuccess() {},
+    ckDanger() {},
+    ckWarning() {},
   },
 };
 

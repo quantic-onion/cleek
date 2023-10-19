@@ -11,11 +11,7 @@
       :placeholder="placeholder"
       @input="text = $event.target.value"
     />
-    <span
-      class="c-Textarea__label"
-      :title="label"
-      @mousedown.prevent="onLabelClick($event)"
-    >
+    <span class="c-Textarea__label" :title="label" @mousedown.prevent="onLabelClick($event)">
       {{ label }}
     </span>
   </div>
@@ -31,9 +27,11 @@ export default {
     autogrow: { type: Boolean, default: false },
     required: { type: Boolean, default: false },
     disabled: { type: Boolean, default: false },
-    resize: { type: String, default: 'default',
+    resize: {
+      type: String,
+      default: 'default',
       validator(resize) {
-        return ['default', 'vertical', 'horizontal', 'none'].includes(resize)
+        return ['default', 'vertical', 'horizontal', 'none'].includes(resize);
       },
     },
   },
@@ -41,13 +39,12 @@ export default {
   data() {
     return {
       text: this.modelValue,
-    }
+    };
   },
   computed: {
     textareaClassObject() {
-      const hasText = this.text !== '' && this.text !== undefined
-      const hasPlaceholder =
-        this.placeholder !== '' && this.placeholder !== undefined
+      const hasText = this.text !== '' && this.text !== undefined;
+      const hasPlaceholder = this.placeholder !== '' && this.placeholder !== undefined;
 
       return {
         'has-value': hasText || hasPlaceholder,
@@ -56,27 +53,27 @@ export default {
         'has-horizontal-resize': this.resize === 'horizontal' && !this.autogrow,
         'has-no-resize': this.resize === 'none',
         'has-autogrow': this.autogrow,
-      }
+      };
     },
   },
   watch: {
     modelValue(newModelValue) {
-      this.text = newModelValue
+      this.text = newModelValue;
     },
     text(newValue) {
       if (this.autogrow) {
-        this.$el.dataset.replicatedText = newValue
+        this.$el.dataset.replicatedText = newValue;
       }
 
-      this.$emit('update:modelValue', newValue)
+      this.$emit('update:modelValue', newValue);
     },
   },
   methods: {
     onLabelClick() {
-      this.$refs.textarea.focus()
+      this.$refs.textarea.focus();
     },
   },
-}
+};
 </script>
 <style scoped>
 .c-Textarea {

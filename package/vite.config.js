@@ -8,13 +8,11 @@ export default defineConfig({
   plugins: [vue()],
   resolve: {
     alias: {
-      "@": path.resolve(__dirname, "./src"),
+      '@': path.resolve(__dirname, './src'),
     },
   },
   build: {
-    plugins: [
-      typescript(/*{ plugin options }*/)
-    ],
+    plugins: [typescript(/*{ plugin options }*/)],
     lib: {
       entry: path.resolve(__dirname, 'src/index.ts'),
       name: 'cleek',
@@ -32,4 +30,4 @@ export default defineConfig({
       },
     },
   },
-})
+});

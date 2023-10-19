@@ -29,14 +29,18 @@ const emits = defineEmits<{
 
 const searchLocal = computed({
   // @ts-ignore
-  get() { return props.search; },
-  set(val: string) { emits('update:search', val); }
+  get() {
+    return props.search;
+  },
+  set(val: string) {
+    emits('update:search', val);
+  },
 });
 const isSearchVisible = computed(() => {
   return typeof searchLocal.value !== 'undefined';
 });
 const itemsPerPageStart = computed(() => {
-  return (props.currentPage -1) * props.itemsPerPage + 1;
+  return (props.currentPage - 1) * props.itemsPerPage + 1;
 });
 const itemsPerPageEnd = computed(() => {
   const value = props.currentPage * props.itemsPerPage;
@@ -74,55 +78,49 @@ function checkRefresh() {
   }, 1000);
 }
 
-hooks.preventUnusedError([
-  searchGroupValue,
-  checkRefresh,
-]);
+hooks.preventUnusedError([searchGroupValue, checkRefresh]);
 </script>
 
 <template lang="pug">
-.ck-table__header-items(:class="computedClass")
-  template(v-if="!hideHeaderActions")
+.ck-table__header-items(:class='computedClass')
+  template(v-if='!hideHeaderActions')
     //- refresh btn
     ck-button(
-    v-if="refreshBtnIsVisible"
-    type="flat"
-    icon="rotate-right"
-    title="Recargar lista"
-    :layout="layout"
-    @click="emits('refreshList', true)"
+      v-if='refreshBtnIsVisible',
+      type='flat',
+      icon='rotate-right',
+      title='Recargar lista',
+      :layout='layout',
+      @click='emits("refreshList", true)'
     )
     //- pages
-    .items-per-page(
-    v-if="itemsPerPageIsVisible"
-    :class="{ 'ck-component__group--left': (isSearchVisible) }"
-    )
+    .items-per-page(v-if='itemsPerPageIsVisible', :class='{ "ck-component__group--left": isSearchVisible }')
       | {{ itemsPerPageStart }} - {{ itemsPerPageEnd }} de {{ listLength }}
     //- search
     ck-input.ck-table--search-input(
-    v-if="isSearchVisible"
-    v-model="searchLocal"
-    icon="magnifying-glass"
-    placeholder="Buscar..."
-    :group="searchGroupValue"
-    :layout="layout"
-    :borderColor="version === 'colored' ? 'white' : ''"
-    @input="checkRefresh()"
+      v-if='isSearchVisible',
+      v-model='searchLocal',
+      icon='magnifying-glass',
+      placeholder='Buscar...',
+      :group='searchGroupValue',
+      :layout='layout',
+      :borderColor='version === "colored" ? "white" : ""',
+      @input='checkRefresh()'
     )
     //- columns manager
     ck-button(
-    icon="columns"
-    type="filled"
-    title="Administrador de columnas"
-    v-if="hasColumnsManager"
-    :group="itemsPerPageIsVisible || isSearchVisible ? 'right' : ''"
-    :layout="layout"
-    @click="emits('openColumnsManager')"
+      icon='columns',
+      type='filled',
+      title='Administrador de columnas',
+      v-if='hasColumnsManager',
+      :group='itemsPerPageIsVisible || isSearchVisible ? "right" : ""',
+      :layout='layout',
+      @click='emits("openColumnsManager")'
     )
 </template>
 
 <style lang="stylus" scoped>
-@import '../../../styles/index';
+@import '../../../styles/index'
 .ck-table__header-items
   display flex
   .items-per-page
@@ -133,7 +131,7 @@ hooks.preventUnusedError([
     padding-x 10px
     // background-color rgba($globalBorderColor, .15) FIXRGBA
     border 1px solid $globalBorderColor
-    border-radius:  $globalBorderRadius
+    border-radius $globalBorderRadius
   &.rounded
     .items-per-page
       border-radius-left 2rem

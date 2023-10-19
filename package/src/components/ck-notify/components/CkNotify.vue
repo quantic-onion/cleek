@@ -56,7 +56,7 @@ const computedStyle = computed(() => {
   const list = [];
   // group
   if (color.value && !hooks.isColorTemplateVariable(color.value)) {
-    list.push({ 'background-color': color.value })
+    list.push({ 'background-color': color.value });
   }
   return list;
 });
@@ -72,22 +72,18 @@ onMounted(() => {
 </script>
 
 <template lang="pug">
-Teleport(to="body" v-if="isActive")
+Teleport(to='body', v-if='isActive')
   .ck-notify__container
-    .ck-notify(
-    :class="computedClass"
-    :style="computedStyle"
-    @click="isActive = false; closeCallback();"
-    )
+    .ck-notify(:class='computedClass', :style='computedStyle', @click='isActive = false; closeCallback()')
       .ck-notify__title
         .close-btn
-          ck-icon(icon="times")
+          ck-icon(icon='times')
         | {{ title || defaultTitle }}
-      .ck-notify__text(v-html="text")
+      .ck-notify__text(v-html='text')
 </template>
 
 <style lang="stylus" scoped>
-@import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import 'undefined'
 $text-color = white
 
 .ck-notify__container
@@ -102,9 +98,9 @@ $text-color = white
   .ck-notify
     font-family 'Nunito', sans-serif
     color $text-color
-    padding .5rem
+    padding 0.5rem
     padding-left 1rem
-    border-radius .5rem
+    border-radius 0.5rem
     min-width 10rem
     background-color #aaa
     cursor pointer
@@ -127,14 +123,14 @@ $text-color = white
         display inline-flex
         align-items center
         justify-content center
-        border-radius .25rem
+        border-radius 0.25rem
         width 25px
         height @width
         cursor pointer
-        transition .3s
+        transition 0.3s
         &:hover
-          background-color rgba(black, .1)
+          background-color rgba(black, 0.1)
     .ck-notify__text
       font-size 1rem
-      padding .15rem
+      padding 0.15rem
 </style>

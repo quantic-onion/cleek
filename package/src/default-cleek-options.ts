@@ -13,7 +13,7 @@ const cleekOptions: CleekOptions = {
   },
   styles: {
     layout: 'base',
-    borderColor: '#dae1e7'
+    borderColor: '#dae1e7',
   },
   button: {
     type: 'outlined',

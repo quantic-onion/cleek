@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { computed, ref, watch } from "vue";
-import type { Icon, IconPack, Size } from "../types/cleek-options";
+import { computed, ref, watch } from 'vue';
+import type { Icon, IconPack, Size } from '../types/cleek-options';
 // computed
-import CkIcon from "./ck-icon.vue";
+import CkIcon from './ck-icon.vue';
 
 type ModelValue = boolean | 1 | 0;
 
@@ -19,25 +19,25 @@ const props = defineProps<{
 }>();
 
 const emits = defineEmits<{
-  (e: "update:modelValue", value: ModelValue): void;
-  (e: "switchClick"): void;
+  (e: 'update:modelValue', value: ModelValue): void;
+  (e: 'switchClick'): void;
 }>();
 
-const defaultSize = "s";
+const defaultSize = 's';
 
 const value = computed({
   get() {
     return props.modelValue;
   },
   set(val: ModelValue) {
-    emits("update:modelValue", val);
+    emits('update:modelValue', val);
   },
 });
 
 const computedClass = computed(() => {
   const list = [];
-  if (props.squared) list.push("is-squared");
-  if (props.outlined) list.push("is-outlined");
+  if (props.squared) list.push('is-squared');
+  if (props.outlined) list.push('is-outlined');
   // size
   let size = props.size || defaultSize;
   list.push(`ck-switch--size-${size}`);
@@ -45,8 +45,8 @@ const computedClass = computed(() => {
 });
 const computedAttributes = computed(() => {
   return {
-    "aria-disabled": props.disabled,
-    tabindex: props.disabled ? undefined : "0",
+    'aria-disabled': props.disabled,
+    tabindex: props.disabled ? undefined : '0',
   };
 });
 const iconClass = computed(() => {
@@ -57,11 +57,8 @@ const iconClass = computed(() => {
   return list;
 });
 
-function handleSwitchClick(e: {
-  preventDefault: () => void;
-  stopPropagation: () => void;
-}) {
-  emits("switchClick");
+function handleSwitchClick(e: { preventDefault: () => void; stopPropagation: () => void }) {
+  emits('switchClick');
   if (props.preventAutoUpdate) {
     e.preventDefault();
     e.stopPropagation();
@@ -70,36 +67,22 @@ function handleSwitchClick(e: {
 </script>
 
 <template lang="pug">
-label.ck-switch(
-v-bind="computedAttributes"
-:class="computedClass"
-@keydown.space.prevent
-)
+label.ck-switch(v-bind='computedAttributes', :class='computedClass', @keydown.space.prevent)
   input.ck-switch__input(
-  type="checkbox"
-  v-model="value"
-  aria-hidden="true"  
-  :disabled="disabled"
-  @click="handleSwitchClick($event)"
+    type='checkbox',
+    v-model='value',
+    aria-hidden='true',
+    :disabled='disabled',
+    @click='handleSwitchClick($event)'
   )
   .ck-switch__slider-container
     //- slider
     .ck-switch__slider
     //- icon-left
-    ck-icon.ck-switch__icon-left(
-    v-if="icon && value"
-    :icon="icon"
-    :icon-pack="iconPack"
-    :class="iconClass"
-    )
+    ck-icon.ck-switch__icon-left(v-if='icon && value', :icon='icon', :icon-pack='iconPack', :class='iconClass')
     //- icon-right
-    ck-icon.ck-switch__icon-right(
-    v-if="icon && !value"
-    :icon="icon"
-    :icon-pack="iconPack"
-    :class="iconClass"
-    )
-  span.ck-switch__content(v-if="$slots.default")
+    ck-icon.ck-switch__icon-right(v-if='icon && !value', :icon='icon', :icon-pack='iconPack', :class='iconClass')
+  span.ck-switch__content(v-if='$slots.default')
     slot
 </template>
 
@@ -139,10 +122,11 @@ $transitionTime = 0.4s
   .ck-switch__content
     user-select none
     margin-left 5px
-  .ck-switch__icon-left, .ck-switch__icon-right
+  .ck-switch__icon-left
+  .ck-switch__icon-right
     position absolute
     z-index 1
-    font-size .65rem
+    font-size 0.65rem
     color white
 
 // outlined
@@ -199,9 +183,9 @@ $transitionTime = 0.4s
   $height = 22px
   $width = 42px
   $border-width = 1px
-  $icon-size = .8rem
+  $icon-size = 0.8rem
   $icon-distance = 8px
-  $ball-size = $height - (4 * $border-width)
+  $ball-size = $height - 4 * $border-width
   .ck-switch__slider-container
     .ck-switch__slider
       width $width
@@ -234,9 +218,9 @@ $transitionTime = 0.4s
   $height = 14px
   $width = 24px
   $border-width = 1px
-  $icon-size = .5rem
+  $icon-size = 0.5rem
   $icon-distance = 4px
-  $ball-size = $height - (4 * $border-width)
+  $ball-size = $height - 4 * $border-width
   .ck-switch__slider-container
     .ck-switch__slider
       width $width
@@ -273,7 +257,7 @@ $transitionTime = 0.4s
   $border-width = 2px
   $icon-size = 1.1rem
   $icon-distance = 12px
-  $ball-size = $height - (4 * $border-width)
+  $ball-size = $height - 4 * $border-width
   .ck-switch__slider-container
     .ck-switch__slider
       width $width
@@ -309,7 +293,7 @@ $transitionTime = 0.4s
   $border-width = 2px
   $icon-size = 1.5rem
   $icon-distance = 14px
-  $ball-size = $height - (4 * $border-width)
+  $ball-size = $height - 4 * $border-width
   .ck-switch__slider-container
     .ck-switch__slider
       width $width

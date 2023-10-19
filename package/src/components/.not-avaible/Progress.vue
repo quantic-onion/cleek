@@ -28,17 +28,17 @@ export default {
   },
   computed: {
     progressPercentage() {
-      const value = Number(this.value)
-      const max = Number(this.max)
+      const value = Number(this.value);
+      const max = Number(this.max);
 
       if (Number.isNaN(value) || Number.isNaN(max)) {
-        return 0
+        return 0;
       }
 
-      return Math.round((value / max) * 100)
+      return Math.round((value / max) * 100);
     },
   },
-}
+};
 </script>
 <style scoped>
 .c-Progress {

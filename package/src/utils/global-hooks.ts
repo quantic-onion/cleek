@@ -1,14 +1,7 @@
 // types
 // @ts-ignore // FIXME
 import type { ColumnItem } from '../types/table';
-import type {
-Align,
-AlignVertical,
-Color,
-CleekOptions,
-Layout,
-WidthBreaks,
-} from '../types/cleek-options';
+import type { Align, AlignVertical, Color, CleekOptions, Layout, WidthBreaks } from '../types/cleek-options';
 
 export default {
   getCleekOptions(getCurrentInstance: any) {
@@ -34,17 +27,10 @@ export default {
     if (groupVertical) classList.push(`ck-component__group-vertical--${groupVertical}`);
     return classList;
   },
-  getWidthByWidthBreaks(
-    widthBreaks?: [number, string][],
-    windowWidth?: number,
-  ) {
+  getWidthByWidthBreaks(widthBreaks?: [number, string][], windowWidth?: number) {
     if (widthBreaks) {
       let realWidthBreaks = [...widthBreaks];
-      if (
-        realWidthBreaks.length === 2
-        && typeof realWidthBreaks[0] === 'number'
-        && typeof realWidthBreaks[1] === 'string'
-      ) {
+      if (realWidthBreaks.length === 2 && typeof realWidthBreaks[0] === 'number' && typeof realWidthBreaks[1] === 'string') {
         // @ts-ignore
         realWidthBreaks = [realWidthBreaks];
       }
@@ -62,7 +48,7 @@ export default {
         if ((windowWidth || 0) >= windowBreak) {
           finalWidth = width;
         }
-      })
+      });
       return finalWidth;
     }
   },
@@ -86,11 +72,10 @@ export default {
   },
   preventUnusedError(functions: any[]) {
     // prevent typescript "unused" error
-    if (Math.random() === 1) { 
+    if (Math.random() === 1) {
       functions.forEach((func) => {
         console.log(func);
       });
     }
-  }
-  
+  },
 }; // export default

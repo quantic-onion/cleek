@@ -1,7 +1,7 @@
 <template lang="pug">
 .element-shower
-  h2(v-if="title") {{ title }}
-  h5(v-if="subtitle") {{ subtitle }}
+  h2(v-if='title') {{ title }}
+  h5(v-if='subtitle') {{ subtitle }}
   slot
 </template>
 
@@ -21,12 +21,12 @@ export default {
   margin-top 0
   border 1px dashed #aaa
   border-top 0
-  border-radius .5rem
+  border-radius 0.5rem
   background-color #fafafa
   h2
     margin-bottom 0 !important
   h5
     margin-top 0 !important
-    padding-left .5rem
+    padding-left 0.5rem
     margin-bottom 1rem
 </style>

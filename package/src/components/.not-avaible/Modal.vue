@@ -1,12 +1,7 @@
 <template>
   <teleport to="body">
     <transition name="fade">
-      <div
-        v-if="isOpen"
-        :css="false"
-        class="c-Modal__overlay"
-        @click="$emit('close')"
-      />
+      <div v-if="isOpen" :css="false" class="c-Modal__overlay" @click="$emit('close')" />
     </transition>
     <transition
       name="fade"
@@ -15,28 +10,20 @@
       @before-leave="beforeModalClose()"
       @after-leave="afterModalClose()"
     >
-      <div
-        v-if="isOpen"
-        ref="modal"
-        :css="false"
-        class="c-Modal"
-        role="dialog"
-        tabindex="0"
-        aria-modal="true"
-      >
+      <div v-if="isOpen" ref="modal" :css="false" class="c-Modal" role="dialog" tabindex="0" aria-modal="true">
         <slot />
       </div>
     </transition>
   </teleport>
 </template>
 <script>
-import { lockScroll, unlockScroll } from '../index'
-import { tabbable } from 'tabbable'
+import { lockScroll, unlockScroll } from '../index';
+import { tabbable } from 'tabbable';
 
-const ESCAPE_KEY = 27
-const TAB_KEY = 9
+const ESCAPE_KEY = 27;
+const TAB_KEY = 9;
 
-let previouslyFocusedElement
+let previouslyFocusedElement;
 
 export default {
   name: 'Modal',
@@ -50,38 +37,38 @@ export default {
   emits: ['close'],
   methods: {
     beforeModalOpen() {
-      previouslyFocusedElement = document.activeElement
-      lockScroll()
+      previouslyFocusedElement = document.activeElement;
+      lockScroll();
     },
     modalOpening() {
-      this.focusModal()
-      document.addEventListener('keydown', this.handleKeyDown)
+      this.focusModal();
+      document.addEventListener('keydown', this.handleKeyDown);
     },
     beforeModalClose() {
-      document.removeEventListener('keydown', this.handleKeyDown)
-      previouslyFocusedElement?.focus()
+      document.removeEventListener('keydown', this.handleKeyDown);
+      previouslyFocusedElement?.focus();
     },
     afterModalClose() {
-      unlockScroll()
+      unlockScroll();
     },
     getFocusableElements() {
-      return tabbable(this.$refs.modal)
+      return tabbable(this.$refs.modal);
     },
     focusModal() {
-      const focusableElements = this.getFocusableElements()
+      const focusableElements = this.getFocusableElements();
 
       if (!focusableElements.length) {
-        this.$refs.modal.focus()
-        return
+        this.$refs.modal.focus();
+        return;
       }
 
-      const firstFocusableElement = focusableElements[0]
-      firstFocusableElement.focus()
+      const firstFocusableElement = focusableElements[0];
+      firstFocusableElement.focus();
     },
     handleKeyDown(event) {
       if (event.keyCode === ESCAPE_KEY) {
-        this.$emit('close')
-        return
+        this.$emit('close');
+        return;
       }
 
       /**
@@ -90,48 +77,41 @@ export default {
        * TAB - focus next element
        */
       if (event.keyCode === TAB_KEY) {
-        const focusableElements = this.getFocusableElements()
+        const focusableElements = this.getFocusableElements();
 
         /**
          * If there are no focusable elements, keep the focus on the modal div
          */
         if (!focusableElements.length) {
-          event.preventDefault()
-          this.$refs.modal.focus()
-          return
+          event.preventDefault();
+          this.$refs.modal.focus();
+          return;
         }
 
-        const firstFocusableElement = focusableElements[0]
-        const lastFocusableElement =
-          focusableElements[focusableElements.length - 1]
+        const firstFocusableElement = focusableElements[0];
+        const lastFocusableElement = focusableElements[focusableElements.length - 1];
 
         /**
          * If the current focus is the first focusable element and the user wants to go back
          * then let's focus on the last element
          */
-        if (
-          event.shiftKey &&
-          document.activeElement === firstFocusableElement
-        ) {
-          event.preventDefault()
-          lastFocusableElement.focus()
+        if (event.shiftKey && document.activeElement === firstFocusableElement) {
+          event.preventDefault();
+          lastFocusableElement.focus();
         }
 
         /**
          * If the current focus is the last focusable element on the modal then let's focus
          * on the first
          */
-        if (
-          !event.shiftKey &&
-          document.activeElement === lastFocusableElement
-        ) {
-          event.preventDefault()
-          firstFocusableElement.focus()
+        if (!event.shiftKey && document.activeElement === lastFocusableElement) {
+          event.preventDefault();
+          firstFocusableElement.focus();
         }
       }
     },
   },
-}
+};
 </script>
 <style scoped>
 .fade-enter-active,
@@ -163,8 +143,7 @@ export default {
   z-index: 11;
   background-color: white;
   border-radius: 4px;
-  box-shadow: 0px 10px 10px rgba(174, 185, 203, 0.26),
-    0px 14px 28px rgba(174, 185, 203, 0.25);
+  box-shadow: 0px 10px 10px rgba(174, 185, 203, 0.26), 0px 14px 28px rgba(174, 185, 203, 0.25);
   display: flex;
   flex-direction: column;
   max-height: 90%;
