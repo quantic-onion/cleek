@@ -77,6 +77,7 @@ export default {
     return false;
   },
   isColumnDisplayed(column: ColumnItem) {
+    if (column.neverDisplay) return false;
     if (column.isDisplayed === false) return false;
     if (column.unchangeable) {
       if (column.isDisplayed === true) return true;

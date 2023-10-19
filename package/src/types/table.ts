@@ -7,6 +7,7 @@ export type ColumnItem = {
   title: string;
   unchangeable: boolean;
   isDisplayed: boolean;
+  neverDisplay?: boolean;
   // td
   nowrap?: boolean;
   block?: boolean;
