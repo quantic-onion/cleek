@@ -19,8 +19,8 @@ const props = defineProps<{
 }>();
 
 const emits = defineEmits<{
-  (e: 'update:modelValue', value: ModelValue): void;
-  (e: 'switchClick'): void;
+  (e: "update:modelValue", value: ModelValue): void;
+  (e: "click"): void;
 }>();
 
 const defaultSize = 's';
@@ -57,11 +57,11 @@ const iconClass = computed(() => {
   return list;
 });
 
-function handleSwitchClick(e: { preventDefault: () => void; stopPropagation: () => void }) {
-  emits('switchClick');
+function handleSwitchClick(e: Event) {
   if (props.preventAutoUpdate) {
     e.preventDefault();
     e.stopPropagation();
+    emits('click');
   }
 }
 </script>
