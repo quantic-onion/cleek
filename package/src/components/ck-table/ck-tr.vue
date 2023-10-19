@@ -5,5 +5,5 @@ tr.ck-tr
 
 <style lang="stylus" scoped>
 .ck-tr
-  transition all .3s ease
+  transition all 0.3s ease
 </style>

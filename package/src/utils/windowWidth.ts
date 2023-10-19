@@ -2,7 +2,7 @@ export default {
   data() {
     return {
       windowWidth: 0,
-    }
+    };
   },
   mounted() {
     this.$nextTick(() => {
@@ -18,4 +18,4 @@ export default {
   beforeUnmount() {
     window.removeEventListener('resize', this.handleWindowResize);
   },
-}
+};

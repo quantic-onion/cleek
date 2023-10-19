@@ -10,10 +10,10 @@ const defaultAlign = 'left';
 
 const computedSpanClass = computed(() => {
   const list = [];
-  list.push(`align-${props.align || defaultAlign}`)
+  list.push(`align-${props.align || defaultAlign}`);
   return list;
 });
-const computedStyle = computed (() => {
+const computedStyle = computed(() => {
   const list = [];
   if (props.minWidth) list.push({ 'min-width': props.minWidth });
   return list;
@@ -22,10 +22,7 @@ const computedStyle = computed (() => {
 
 <template lang="pug">
 th.ck-th
-  span(
-  :class="computedSpanClass"
-  :style="computedStyle"
-  )
+  span(:class='computedSpanClass', :style='computedStyle')
     slot
 </template>
 
@@ -34,8 +31,8 @@ th.ck-th
   vertical-align bottom
   > span
     display flex
-    padding .5rem
-    font-size .8rem
+    padding 0.5rem
+    font-size 0.8rem
     &.align-center
       justify-content center
       margin-x auto

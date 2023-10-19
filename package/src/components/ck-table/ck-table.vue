@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { computed, getCurrentInstance, onMounted, ref } from 'vue'
-import type { Ref } from 'vue'
+import { computed, getCurrentInstance, onMounted, ref } from 'vue';
+import type { Ref } from 'vue';
 // components
 import CkTr from './ck-tr.vue';
 import CkTd from './ck-td.vue';
@@ -20,7 +20,7 @@ type Columns = ColumnItem[] | object;
 type CellPadding = 's' | 'm' | 'l' | 'none';
 
 const props = defineProps<{
-  columns?: Columns,
+  columns?: Columns;
   hasColumnsManager?: boolean;
   // pagination - header items
   currentPage?: number;
@@ -42,7 +42,7 @@ const props = defineProps<{
   layout?: Layout;
   version?: TableVersion;
   // mobile
-  mobileMaxWidth?: Number,
+  mobileMaxWidth?: Number;
 }>();
 
 const emits = defineEmits<{
@@ -62,7 +62,7 @@ const isPopupActive = ref({
   columnsManager: false,
 });
 const defaultNoResultsText = computed(() => {
-  if (cleekOptions.value?.lang === 'es') return 'No se encontraron resultados'; 
+  if (cleekOptions.value?.lang === 'es') return 'No se encontraron resultados';
   return 'No results found';
 });
 const realTableVersion = computed(() => {
@@ -106,11 +106,17 @@ const filteredColumnsList = computed(() => {
 
 const searchLocal = computed({
   // @ts-ignore
-  get() { return props.search; },
-  set(val: string) { emits('update:search', val); }
+  get() {
+    return props.search;
+  },
+  set(val: string) {
+    emits('update:search', val);
+  },
 });
 const currentPageLocal = computed({
-  get() { return props.currentPage || 0; },
+  get() {
+    return props.currentPage || 0;
+  },
   set(val: number) {
     emits('update:currentPage', val);
   },
@@ -125,7 +131,7 @@ function refreshList(pageChange: boolean = false) {
 }
 function openColumnsManager() {
   if (columnsAreObj.value) {
-    isPopupActive.value.columnsManager = true
+    isPopupActive.value.columnsManager = true;
   } else {
     console.log('ERROR ck-table', 'The columns list should be an object');
   }
@@ -168,74 +174,65 @@ hooks.preventUnusedError([
 <template lang="pug">
 //- columns manager
 TableColumnsManager(
-v-if="hasColumnsManager && columnsAreObj"
-v-model="isPopupActive.columnsManager"
-:columnsArray="columnsArray"
-:columns="columns || []"
+  v-if='hasColumnsManager && columnsAreObj',
+  v-model='isPopupActive.columnsManager',
+  :columnsArray='columnsArray',
+  :columns='columns || []'
 )
 .ck-table
-  .ck-table__header(v-if="$slots.header || !hideHeaderActions")
+  .ck-table__header(v-if='$slots.header || !hideHeaderActions')
     //- header items
     TableHeaderItems(
-    v-model:search="searchLocal"
-    :hideHeaderActions="hideHeaderActions"
-    :currentPage="currentPage"
-    :hasColumnsManager="hasColumnsManager"
-    :itemsPerPage="itemsPerPage || defaultItemsPerPage"
-    :listLength="listLength"
-    :showRefreshBtn="showRefreshBtn"
-    :hideItemsPerPage="hideItemsPerPage"
-    :layout="realLayout"
-    :version="realTableVersion"
-    @refreshList="refreshList($event)"
-    @openColumnsManager="openColumnsManager()"
+      v-model:search='searchLocal',
+      :hideHeaderActions='hideHeaderActions',
+      :currentPage='currentPage',
+      :hasColumnsManager='hasColumnsManager',
+      :itemsPerPage='itemsPerPage || defaultItemsPerPage',
+      :listLength='listLength',
+      :showRefreshBtn='showRefreshBtn',
+      :hideItemsPerPage='hideItemsPerPage',
+      :layout='realLayout',
+      :version='realTableVersion',
+      @refreshList='refreshList($event)',
+      @openColumnsManager='openColumnsManager()'
     )
     //- header slot
-    .ck-table__header--slot(v-if="$slots.header")
-      slot(name="header")
+    .ck-table__header--slot(v-if='$slots.header')
+      slot(name='header')
 
   //- desktop
-  .ck-table__table-container(
-  v-if="!isMobileVisible"
-  :class="{ 'not-overflow': notOverflow }"
-  )
-    table.ck-table__table(
-    :class="computedClassTable"
-    )
+  .ck-table__table-container(v-if='!isMobileVisible', :class='{ "not-overflow": notOverflow }')
+    table.ck-table__table(:class='computedClassTable')
       //- header
-      thead(v-if="filteredColumnsList.length && !($slots.mobile && isMobileVisible)")
+      thead(v-if='filteredColumnsList.length && !($slots.mobile && isMobileVisible)')
         ck-tr.header-row
-          ck-table-title(
-          v-for="col in filteredColumnsList"
-          :key="col.title"
-          :col="col"
-          )
+          ck-table-title(v-for='col in filteredColumnsList', :key='col.title', :col='col')
       //- body
       tbody
         slot
-        slot(name="desktop")
+        slot(name='desktop')
         //- noResultsText - if not used, listLength = undefined 
-        ck-tr(v-if="listLength === 0")
-          ck-td.no-result-text(colspan="100%" align="center")
+        ck-tr(v-if='listLength === 0')
+          ck-td.no-result-text(colspan='100%', align='center')
             | {{ noResultsText || defaultNoResultsText }}
       //- footer
-      tfoot(v-if="$slots.footer")
-        slot(name="footer")
+      tfoot(v-if='$slots.footer')
+        slot(name='footer')
   //- @update:currentPage="testCurrentPage($event)"
 
   //- mobile
-  .ck-table--mobile-container(v-if="isMobileVisible")
-    slot(name="mobile")
+  .ck-table--mobile-container(v-if='isMobileVisible')
+    slot(name='mobile')
 
   //- pagination
   TablePagination.ck-table__pagination(
-  v-model:currentPage="currentPageLocal"
-  :currentPage="currentPage"
-  :itemsPerPage="itemsPerPage"
-  :listLength="listLength"
-  :align="paginationAlign"
-  :layout="realLayout"
-  @refreshList="refreshList(true)"
+    v-model:currentPage='currentPageLocal',
+    :currentPage='currentPage',
+    :itemsPerPage='itemsPerPage',
+    :listLength='listLength',
+    :align='paginationAlign',
+    :layout='realLayout',
+    @refreshList='refreshList(true)'
   )
 </template>
 
@@ -248,13 +245,13 @@ v-model="isPopupActive.columnsManager"
       padding 0
   &.table__cell-padding-y--none
     td
-      padding-y .25rem
+      padding-y 0.25rem
   &.table__cell-padding-y--xs
     td
-      padding-y .25rem
+      padding-y 0.25rem
   &.table__cell-padding-y--s
     td
-      padding-y .5rem
+      padding-y 0.5rem
 .ck-table__table
   &.striped-table > tbody > tr
     background-color white
@@ -289,7 +286,7 @@ v-model="isPopupActive.columnsManager"
     display flex
     align-items flex-end
     flex-wrap wrap
-    gap .5rem
+    gap 0.5rem
 .ck-table__pagination
   margin-top 1rem
 

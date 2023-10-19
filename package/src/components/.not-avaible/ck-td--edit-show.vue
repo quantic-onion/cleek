@@ -1,30 +1,24 @@
 <template lang="pug">
-td.ck-td(
-v-if="isColumnDisplayed"
-:class="computedTdClass"
-)
+td.ck-td(v-if='isColumnDisplayed', :class='computedTdClass')
   //- default
-  span(
-  v-if="$slots.default"
-  :class="computedSpanClass"
-  :style="computedStyle"
-  )
+  span(v-if='$slots.default', :class='computedSpanClass', :style='computedStyle')
     slot
   //- edit
   span.ck-td__slot-edit(
-  v-if="$slots.edit && isEditingCol"
-  :class="computedSpanClass"
-  :style="computedStyle"
-  @blur.capture="isEditingCol = false"
+    v-if='$slots.edit && isEditingCol',
+    :class='computedSpanClass',
+    :style='computedStyle',
+    @blur.capture='isEditingCol = false'
   )
-    slot(name="edit")
+    slot(name='edit')
   //- show
-  span.ck-td__slot-show(v-if="$slots.show && !isEditingCol"
-  :class="computedSpanClass"
-  :style="computedStyle"
-  @click="isEditingCol = true; setFocusChildren($event);"
+  span.ck-td__slot-show(
+    v-if='$slots.show && !isEditingCol',
+    :class='computedSpanClass',
+    :style='computedStyle',
+    @click='isEditingCol = true; setFocusChildren($event)'
   )
-    slot(name="show")
+    slot(name='show')
 </template>
 
 <script setup lang="ts">
@@ -108,7 +102,7 @@ function setFocusChildren(event) {
 
 <style lang="stylus" scoped>
 .ck-td
-  padding .5rem
+  padding 0.5rem
   border-bottom 1px solid $globalBorderColor
   background #fff
   .ck-td__slot-show

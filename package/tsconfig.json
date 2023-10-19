@@ -19,7 +19,6 @@
 //   },
 // }
 
-
 {
   "extends": "@vue/tsconfig/tsconfig.web.json",
   "include": ["./src/components/**/*", "./src/utils/**/*"],
@@ -28,7 +27,7 @@
     "composite": true,
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./src/*"],
+      "@/*": ["./src/*"]
     }
-  },
+  }
 }

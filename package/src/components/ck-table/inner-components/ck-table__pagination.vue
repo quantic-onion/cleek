@@ -27,17 +27,23 @@ let cleekOptions: Ref<undefined | CleekOptions> = ref();
 const itemsShowed = 5;
 
 const currentPageLocal = computed({
-  get() { return props.currentPage; },
-  set(val: number) { emits('update:currentPage', val); },
+  get() {
+    return props.currentPage;
+  },
+  set(val: number) {
+    emits('update:currentPage', val);
+  },
 });
 const currentPageInputValue = computed({
-  get() { return props.currentPage; },
-  set() { },
+  get() {
+    return props.currentPage;
+  },
+  set() {},
 });
 const hasArrowLeft = computed(() => {
   return props.currentPage !== 1;
-//   if (!listLeft.value.length) return false;
-//   return listLeft.value[0] !== 1;
+  //   if (!listLeft.value.length) return false;
+  //   return listLeft.value[0] !== 1;
 });
 const hasArrowRight = computed(() => !!listRight.value.length);
 const totalPages = computed(() => {
@@ -74,15 +80,18 @@ const computedClass = computed(() => {
   return list;
 });
 
-watch(() => currentPageLocal.value, () => {
-  emits('refreshList');
-});
+watch(
+  () => currentPageLocal.value,
+  () => {
+    emits('refreshList');
+  },
+);
 
 function updatePageByInput(eventTarget: HTMLInputElement) {
   let newValue = +eventTarget.value;
   // validate
-  if (newValue > totalPages.value) newValue = totalPages.value; 
-  if (newValue < 1) newValue = 1; 
+  if (newValue > totalPages.value) newValue = totalPages.value;
+  if (newValue < 1) newValue = 1;
   // set value
   if (props.currentPage === newValue) {
     eventTarget.value = `${newValue}`;
@@ -92,7 +101,7 @@ function updatePageByInput(eventTarget: HTMLInputElement) {
 }
 function onClickArrowRight() {
   if (!hasArrowRight.value) return;
-  currentPageLocal.value = props.currentPage + 1
+  currentPageLocal.value = props.currentPage + 1;
 }
 
 onMounted(() => {
@@ -101,23 +110,14 @@ onMounted(() => {
 </script>
 
 <template lang="pug">
-.ck-table__pagination-container(
-v-if="currentPage && totalPages > 1"
-:class="computedClass"
-)
+.ck-table__pagination-container(v-if='currentPage && totalPages > 1', :class='computedClass')
   .ck-table__pagination
     //- arrow left
-    .ck-table__pagination--arrow-left(
-    :class="{ disabled: !hasArrowLeft }"
-    @click="currentPageLocal = currentPage - 1"
-    )
-      ck-icon(:icon="hasArrowLeft ? 'angle-left' : 'grip-lines-vertical'")
+    .ck-table__pagination--arrow-left(:class='{ disabled: !hasArrowLeft }', @click='currentPageLocal = currentPage - 1')
+      ck-icon(:icon='hasArrowLeft ? "angle-left" : "grip-lines-vertical"')
     .ck-table__pagination--numbers-container
       //- list left
-      .ck-table__pagination-item--left(
-      v-for="num in listLeft"
-      @click="currentPageLocal = num"
-      )
+      .ck-table__pagination-item--left(v-for='num in listLeft', @click='currentPageLocal = num')
         | {{ num }}
       //- input
       //- autoSelect 
@@ -125,28 +125,22 @@ v-if="currentPage && totalPages > 1"
       //- align="center"
       .ck-table__pagination-input-container
         input.ck-table__pagination-input(
-        type="number"
-        v-model="currentPageInputValue"
-        @click="$event.target.select()"
-        @change="updatePageByInput($event.target)"
+          type='number',
+          v-model='currentPageInputValue',
+          @click='$event.target.select()',
+          @change='updatePageByInput($event.target)'
         )
         .ck-table__pagination--input-pointer
       //- list right
-      .ck-table__pagination-item--right(
-      v-for="num in listRight"
-      @click="currentPageLocal = num"
-      )
+      .ck-table__pagination-item--right(v-for='num in listRight', @click='currentPageLocal = num')
         | {{ num }}
     //- arrow right
-    .ck-table__pagination--arrow-right(
-    :class="{ disabled: !hasArrowRight }"
-    @click="onClickArrowRight()"
-    )
-      ck-icon(:icon="hasArrowRight ? 'angle-right' : 'grip-lines-vertical'")
+    .ck-table__pagination--arrow-right(:class='{ disabled: !hasArrowRight }', @click='onClickArrowRight()')
+      ck-icon(:icon='hasArrowRight ? "angle-right" : "grip-lines-vertical"')
 </template>
 
 <style lang="stylus" scoped>
-@import '../../../styles/index';
+@import '../../../styles/index'
 $item-size = 40px
 $border-color = #aaa
 .ck-table__pagination-container
@@ -158,10 +152,10 @@ $border-color = #aaa
     justify-content flex-end
   .ck-table__pagination
     flex-center()
-    .ck-table__pagination-input,
-    .ck-table__pagination-item--left,
-    .ck-table__pagination-item--right,
-    .ck-table__pagination--arrow-left,
+    .ck-table__pagination-input
+    .ck-table__pagination-item--left
+    .ck-table__pagination-item--right
+    .ck-table__pagination--arrow-left
     .ck-table__pagination--arrow-right
       inline-flex-center()
       padding 0
@@ -171,10 +165,10 @@ $border-color = #aaa
       height @width
       cursor pointer
       border 1px solid $border-color
-      transition .2s
+      transition 0.2s
       color #666
       &:hover
-        background-color rgba(black, .05)
+        background-color rgba(black, 0.05)
     .ck-table__pagination-item--left
       border-right 0
       &:first-of-type
@@ -199,11 +193,11 @@ $border-color = #aaa
         left 0
         right 0
         margin-x auto
-        width .75rem
+        width 0.75rem
         height 2px
         background-color white
         border-radius 1px
-        bottom .5rem
+        bottom 0.5rem
     .ck-table__pagination--numbers-container
       display flex
       align-items flex-end
@@ -221,25 +215,25 @@ $border-color = #aaa
     //     &.pagination-item__right
     //       margin-left ($globalPadding / 2)
     // arrow
-    .ck-table__pagination--arrow-left,
+    .ck-table__pagination--arrow-left
     .ck-table__pagination--arrow-right
       &.disabled
         background-color #eee
         color #999
         cursor auto
     .ck-table__pagination--arrow-left
-      border-radius-left .3rem
+      border-radius-left 0.3rem
     .ck-table__pagination--arrow-right
-      border-radius-right .3rem
+      border-radius-right 0.3rem
     //   width $item-size
     //   height @width
-      // border 1px solid var(--primary)
-    // .ck-table__pagination--arrow-left
-    //   margin-right $globalPadding
-    //   border-right 0
-    // .ck-table__pagination--arrow-right
-    //   margin-left $globalPadding
-    //   border-left 0
+    // border 1px solid var(--primary)
+  // .ck-table__pagination--arrow-left
+  //   margin-right $globalPadding
+  //   border-right 0
+  // .ck-table__pagination--arrow-right
+  //   margin-left $globalPadding
+  //   border-left 0
 
 .ck-table__pagination-container
   &.rounded
@@ -254,13 +248,13 @@ $border-color = #aaa
         width 44px
   &.squared
     .ck-table__pagination
-      .ck-table__pagination--arrow-left,
+      .ck-table__pagination--arrow-left
       .ck-table__pagination--arrow-right
         border-radius 0
 
 // REMOVE INPUT ARROWS
 /* Chrome, Safari, Edge, Opera */
-input::-webkit-outer-spin-button,
+input::-webkit-outer-spin-button
 input::-webkit-inner-spin-button
   -webkit-appearance none
   margin 0

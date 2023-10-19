@@ -14,7 +14,7 @@ type ColumnCheckableItem = {
   title: string;
   value: boolean;
   neverDisplay?: boolean;
-}
+};
 
 const props = defineProps<{
   modelValue: boolean;
@@ -29,8 +29,12 @@ const emits = defineEmits<{
 let columnsCheckable: Ref<ColumnCheckableItem[]> = ref([]);
 
 const isActive = computed({
-  get() { return props.modelValue; },
-  set(val: boolean) { emits('update:modelValue', val); },
+  get() {
+    return props.modelValue;
+  },
+  set(val: boolean) {
+    emits('update:modelValue', val);
+  },
 });
 
 watch(() => isActive.value, (val) => {
@@ -38,9 +42,17 @@ watch(() => isActive.value, (val) => {
   setColumnsCheckable();
 });
 
+watch(
+  () => isActive.value,
+  (val) => {
+    if (!val) return;
+    setColumnsCheckable();
+  },
+);
+
 function setColumnsCheckable() {
   const list: ColumnCheckableItem[] = [];
-  (props.columnsArray || []).forEach(col => {
+  (props.columnsArray || []).forEach((col) => {
     if (!col.unchangeable) {
       list.push({
         name: col.name,
@@ -59,10 +71,7 @@ function setColumnDisplayValue(colName: string, value: any) {
 </script>
 
 <template lang="pug">
-ck-popup(
-v-model="isActive"
-title="Administrador de columnas"
-)
+ck-popup(v-model='isActive', title='Administrador de columnas')
   .columns-manger-container
     .columns-manger__item(
     v-for="(col, colIndex) in columnsCheckable"
@@ -86,6 +95,6 @@ title="Administrador de columnas"
     display flex
     align-items center
     margin-bottom 1rem
-  @media(max-width 600px)
+  @media (max-width: 600px)
     max-height 68vh
 </style>

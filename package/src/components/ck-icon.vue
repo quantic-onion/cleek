@@ -39,31 +39,27 @@ const computedStyle = computed(() => {
   const styles = [];
   // color
   if (props.color && !hooks.isColorTemplateVariable(props.color)) {
-    styles.push({ color: props.color })
+    styles.push({ color: props.color });
   }
   return styles;
 });
 
 function onClick(event: Event) {
-  emits('click', event)
+  emits('click', event);
 }
 </script>
 
 <template lang="pug">
-.ck-icon(
-:class="computedClass"
-:style="computedStyle"
-@click="onClick($event)"
-)
+.ck-icon(:class='computedClass', :style='computedStyle', @click='onClick($event)')
   font-awesome-icon(
-  v-if="computediconPack === 'font-awesome'"
-  :icon="icon"
-  :size="size"
-  :rotation="rotation"
-  :flip="flip"
-  :spin="spin"
-  :pulse="pulse"
-  :fixed-width="fixedWidth"
+    v-if='computediconPack === "font-awesome"',
+    :icon='icon',
+    :size='size',
+    :rotation='rotation',
+    :flip='flip',
+    :spin='spin',
+    :pulse='pulse',
+    :fixed-width='fixedWidth'
   )
 </template>
 

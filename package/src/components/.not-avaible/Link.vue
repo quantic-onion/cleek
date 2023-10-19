@@ -49,17 +49,17 @@ export default {
         target: this.openOnNewTab ? '_blank' : undefined,
         'aria-disabled': this.disabled,
         tabindex: this.disabled ? undefined : '0',
-      }
+      };
     },
   },
   methods: {
     onClick() {
       if (!this.disabled) {
-        this.$emit('click')
+        this.$emit('click');
       }
     },
   },
-}
+};
 </script>
 <style scoped>
 .c-Link {

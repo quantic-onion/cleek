@@ -1,11 +1,11 @@
 <template lang="pug">
 //- router link
-router-link(v-if="!disabled" v-bind="$attrs" @click="onClick($event)")
+router-link(v-if='!disabled', v-bind='$attrs', @click='onClick($event)')
   slot
 
 //- span
-span(v-else v-bind="$attrs" @click="onClick($event)")
- slot
+span(v-else, v-bind='$attrs', @click='onClick($event)')
+  slot
 </template>
 
 <script setup lang="ts">

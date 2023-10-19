@@ -8,15 +8,15 @@ import hooks from '../utils/global-hooks';
 import useWindowWidth from '../hooks/windowWidth';
 // types
 import type {
-Align,
-AlignVertical,
-Color,
-CleekOptions,
-Icon,
-IconPack,
-Layout,
-ButtonType,
-WidthBreaks,
+  Align,
+  AlignVertical,
+  Color,
+  CleekOptions,
+  Icon,
+  IconPack,
+  Layout,
+  ButtonType,
+  WidthBreaks,
 } from '../types/cleek-options';
 
 const props = defineProps<{
@@ -95,7 +95,7 @@ const computedStyle = computed(() => {
   // width-break
   let isWidthDefined = false;
   if (props.widthBreaks) {
-    const width = hooks.getWidthByWidthBreaks(props.widthBreaks, windowWidth.value )
+    const width = hooks.getWidthByWidthBreaks(props.widthBreaks, windowWidth.value);
     if (width) {
       isWidthDefined = true;
       list.push({ width });
@@ -107,44 +107,35 @@ const computedStyle = computed(() => {
 });
 
 function onClick(event: Event) {
-  emits('click', event)
+  emits('click', event);
 }
 
 onMounted(() => {
   cleekOptions.value = hooks.getCleekOptions(getCurrentInstance);
 });
 
-hooks.preventUnusedError([
-  onClick,
-  computedStyle,
-  computedClass,
-]);
+hooks.preventUnusedError([onClick, computedStyle, computedClass]);
 </script>
 
 <template lang="pug">
 button(
-type="button"
-:class="computedClass"
-:title="title"
-:aria-label="title"
-:disabled="disabled"
-:style="computedStyle"
-@click="onClick($event)"
+  type='button',
+  :class='computedClass',
+  :title='title',
+  :aria-label='title',
+  :disabled='disabled',
+  :style='computedStyle',
+  @click='onClick($event)'
 )
-  ck-icon(v-if="isLoading" icon="spinner" spin)
+  ck-icon(v-if='isLoading', icon='spinner', spin)
   template(v-else)
-    ck-icon.ck-button__icon-left(
-    v-if="icon"
-    :icon="icon"
-    :icon-pack="iconPack"
-    :class="{ 'just-icon': !$slots.default }"
-    )
+    ck-icon.ck-button__icon-left(v-if='icon', :icon='icon', :icon-pack='iconPack', :class='{ "just-icon": !$slots.default }')
     slot
     ck-icon.ck-button__icon-right(
-    v-if="iconRight"
-    :icon="iconRight"
-    :icon-pack="iconPack"
-    :class="{ 'just-icon': !$slots.default }"
+      v-if='iconRight',
+      :icon='iconRight',
+      :icon-pack='iconPack',
+      :class='{ "just-icon": !$slots.default }'
     )
 </template>
 
@@ -159,7 +150,7 @@ button
   border-radius $globalBorderRadius
   position relative
   font-size $globalFontSize
-  padding $globalPadding (2 * $globalPadding)
+  padding $globalPadding 2 * $globalPadding
   justify-content flex-start
   background-color white
   &.ck-button__align--center
@@ -202,8 +193,8 @@ button
     background-color transparent
     border none
     color var(--primary)
-  &.type-filled:disabled,
-  &.type-outlined:disabled,
+  &.type-filled:disabled
+  &.type-outlined:disabled
   &.type-flat:disabled
     border-color #eeeeee
     background-color #eeeeee
@@ -213,20 +204,20 @@ button
   &:disabled > span
     color $color-disabled
   > .ck-button__icon-left
-    margin-right .5rem
+    margin-right 0.5rem
     &.just-icon
       margin-right 0
   > .ck-button__icon-right
-    margin-left .5rem
+    margin-left 0.5rem
     &.just-icon
       margin-left 0
   &.ck-button-size__s
-    font-size .7rem
+    font-size 0.7rem
     min-height unset
-    padding .35rem .5rem
+    padding 0.35rem 0.5rem
   &.ck-button-size__l
     font-size 1.2rem
-    padding .75rem 1.5rem
+    padding 0.75rem 1.5rem
 
 .is-loading-btn
   cursor initial // could be 'not-allowed' also

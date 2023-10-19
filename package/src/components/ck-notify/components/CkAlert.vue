@@ -12,12 +12,12 @@ const acceptText = ref('');
 const isActive = ref(true);
 
 const defaultTitle = computed(() => {
-  if (packageConfig.lang === 'es') return 'Atención'; 
-  return 'Attention'; 
+  if (packageConfig.lang === 'es') return 'Atención';
+  return 'Attention';
 });
 const defaultAcceptText = computed(() => {
-  if (packageConfig.lang === 'es') return 'Aceptar'; 
-  return 'Accept'; 
+  if (packageConfig.lang === 'es') return 'Aceptar';
+  return 'Accept';
 });
 
 defineExpose({
@@ -28,17 +28,17 @@ defineExpose({
 </script>
 
 <template lang="pug">
-teleport(to="body")
+teleport(to='body')
   ck-popup(
-  v-model="isActive"
-  acceptButton
-  notCloseBtn
-  headerColor="primary"
-  headerAlign="center"
-  acceptBtnType="filled"
-  :title="title || defaultTitle"
-  :acceptBtnText="acceptText || defaultAcceptText"
-  @accept="isActive = false"
+    v-model='isActive',
+    acceptButton,
+    notCloseBtn,
+    headerColor='primary',
+    headerAlign='center',
+    acceptBtnType='filled',
+    :title='title || defaultTitle',
+    :acceptBtnText='acceptText || defaultAcceptText',
+    @accept='isActive = false'
   )
     .alert--msg {{ msg }}
 </template>

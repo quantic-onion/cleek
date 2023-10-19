@@ -5,7 +5,6 @@ import { packageConfig } from '../../../package-config';
 // hooks
 import hooks from '../../../utils/global-hooks';
 
-
 const title = ref('');
 const msg = ref('');
 const acceptText = ref('');
@@ -15,16 +14,16 @@ const responseSuccess = ref(() => {});
 const responseFailure = ref(() => {});
 
 const defaultTitle = computed(() => {
-  if (packageConfig.lang === 'es') return '¿Estás seguro?'; 
-  return '¿Are you sure?'; 
+  if (packageConfig.lang === 'es') return '¿Estás seguro?';
+  return '¿Are you sure?';
 });
 const defaultAcceptText = computed(() => {
-  if (packageConfig.lang === 'es') return 'Aceptar'; 
-  return 'Accept'; 
+  if (packageConfig.lang === 'es') return 'Aceptar';
+  return 'Accept';
 });
 const defaultCancelText = computed(() => {
-  if (packageConfig.lang === 'es') return 'Cancelar'; 
-  return 'Cancel'; 
+  if (packageConfig.lang === 'es') return 'Cancelar';
+  return 'Cancel';
 });
 
 function onCancel() {
@@ -49,20 +48,20 @@ defineExpose({
   .ck-confirm
     .ck-confirm__icon
       //- ck-img(src="cleek/hexagon-exclamation.png" height="7rem")
-      img.ck-confirm__icon--img(src="https://img.quanticonion.com/icons/hexagon-exclamation.png" height="7rem")
+      img.ck-confirm__icon--img(src='https://img.quanticonion.com/icons/hexagon-exclamation.png', height='7rem')
     .ck-confirm__title {{ title || defaultTitle }}
     .ck-confirm__message {{ msg }}
     .ck-confirm__buttons-container
       //- ck-button.mr-2(@click="onCancel()" color="light" type="filled")
-      button.ck-confirm__button--cancel(@click="onCancel()")
+      button.ck-confirm__button--cancel(@click='onCancel()')
         | {{ cancelText || defaultCancelText }}
       //- ck-button(@click="onAccept()" type="filled" color="danger")
-      button.ck-confirm__button--accept(@click="onAccept()")
+      button.ck-confirm__button--accept(@click='onAccept()')
         | {{ acceptText || defaultAcceptText }}
 </template>
 
 <style lang="stylus" scoped>
-@import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import 'undefined'
 .ck-confirm--background
   z-index 99999
   position fixed
@@ -79,7 +78,7 @@ defineExpose({
   color #5C5C5C
   padding 2rem 1rem
   background-color white
-  border-radius .5rem
+  border-radius 0.5rem
   width 450px
   max-width 100%
   font-family 'Nunito', sans-serif
@@ -100,17 +99,18 @@ defineExpose({
 .ck-confirm__icon--img
   width 7rem
   height @width
-.ck-confirm__button--cancel, .ck-confirm__button--accept
+.ck-confirm__button--cancel
+.ck-confirm__button--accept
   border none
   border-radius 0.5rem
   padding 0.85rem 1.5rem
   cursor pointer
-  font-size .9rem
+  font-size 0.9rem
   font-weight 600
 .ck-confirm__button--accept
   background-color #E64942
   color white
-  margin-left .5rem
+  margin-left 0.5rem
   &:hover
     background-color #df4740
 .ck-confirm__button--cancel
