@@ -19,8 +19,8 @@ const props = defineProps<{
 }>();
 
 const emits = defineEmits<{
-  (e: "update:modelValue", value: ModelValue): void;
-  (e: "click"): void;
+  (e: 'update:modelValue', value: ModelValue): void;
+  (e: 'click'): void;
 }>();
 
 const defaultSize = 's';
