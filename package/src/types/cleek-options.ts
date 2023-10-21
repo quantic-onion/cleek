@@ -44,5 +44,7 @@ export type CleekOptions = {
   table: {
     striped: boolean;
     version: TableVersion;
+    headerTextColor?: Color;
+    headerBackgroundColor?: Color;
   }
 };

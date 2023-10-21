@@ -2,10 +2,14 @@
 // components
 import CkTh from '../ck-th.vue';
 // types
+import type { Color } from '../../../types/cleek-options';
 import type { ColumnItem } from '../../../types/table';
 
 defineProps<{
   col: ColumnItem;
+  // style
+  textColor?: Color;
+  backgroundColor?: Color;
 }>();
 </script>
 
@@ -13,6 +17,8 @@ defineProps<{
 ck-th(
 :align="col.align"
 :min-width="col.minWidth"
+:textColor="textColor"
+:backgroundColor="backgroundColor"
 )
   | {{ col.title }}
 </template>

@@ -37,6 +37,8 @@ const cleekOptions: CleekOptions = {
   table: {
     striped: false,
     version: 'default',
+    headerTextColor: '',
+    headerBackgroundColor: '',
   },
 };
 
