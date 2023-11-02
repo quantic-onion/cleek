@@ -4,7 +4,7 @@ export type Color = string;
 export type Icon = string | [string, string];
 export type IconPack = 'font-awesome' | 'feather';
 export type Lang = 'es' | 'en';
-export type Layout = 'base' | 'rounded' | 'squared'; 
+export type Layout = 'base' | 'rounded' | 'squared';
 export type ButtonType = 'filled' | 'outlined' | 'flat';
 export type WidthBreaks = [number, string][];
 export type InputType = 'text' | 'number' | 'date' | 'time' | 'password';
@@ -25,6 +25,9 @@ export type CleekOptions = {
   button: {
     type: ButtonType;
     layout: Layout;
+  };
+  div: {
+    gap: 0;
   };
   img: {
     basePath: string;
