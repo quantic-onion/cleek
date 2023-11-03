@@ -265,7 +265,6 @@ teleport(v-if="isActive" to="body")
           cursor pointer
           background-color #ddd
     .ck-popup__slot-body
-      overflow-y scroll
       max-height 75vh
       text-align left
       padding-x 2rem
