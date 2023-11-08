@@ -52,8 +52,9 @@ const computedDate = computed(() => {
 </script>
 
 <style lang="stylus" scoped>
-.date-and-time-container
+.ck-datetime-shower--split, .ck-datetime-shower
   max-width max-content
+.date-and-time-container
   display flex
 .datetime-shower
   cursor pointer
