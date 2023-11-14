@@ -23,6 +23,7 @@ const props = defineProps<{
   notCloseByBg?: boolean;
   notClose?: boolean;
   preventCloseOnCancel?: boolean;
+  isLoading?: boolean;
   // styles
   width?: number;
   maxWidth?: number;
@@ -188,6 +189,7 @@ teleport(v-if="isActive" to="body")
             ck-button(
             v-if="confirmButtons || acceptButton"
             :type="realAcceptBtnType"
+            :isLoading="isLoading"
             @click="onAccept()"
             )
               | {{ realAcceptBtnText }}
