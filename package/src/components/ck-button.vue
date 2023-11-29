@@ -27,6 +27,7 @@ const props = defineProps<{
   // style
   type?: ButtonType;
   color?: Color;
+  backgroundColor?: Color;
   align?: Align;
   size?: 'xs' | 's' | 'm' | 'l' | 'xl';
   width?: string;
