@@ -26,6 +26,9 @@ export type CleekOptions = {
     type: ButtonType;
     layout: Layout;
   };
+  div: {
+    gap: 0;
+  };
   img: {
     basePath: string;
   };
@@ -44,5 +47,7 @@ export type CleekOptions = {
   table: {
     striped: boolean;
     version: TableVersion;
-  };
+    headerTextColor?: Color;
+    headerBackgroundColor?: Color;
+  }
 };

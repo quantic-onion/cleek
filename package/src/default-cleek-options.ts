@@ -19,6 +19,9 @@ const cleekOptions: CleekOptions = {
     type: 'outlined',
     layout: 'base',
   },
+  div: {
+    gap: 0,
+  },
   img: {
     basePath: '',
   },
@@ -37,6 +40,8 @@ const cleekOptions: CleekOptions = {
   table: {
     striped: false,
     version: 'default',
+    headerTextColor: '',
+    headerBackgroundColor: '',
   },
 };
 

@@ -23,6 +23,7 @@ const props = defineProps<{
   notCloseByBg?: boolean;
   notClose?: boolean;
   preventCloseOnCancel?: boolean;
+  isLoading?: boolean;
   // styles
   width?: number;
   maxWidth?: number;
@@ -178,7 +179,12 @@ teleport(v-if="isActive" to="body")
               @click="onCancel()"
             )
               | {{ realCancelBtnText }}
-            ck-button(v-if="confirmButtons || acceptButton" :type="realAcceptBtnType" @click="onAccept()")
+            ck-button(
+            v-if="confirmButtons || acceptButton"
+            :type="realAcceptBtnType"
+            :isLoading="isLoading"
+            @click="onAccept()"
+            )
               | {{ realAcceptBtnText }}
 </template>
 
@@ -255,7 +261,6 @@ teleport(v-if="isActive" to="body")
           cursor pointer
           background-color #ddd
     .ck-popup__slot-body
-      overflow-y scroll
       max-height 75vh
       text-align left
       padding-x 2rem

@@ -11,7 +11,7 @@ import TablePagination from './inner-components/ck-table__pagination.vue';
 import TableColumnsManager from './inner-components/ck-table__columns-manager.vue';
 // types
 import type { ColumnItem } from '../../types/table';
-import type { Align, CleekOptions, Layout, TableVersion } from '../../types/cleek-options';
+import type { Align, Color, CleekOptions, Layout, TableVersion } from '../../types/cleek-options';
 // hooks
 import hooks from '../../utils/global-hooks';
 import useWindowWidth from '../../hooks/windowWidth';
@@ -41,6 +41,8 @@ const props = defineProps<{
   notOverflow?: boolean;
   layout?: Layout;
   version?: TableVersion;
+  headerTextColor?: Color;
+  headerBackgroundColor?: Color;
   // mobile
   mobileMaxWidth?: Number;
 }>();
@@ -69,6 +71,14 @@ const realTableVersion = computed(() => {
   if (props.version) return props.version;
   if (cleekOptions.value) return cleekOptions.value.table.version;
   return defaultTableVersion;
+});
+const realHeaderTextColor = computed(() => {
+  if (props.headerTextColor) return props.headerTextColor;
+  if (cleekOptions.value) return cleekOptions.value.table.headerTextColor;
+});
+const realHeaderBackgroundColor = computed(() => {
+  if (props.headerBackgroundColor) return props.headerBackgroundColor;
+  if (cleekOptions.value) return cleekOptions.value.table.headerBackgroundColor;
 });
 // @ts-ignore
 const columnsAreObj = computed(() => !qmObj.isArray(props.columns || []));
@@ -206,7 +216,13 @@ TableColumnsManager(
       //- header
       thead(v-if="filteredColumnsList.length && !($slots.mobile && isMobileVisible)")
         ck-tr.header-row
-          ck-table-title(v-for="col in filteredColumnsList" :key="col.title" :col="col")
+          ck-table-title(
+          v-for="col in filteredColumnsList"
+          :key="col.title"
+          :col="col"
+          :textColor="realHeaderTextColor"
+          :backgroundColor="realHeaderBackgroundColor"
+          )
       //- body
       tbody
         slot
