@@ -179,7 +179,7 @@ ComponentShower(title="Reductors")
   ComponentShowerRow(title="reduceNameFunction")
     ck-select(
     :reduceNameFunction="(customer) => customer.address.fullAddress"
-    label="¿Quién es el más lindo?"
+    label="¿Dónde vivís?"
     v-model="selectedOptionNestedId"
     :options="customers"
     )
@@ -188,7 +188,7 @@ ComponentShower(title="Reductors")
     ck-select(
     notReduceValue
     :reduceNameFunction="(customer) => customer.address.fullAddress"
-    label="¿Quién es el más lindo?"
+    label="¿Dónde vivís?"
     v-model="selectedOptionNested"
     :options="customers"
     )
@@ -197,7 +197,7 @@ ComponentShower(title="Reductors")
     ck-select(
     :reduceNameFunction="(customer) => customer.address.fullAddress"
     :reduceValueFunction="(customer) => customer.address"
-    label="¿Quién es el más lindo?"
+    label="¿Dónde vivís?"
     v-model="selectedOptionNested2"
     :options="customers"
     )
