@@ -128,6 +128,8 @@ button(
   :style="computedStyle"
   @click="onClick($event)"
 )
+  p
+    test
   ck-icon(v-if="isLoading" icon="spinner" spin)
   template(v-else)
     ck-icon.ck-button__icon-left(v-if="icon" :icon="icon" :icon-pack="iconPack" :class="{ 'just-icon': !$slots.default }")
