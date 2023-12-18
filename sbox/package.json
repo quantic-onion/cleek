@@ -12,7 +12,9 @@
     "type-check": "vue-tsc --build --force"
   },
   "dependencies": {
+    "i18n": "^0.15.1",
     "pinia": "^2.1.7",
+    "pinia-plugin-persistedstate": "^3.2.0",
     "vue": "^3.3.11",
     "vue-router": "^4.2.5"
   },

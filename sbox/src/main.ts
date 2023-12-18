@@ -1,14 +1,28 @@
-import './assets/main.css'
+import { createApp } from "vue";
+import App from "@/App.vue";
+// import i18n from "@/i18n/i18n";
+// import { createPinia } from "pinia";
+import piniaPluginPersistedstate from "pinia-plugin-persistedstate";
+import cleek from "cleek";
+import cleekConfig from "@/cleek-config";
+// styles
+import "../node_modules/cleek/dist/style.css";
+import { createPinia } from "pinia";
+import router from "./router";
 
-import { createApp } from 'vue'
-import { createPinia } from 'pinia'
+const app = createApp(App);
+// i18n
+// app.use(i18n);
+// pinia
+const pinia = createPinia();
+pinia.use(piniaPluginPersistedstate);
+app.use(pinia);
+// router
+app.use(router);
+// cleek
+app.use(cleek, cleekConfig);
 
-import App from './App.vue'
-import router from './router'
+app.mount("#app");
 
-const app = createApp(App)
-
-app.use(createPinia())
-app.use(router)
-
-app.mount('#app')
+// import "@/assets/styles/main.styl";
+// import "animate.css";
