@@ -60,5 +60,4 @@ ElementsShower(title="Botones" subtitle="ck-button")
     | Both icons
 </template>
 
-<style lang="stylus" scoped>
-</style>
+<style lang="stylus" scoped></style>

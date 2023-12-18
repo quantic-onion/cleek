@@ -4,4 +4,4 @@ export default {
 
   OPEN_SIDEBAR: 'OPEN_MODAL',
   CLOSE_SIDEBAR: 'CLOSE_MODAL',
-}
+};

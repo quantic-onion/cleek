@@ -20,7 +20,6 @@ const emits = defineEmits<{
   (e: 'closeCard'): void;
 }>();
 
-
 let cleekOptions: Ref<undefined | CleekOptions> = ref();
 
 const isActive = computed({
@@ -66,7 +65,7 @@ onMounted(() => {
 <style lang="stylus" scoped>
 .ck-card
   background-color white
-  my-box-shadow(.1)
+  my-box-shadow(0.1)
   padding 1rem
   border-radius 1rem
   width 100%
@@ -77,11 +76,11 @@ onMounted(() => {
     .ck-card__header-title
       display inline-block
       font-size 1.25rem
-      margin-left .5rem
-      padding-left .5rem
+      margin-left 0.5rem
+      padding-left 0.5rem
       padding-right 1.5rem
-      padding-bottom .1rem
-      margin-bottom .5rem
+      padding-bottom 0.1rem
+      margin-bottom 0.5rem
       border-bottom 1px solid #999
     .ck-card__close-btn
       width 35px
@@ -89,12 +88,12 @@ onMounted(() => {
       display inline-flex
       align-items center
       justify-content center
-      border-radius .5rem
+      border-radius 0.5rem
       cursor pointer
       font-size 1.25rem
       // background-color red
       &:hover
-        my-box-shadow(.1)
+        my-box-shadow(0.1)
   .ck-card__body
     width 100%
     .ck-card__content
@@ -106,7 +105,7 @@ onMounted(() => {
         display block
     .ck-card__header-subtitle
       margin-left 1.5rem
-      font-size .9rem
+      font-size 0.9rem
       margin-bottom 1rem
 
 // layout

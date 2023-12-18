@@ -46,7 +46,9 @@ const refTextarea: Ref<null | HTMLTextAreaElement> = ref(null);
 const { windowWidth } = useWindowWidth();
 
 const inputValue = computed({
-  get() { return props.modelValue; },
+  get() {
+    return props.modelValue;
+  },
   set(val: string) {
     if (props.capitalize) val = qmStr.capitalize(val);
     emits('update:modelValue', val);
@@ -80,14 +82,14 @@ const computedStyleTextarea = computed(() => {
   // border-radius
   if (props.borderRadius) list.push({ 'border-radius': props.borderRadius });
   // text-color
-  if (props.textColor) list.push({ 'color': props.textColor });
+  if (props.textColor) list.push({ color: props.textColor });
   // width
-  if (props.width) list.push({ 'width': props.width });
+  if (props.width) list.push({ width: props.width });
   // height
-  if (props.height) list.push({ 'height': props.height });
+  if (props.height) list.push({ height: props.height });
   // resize
   const resize = props.resize ? props.resize : 'none';
-  if (resize)  list.push({ resize: resize || 'both' })
+  if (resize) list.push({ resize: resize || 'both' });
   return list;
 });
 
@@ -112,15 +114,15 @@ onMounted(() => {
 .ck-textarea
   ck-label(v-if="label" :label-align="labelAlign") {{ label }}
   textarea(
-  v-model="inputValue"
-  ref="refTextarea"
-  :placeholder="placeholder"
-  :disabled="disabled"
-  :class="computedClassTextarea"
-  :style="computedStyleTextarea"
-  @click="onClick($event)"
-  @input="onInput($event)"
-  @change="onChange($event)"
+    v-model="inputValue"
+    ref="refTextarea"
+    :placeholder="placeholder"
+    :disabled="disabled"
+    :class="computedClassTextarea"
+    :style="computedStyleTextarea"
+    @click="onClick($event)"
+    @input="onInput($event)"
+    @change="onChange($event)"
   )
 </template>
 

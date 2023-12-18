@@ -3,11 +3,7 @@ import { computed, ref } from 'vue';
 import { qmDate } from 'quantic-methods';
 import type { Ref } from 'vue';
 // types
-import type {
-  Align,
-  WidthBreaks,
-} from '../../types/cleek-options';
-
+import type { Align, WidthBreaks } from '../../types/cleek-options';
 
 type stringTime = string | null;
 type numberTime = number | undefined;
@@ -31,17 +27,19 @@ const inputValue = computed({
     if (typeof props.modelValue !== 'number') return null;
     return qmDate.minToHour(props.modelValue);
   },
-  set(val: stringTime) { emits('update:modelValue', +qmDate.hourToMin(val)); },
+  set(val: stringTime) {
+    emits('update:modelValue', +qmDate.hourToMin(val));
+  },
 });
 </script>
 
 <template lang="pug">
 ck-input(
-v-model="inputValue"
-type="time"
-:label="label"
-:group="group"
-:widthBreaks="widthBreaks"
-@change="emits('change', inputValue)"
+  v-model="inputValue"
+  type="time"
+  :label="label"
+  :group="group"
+  :widthBreaks="widthBreaks"
+  @change="emits('change', inputValue)"
 )
 </template>

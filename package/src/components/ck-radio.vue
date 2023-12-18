@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 
-type Option = { value: any, label: string };
+type Option = { value: any; label: string };
 
 const props = defineProps<{
   modelValue: string;
@@ -21,14 +21,18 @@ const emits = defineEmits<{
 }>();
 
 const value = computed({
-  get() { return props.modelValue; },
-  set(val: string) { emits('update:modelValue', val); },
+  get() {
+    return props.modelValue;
+  },
+  set(val: string) {
+    emits('update:modelValue', val);
+  },
 });
 const radioAttributes = computed(() => {
   return {
     'aria-disabled': props.disabled,
     tabindex: props.disabled ? undefined : '0',
-  }
+  };
 });
 const computedOptions = computed(() => {
   if (props.options) return props.options;
@@ -43,33 +47,25 @@ const computedClass = computed(() => {
   if (props.vertical) list.push('vertical');
   if (props.classes) list.push(props.classes);
   return list;
-})
+});
 
 function handleChange(option: Option, event: Event) {
-  option.value = value
+  option.value = value;
   emits('change', event);
 }
 </script>
 
 <template lang="pug">
 label.ck-radio(
-v-for="(option, index) in computedOptions"
-:key="`radio-${index}`"
-v-bind="radioAttributes"
-:class="computedClass"
-@keydown.space.prevent
-@keyup.enter="handleChange(option, $event)"
-@keyup.space="handleChange(option, $event)"
+  v-for="(option, index) in computedOptions"
+  :key="`radio-${index}`"
+  v-bind="radioAttributes"
+  :class="computedClass"
+  @keydown.space.prevent
+  @keyup.enter="handleChange(option, $event)"
+  @keyup.space="handleChange(option, $event)"
 )
-  input(
-    v-model="value"
-    aria-hidden="true"
-    class="c-Radio__input"
-    type="radio"
-    :name="name"
-    :value="option.value"
-    :disabled="disabled"
-  )
+  input.c-Radio__input(v-model="value" aria-hidden="true" type="radio" :name="name" :value="option.value" :disabled="disabled")
   .c-Radio__element
   span.c-Radio__label(v-if="option.label")
     | {{ option.label }}

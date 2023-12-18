@@ -35,7 +35,9 @@ const search = ref('');
 const lastSelectedValue = ref(null);
 
 const value = computed({
-  get() { return props.modelValue; },
+  get() {
+    return props.modelValue;
+  },
   set(val) {
     if (val === null) val = realClearValue;
     emits('update:modelValue', val);
@@ -49,7 +51,7 @@ const filteredOptions = computed(() => {
   return list;
   // const noResultMsg = 'No se encuentra resultados'
   // if (list.length) return list;
-  // if (props.notReduce) return [noResultMsg]; 
+  // if (props.notReduce) return [noResultMsg];
   // return [{ [props.prop]: noResultMsg }]
 });
 const computedClass = computed(() => {
@@ -72,25 +74,31 @@ const realSearchable = computed(() => {
 });
 const realClearValue = computed(() => {
   switch (typeof props.modelValue) {
-    case 'number': return 0;
-    case 'string': return '';
+    case 'number':
+      return 0;
+    case 'string':
+      return '';
     case 'object': // array is also object
       if (props.modelValue.constructor === Array) return [];
       return {};
-    default: return null;
+    default:
+      return null;
   }
 });
 const valueIsDefault = computed(() => {
   switch (typeof props.modelValue) {
-    case 'number': return props.modelValue === 0;
-    case 'string': return props.modelValue === '';
+    case 'number':
+      return props.modelValue === 0;
+    case 'string':
+      return props.modelValue === '';
     case 'object': // array is also object
       if (!props.modelValue) return null;
       if (props.modelValue.constructor === Array) {
         return props.modelValue.length() === 0;
       }
       return Object.keys(props.modelValue).length === 0;
-    default: return props.modelValue === null;
+    default:
+      return props.modelValue === null;
   }
 });
 
@@ -104,13 +112,13 @@ const onFocus = (event) => {
   search.value = '';
 };
 const onChangeOption = (event) => {
-  const selected = props.options.find(i => getOptionName(i) === search.value);
-  value.value = getOptionKey(selected)
+  const selected = props.options.find((i) => getOptionName(i) === search.value);
+  value.value = getOptionKey(selected);
   event.target.blur();
 };
 const checkOptionsIsValid = (optionName) => {
   if (!optionName) return;
-  return props.options.some(i => getOptionName(i) === optionName);
+  return props.options.some((i) => getOptionName(i) === optionName);
 };
 const getOptionKey = (option) => {
   return realReduceFunction(option);
@@ -139,28 +147,23 @@ form.ck-select(action="/action_page.php" method="get")
   //- chevron
   //- ck-icon.ck-select__chevron-icon(v-if="" icon="chevron-down")
   input(
-  autocomplete="off"
-  list="ck-select__list"
-  name="ck-select"
-  v-model="search"
-  :id="label ? 'ck-select' : ''"
-  :placeholder="lastSelectedValue"
-  :class="computedClass"
-  @focus="onFocus($event)"
-  @blur="onBlur($event)"
-  @change="onChangeOption($event)"
+    autocomplete="off"
+    list="ck-select__list"
+    name="ck-select"
+    v-model="search"
+    :id="label ? 'ck-select' : ''"
+    :placeholder="lastSelectedValue"
+    :class="computedClass"
+    @focus="onFocus($event)"
+    @blur="onBlur($event)"
+    @change="onChangeOption($event)"
   )
-  datalist(id="ck-select__list")
-    option(
-    @click="onClickOption(option)"
-    :key="getOptionKey(option)"
-    :value="getOptionName(option)"
-    v-for="option in options"
-    )
+  datalist#ck-select__list
+    option(@click="onClickOption(option)" :key="getOptionKey(option)" :value="getOptionName(option)" v-for="option in options")
 </template>
 
 <style lang="stylus" scoped>
-@import '../styles/.variables.styl';
+@import '../styles/.variables.styl'
 .ck-select
   display inline-block
   position relative

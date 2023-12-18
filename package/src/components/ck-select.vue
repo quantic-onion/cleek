@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, getCurrentInstance, onMounted, ref } from 'vue';
 import type { Ref } from 'vue';
-import { qmStr} from 'quantic-methods';
+import { qmStr } from 'quantic-methods';
 // components
 import CkLabel from './ck-label.vue';
 import CkIcon from './ck-icon.vue';
@@ -9,16 +9,7 @@ import CkIcon from './ck-icon.vue';
 import hooks from '../utils/global-hooks';
 import useWindowWidth from '../hooks/windowWidth';
 // types
-import type {
-Align,
-AlignVertical,
-Color,
-CleekOptions,
-Icon,
-IconPack,
-Layout,
-WidthBreaks,
-} from '../types/cleek-options';
+import type { Align, AlignVertical, Color, CleekOptions, Icon, IconPack, Layout, WidthBreaks } from '../types/cleek-options';
 
 type SelectOption = any;
 
@@ -79,12 +70,14 @@ const defaultClearValue = 'auto';
 const defaultReduceNameProp = 'name';
 const defaultReduceValueProp = 'id';
 
-const { windowWidth } = useWindowWidth(); 
+const { windowWidth } = useWindowWidth();
 const search = ref('');
 // const lastSelectedValue: Ref<null | string> = ref(null);
 
 const value = computed({
-  get() { return props.modelValue; },
+  get() {
+    return props.modelValue;
+  },
   set(val) {
     // if (val === null) val = realClearValue;
     emits('update:modelValue', val);
@@ -100,7 +93,7 @@ const filteredOptions = computed(() => {
   return list;
   // const noResultMsg = 'No se encuentra resultados'
   // if (list.length) return list;
-  // if (props.notReduce) return [noResultMsg]; 
+  // if (props.notReduce) return [noResultMsg];
   // return [{ [props.prop]: noResultMsg }]
 });
 const isClearBtnVisible = computed(() => {
@@ -120,7 +113,7 @@ const computedClassSelect = computed(() => {
   const layout = props.layout || cleekOptions.value?.styles.layout;
   if (layout) list.push(layout);
   // clear able
-  if (isClearBtnVisible.value) list.push('clear-able')
+  if (isClearBtnVisible.value) list.push('clear-able');
   // border-color
   const borderColor = props.borderColor || cleekOptions.value?.styles.borderColor;
   if (borderColor && hooks.isColorTemplateVariable(borderColor)) {
@@ -143,13 +136,13 @@ const computedClass = computed(() => {
   if (props.icon) list.push('has-icon-left');
   if (props.iconRight) list.push('has-icon-right');
   return list;
-})
+});
 const computedStyle = computed(() => {
   const list = [];
   // width-break
   let isWidthDefined = false;
   if (props.widthBreaks) {
-    const width = hooks.getWidthByWidthBreaks(props.widthBreaks, windowWidth.value )
+    const width = hooks.getWidthByWidthBreaks(props.widthBreaks, windowWidth.value);
     if (width) {
       list.push({ width });
       isWidthDefined = true;
@@ -161,7 +154,7 @@ const computedStyle = computed(() => {
     list.push({ 'min-width': minWidth });
   }
   // width
-  if (props.width) list.push({ 'width': props.width });
+  if (props.width) list.push({ width: props.width });
   return list;
 });
 // const realSearchable = computed(() => {
@@ -180,27 +173,33 @@ const logicClearValue = computed(() => {
 const realClearValue = computed(() => {
   if (logicClearValue.value !== 'auto') return logicClearValue.value;
   switch (typeof props.modelValue) {
-    case 'number': return 0;
-    case 'string': return '';
+    case 'number':
+      return 0;
+    case 'string':
+      return '';
     case 'object': // array is also object
       if (!props.modelValue) return null;
       if (props.modelValue.constructor === Array) return [];
       return {};
-    default: return null;
+    default:
+      return null;
   }
 });
 const valueIsDefault = computed(() => {
   if (logicClearValue.value !== 'auto') return value.value === logicClearValue.value;
   switch (typeof props.modelValue) {
-    case 'number': return props.modelValue === 0;
-    case 'string': return props.modelValue === '';
+    case 'number':
+      return props.modelValue === 0;
+    case 'string':
+      return props.modelValue === '';
     case 'object': // array is also object
       if (!props.modelValue) return null;
       if (props.modelValue.constructor === Array) {
         return props.modelValue.length === 0;
       }
       return Object.keys(props.modelValue).length === 0;
-    default: return props.modelValue === null;
+    default:
+      return props.modelValue === null;
   }
 });
 const isPlaceholderVisible = computed(() => {
@@ -241,7 +240,7 @@ function getOptionName(option: SelectOption) {
   return option[props.prop || reduceNameProp];
 }
 function setClearValue() {
-  value.value = realClearValue.value
+  value.value = realClearValue.value;
 }
 
 function setFocus() {
@@ -255,55 +254,29 @@ onMounted(() => {
   cleekOptions.value = hooks.getCleekOptions(getCurrentInstance);
 });
 
-hooks.preventUnusedError([
-  computedStyle,
-  computedClassSelect,
-  getOptionValue,
-  onClick,
-  filteredOptions,
-]);
+hooks.preventUnusedError([computedStyle, computedClassSelect, getOptionValue, onClick, filteredOptions]);
 </script>
 
 <template lang="pug">
-.ck-select(
-:style="computedStyle"
-:class="computedClass"
-) 
+.ck-select(:style="computedStyle" :class="computedClass") 
   //- icon left
-  ck-icon.ck-select__icon-left(
-  v-if="icon"
-  color="lightgrey"
-  :icon="icon"
-  :icon-pack="iconPack"
-  )
+  ck-icon.ck-select__icon-left(v-if="icon" color="lightgrey" :icon="icon" :icon-pack="iconPack")
   //- icon right
-  ck-icon.ck-select__icon-right(
-  v-if="iconRight"
-  color="lightgrey"
-  :icon="iconRight"
-  :icon-pack="iconPack"
-  )
-  .ck-select__clear-btn(
-  v-if="isClearBtnVisible"
-  @click="setClearValue()"
-  )
+  ck-icon.ck-select__icon-right(v-if="iconRight" color="lightgrey" :icon="iconRight" :icon-pack="iconPack")
+  .ck-select__clear-btn(v-if="isClearBtnVisible" @click="setClearValue()")
     ck-icon(icon="times")
   //- label
   ck-label(v-if="label" :align="labelAlign" for="ck-input") {{ label }}
   //- select
   select(
-  v-model="value"
-  :class="computedClassSelect"
-  :style="computedStyleSelect"
-  :disabled="disabled || isOptionsListEmpty"
-  @click="onClick($event)"
+    v-model="value"
+    :class="computedClassSelect"
+    :style="computedStyleSelect"
+    :disabled="disabled || isOptionsListEmpty"
+    @click="onClick($event)"
   )
     //- option
-    option(
-    v-for="option in filteredOptions"
-    :value="getOptionValue(option)"
-    :key="(option)"
-    )
+    option(v-for="option in filteredOptions" :value="getOptionValue(option)" :key="option")
       | {{ getOptionName(option) }}
   span.ck-select--placeholder(v-if="isEmptyOptionsMsgVisible")
     | {{ emptyOptionsMsg }}
@@ -312,7 +285,7 @@ hooks.preventUnusedError([
 </template>
 
 <style lang="stylus" scoped>
-@import '../styles/.variables.styl';
+@import '../styles/.variables.styl'
 .ck-select
   display inline-block
   position relative
@@ -337,11 +310,11 @@ hooks.preventUnusedError([
       border-radius-bottom(1px)
     option
       color #333
-      font-size .9rem
+      font-size 0.9rem
       // cursor pointer // NOT WORKING
       // padding .25rem // NOT WORKING
   // icon
-  > .ck-select__icon-left,
+  > .ck-select__icon-left
   > .ck-select__icon-right
     position absolute
     bottom 13px
@@ -361,29 +334,29 @@ hooks.preventUnusedError([
     height 25px
     border-radius 5px
     width @height
-    margin-bottom ((40px - @height) / 2)
+    margin-bottom 40px - @height / 2
     margin-right 1.25rem
     color #666
-    transition .3s
+    transition 0.3s
     &:hover
-      background-color rgba(black, .025)
+      background-color rgba(black, 0.025)
   .ck-select--placeholder
     position absolute
     color $color-placeholder
     left 12px
     bottom 12px
-    font-size .9rem
+    font-size 0.9rem
     pointer-events none
 
 .ck-select
   &.has-icon-left
     select
-      padding-left 14px + (3 * $globalPadding)
+      padding-left 14px + 3 * $globalPadding
     .ck-select--placeholder
-      padding-left  28px
+      padding-left 28px
   &.has-icon-right
     select
-      padding-right 14px + (3 * $globalPadding)
+      padding-right 14px + 3 * $globalPadding
     .ck-select--placeholder
       padding-right 28px
   // .ck-select__chevron-icon

@@ -60,6 +60,7 @@ yarn lint
 ```
 
 **Format all files**
+
 ```bash
 yarn format
 ```

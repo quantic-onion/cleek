@@ -21,8 +21,12 @@ const emits = defineEmits<{
 }>();
 
 const isActive = computed({
-  get() { return props.modelValue; },
-  set(val: boolean) { emits('update:modelValue', val); },
+  get() {
+    return props.modelValue;
+  },
+  set(val: boolean) {
+    emits('update:modelValue', val);
+  },
 });
 
 const computedClass = computed(() => {
@@ -61,21 +65,10 @@ const computedStyleHeader = computed(() => {
 </script>
 
 <template lang="pug">
-.ck-sidebar-background(
-v-if="isActive"
-@click.self="isActive = false"
-)
-  .sidebar-content(
-  :class="computedClass"
-  :style="computedStyle"
-  )
+.ck-sidebar-background(v-if="isActive" @click.self="isActive = false")
+  .sidebar-content(:class="computedClass" :style="computedStyle")
     //- header
-    .sidebar-header(
-    v-if="title"
-    :class="computedClassHeader"
-    :style="computedStyleHeader"
-    @click="isActive = false"
-    )
+    .sidebar-header(v-if="title" :class="computedClassHeader" :style="computedStyleHeader" @click="isActive = false")
       .sidebar-header-title(v-if="title")
         | {{ title }}
       ck-icon.close-btn(icon="times")
@@ -88,12 +81,12 @@ v-if="isActive"
 .ck-sidebar-background
   z-index 1000
   position fixed
-  background rgba(0,0,0,.5)
+  background rgba(0, 0, 0, 0.5)
   width 100%
   height 100%
   bottom 0
-  -webkit-transition all .3s ease
-  transition all .3s ease
+  -webkit-transition all 0.3s ease
+  transition all 0.3s ease
   opacity 1
   left 0
   .sidebar-content
@@ -103,11 +96,11 @@ v-if="isActive"
     height 100%
     position fixed
     width 450px
-    @media(max-width 1023px)
+    @media (max-width: 1023px)
       width 400px
-    @media(max-width 900px)
+    @media (max-width: 900px)
       width 350px
-    @media(max-width 750px)
+    @media (max-width: 750px)
       width 300px
     &.right-side
       left unset
@@ -123,7 +116,7 @@ v-if="isActive"
       align-items center
       padding-left 1.5rem
       padding-right @padding-left
-      box-shadow 0 0.3rem 0.8rem 0 rgba(0, 0, 0, .25)
+      box-shadow 0 0.3rem 0.8rem 0 rgba(0, 0, 0, 0.25)
       position relative
       &:hover
         cursor pointer
@@ -140,16 +133,16 @@ v-if="isActive"
       // .sidebar-header-title
       .close-btn
         position absolute
-        right .5rem
+        right 0.5rem
         width 35px
         height @width
         display flex
         justify-content center
         align-items center
         border-radius 2rem
-        transition .2s
+        transition 0.2s
         &:hover
-          background-color rgba(black, .15)
+          background-color rgba(black, 0.15)
     .scroll-area
       padding-bottom 5rem
       height calc(100%)

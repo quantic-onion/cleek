@@ -25,12 +25,8 @@ const computedStyle = computed(() => {
 </script>
 
 <template lang="pug">
-.ck-navbar(
-:style="computedStyle"
-)
-  .ck-navbar__content(
-  :class="computedClassContent"
-  )
+.ck-navbar(:style="computedStyle")
+  .ck-navbar__content(:class="computedClassContent")
     slot
 </template>
 
@@ -42,10 +38,10 @@ const computedStyle = computed(() => {
   top 0
   z-index 99
   .ck-navbar__content
-    padding .75rem 1rem
+    padding 0.75rem 1rem
     background-color white
     width 100%
     ck-box-shadow()
     &.has-padding
-      border-radius .5rem
+      border-radius 0.5rem
 </style>

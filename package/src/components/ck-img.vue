@@ -119,26 +119,12 @@ onMounted(() => {
   cleekOptions.value = hooks.getCleekOptions(getCurrentInstance);
   isMounted.value = true;
 });
-hooks.preventUnusedError([
-  computedImgStyle,
-  computedStyle,
-  computedClass,
-  clickImg,
-]);
+hooks.preventUnusedError([computedImgStyle, computedStyle, computedClass, clickImg]);
 </script>
 
 <template lang="pug">
-.ck-img(
-:class="computedClass"
-:style="computedStyle"
-@click="clickImg()"
-)
-  img(
-  :src="imageUrl"
-  :style="computedImgStyle"
-  :alt="alt"
-  @error="altNeeded = true"
-  )
+.ck-img(:class="computedClass" :style="computedStyle" @click="clickImg()")
+  img(:src="imageUrl" :style="computedImgStyle" :alt="alt" @error="altNeeded = true")
 </template>
 
 <style lang="stylus" scoped>
@@ -146,7 +132,7 @@ hooks.preventUnusedError([
 
 .ck-img
   display inline-flex
-  border-radius .5rem
+  border-radius 0.5rem
   overflow hidden
   flex-shrink 0
   flex-grow 0
@@ -156,7 +142,7 @@ hooks.preventUnusedError([
     background-color white
     border 1px solid transparent
   &.zoom-able
-    transition .5s
+    transition 0.5s
     cursor pointer
     &:hover
       border-color primary
@@ -171,19 +157,19 @@ hooks.preventUnusedError([
   &.ck-img__size--xxs
     width 2rem
     height @width
-    border-radius .25rem
+    border-radius 0.25rem
   &.ck-img__size--xs
     width 2.5rem
     height @width
-    border-radius .25rem
+    border-radius 0.25rem
   &.ck-img__size--s
     width 4rem
     height @width
-    border-radius .5rem
+    border-radius 0.5rem
   &.ck-img__size--m
     width 7rem
     height @width
-    border-radius .5rem
+    border-radius 0.5rem
   &.ck-img__size--l
     width 11rem
     height @width

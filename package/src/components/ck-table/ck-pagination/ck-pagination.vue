@@ -14,12 +14,16 @@ const emits = defineEmits<{
 }>();
 
 const currentStep = computed({
-  get() { return props.modelValue; },
-  set(val: number) { emits('update:modelValue', val); },
+  get() {
+    return props.modelValue;
+  },
+  set(val: number) {
+    emits('update:modelValue', val);
+  },
 });
 const computedClass = computed(() => {
   const list = [];
-  if (props.align) list.push(`align--${props.align}`)
+  if (props.align) list.push(`align--${props.align}`);
   return list;
 });
 
@@ -36,10 +40,10 @@ function goToNextStep() {
 .ck-pagination(:class="computedClass")
   ck-button(group="left" icon="arrow-left" @click="goToPreviousStep()")
   ck-button(
-  v-for="stepNumber in maxStep"
-  group="center"
-  :type="currentStep === stepNumber ? 'filled' : 'outlined'"
-  @click="currentStep = stepNumber"
+    v-for="stepNumber in maxStep"
+    group="center"
+    :type="currentStep === stepNumber ? 'filled' : 'outlined'"
+    @click="currentStep = stepNumber"
   )
     | {{ stepNumber }}
   ck-button(group="right" icon="arrow-right" @click="goToNextStep()")

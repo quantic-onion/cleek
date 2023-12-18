@@ -10,16 +10,16 @@ import hooks from '../utils/global-hooks';
 import useWindowWidth from '../hooks/windowWidth';
 // types
 import type {
-Align,
-AlignVertical,
-Color,
-CleekOptions,
-Icon,
-IconPack,
-InputType,
-Layout,
-SizeInCSS,
-WidthBreaks,
+  Align,
+  AlignVertical,
+  Color,
+  CleekOptions,
+  Icon,
+  IconPack,
+  InputType,
+  Layout,
+  SizeInCSS,
+  WidthBreaks,
 } from '../types/cleek-options';
 
 const props = defineProps<{
@@ -77,7 +77,7 @@ const defaultDelayChangeTime = 300;
 const realInput: Ref<null | HTMLInputElement> = ref(null);
 const isShowingPassword = ref(false);
 
-const { windowWidth } = useWindowWidth(); 
+const { windowWidth } = useWindowWidth();
 
 const value = computed({
   get() {
@@ -95,7 +95,7 @@ const realLabelAlign = computed(() => {
   if (props.labelAlign) return props.labelAlign;
   if (props.align) return props.align;
   return 'left';
-})
+});
 
 // events
 const onClick = (event: Event) => {
@@ -138,7 +138,7 @@ const computedStyleInput = computed(() => {
   // font-size
   if (props.fontSize) list.push({ 'font-size': props.fontSize });
   // font-size
-  if (props.textColor) list.push({ 'color': props.textColor });
+  if (props.textColor) list.push({ color: props.textColor });
   // border-color
   const borderColor = props.borderColor || cleekOptions.value?.styles.borderColor;
   if (borderColor && !hooks.isColorTemplateVariable(borderColor)) {
@@ -153,7 +153,7 @@ const computedStyle = computed(() => {
   list.push({ width: props.width });
   // width-break
   if (props.widthBreaks) {
-    const width = hooks.getWidthByWidthBreaks(props.widthBreaks, windowWidth.value )
+    const width = hooks.getWidthByWidthBreaks(props.widthBreaks, windowWidth.value);
     if (width) list.push({ width });
   }
   return list;
@@ -174,15 +174,7 @@ function checkSearchTime(oldValue: string | number) {
   }, props.delayChangeTime || defaultDelayChangeTime);
 }
 
-hooks.preventUnusedError([
-  computedStyle,
-  computedClassInput,
-  realLabelAlign,
-  defaultType,
-  onChange,
-  onInput,
-  onClick,
-]);
+hooks.preventUnusedError([computedStyle, computedClassInput, realLabelAlign, defaultType, onChange, onInput, onClick]);
 
 onMounted(() => {
   cleekOptions.value = hooks.getCleekOptions(getCurrentInstance);
@@ -193,63 +185,51 @@ onMounted(() => {
 </script>
 
 <template lang="pug">
-.ck-input(
-:style="computedStyle"
-)
+.ck-input(:style="computedStyle")
   //- label
   ck-label(v-if="label" :align="realLabelAlign" for="ck-input" :size="size") {{ label }}
   //- icon left
-  ck-icon.ck-input__icon-left(
-  v-if="icon"
-  :color="iconColor ? iconColor : 'lightgrey'"
-  :icon="icon"
-  :icon-pack="iconPack"
+  ck-icon.ck-input__icon-left(v-if="icon" :color="iconColor ? iconColor : 'lightgrey'" :icon="icon" :icon-pack="iconPack")
+  input(
+    v-if="isShowingPassword"
+    v-model="value"
+    ref="realInput"
+    type="text"
+    :autocomplete="autocomplete ? 'on' : 'off'"
+    :placeholder="placeholder"
+    :class="computedClassInput"
+    :style="computedStyleInput"
+    :disabled="disabled"
+    @change="onChange($event)"
+    @input="onInput($event)"
+    @click="onClick($event)"
+    @focus="emits('focus', $event)"
+    @blur="emits('blur', $event)"
   )
   input(
-  v-if="isShowingPassword"
-  v-model="value"
-  ref="realInput"
-  type="text"
-  :autocomplete="autocomplete ? 'on' : 'off'"
-  :placeholder="placeholder"
-  :class="computedClassInput"
-  :style="computedStyleInput"
-  :disabled="disabled"
-  @change="onChange($event)"
-  @input="onInput($event)"
-  @click="onClick($event)"
-  @focus="emits('focus', $event)"
-  @blur="emits('blur', $event)"
-  )
-  input(
-  v-else
-  v-model="value"
-  ref="realInput"
-  :autocomplete="autocomplete ? 'on' : 'off'"
-  :type="type || defaultType"
-  :placeholder="placeholder"
-  :class="computedClassInput"
-  :style="computedStyleInput"
-  :disabled="disabled"
-  @change="onChange($event)"
-  @input="onInput($event)"
-  @click="onClick($event)"
-  @focus="emits('focus', $event)"
-  @blur="emits('blur', $event)"
+    v-else
+    v-model="value"
+    ref="realInput"
+    :autocomplete="autocomplete ? 'on' : 'off'"
+    :type="type || defaultType"
+    :placeholder="placeholder"
+    :class="computedClassInput"
+    :style="computedStyleInput"
+    :disabled="disabled"
+    @change="onChange($event)"
+    @input="onInput($event)"
+    @click="onClick($event)"
+    @focus="emits('focus', $event)"
+    @blur="emits('blur', $event)"
   )
   .show-password(
-  v-if="type === 'password'"
-  :class="layout || cleekOptions?.styles.layout"
-  @click="isShowingPassword = !isShowingPassword"
+    v-if="type === 'password'"
+    :class="layout || cleekOptions?.styles.layout"
+    @click="isShowingPassword = !isShowingPassword"
   )
     ck-icon(:icon="isShowingPassword ? 'eye-slash' : 'eye'")
   //- icon right
-  ck-icon.ck-input__icon-right(
-  v-if="iconRight && type !== 'password'"
-  color="lightgrey"
-  :icon="iconRight"
-  :icon-pack="iconPack"
-  )
+  ck-icon.ck-input__icon-right(v-if="iconRight && type !== 'password'" color="lightgrey" :icon="iconRight" :icon-pack="iconPack")
 </template>
 
 <style lang="stylus" scoped>
@@ -285,27 +265,27 @@ onMounted(() => {
     &.no-border
       border-color transparent !important
     &.has-icon-left
-      padding-left 14px + (3 * $globalPadding)
+      padding-left 14px + 3 * $globalPadding
     &.has-icon-right
-      padding-right 14px + (3 * $globalPadding)
+      padding-right 14px + 3 * $globalPadding
     &.ck-input-size__s
-      font-size .7rem
+      font-size 0.7rem
       min-height unset
-      padding .35rem .5rem
+      padding 0.35rem 0.5rem
     &.ck-input-size__l
       font-size 1.3rem
-      padding .75rem 1.5rem
-      border-radius .5rem
+      padding 0.75rem 1.5rem
+      border-radius 0.5rem
     &.ck-input-size__xl
       font-size 1.5rem
-      padding .75rem 1.5rem
-      border-radius .5rem
+      padding 0.75rem 1.5rem
+      border-radius 0.5rem
     &:disabled
       cursor not-allowed
       border-color $color-disabled
       color $color-disabled
       background-color #e0e0e0
-  > .ck-input__icon-left,
+  > .ck-input__icon-left
   > .ck-input__icon-right
     position absolute
     bottom 13px
@@ -322,7 +302,7 @@ onMounted(() => {
     display flex
     align-items center
     justify-content center
-    transition .3s
+    transition 0.3s
     border-left 1px solid $globalBorderColor
     &:hover
       background-color #f0f0f0
@@ -334,9 +314,10 @@ onMounted(() => {
     left 1.5 * $globalPadding
   > .ck-input__icon-right
     right 1.5 * $globalPadding
-  
+
 // remove arrows | chrome
-input::-webkit-outer-spin-button, input::-webkit-inner-spin-button
+input::-webkit-outer-spin-button
+input::-webkit-inner-spin-button
   -webkit-appearance none
   margin 0
 // remove arrows | firefox

@@ -40,7 +40,7 @@ function openClose() {
   const closeListerner = (event: Event) => {
     if (popperRef.value != event.target) isOpen.value = false;
     window.removeEventListener('click', closeListerner);
-  }
+  };
   setTimeout(() => {
     window.addEventListener('click', closeListerner);
   });
@@ -55,20 +55,12 @@ onMounted(() => {
 <template lang="pug">
 .ck-dropdown(:class="computedClass")
   //- button
-  .ck-dropdown__trigger(
-  @click="openClose()"
-  )
+  .ck-dropdown__trigger(@click="openClose()")
     slot(name="trigger")
   //- menu
   .ck-dropdown__popper-container
-    section.ck-dropdown__popper(
-    ref="popperRef"
-    v-if="isOpen"
-    :class="computedClassPopper"
-    )
-      .ck-dropdown__popper--arrow(
-      :class="{ 'ck-dropdown__popper--arrow--dark': dark }"
-      )
+    section.ck-dropdown__popper(ref="popperRef" v-if="isOpen" :class="computedClassPopper")
+      .ck-dropdown__popper--arrow(:class="{ 'ck-dropdown__popper--arrow--dark': dark }")
       slot(name="popper")
 </template>
 
@@ -92,9 +84,9 @@ onMounted(() => {
       min-height 10px
       border-radius 8px
       border 1px solid #eee
-      box-shadow 10px 10px 0 0 rgba(black,.03)
+      box-shadow 10px 10px 0 0 rgba(black, 0.03)
       background white
-      padding .5rem
+      padding 0.5rem
       animation menu 0.3s ease forwards
       &.layout--rounded
         border-radius 1.75rem

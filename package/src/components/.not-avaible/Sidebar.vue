@@ -1,11 +1,6 @@
 <template>
   <transition name="fade">
-    <div
-      v-if="isOpen"
-      :css="false"
-      class="c-Sidebar__overlay"
-      @click="$emit('close')"
-    />
+    <div v-if="isOpen" :css="false" class="c-Sidebar__overlay" @click="$emit('close')" />
   </transition>
   <transition
     :name="slideAnimation"
@@ -14,27 +9,19 @@
     @before-leave="beforeSidebarClose()"
     @after-leave="afterSidebarClose()"
   >
-    <div
-      v-if="isOpen"
-      ref="sidebar"
-      :css="false"
-      class="c-Sidebar"
-      :class="sidebarClassObject"
-      role="dialog"
-      tabindex="0"
-    >
+    <div v-if="isOpen" ref="sidebar" :css="false" class="c-Sidebar" :class="sidebarClassObject" role="dialog" tabindex="0">
       <slot />
     </div>
   </transition>
 </template>
 <script>
-import { lockScroll, unlockScroll } from '../index'
-import { tabbable } from 'tabbable'
+import { lockScroll, unlockScroll } from '../index';
+import { tabbable } from 'tabbable';
 
-const ESCAPE_KEY = 27
-const TAB_KEY = 9
+const ESCAPE_KEY = 27;
+const TAB_KEY = 9;
 
-let previouslyFocusedElement
+let previouslyFocusedElement;
 
 export default {
   name: 'Sidebar',
@@ -49,7 +36,7 @@ export default {
       required: false,
       default: 'right',
       validator(type) {
-        return ['right', 'left'].includes(type)
+        return ['right', 'left'].includes(type);
       },
     },
   },
@@ -59,46 +46,46 @@ export default {
       return {
         'is-right': this.position === 'right',
         'is-left': this.position === 'left',
-      }
+      };
     },
     slideAnimation() {
-      return this.position === 'right' ? 'slideFromRight' : 'slideFromLeft'
+      return this.position === 'right' ? 'slideFromRight' : 'slideFromLeft';
     },
   },
   methods: {
     beforeSidebarOpen() {
-      previouslyFocusedElement = document.activeElement
-      lockScroll()
+      previouslyFocusedElement = document.activeElement;
+      lockScroll();
     },
     sidebarOpening() {
-      this.focusSidebar()
-      document.addEventListener('keydown', this.handleKeyDown)
+      this.focusSidebar();
+      document.addEventListener('keydown', this.handleKeyDown);
     },
     beforeSidebarClose() {
-      document.removeEventListener('keydown', this.handleKeyDown)
-      previouslyFocusedElement?.focus()
+      document.removeEventListener('keydown', this.handleKeyDown);
+      previouslyFocusedElement?.focus();
     },
     afterSidebarClose() {
-      unlockScroll()
+      unlockScroll();
     },
     getFocusableElements() {
-      return tabbable(this.$refs.sidebar)
+      return tabbable(this.$refs.sidebar);
     },
     focusSidebar() {
-      const focusableElements = this.getFocusableElements()
+      const focusableElements = this.getFocusableElements();
 
       if (!focusableElements.length) {
-        this.$refs.sidebar.focus()
-        return
+        this.$refs.sidebar.focus();
+        return;
       }
 
-      const firstFocusableElement = focusableElements[0]
-      firstFocusableElement.focus()
+      const firstFocusableElement = focusableElements[0];
+      firstFocusableElement.focus();
     },
     handleKeyDown(event) {
       if (event.keyCode === ESCAPE_KEY) {
-        this.$emit('close')
-        return
+        this.$emit('close');
+        return;
       }
 
       /**
@@ -107,48 +94,41 @@ export default {
        * TAB - focus next element
        */
       if (event.keyCode === TAB_KEY) {
-        const focusableElements = this.getFocusableElements()
+        const focusableElements = this.getFocusableElements();
 
         /**
          * If there are no focusable elements, keep the focus on the modal div
          */
         if (!focusableElements.length) {
-          event.preventDefault()
-          this.$refs.sidebar.focus()
-          return
+          event.preventDefault();
+          this.$refs.sidebar.focus();
+          return;
         }
 
-        const firstFocusableElement = focusableElements[0]
-        const lastFocusableElement =
-          focusableElements[focusableElements.length - 1]
+        const firstFocusableElement = focusableElements[0];
+        const lastFocusableElement = focusableElements[focusableElements.length - 1];
 
         /**
          * If the current focus is the first focusable element and the user wants to go back
          * then let's focus on the last element
          */
-        if (
-          event.shiftKey &&
-          document.activeElement === firstFocusableElement
-        ) {
-          event.preventDefault()
-          lastFocusableElement.focus()
+        if (event.shiftKey && document.activeElement === firstFocusableElement) {
+          event.preventDefault();
+          lastFocusableElement.focus();
         }
 
         /**
          * If the current focus is the last focusable element on the modal then let's focus
          * on the first
          */
-        if (
-          !event.shiftKey &&
-          document.activeElement === lastFocusableElement
-        ) {
-          event.preventDefault()
-          firstFocusableElement.focus()
+        if (!event.shiftKey && document.activeElement === lastFocusableElement) {
+          event.preventDefault();
+          firstFocusableElement.focus();
         }
       }
     },
   },
-}
+};
 </script>
 <style scoped>
 .fade-enter-active,
@@ -199,8 +179,7 @@ export default {
   top: 0;
   z-index: 11;
   background-color: white;
-  box-shadow: 0px 10px 10px rgba(174, 185, 203, 0.26),
-    0px 14px 28px rgba(174, 185, 203, 0.25);
+  box-shadow: 0px 10px 10px rgba(174, 185, 203, 0.26), 0px 14px 28px rgba(174, 185, 203, 0.25);
   display: flex;
   flex-direction: column;
   height: 100%;

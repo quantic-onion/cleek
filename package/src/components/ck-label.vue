@@ -35,9 +35,9 @@ label.ck-label(
 
 .ck-label
   width 100%
-  padding-x .5rem
+  padding-x 0.5rem
   display flex
-  font-size .9rem
+  font-size 0.9rem
   color #626262
   box-sizing border-box
   &.ck-align--left
@@ -47,11 +47,11 @@ label.ck-label(
   &.ck-align--center
     justify-content center
   &.ck-size--s
-    font-size .7rem
+    font-size 0.7rem
   &.ck-size--l
-    padding-x .5rem
+    padding-x 0.5rem
     font-size 1.25rem
   &.ck-size--xl
-    padding-x .75rem
+    padding-x 0.75rem
     font-size 1.5rem
 </style>

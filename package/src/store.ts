@@ -1,10 +1,10 @@
 import { createStore } from 'vuex';
 
 export const store = createStore({
-  state () {
+  state() {
     return {
       count: 1,
-      imagesFolderPath: 'holis', 
-    }
-  }
+      imagesFolderPath: 'holis',
+    };
+  },
 });

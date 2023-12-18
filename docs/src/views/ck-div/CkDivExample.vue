@@ -16,10 +16,11 @@ const optionsExample = ref([
 
 <template lang="pug">
 ComponentShower(title="width-breaks")
-  p Works with every component using lwidth-breaks
+  p Works with every component using width-breaks
   p This break down at 600px
   ComponentShowerRow(noGap)
     ck-div(:width-breaks="[[0, '100%'], [600, '50%']]")
+    ck-div(:width-breaks="[[600, '50%']]")
       .blue-box
     ck-div(:width-breaks="[[0, '100%'], [600, '50%']]")
       .red-box

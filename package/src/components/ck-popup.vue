@@ -48,8 +48,12 @@ const emits = defineEmits<{
 let cleekOptions: Ref<undefined | CleekOptions> = ref();
 
 const isActive = computed({
-  get() { return props.modelValue; },
-  set(val: boolean) { emits('update:modelValue', val); },
+  get() {
+    return props.modelValue;
+  },
+  set(val: boolean) {
+    emits('update:modelValue', val);
+  },
 });
 const computedClassContent = computed(() => {
   const list = [];
@@ -77,7 +81,7 @@ const computedStyleContent = computed(() => {
   const textColor = props.textColor || cleekOptions.value?.popup.textColor;
   if (textColor && !hooks.isColorTemplateVariable(textColor)) {
     list.push(`ck-component__color--${textColor}`);
-    list.push({ color: textColor })
+    list.push({ color: textColor });
   }
   return list;
 });
@@ -86,10 +90,10 @@ const computedStyleHeader = computed(() => {
   // header-color
   const headerColor = props.headerColor || cleekOptions.value?.popup.headerColor;
   if (headerColor && !hooks.isColorTemplateVariable(headerColor)) {
-    list.push({ backgroundColor: headerColor })
+    list.push({ backgroundColor: headerColor });
   }
   return list;
-})
+});
 const computedClassHeader = computed(() => {
   const list = [];
   // header-align
@@ -120,14 +124,14 @@ const isCloseBtnVisible = computed(() => {
   return true;
 });
 const realAcceptBtnText = computed(() => {
-  if (props.acceptBtnText) return props.acceptBtnText; 
-  if (cleekOptions.value?.lang === 'es') return 'Aceptar'; 
-  return 'Accept'; 
+  if (props.acceptBtnText) return props.acceptBtnText;
+  if (cleekOptions.value?.lang === 'es') return 'Aceptar';
+  return 'Accept';
 });
 const realCancelBtnText = computed(() => {
-  if (props.cancelBtnText) return props.cancelBtnText; 
-  if (cleekOptions.value?.lang === 'es') return 'Cancelar'; 
-  return 'Cancel'; 
+  if (props.cancelBtnText) return props.cancelBtnText;
+  if (cleekOptions.value?.lang === 'es') return 'Cancelar';
+  return 'Cancel';
 });
 
 function onCancel() {
@@ -153,26 +157,15 @@ teleport(v-if="isActive" to="body")
   .ck-popup
     .blackout
     .popup-container(@mousedown="onBgClick()")
-      .ck-popup__content(
-      @mousedown.stop=""
-      :style="computedStyleContent"
-      :class="computedClassContent"
-      )
-        .ck-popup__slot-header(
-        :style="computedStyleHeader"
-        :class="computedClassHeader"
-        )
+      .ck-popup__content(@mousedown.stop="" :style="computedStyleContent" :class="computedClassContent")
+        .ck-popup__slot-header(:style="computedStyleHeader" :class="computedClassHeader")
           //- title
           h3.ck-popup__title(v-if="title")
             | {{ title }}
           //- header slot
           slot(name="header")
           //- close btn
-          ck-icon.icon-close(
-          icon="times"
-          v-if="isCloseBtnVisible"
-          @click="isActive = false"
-          )
+          ck-icon.icon-close(icon="times" v-if="isCloseBtnVisible" @click="isActive = false")
         //- VuePerfectScrollbar.ck-popup__slot-body
         .ck-popup__slot-body
           slot
@@ -180,10 +173,10 @@ teleport(v-if="isActive" to="body")
           slot(name="footer")
           .ck-popup-slot-footer__confirm-buttons(v-if="confirmButtons || acceptButton || cancelButton")
             ck-button.cancel-button(
-            v-if="confirmButtons || cancelButton"
-            color="danger"
-            :type="realCancelBtnType"
-            @click="onCancel()"
+              v-if="confirmButtons || cancelButton"
+              color="danger"
+              :type="realCancelBtnType"
+              @click="onCancel()"
             )
               | {{ realCancelBtnText }}
             ck-button(
@@ -198,7 +191,8 @@ teleport(v-if="isActive" to="body")
 <style lang="stylus">
 @require '../styles/index'
 
-.blackout, .popup-container
+.blackout
+.popup-container
   background-color RGBA(0, 0, 0, 0.2)
   position fixed
   z-index 9999
@@ -217,7 +211,7 @@ teleport(v-if="isActive" to="body")
     min-width 30vw
     // width 500px
     max-width 95vw
-    @media(min-width 1150px)
+    @media (min-width: 1150px)
       max-width 80vw
     margin auto
     border-radius 10px
@@ -231,12 +225,12 @@ teleport(v-if="isActive" to="body")
         padding-y 1rem
         .icon-close
           border-radius 3rem
-          right .75rem
+          right 0.75rem
     &.squared
       border-radius 0
     .ck-popup__slot-header
       min-height 3rem
-      padding-y .6rem
+      padding-y 0.6rem
       font-weight 600
       font-size 1.2rem
       background-color #f0f0f0
@@ -258,11 +252,11 @@ teleport(v-if="isActive" to="body")
         font-size 1.2rem
         margin 0
       .icon-close
-        padding .5rem .75rem
-        right .5rem
+        padding 0.5rem 0.75rem
+        right 0.5rem
         position absolute
-        border-radius .25rem
-        transition .4s
+        border-radius 0.25rem
+        transition 0.4s
         &:hover
           cursor pointer
           background-color #ddd
@@ -281,10 +275,10 @@ teleport(v-if="isActive" to="body")
         display flex
         justify-content flex-end
         .cancel-button
-          margin-right .5rem
+          margin-right 0.5rem
 
 // fullscreen
-@media(max-width 600px)
+@media (max-width: 600px)
   .popup-container
     padding-y 0
     .ck-popup__content

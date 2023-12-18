@@ -35,10 +35,12 @@ const emits = defineEmits<{
   (e: 'change', value: Option): void;
 }>();
 
-const { windowWidth } = useWindowWidth(); 
+const { windowWidth } = useWindowWidth();
 
 const selectedOption = computed({
-  get() { return props.modelValue; },
+  get() {
+    return props.modelValue;
+  },
   set(val: Option) {
     emits('update:modelValue', val);
     emits('change', val);
@@ -61,12 +63,10 @@ function getOptionValue(option: Option) {
   if (props.reduceFunction) {
     return props.reduceFunction(option);
   }
-  return defaultReduceFunction(option)
+  return defaultReduceFunction(option);
 }
 
-functions.preventUnusedError([
-  getOptionValue,
-]);
+functions.preventUnusedError([getOptionValue]);
 </script>
 
 <template lang="pug">
@@ -76,11 +76,11 @@ functions.preventUnusedError([
   //- switch options
   .ck-switch-options__container(:class="computedClass")
     .ck-switch-options__option(
-    v-for="(option, index) in options"
-    :key="`ck-switch-options${index}`"
-    :class="{ selected: selectedOption == getOptionValue(option)}"
-    :style="computedItemStyle"
-    @click="selectedOption = getOptionValue(option)"
+      v-for="(option, index) in options"
+      :key="`ck-switch-options${index}`"
+      :class="{ selected: selectedOption == getOptionValue(option) }"
+      :style="computedItemStyle"
+      @click="selectedOption = getOptionValue(option)"
     )
       | {{ option[prop || defaultProp] }}
 </template>
@@ -116,9 +116,9 @@ $borderColor = var(--primary)
     // padding 7px
     padding 5px 15px
     cursor pointer
-    transition transform .2s /* Animation */
+    transition transform 0.2s /* Animation */
     flex-grow 1
-    transition .4s
+    transition 0.4s
     &:hover
       // background-color rgba(var(--primary), .1) FIXRGBA
     // margin-bottom $borderWidth
@@ -146,5 +146,4 @@ $borderColor = var(--primary)
     border-radius-top 0
   .ck-switch-options__option
     border-radius 0 !important
-
 </style>

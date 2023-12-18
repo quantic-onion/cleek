@@ -5,7 +5,7 @@ router-link(v-if="!disabled" v-bind="$attrs" @click="onClick($event)")
 
 //- span
 span(v-else v-bind="$attrs" @click="onClick($event)")
- slot
+  slot
 </template>
 
 <script setup lang="ts">

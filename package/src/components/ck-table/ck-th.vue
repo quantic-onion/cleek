@@ -28,7 +28,7 @@ const computedSpanClass = computed(() => {
   }
   return list;
 });
-const computedStyle = computed (() => {
+const computedStyle = computed(() => {
   const list = [];
   // minWidth
   if (props.minWidth) list.push({ 'min-width': props.minWidth });
@@ -46,10 +46,7 @@ const computedStyle = computed (() => {
 
 <template lang="pug">
 th.ck-th
-  span(
-  :class="computedSpanClass"
-  :style="computedStyle"
-  )
+  span(:class="computedSpanClass" :style="computedStyle")
     slot
 </template>
 
@@ -58,8 +55,8 @@ th.ck-th
   vertical-align bottom
   > span
     display flex
-    padding .5rem
-    font-size .8rem
+    padding 0.5rem
+    font-size 0.8rem
     &.align-center
       justify-content center
       margin-x auto

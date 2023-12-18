@@ -29,7 +29,7 @@ const computedTdClass = computed(() => {
   if (props.overflowAuto || props.col?.overflowAuto) list.push('overflow-auto');
   // verticalAlign
   const verticalAlign = props.verticalAlign || props.col?.verticalAlign;
-  if (verticalAlign) list.push(`vertical-align--${verticalAlign}`)
+  if (verticalAlign) list.push(`vertical-align--${verticalAlign}`);
   return list;
 });
 const computedSpanClass = computed(() => {
@@ -71,24 +71,18 @@ const isColumnDisplayed = computed(() => {
   return hooks.isColumnDisplayed(props.col);
 });
 
-hooks.preventUnusedError([
-  isColumnDisplayed,
-  computedStyle,
-]);
+hooks.preventUnusedError([isColumnDisplayed, computedStyle]);
 </script>
 
 <template lang="pug">
-td.ck-td(
-v-if="isColumnDisplayed"
-:class="computedTdClass"
-)
+td.ck-td(v-if="isColumnDisplayed" :class="computedTdClass")
   span(:class="computedSpanClass" :style="computedStyle")
     slot
 </template>
 
 <style lang="stylus" scoped>
 .ck-td
-  padding .5rem
+  padding 0.5rem
   border-bottom 1px solid $globalBorderColor
   &:last-of-type
     border none
