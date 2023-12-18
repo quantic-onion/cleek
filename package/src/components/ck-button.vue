@@ -53,6 +53,7 @@ const { windowWidth } = useWindowWidth();
 
 const defaultButtonType = 'outlined'; // move to default file
 const defaultColor = 'primary'; // move to default file
+const defaultBackgroundColor = 'transparent'; // move to default file
 const defaultAlign = 'left'; // move to default file
 
 let cleekOptions: Ref<undefined | CleekOptions> = ref();
@@ -74,6 +75,11 @@ const computedClass = computed(() => {
     } else {
       list.push(`ck-component__border-color--${props.color}`);
     }
+  }
+  // backgroundColor
+  const bgColor = props.backgroundColor || defaultBackgroundColor;
+  if (bgColor !== defaultBackgroundColor && hooks.isColorTemplateVariable(bgColor)) {
+    list.push(`ck-component__bg-color--${bgColor}`);
   }
   // align
   const align = props.align || defaultAlign;
@@ -104,6 +110,11 @@ const computedStyle = computed(() => {
   }
   // width
   if (props.width && !isWidthDefined) list.push({ width: props.width });
+  // backgroundColor
+  const bgColor = props.backgroundColor || defaultBackgroundColor;
+  if (bgColor !== defaultBackgroundColor && !hooks.isColorTemplateVariable(bgColor)) {
+    list.push({ 'background-color': bgColor });
+  }
   return list;
 });
 
@@ -150,7 +161,7 @@ type="button"
 </template>
 
 <style lang="stylus" scoped>
-@import '../styles/.variables.styl'
+@import '../styles/.variables.styl';
 
 button
   cursor pointer
@@ -162,7 +173,7 @@ button
   font-size $globalFontSize
   padding $globalPadding (2 * $globalPadding)
   justify-content flex-start
-  background-color white
+  background-color transparent
   &.ck-button__align--center
     justify-content center
   &.ck-button__align--right

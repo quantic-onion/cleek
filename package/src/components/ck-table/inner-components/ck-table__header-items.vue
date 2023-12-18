@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 // components
+import CkIcon from '../../ck-icon.vue';
 import CkButton from '../../ck-button.vue';
 import CkInput from '../../ck-input.vue';
 // types
@@ -19,6 +20,7 @@ const props = defineProps<{
   listLength: number;
   layout: Layout;
   version: TableVersion;
+  isLoading: { type: boolean, default: undefined };
 }>();
 
 const emits = defineEmits<{
@@ -94,10 +96,12 @@ hooks.preventUnusedError([
     )
     //- pages
     .items-per-page(
-    v-if="itemsPerPageIsVisible"
     :class="{ 'ck-component__group--left': (isSearchVisible) }"
     )
-      | {{ itemsPerPageStart }} - {{ itemsPerPageEnd }} de {{ listLength }}
+      template(v-if="isLoading !== false && listLength === 0")
+        ck-icon.px-2(icon="spinner" spin)
+      template(v-else-if="itemsPerPageIsVisible")
+        | {{ itemsPerPageStart }} - {{ itemsPerPageEnd }} de {{ listLength }}
     //- search
     ck-input.ck-table--search-input(
     v-if="isSearchVisible"

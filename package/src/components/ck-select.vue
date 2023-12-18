@@ -26,7 +26,9 @@ const props = defineProps<{
   modelValue: any;
   prop?: string; // SHOULD BE DELETED REPLACE BY reduceNameProp
   reduceValueProp?: string;
+  reduceValueMethod?: string;
   reduceNameProp?: string; // prop of the object showed in HTML
+  reduceNameMethod?: string; // method of the object showed in HTML
   autofocus?: boolean; // CHECK
   notReduce?: boolean; // notReduce value & name
   notReduceValue?: boolean;
@@ -228,11 +230,13 @@ function onClick(event: Event) {
 function getOptionValue(option: SelectOption) {
   if (props.reduceValueFunction) return props.reduceValueFunction(option);
   if (props.notReduceValue || props.notReduce) return option;
+  if (props.reduceValueMethod) return option[props.reduceValueMethod]();
   return option[props.reduceValueProp || defaultReduceValueProp];
 }
 function getOptionName(option: SelectOption) {
   if (props.reduceNameFunction) return props.reduceNameFunction(option);
   if (props.notReduce) return option;
+  if (props.reduceNameMethod) return option[props.reduceNameMethod]();
   const reduceNameProp = props.reduceNameProp || defaultReduceNameProp;
   return option[props.prop || reduceNameProp];
 }
