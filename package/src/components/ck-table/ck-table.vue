@@ -2,6 +2,7 @@
 import { computed, getCurrentInstance, onMounted, ref } from 'vue';
 import type { Ref } from 'vue';
 // components
+import CkIcon from '../ck-icon.vue';
 import CkTr from './ck-tr.vue';
 import CkTd from './ck-td.vue';
 import { qmObj } from 'quantic-methods';
@@ -29,6 +30,8 @@ const props = defineProps<{
   paginationAlign?: Align;
   // header items
   search?: string;
+  loadingText?: string;
+  isLoading?: { type: boolean, default: undefined };
   hideHeaderActions?: boolean;
   showRefreshBtn?: boolean;
   hideItemsPerPage?: boolean;
@@ -62,6 +65,10 @@ const { windowWidth } = useWindowWidth();
 
 const isPopupActive = ref({
   columnsManager: false,
+});
+const defaultLoadingText = computed(() => {
+  if (cleekOptions.value?.lang === 'es') return 'Cargando'; 
+  return 'Loading';
 });
 const defaultNoResultsText = computed(() => {
   if (cleekOptions.value?.lang === 'es') return 'No se encontraron resultados';
@@ -186,6 +193,7 @@ hooks.preventUnusedError([
 TableColumnsManager(
   v-if="hasColumnsManager && columnsAreObj"
   v-model="isPopupActive.columnsManager"
+  :isLoading="isLoading"
   :columnsArray="columnsArray"
   :columns="columns || []"
 )
@@ -227,8 +235,12 @@ TableColumnsManager(
       tbody
         slot
         slot(name="desktop")
-        //- noResultsText - if not used, listLength = undefined 
-        ck-tr(v-if="listLength === 0")
+        //- noResultsText - if not used, listLength = undefined
+        ck-tr(v-if="isLoading")
+          ck-td.no-result-text(colspan="100%" align="center")
+            ck-icon.mr-2(icon="spinner" spin)
+            | {{ loadingText || defaultLoadingText }}...
+        ck-tr(v-else-if="isLoading !== false && listLength === 0")
           ck-td.no-result-text(colspan="100%" align="center")
             | {{ noResultsText || defaultNoResultsText }}
       //- footer
