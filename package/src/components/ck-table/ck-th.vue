@@ -44,10 +44,12 @@ const computedStyle = computed(() => {
 });
 </script>
 
-<template lang="pug">
-th.ck-th
-  span(:class="computedSpanClass" :style="computedStyle")
-    slot
+<template>
+<th class="ck-th">
+  <span :class="computedSpanClass" :style="computedStyle">
+    <slot/>
+  </span>
+</th>
 </template>
 
 <style lang="stylus" scoped>

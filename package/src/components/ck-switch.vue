@@ -66,24 +66,45 @@ function handleSwitchClick(e: Event) {
 }
 </script>
 
-<template lang="pug">
-label.ck-switch(v-bind="computedAttributes" :class="computedClass" @keydown.space.prevent)
-  input.ck-switch__input(
+<template>
+<label
+  v-bind="computedAttributes"
+  class="ck-switch"
+  :class="computedClass"
+  @keydown.space.prevent
+>
+  <input
+    class="ck-switch__input"
     type="checkbox"
     v-model="value"
     aria-hidden="true"
     :disabled="disabled"
     @click="handleSwitchClick($event)"
-  )
-  .ck-switch__slider-container
-    //- slider
-    .ck-switch__slider
-    //- icon-left
-    ck-icon.ck-switch__icon-left(v-if="icon && value" :icon="icon" :icon-pack="iconPack" :class="iconClass")
-    //- icon-right
-    ck-icon.ck-switch__icon-right(v-if="icon && !value" :icon="icon" :icon-pack="iconPack" :class="iconClass")
-  span.ck-switch__content(v-if="$slots.default")
-    slot
+  />
+  <div class="ck-switch__slider-container">
+    <!-- slider -->
+    <div class="ck-switch__slider"/>
+    <!-- icon-left -->
+    <ck-icon
+      v-if="icon && value"
+      class="ck-switch__icon-left"
+      :icon="icon"
+      :icon-pack="iconPack"
+      :class="iconClass"
+    />
+    <!-- icon-right -->
+    <ck-icon
+      v-if="icon && !value"
+      class="ck-switch__icon-right"
+      :icon="icon"
+      :icon-pack="iconPack"
+      :class="iconClass"
+    />
+  </div>
+  <span v-if="$slots.default" class="ck-switch__content">
+    <slot/>
+  </span>
+</label>
 </template>
 
 <style lang="stylus" scoped>

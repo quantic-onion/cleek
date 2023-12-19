@@ -46,16 +46,22 @@ const computedStyle = computed(() => {
     list.push({ color: props.textColor || 'white' });
   }
   return list;
-  return [];
 });
 </script>
 
-<template lang="pug">
-.ck-chip(:color="color" :class="computedClass" :style="computedStyle" @click="emits('click', $event)")
-  ck-icon.pr-2(v-if="icon && !iconRight" :icon="icon" :icon-pack="iconPack")
-  span
-    slot
-  ck-icon.pl-2(v-if="icon && iconRight" :icon="icon" :icon-pack="iconPack")
+<template>
+<div class="ck-chip"
+  :color="color"
+  :class="computedClass"
+  :style="computedStyle"
+  @click="emits('click', $event)"
+>
+  <ck-icon v-if="icon && !iconRight" class="pr-2" :icon="icon" :icon-pack="iconPack"/>
+  <span>
+    <slot/>
+  </span>
+  <ck-icon v-if="icon && iconRight" class="pl-2" :icon="icon" :icon-pack="iconPack"/>
+</div>
 </template>
 
 <style lang="stylus" scoped>

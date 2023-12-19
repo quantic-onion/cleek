@@ -184,13 +184,21 @@ onMounted(() => {
 });
 </script>
 
-<template lang="pug">
-.ck-input(:style="computedStyle")
-  //- label
-  ck-label(v-if="label" :align="realLabelAlign" for="ck-input" :size="size") {{ label }}
-  //- icon left
-  ck-icon.ck-input__icon-left(v-if="icon" :color="iconColor ? iconColor : 'lightgrey'" :icon="icon" :icon-pack="iconPack")
-  input(
+<template>
+<div class="ck-input" :style="computedStyle">
+  <!-- label -->
+  <ck-label v-if="label" for="ck-input" :size="size" :align="realLabelAlign">
+    {{ label }}
+  </ck-label>
+  <!-- icon left -->
+  <ck-icon
+    v-if="icon"
+    class="ck-input__icon-left"
+    :color="iconColor ? iconColor : 'lightgrey'"
+    :icon="icon"
+    :icon-pack="iconPack"
+  />
+  <input
     v-if="isShowingPassword"
     v-model="value"
     ref="realInput"
@@ -205,8 +213,8 @@ onMounted(() => {
     @click="onClick($event)"
     @focus="emits('focus', $event)"
     @blur="emits('blur', $event)"
-  )
-  input(
+  />
+  <input
     v-else
     v-model="value"
     ref="realInput"
@@ -221,15 +229,23 @@ onMounted(() => {
     @click="onClick($event)"
     @focus="emits('focus', $event)"
     @blur="emits('blur', $event)"
-  )
-  .show-password(
+  />
+  <div class="show-password"
     v-if="type === 'password'"
     :class="layout || cleekOptions?.styles.layout"
     @click="isShowingPassword = !isShowingPassword"
-  )
-    ck-icon(:icon="isShowingPassword ? 'eye-slash' : 'eye'")
-  //- icon right
-  ck-icon.ck-input__icon-right(v-if="iconRight && type !== 'password'" color="lightgrey" :icon="iconRight" :icon-pack="iconPack")
+  >
+    <ck-icon :icon="isShowingPassword ? 'eye-slash' : 'eye'"/>
+  </div>
+  <!-- icon right -->
+  <ck-icon
+    v-if="iconRight && type !== 'password'"
+    class="ck-input__icon-right"
+    color="lightgrey"
+    :icon="iconRight"
+    :icon-pack="iconPack"
+  />
+</div>
 </template>
 
 <style lang="stylus" scoped>

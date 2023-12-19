@@ -71,15 +71,25 @@ onMounted(() => {
 });
 </script>
 
-<template lang="pug">
-Teleport(to="body" v-if="isActive")
-  .ck-notify__container
-    .ck-notify(:class="computedClass" :style="computedStyle" @click="isActive = false; closeCallback()")
-      .ck-notify__title
-        .close-btn
-          ck-icon(icon="times")
-        | {{ title || defaultTitle }}
-      .ck-notify__text(v-html="text")
+<template>
+<teleport v-if="isActive" to="body">
+  <div class="ck-notify__container">
+    <div
+      class="ck-notify"
+      :class="computedClass"
+      :style="computedStyle"
+      @click="isActive = false; closeCallback()"
+    >
+      <div class="ck-notify__title">
+        <div class="close-btn">
+          <ck-icon icon="times"/>
+        </div>
+        {{ title || defaultTitle }}
+      </div>
+      <div class="ck-notify__text" v-html="text"/>
+    </div>
+  </div>
+</teleport>
 </template>
 
 <style lang="stylus" scoped>

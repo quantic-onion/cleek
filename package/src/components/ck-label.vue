@@ -22,12 +22,14 @@ const computedClass = computed(() => {
 });
 </script>
 
-<template lang="pug">
-label.ck-label(
-:for="for"
+<template>
+<label
+class="ck-label"
+:for="props.for"
 :class="computedClass"
-)
-  slot
+>
+  <slot/>
+</label>
 </template>
 
 <style lang="stylus" scoped>

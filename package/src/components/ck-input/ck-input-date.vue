@@ -64,14 +64,21 @@ function dateToString(date: Date) {
 }
 </script>
 
-<template lang="pug">
-ck-div(:widthBreaks="widthBreaks")
-  .ck-input-date(:class="computedClass")
-    input.ck-input-date--focus-absorber(ref="refFocusAbsorber")
-    ck-label
-      | {{ label }}
-    //- typeable
-    Datepicker(v-model="inputValue" inputFormat="dd-MM-yyyy" @change="emits('change', inputValue)")
+<template>
+<ck-div :widthBreaks="widthBreaks">
+  <div class="ck-input-date" :class="computedClass">
+    <input ref="refFocusAbsorber" class="ck-input-date--focus-absorber">
+    <ck-label>
+      {{ label }}
+    </ck-label>
+    <!-- typeable -->
+    <Datepicker
+      v-model="inputValue"
+      inputFormat="dd-MM-yyyy"
+      @change="emits('change', inputValue)"
+    />
+  </div>
+</ck-div>
 </template>
 
 <style lang="stylus" scoped>

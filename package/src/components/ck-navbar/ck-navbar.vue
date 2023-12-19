@@ -24,10 +24,12 @@ const computedStyle = computed(() => {
 });
 </script>
 
-<template lang="pug">
-.ck-navbar(:style="computedStyle")
-  .ck-navbar__content(:class="computedClassContent")
-    slot
+<template>
+<div class="ck-navbar" :style="computedStyle">
+  <div class="ck-navbar__content" :class="computedClassContent">
+    <slot/>
+  </div> 
+</div> 
 </template>
 
 <style lang="stylus" scoped>

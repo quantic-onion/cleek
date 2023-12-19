@@ -188,19 +188,19 @@ hooks.preventUnusedError([
 ]);
 </script>
 
-<template lang="pug">
-//- columns manager
-TableColumnsManager(
+<template>
+<!-- columns manager -->
+<TableColumnsManager(
   v-if="hasColumnsManager && columnsAreObj"
   v-model="isPopupActive.columnsManager"
   :isLoading="isLoading"
   :columnsArray="columnsArray"
   :columns="columns || []"
-)
-.ck-table
-  .ck-table__header(v-if="$slots.header || !hideHeaderActions")
-    //- header items
-    TableHeaderItems(
+/>
+<div class="ck-table">
+  <div v-if="$slots.header || !hideHeaderActions" class="ck-table__header">
+    <!-- header items -->
+    <TableHeaderItems
       v-model:search="searchLocal"
       :hideHeaderActions="hideHeaderActions"
       :currentPage="currentPage"
@@ -213,55 +213,73 @@ TableColumnsManager(
       :version="realTableVersion"
       @refreshList="refreshList($event)"
       @openColumnsManager="openColumnsManager()"
-    )
-    //- header slot
-    .ck-table__header--slot(v-if="$slots.header")
-      slot(name="header")
+    />
+    <!-- header slot -->
+    <div v-if="$slots.header" class="ck-table__header--slot">
+      <slot name="header"/>
+    </div>
+  </div>
+  <!-- desktop -->
+  <div
+    v-if="!isMobileVisible"
+    class="ck-table__table-container"
+    :class="{ 'not-overflow': notOverflow }"
+  >
+    <table class="ck-table__table" :class="computedClassTable">
+      <!-- header -->
+      <thead v-if="filteredColumnsList.length && !($slots.mobile && isMobileVisible)">
+        <ck-tr class="header-row">
+          <ck-table-title
+            v-for="col in filteredColumnsList"
+            :key="col.title"
+            :col="col"
+            :textColor="realHeaderTextColor"
+            :backgroundColor="realHeaderBackgroundColor"
+          />
+        </ck-tr>
+      </thead>
+      <!-- body -->
+      <tbody>
+        <slot/>
+        <slot name="desktop"/>
+        <!-- noResultsText - if not used, listLength = undefined -->
+        <ck-tr v-if="isLoading">
+          <ck-td class="no-result-text" colspan="100%" align="center">
+            <ck-icon class="mr-2" icon="spinner" spin/>
+            {{ loadingText || defaultLoadingText }}...
+          </ck-td>
+        </ck-tr>
+        <ck-tr v-else-if="isLoading !== false && listLength === 0">
+          <ck-td class="no-result-text" colspan="100%" align="center">
+            {{ noResultsText || defaultNoResultsText }}
+          </ck-td>
+        </ck-tr>
+      </tbody>
+      <!-- footer -->
+      <tfoot v-if="$slots.footer">
+        <slot name="footer"/>
+      </tfoot>
+    </table>
+  </div>
+  <!-- @update:currentPage="testCurrentPage($event)" -->
 
-  //- desktop
-  .ck-table__table-container(v-if="!isMobileVisible" :class="{ 'not-overflow': notOverflow }")
-    table.ck-table__table(:class="computedClassTable")
-      //- header
-      thead(v-if="filteredColumnsList.length && !($slots.mobile && isMobileVisible)")
-        ck-tr.header-row
-          ck-table-title(
-          v-for="col in filteredColumnsList"
-          :key="col.title"
-          :col="col"
-          :textColor="realHeaderTextColor"
-          :backgroundColor="realHeaderBackgroundColor"
-          )
-      //- body
-      tbody
-        slot
-        slot(name="desktop")
-        //- noResultsText - if not used, listLength = undefined
-        ck-tr(v-if="isLoading")
-          ck-td.no-result-text(colspan="100%" align="center")
-            ck-icon.mr-2(icon="spinner" spin)
-            | {{ loadingText || defaultLoadingText }}...
-        ck-tr(v-else-if="isLoading !== false && listLength === 0")
-          ck-td.no-result-text(colspan="100%" align="center")
-            | {{ noResultsText || defaultNoResultsText }}
-      //- footer
-      tfoot(v-if="$slots.footer")
-        slot(name="footer")
-  //- @update:currentPage="testCurrentPage($event)"
+  <!-- mobile -->
+  <div v-if="isMobileVisible" class="ck-table--mobile-container">
+    <slot name="mobile"/>
+  </div>
 
-  //- mobile
-  .ck-table--mobile-container(v-if="isMobileVisible")
-    slot(name="mobile")
-
-  //- pagination
-  TablePagination.ck-table__pagination(
+  <!-- pagination -->
+  <TablePagination
     v-model:currentPage="currentPageLocal"
+    class="ck-table__pagination"
     :currentPage="currentPage"
     :itemsPerPage="itemsPerPage"
     :listLength="listLength"
     :align="paginationAlign"
     :layout="realLayout"
     @refreshList="refreshList(true)"
-  )
+  />
+</div>
 </template>
 
 <style lang="stylus">

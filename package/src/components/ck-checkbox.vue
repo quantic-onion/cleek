@@ -35,18 +35,27 @@ function onTrigger() {
 }
 </script>
 
-<template lang="pug">
-label.ck-checkbox(v-bind="checkboxAttributes" @keydown.space.prevent @keyup.enter="onTrigger()" @keyup.space="onTrigger()")
-  input.ck-checkbox__input(
+<template>
+<label
+  v-bind="checkboxAttributes"
+  class="ck-checkbox"
+  @keydown.space.prevent
+  @keyup.enter="onTrigger()"
+  @keyup.space="onTrigger()"
+>
+  <input
+    class="ck-checkbox__input"
     aria-hidden="true"
     type="checkbox"
     :disabled="disabled"
     :checked="value"
     @change="value = $event.target.checked; onChange($event)"
-  )
-  .ck-checkbox__element
-  span.c-Checkbox__label(v-if="$slots.default")
-    slot
+  />
+  <div class="ck-checkbox__element"/>
+  <span v-if="$slots.default" class="c-Checkbox__label">
+    <slot/>
+  </span>
+</label>
 </template>
 
 <style lang="stylus" scoped>

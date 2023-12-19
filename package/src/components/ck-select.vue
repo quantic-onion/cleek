@@ -257,31 +257,55 @@ onMounted(() => {
 hooks.preventUnusedError([computedStyle, computedClassSelect, getOptionValue, onClick, filteredOptions]);
 </script>
 
-<template lang="pug">
-.ck-select(:style="computedStyle" :class="computedClass") 
-  //- icon left
-  ck-icon.ck-select__icon-left(v-if="icon" color="lightgrey" :icon="icon" :icon-pack="iconPack")
-  //- icon right
-  ck-icon.ck-select__icon-right(v-if="iconRight" color="lightgrey" :icon="iconRight" :icon-pack="iconPack")
-  .ck-select__clear-btn(v-if="isClearBtnVisible" @click="setClearValue()")
-    ck-icon(icon="times")
-  //- label
-  ck-label(v-if="label" :align="labelAlign" for="ck-input") {{ label }}
-  //- select
-  select(
+<template>
+<div class="ck-select" :style="computedStyle" :class="computedClass">
+  <!-- icon left -->
+  <ck-icon
+    v-if="icon"
+    class="ck-select__icon-left"
+    color="lightgrey"
+    :icon="icon"
+    :icon-pack="iconPack"
+  />
+  <!-- icon right -->
+  <ck-icon
+    v-if="iconRight"
+    class="ck-select__icon-right"
+    color="lightgrey"
+    :icon="iconRight"
+    :icon-pack="iconPack"
+  />
+  <div v-if="isClearBtnVisible" class="ck-select__clear-btn" @click="setClearValue()">
+    <ck-icon icon="times"/>
+  </div>
+  <!-- label -->
+  <ck-label v-if="label" :align="labelAlign" for="ck-input">
+    {{ label }}
+  </ck-label>
+  <!-- select -->
+  <select
     v-model="value"
     :class="computedClassSelect"
     :style="computedStyleSelect"
     :disabled="disabled || isOptionsListEmpty"
     @click="onClick($event)"
-  )
-    //- option
-    option(v-for="option in filteredOptions" :value="getOptionValue(option)" :key="option")
-      | {{ getOptionName(option) }}
-  span.ck-select--placeholder(v-if="isEmptyOptionsMsgVisible")
-    | {{ emptyOptionsMsg }}
-  span.ck-select--placeholder(v-else-if="isPlaceholderVisible")
-    | {{ placeholder }}
+  >
+    <!-- option -->
+    <option
+      v-for="option in filteredOptions"
+      :value="getOptionValue(option)"
+      :key="option"
+    >
+      {{ getOptionName(option) }}
+    </option>
+  </select>
+  <span v-if="isEmptyOptionsMsgVisible" class="ck-select--placeholder">
+    {{ emptyOptionsMsg }}
+  </span>
+  <span v-else-if="isPlaceholderVisible" class="ck-select--placeholder">
+    {{ placeholder }}
+  </span>
+</div>
 </template>
 
 <style lang="stylus" scoped>

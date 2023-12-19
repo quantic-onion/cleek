@@ -83,39 +83,44 @@ function checkRefresh() {
 hooks.preventUnusedError([searchGroupValue, checkRefresh]);
 </script>
 
-<template lang="pug">
-.ck-table__header-items(:class="computedClass")
-  template(v-if="!hideHeaderActions")
-    //- refresh btn
-    ck-button(
+<template>
+<div class="ck-table__header-items" :class="computedClass">
+  <template v-if="!hideHeaderActions">
+    <!-- refresh btn -->
+    <ck-button
       v-if="refreshBtnIsVisible"
       type="flat"
       icon="rotate-right"
       title="Recargar lista"
       :layout="layout"
       @click="emits('refreshList', true)"
-    )
-    //- pages
-    .items-per-page(
-    :class="{ 'ck-component__group--left': (isSearchVisible) }"
-    )
-      template(v-if="isLoading !== false && listLength === 0")
-        ck-icon.px-2(icon="spinner" spin)
-      template(v-else-if="itemsPerPageIsVisible")
-        | {{ itemsPerPageStart }} - {{ itemsPerPageEnd }} de {{ listLength }}
-    //- search
-    ck-input.ck-table--search-input(
+    />
+    <!-- pages -->
+    <div
+      class="items-per-page"
+      :class="{ 'ck-component__group--left': (isSearchVisible) }"
+    >
+      <template v-if="isLoading !== false && listLength === 0">
+        <ck-icon class="px-2" icon="spinner" spin/>
+      </template>
+      <template v-else-if="itemsPerPageIsVisible">
+        {{ itemsPerPageStart }} - {{ itemsPerPageEnd }} de {{ listLength }}
+      </template>
+    </div>
+    <!-- search -->
+    <ck-input
       v-if="isSearchVisible"
       v-model="searchLocal"
+      class="ck-table--search-input"
       icon="magnifying-glass"
       placeholder="Buscar..."
       :group="searchGroupValue"
       :layout="layout"
       :borderColor="version === 'colored' ? 'white' : ''"
       @input="checkRefresh()"
-    )
-    //- columns manager
-    ck-button(
+    />
+    <!-- columns manager -->
+    <ck-button
       icon="columns"
       type="filled"
       title="Administrador de columnas"
@@ -123,7 +128,9 @@ hooks.preventUnusedError([searchGroupValue, checkRefresh]);
       :group="itemsPerPageIsVisible || isSearchVisible ? 'right' : ''"
       :layout="layout"
       @click="emits('openColumnsManager')"
-    )
+    />
+  </template>
+</div>
 </template>
 
 <style lang="stylus" scoped>

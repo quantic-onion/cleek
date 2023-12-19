@@ -69,20 +69,26 @@ function getOptionValue(option: Option) {
 functions.preventUnusedError([getOptionValue]);
 </script>
 
-<template lang="pug">
-.ck-switch-options__container-exterior
-  //- label
-  ck-label(v-if="label" :align="labelAlign") {{ label }}
-  //- switch options
-  .ck-switch-options__container(:class="computedClass")
-    .ck-switch-options__option(
+<template>
+<div class="ck-switch-options__container-exterior">
+  <!-- label -->
+  <ck-label v-if="label" :align="labelAlign">
+    {{ label }}
+  </ck-label>
+  <!-- switch options -->
+  <div class="ck-switch-options__container" :class="computedClass">
+    <div
       v-for="(option, index) in options"
+      class="ck-switch-options__option"
       :key="`ck-switch-options${index}`"
       :class="{ selected: selectedOption == getOptionValue(option) }"
       :style="computedItemStyle"
       @click="selectedOption = getOptionValue(option)"
-    )
-      | {{ option[prop || defaultProp] }}
+    >
+      {{ option[prop || defaultProp] }}
+    </div>
+  </div>
+</div>
 </template>
 
 <style lang="stylus" scoped>

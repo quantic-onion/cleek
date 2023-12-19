@@ -122,9 +122,20 @@ onMounted(() => {
 hooks.preventUnusedError([computedImgStyle, computedStyle, computedClass, clickImg]);
 </script>
 
-<template lang="pug">
-.ck-img(:class="computedClass" :style="computedStyle" @click="clickImg()")
-  img(:src="imageUrl" :style="computedImgStyle" :alt="alt" @error="altNeeded = true")
+<template>
+<div
+  class="ck-img"
+  :class="computedClass"
+  :style="computedStyle"
+  @click="clickImg()"
+>
+  <img
+    :src="imageUrl"
+    :style="computedImgStyle"
+    :alt="alt"
+    @error="altNeeded = true"
+  />
+</div>
 </template>
 
 <style lang="stylus" scoped>

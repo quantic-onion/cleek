@@ -43,21 +43,35 @@ defineExpose({
 });
 </script>
 
-<template lang="pug">
-.ck-confirm--background
-  .ck-confirm
-    .ck-confirm__icon
-      //- ck-img(src="cleek/hexagon-exclamation.png" height="7rem")
-      img.ck-confirm__icon--img(src="https://img.quanticonion.com/icons/hexagon-exclamation.png" height="7rem")
-    .ck-confirm__title {{ title || defaultTitle }}
-    .ck-confirm__message {{ msg }}
-    .ck-confirm__buttons-container
-      //- ck-button.mr-2(@click="onCancel()" color="light" type="filled")
-      button.ck-confirm__button--cancel(@click="onCancel()")
-        | {{ cancelText || defaultCancelText }}
-      //- ck-button(@click="onAccept()" type="filled" color="danger")
-      button.ck-confirm__button--accept(@click="onAccept()")
-        | {{ acceptText || defaultAcceptText }}
+<template>
+<div class="ck-confirm--background">
+  <div class="ck-confirm">
+    <div class="ck-confirm__icon">
+      <!-- <ck-img src="cleek/hexagon-exclamation.png" height="7rem"/> -->
+      <img
+        class="ck-confirm__icon--img"
+        src="https://img.quanticonion.com/icons/hexagon-exclamation.png"
+        height="7rem"
+      />
+    </div>
+    <div class="ck-confirm__title">
+      {{ title || defaultTitle }}
+    </div>
+    <div class="ck-confirm__message">
+      {{ msg }}
+    </div>
+    <div class="ck-confirm__buttons-container">
+      <!-- <ck-button class="mr-2" color="light" type="filled" @click="onCancel()"/> -->
+      <button class="ck-confirm__button--cancel" @click="onCancel()">
+        {{ cancelText || defaultCancelText }}
+      </button>
+      <!-- <ck-button type="filled" color="danger" @click="onAccept()"/> -->
+      <button class="ck-confirm__button--accept" @click="onAccept()">
+        {{ acceptText || defaultAcceptText }}
+      </button>
+    </div>
+  </div>
+</div>
 </template>
 
 <style lang="stylus" scoped>

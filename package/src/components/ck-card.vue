@@ -49,17 +49,36 @@ onMounted(() => {
 });
 </script>
 
-<template lang="pug">
-.ck-card(v-if="isActive" :class="computedClass")
-  .ck-card__header(v-if="title || !computedHideCloseBtn")
-    .ck-card__header-title(v-if="title") {{ title }}
-    .ck-card__close-btn(v-if="!computedHideCloseBtn" @click="isActive = false")
-      ck-icon(icon="times")
-  .ck-card__body
-    .ck-card__header-subtitle(v-if="subtitle")
-      | {{ subtitle }}
-    .ck-card__content(:class="{ 'content-block': block }")
-      slot
+<template>
+<div
+  v-if="isActive"
+  class="ck-card"
+  :class="computedClass"
+>
+  <div
+    v-if="title || !computedHideCloseBtn"
+    class="ck-card__header"
+  >
+    <div v-if="title" class="ck-card__header-title">
+      {{ title }}
+    </div>
+    <div
+      v-if="!computedHideCloseBtn"
+      class="ck-card__close-btn"
+      @click="isActive = false"
+    >
+      <ck-icon icon="times"/>
+    </div>
+  </div>
+  <div class="ck-card__body">
+    <div v-if="subtitle" class="ck-card__header-subtitle">
+      {{ subtitle }}
+    </div>
+    <div class="ck-card__content" :class="{ 'content-block': block }">
+      <slot/>
+    </div>
+  </div>
+</div>
 </template>
 
 <style lang="stylus" scoped>

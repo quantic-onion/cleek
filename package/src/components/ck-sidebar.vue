@@ -64,17 +64,28 @@ const computedStyleHeader = computed(() => {
 });
 </script>
 
-<template lang="pug">
-.ck-sidebar-background(v-if="isActive" @click.self="isActive = false")
-  .sidebar-content(:class="computedClass" :style="computedStyle")
-    //- header
-    .sidebar-header(v-if="title" :class="computedClassHeader" :style="computedStyleHeader" @click="isActive = false")
-      .sidebar-header-title(v-if="title")
-        | {{ title }}
-      ck-icon.close-btn(icon="times")
-    //- content
-    div
-      slot
+<template>
+<div v-if="isActive" class="ck-sidebar-background" @click.self="isActive = false">
+  <div class="sidebar-content" :class="computedClass" :style="computedStyle">
+    <!-- header -->
+    <div
+      v-if="title"
+      class="sidebar-header"
+      :class="computedClassHeader"
+      :style="computedStyleHeader"
+      @click="isActive = false"
+    >
+      <div v-if="title" class="sidebar-header-title">
+        {{ title }}
+      </div>
+      <ck-icon class="close-btn" icon="times"/>
+    </div>
+    <!-- content -->
+    <div>
+      <slot/>
+    </div>
+  </div>
+</div>
 </template>
 
 <style lang="stylus" scoped>

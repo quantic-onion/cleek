@@ -152,40 +152,71 @@ onMounted(() => {
 });
 </script>
 
-<template lang="pug">
-teleport(v-if="isActive" to="body")
-  .ck-popup
-    .blackout
-    .popup-container(@mousedown="onBgClick()")
-      .ck-popup__content(@mousedown.stop="" :style="computedStyleContent" :class="computedClassContent")
-        .ck-popup__slot-header(:style="computedStyleHeader" :class="computedClassHeader")
-          //- title
-          h3.ck-popup__title(v-if="title")
-            | {{ title }}
-          //- header slot
-          slot(name="header")
-          //- close btn
-          ck-icon.icon-close(icon="times" v-if="isCloseBtnVisible" @click="isActive = false")
-        //- VuePerfectScrollbar.ck-popup__slot-body
-        .ck-popup__slot-body
-          slot
-        .ck-popup__slot-footer(v-if="$slots.footer || confirmButtons || acceptButton || cancelButton")
-          slot(name="footer")
-          .ck-popup-slot-footer__confirm-buttons(v-if="confirmButtons || acceptButton || cancelButton")
-            ck-button.cancel-button(
+<template>
+<teleport v-if="isActive" to="body">
+  <div class="ck-popup">
+    <div class="blackout"/>
+    <div class="popup-container" @mousedown="onBgClick()">
+      <div
+        class="ck-popup__content"
+        :style="computedStyleContent"
+        :class="computedClassContent"
+        @mousedown.stop=""
+      >
+        <div
+          class="ck-popup__slot-header"
+          :style="computedStyleHeader"
+          :class="computedClassHeader"
+        >
+          <!-- title -->
+          <h3 v-if="title" class="ck-popup__title">
+            {{ title }}
+          </h3>
+          <!-- header slot -->
+          <slot name="header"/>
+          <!-- close btn -->
+          <ck-icon
+            v-if="isCloseBtnVisible"
+            class="icon-close"
+            icon="times"
+            @click="isActive = false"
+          />
+        </div>
+        <div class="ck-popup__slot-body">
+          <slot/>
+        </div>
+        <div
+          v-if="$slots.footer || confirmButtons || acceptButton || cancelButton"
+          class="ck-popup__slot-footer"
+        >
+          <slot name="footer"/>
+          <div
+            v-if="confirmButtons || acceptButton || cancelButton"
+            class="ck-popup-slot-footer__confirm-buttons"
+          >
+            <ck-button
               v-if="confirmButtons || cancelButton"
+              class="cancel-button"
               color="danger"
               :type="realCancelBtnType"
               @click="onCancel()"
-            )
-              | {{ realCancelBtnText }}
-            ck-button(
+            >
+              {{ realCancelBtnText }}
+            </ck-button>
+            <ck-button
             v-if="confirmButtons || acceptButton"
             :type="realAcceptBtnType"
             :isLoading="isLoading"
             @click="onAccept()"
-            )
-              | {{ realAcceptBtnText }}
+            >
+              {{ realAcceptBtnText }}
+            </ck-button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</teleport>
 </template>
 
 <style lang="stylus">

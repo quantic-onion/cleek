@@ -73,12 +73,23 @@ function setColumnDisplayValue(colName: string, value: any) {
 }
 </script>
 
-<template lang="pug">
-ck-popup(v-model="isActive" title="Administrador de columnas")
-  .columns-manger-container
-    .columns-manger__item(v-for="(col, colIndex) in columnsCheckable" :key="colIndex")
-      ck-checkbox(v-model="col.value" @change="setColumnDisplayValue(col.name, col.value)")
-        | {{ col.title }}
+<template>
+<ck-popup v-model="isActive" title="Administrador de columnas">
+  <div class="columns-manger-container">
+    <div
+      v-for="(col, colIndex) in columnsCheckable"
+      class="columns-manger__item"
+      :key="colIndex"
+    >
+      <ck-checkbox
+        v-model="col.value"
+        @change="setColumnDisplayValue(col.name, col.value)"
+      >
+        {{ col.title }}
+      </ck-checkbox>
+    </div>
+  </div>
+</ck-popup>
 </template>
 
 <style lang="stylus" scoped>

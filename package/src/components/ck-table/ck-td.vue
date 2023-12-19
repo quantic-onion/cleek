@@ -74,10 +74,12 @@ const isColumnDisplayed = computed(() => {
 hooks.preventUnusedError([isColumnDisplayed, computedStyle]);
 </script>
 
-<template lang="pug">
-td.ck-td(v-if="isColumnDisplayed" :class="computedTdClass")
-  span(:class="computedSpanClass" :style="computedStyle")
-    slot
+<template>
+<td v-if="isColumnDisplayed" :class="computedTdClass" class="ck-td">
+  <span :class="computedSpanClass" :style="computedStyle">
+    <slot/>
+  </span>
+</td>
 </template>
 
 <style lang="stylus" scoped>

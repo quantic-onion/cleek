@@ -1,19 +1,3 @@
-<template lang="pug">
-//- no date
-span.help-text(v-if="!computedDate")
-  | {{ noDateMsg }}
-
-//- date and time split
-.ck-datetime-shower--split(v-else-if="split || date" @click="emits('click', $event)")
-  | {{ computedDate }}
-  span.pl-1(v-if="computedTime")
-    | | {{ computedTime }}
-
-//- date shower
-.ck-datetime-shower(v-else v-tooltip="computedTime" @click="emits('click', $event)")
-  | {{ computedDate }}
-</template>
-
 <script setup lang="ts">
 import { qmDate } from 'quantic-methods';
 import { computed } from 'vue';
@@ -43,6 +27,32 @@ const computedDate = computed(() => {
   return qmDate.presentDate(props.datetime);
 });
 </script>
+
+<template>
+<!-- no date -->
+<span v-if="!computedDate" class="help-text">
+  {{ noDateMsg }}
+</span>
+<!-- date and time split -->
+<div
+  v-else-if="split || date"
+  class="ck-datetime-shower--split"
+  @click="emits('click', $event)"
+>
+  {{ computedDate }}
+  <span v-if="computedTime" class="pl-1">
+    | {{ computedTime }}
+  </span> 
+</div>
+<!-- date shower -->
+<div class="ck-datetime-shower"
+  v-else
+  v-tooltip="computedTime"
+  @click="emits('click', $event)"
+>
+  {{ computedDate }}
+</div>
+</template>
 
 <style lang="stylus" scoped>
 .ck-datetime-shower--split, .ck-datetime-shower

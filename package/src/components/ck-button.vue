@@ -129,8 +129,8 @@ onMounted(() => {
 hooks.preventUnusedError([onClick, computedStyle, computedClass]);
 </script>
 
-<template lang="pug">
-button(
+<template>
+<button
   type="button"
   :class="computedClass"
   :title="title"
@@ -138,19 +138,26 @@ button(
   :disabled="disabled"
   :style="computedStyle"
   @click="onClick($event)"
-)
-  p
-    test
-  ck-icon(v-if="isLoading" icon="spinner" spin)
-  template(v-else)
-    ck-icon.ck-button__icon-left(v-if="icon" :icon="icon" :icon-pack="iconPack" :class="{ 'just-icon': !$slots.default }")
-    slot
-    ck-icon.ck-button__icon-right(
+>
+  <ck-icon v-if="isLoading" icon="spinner" spin/>
+  <template v-else>
+    <ck-icon
+      class="ck-button__icon-left"
+      v-if="icon"
+      :icon="icon"
+      :icon-pack="iconPack"
+      :class="{ 'just-icon': !$slots.default }"
+    />
+    <slot/>
+    <ck-icon
       v-if="iconRight"
+      class="ck-button__icon-right"
       :icon="iconRight"
       :icon-pack="iconPack"
       :class="{ 'just-icon': !$slots.default }"
-    )
+    />
+  </template>
+</button>
 </template>
 
 <style lang="stylus" scoped>

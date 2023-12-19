@@ -3,7 +3,7 @@ import { computed, ref } from 'vue';
 import { qmDate } from 'quantic-methods';
 import type { Ref } from 'vue';
 // types
-import type { Align, WidthBreaks } from '../../types/cleek-options';
+import type { Align, AlignVertical, WidthBreaks } from '../../types/cleek-options';
 
 type stringTime = string | null;
 type numberTime = number | undefined;
@@ -33,13 +33,13 @@ const inputValue = computed({
 });
 </script>
 
-<template lang="pug">
-ck-input(
+<template>
+<ck-input
   v-model="inputValue"
   type="time"
   :label="label"
   :group="group"
   :widthBreaks="widthBreaks"
   @change="emits('change', inputValue)"
-)
+/>
 </template>

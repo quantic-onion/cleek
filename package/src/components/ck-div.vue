@@ -40,9 +40,14 @@ onMounted(() => {
 });
 </script>
 
-<template lang="pug">
-.ck-div(:style="computedStyle" @click="emits('click', $event)")
-  slot
+<template>
+<div
+  class="ck-div"
+  :style="computedStyle"
+  @click="emits('click', $event)"
+>
+  <slot/>
+</div>
 </template>
 
 <style lang="stylus">

@@ -109,34 +109,63 @@ onMounted(() => {
 });
 </script>
 
-<template lang="pug">
-.ck-table__pagination-container(v-if="currentPage && totalPages > 1" :class="computedClass")
-  .ck-table__pagination
-    //- arrow left
-    .ck-table__pagination--arrow-left(:class="{ disabled: !hasArrowLeft }" @click="currentPageLocal = currentPage - 1")
-      ck-icon(:icon="hasArrowLeft ? 'angle-left' : 'grip-lines-vertical'")
-    .ck-table__pagination--numbers-container
-      //- list left
-      .ck-table__pagination-item--left(v-for="num in listLeft" @click="currentPageLocal = num")
-        | {{ num }}
-      //- input
-      //- autoSelect 
-      //- width="50px"
-      //- align="center"
-      .ck-table__pagination-input-container
-        input.ck-table__pagination-input(
-          type="number"
+<template>
+<div
+v-if="currentPage && totalPages > 1"
+class="ck-table__pagination-container"
+:class="computedClass"
+>
+  <div class="ck-table__pagination">
+    <!-- arrow left -->
+    <div
+      class="ck-table__pagination--arrow-left"
+      :class="{ disabled: !hasArrowLeft }"
+      @click="currentPageLocal = currentPage - 1"
+    >
+      <ck-icon :icon="hasArrowLeft ? 'angle-left' : 'grip-lines-vertical'"/>
+    </div>
+    <div class="ck-table__pagination--numbers-container">
+      <!-- list left -->
+      <div
+        v-for="num in listLeft"
+        class="ck-table__pagination-item--left"
+        @click="currentPageLocal = num"
+      >
+        {{ num }}
+      </div>
+      <!-- input -->
+      <!-- autoSelect  -->
+      <!-- width="50px" -->
+      <!-- align="center" -->
+      <div class="ck-table__pagination-input-container">
+        <input
           v-model="currentPageInputValue"
+          class="ck-table__pagination-input"
+          type="number"
           @click="$event.target.select()"
           @change="updatePageByInput($event.target)"
-        )
-        .ck-table__pagination--input-pointer
-      //- list right
-      .ck-table__pagination-item--right(v-for="num in listRight" @click="currentPageLocal = num")
-        | {{ num }}
-    //- arrow right
-    .ck-table__pagination--arrow-right(:class="{ disabled: !hasArrowRight }" @click="onClickArrowRight()")
-      ck-icon(:icon="hasArrowRight ? 'angle-right' : 'grip-lines-vertical'")
+        />
+        <div class="ck-table__pagination--input-pointer"/>
+      </div>
+      <!-- list right -->
+      <div
+        v-for="num in listRight"
+        class="ck-table__pagination-item--right"
+        @click="currentPageLocal = num"
+      >
+        {{ num }}
+      </div>
+    </div>
+    <!-- arrow right -->
+    <div
+      class="ck-table__pagination--arrow-right"
+      :class="{ disabled: !hasArrowRight }"
+      @click="onClickArrowRight()"
+    >
+      <ck-icon :icon="hasArrowRight ? 'angle-right' : 'grip-lines-vertical'"/>
+    </div>
+  </div>
+</div>
 </template>
 
 <style lang="stylus" scoped>

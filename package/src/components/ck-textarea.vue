@@ -110,10 +110,12 @@ onMounted(() => {
 });
 </script>
 
-<template lang="pug">
-.ck-textarea
-  ck-label(v-if="label" :label-align="labelAlign") {{ label }}
-  textarea(
+<template>
+<div class="ck-textarea">
+  <ck-label v-if="label" :label-align="labelAlign">
+    {{ label }}
+  </ck-label>
+  <textarea
     v-model="inputValue"
     ref="refTextarea"
     :placeholder="placeholder"
@@ -123,7 +125,8 @@ onMounted(() => {
     @click="onClick($event)"
     @input="onInput($event)"
     @change="onChange($event)"
-  )
+  />
+</div>
 </template>
 
 <style lang="stylus" scoped>

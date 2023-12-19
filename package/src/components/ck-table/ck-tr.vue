@@ -1,6 +1,7 @@
-<template lang="pug">
-tr.ck-tr
-  slot
+<template>
+<tr class="ck-tr">
+  <slot/>
+</tr>
 </template>
 
 <style lang="stylus" scoped>

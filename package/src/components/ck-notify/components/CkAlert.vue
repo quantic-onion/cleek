@@ -27,9 +27,9 @@ defineExpose({
 });
 </script>
 
-<template lang="pug">
-teleport(to="body")
-  ck-popup(
+<template>
+<teleport to="body">
+  <ck-popup
     v-model="isActive"
     acceptButton
     notCloseBtn
@@ -39,8 +39,12 @@ teleport(to="body")
     :title="title || defaultTitle"
     :acceptBtnText="acceptText || defaultAcceptText"
     @accept="isActive = false"
-  )
-    .alert--msg {{ msg }}
+  >
+    <div class="alert--msg">
+      {{ msg }}
+    </div>
+  </ck-popup>
+</teleport>
 </template>
 
 <style lang="stylus" scoped>

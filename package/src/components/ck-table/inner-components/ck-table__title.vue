@@ -13,12 +13,13 @@ defineProps<{
 }>();
 </script>
 
-<template lang="pug">
-ck-th(
-:align="col.align"
-:min-width="col.minWidth"
-:textColor="textColor"
-:backgroundColor="backgroundColor"
-)
-  | {{ col.title }}
+<template>
+<ck-th
+  :align="col.align"
+  :min-width="col.minWidth"
+  :textColor="textColor"
+  :backgroundColor="backgroundColor"
+>
+  {{ col.title }}
+</ck-th>
 </template>
