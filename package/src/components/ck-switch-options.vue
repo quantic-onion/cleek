@@ -65,8 +65,6 @@ function getOptionValue(option: Option) {
   }
   return defaultReduceFunction(option);
 }
-
-functions.preventUnusedError([getOptionValue]);
 </script>
 
 <template>

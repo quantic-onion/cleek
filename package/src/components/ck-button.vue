@@ -125,8 +125,6 @@ function onClick(event: Event) {
 onMounted(() => {
   cleekOptions.value = hooks.getCleekOptions(getCurrentInstance);
 });
-
-hooks.preventUnusedError([onClick, computedStyle, computedClass]);
 </script>
 
 <template>

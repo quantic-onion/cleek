@@ -79,8 +79,6 @@ function checkRefresh() {
     emits('refreshList', false);
   }, 1000);
 }
-
-hooks.preventUnusedError([searchGroupValue, checkRefresh]);
 </script>
 
 <template>

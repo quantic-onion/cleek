@@ -170,22 +170,6 @@ const computedClassTable = computed(() => {
 onMounted(() => {
   cleekOptions.value = hooks.getCleekOptions(getCurrentInstance);
 });
-
-hooks.preventUnusedError([
-  computedClassTable,
-  defaultNoResultsText,
-  isMobileVisible,
-  currentPageLocal,
-  searchLocal,
-  filteredColumnsList,
-  defaultItemsPerPage,
-  openColumnsManager,
-  refreshList,
-  TableColumnsManager,
-  TablePagination,
-  TableHeaderItems,
-  CkTableTitle,
-]);
 </script>
 
 <template>

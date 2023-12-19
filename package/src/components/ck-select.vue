@@ -253,8 +253,6 @@ function setFocus() {
 onMounted(() => {
   cleekOptions.value = hooks.getCleekOptions(getCurrentInstance);
 });
-
-hooks.preventUnusedError([computedStyle, computedClassSelect, getOptionValue, onClick, filteredOptions]);
 </script>
 
 <template>

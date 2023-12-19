@@ -70,8 +70,6 @@ const isColumnDisplayed = computed(() => {
   if (!props.col) return true;
   return hooks.isColumnDisplayed(props.col);
 });
-
-hooks.preventUnusedError([isColumnDisplayed, computedStyle]);
 </script>
 
 <template>

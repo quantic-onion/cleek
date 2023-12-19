@@ -174,8 +174,6 @@ function checkSearchTime(oldValue: string | number) {
   }, props.delayChangeTime || defaultDelayChangeTime);
 }
 
-hooks.preventUnusedError([computedStyle, computedClassInput, realLabelAlign, defaultType, onChange, onInput, onClick]);
-
 onMounted(() => {
   cleekOptions.value = hooks.getCleekOptions(getCurrentInstance);
   if (props.autofocus) {

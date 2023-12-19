@@ -1,5 +1,4 @@
 // types
-// @ts-ignore // FIXME
 import type { ColumnItem } from '../types/table';
 import type { Align, AlignVertical, Color, CleekOptions, Layout, WidthBreaks } from '../types/cleek-options';
 
@@ -70,13 +69,5 @@ export default {
       return false;
     }
     return true;
-  },
-  preventUnusedError(functions: any[]) {
-    // prevent typescript "unused" error
-    if (Math.random() === 1) {
-      functions.forEach((func) => {
-        console.log(func);
-      });
-    }
   },
 }; // export default

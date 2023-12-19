@@ -119,7 +119,6 @@ onMounted(() => {
   cleekOptions.value = hooks.getCleekOptions(getCurrentInstance);
   isMounted.value = true;
 });
-hooks.preventUnusedError([computedImgStyle, computedStyle, computedClass, clickImg]);
 </script>
 
 <template>
