@@ -27,7 +27,6 @@ const emits = defineEmits<{
 
 const { windowWidth } = useWindowWidth();
 const refFocusAbsorber: Ref<HTMLInputElement | null> = ref(null);
-
 const inputValue = computed({
   get() {
     return convertToDate();
@@ -42,11 +41,16 @@ const inputValue = computed({
   },
 });
 
+const isOnPopup = ref(false);
 const computedClass = computed(() => {
   const classes = [];
   // group
   // @ts-ignore
   classes.push(hooks.getGroupClass(props, windowWidth.value));
+
+  // If the date picker is on a popup, we add a class to the container
+  isOnPopup.value = document.querySelector('.ck-popup__content') ? true : false;
+  if (isOnPopup.value) classes.push('ck-picker-popup');
   return classes;
 });
 
@@ -65,20 +69,18 @@ function dateToString(date: Date) {
 </script>
 
 <template>
-<ck-div :widthBreaks="widthBreaks">
-  <div class="ck-input-date" :class="computedClass">
-    <input ref="refFocusAbsorber" class="ck-input-date--focus-absorber">
-    <ck-label>
-      {{ label }}
-    </ck-label>
-    <!-- typeable -->
-    <Datepicker
-      v-model="inputValue"
-      inputFormat="dd-MM-yyyy"
-      @change="emits('change', inputValue)"
-    />
-  </div>
-</ck-div>
+  <ck-div :widthBreaks="widthBreaks">
+    <div class="ck-input-date" :class="computedClass">
+      <input ref="refFocusAbsorber" class="ck-input-date--focus-absorber" />
+      <ck-label>
+        {{ label }}
+      </ck-label>
+      <!-- typeable -->
+      <div class="ck-picker-container">
+        <Datepicker v-model="inputValue" @change="emits('change', inputValue)" inputFormat="dd-MM-yyyy" />
+      </div>
+    </div>
+  </ck-div>
 </template>
 
 <style lang="stylus" scoped>
@@ -101,6 +103,9 @@ function dateToString(date: Date) {
         border 1px solid rgb(218, 225, 231)
         box-sizing border-box
         border-radius 4px
+  .ck-picker-popup .ck-picker-container
+    /deep/ .v3dp__popout
+      position fixed
   &.group--left
     /deep/ .v3dp__datepicker .v3dp__input_wrapper input
       border-radius-right 0
