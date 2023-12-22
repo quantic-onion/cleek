@@ -32,7 +32,7 @@ function getCleekOptions(userOptions: CleekOptions) {
   const options = defaultCleekOptions;
   for (const categoryName in defaultCleekOptions) {
     if (userOptions[categoryName]) {
-      if (typeof userOptions[categoryName] === 'string') {
+      if (typeof userOptions[categoryName] === 'string' || typeof userOptions[categoryName] === 'boolean') {
         // set string
         options[categoryName] = userOptions[categoryName];
       } else {

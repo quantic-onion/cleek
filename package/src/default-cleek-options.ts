@@ -2,6 +2,10 @@ import { CleekOptions } from './types/cleek-options';
 
 const cleekOptions: CleekOptions = {
   lang: 'en',
+  darkMode: false,
+  darkModeColorText: '#ccc',
+  darkModeColorBackground: '#23282E',
+  darkModeColorItems: '#1E2126',
   colors: {
     primary: '#559933',
     secondary: '#559933',
@@ -28,6 +32,7 @@ const cleekOptions: CleekOptions = {
   popup: {
     textColor: '',
     headerAlign: '',
+    backgroundColor: '',
     headerColor: '',
     acceptBtnType: '',
     cancelBtnType: '',

@@ -1,5 +1,6 @@
 // showers
 export { default as CkDatetimeShower } from './showers/ck-datetime-shower.vue';
+export { default as CkHourShower } from './showers/ck-datetime-shower.vue';
 
 // components
 export { default as CkDropdown } from './ck-dropdown/ck-dropdown.vue';

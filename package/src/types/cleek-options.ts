@@ -14,6 +14,10 @@ export type TableVersion = 'default' | 'colored';
 
 export type CleekOptions = {
   lang: Lang;
+  darkMode: boolean;
+  darkModeColorText: Color;
+  darkModeColorBackground: Color;
+  darkModeColorItems: Color;
   colors: {
     primary: Color;
     secondary: Color;
@@ -35,6 +39,7 @@ export type CleekOptions = {
   popup: {
     textColor: string;
     headerAlign: Align;
+    backgroundColor: Color;
     headerColor: Color;
     acceptBtnType: ButtonType;
     cancelBtnType: ButtonType;

@@ -1,5 +1,17 @@
+import { storeToRefs } from 'pinia';
+// components
+import TestPopup from '@/views/test-components/test-popup/TestPopup.vue';
+// stores
+import { useLayoutStore } from '@/stores/layout.stores.ts';
+
+// const { isDarkModeActive } = storeToRefs(useLayoutStore());
+
+console.log('value', JSON.parse(localStorage.layout));
+console.log('value', JSON.parse(localStorage.layout).isDarkModeActive);
+
 export default {
   lang: "es",
+  darkMode: JSON.parse(localStorage.layout).isDarkModeActive,
   colors: {
     primary: "#DA135D",
     secondary: "#00ceff",

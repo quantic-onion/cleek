@@ -1,7 +1,8 @@
-<script setup lang="ts">
-import TestPopup from '@/views/test-components/test-popup/TestPopup.vue';
-</script>
-
 <template>
-<TestPopup/>
+  <router-view/>
 </template>
+
+<style lang="stylus">
+body
+  margin 0
+</style>

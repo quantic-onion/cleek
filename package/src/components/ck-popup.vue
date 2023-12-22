@@ -88,9 +88,24 @@ const computedStyleContent = computed(() => {
 const computedStyleHeader = computed(() => {
   const list = [];
   // header-color
-  const headerColor = props.headerColor || cleekOptions.value?.popup.headerColor;
+  let headerColor = '';
+  if (cleekOptions.value?.popup.headerColor) headerColor = cleekOptions.value?.popup.headerColor;
+  if (cleekOptions.value?.darkMode) headerColor = cleekOptions.value?.darkModeColorItems;
+  if (props.headerColor) headerColor = props.headerColor;
   if (headerColor && !hooks.isColorTemplateVariable(headerColor)) {
     list.push({ backgroundColor: headerColor });
+  }
+  return list;
+});
+const computedStyleBody = computed(() => {
+  const list = [];
+  // background-color
+  let backgroundColor = '';
+  if (cleekOptions.value?.popup.backgroundColor) backgroundColor = cleekOptions.value?.popup.headerColor;
+  if (cleekOptions.value?.darkMode) backgroundColor = cleekOptions.value?.darkModeColorItems;
+  if (props.headerColor) backgroundColor = props.headerColor;
+  if (backgroundColor && !hooks.isColorTemplateVariable(backgroundColor)) {
+    list.push({ backgroundColor: backgroundColor });
   }
   return list;
 });

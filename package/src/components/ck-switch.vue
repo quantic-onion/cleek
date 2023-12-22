@@ -1,8 +1,11 @@
 <script setup lang="ts">
-import { computed, ref, watch } from 'vue';
-import type { Icon, IconPack, Size } from '../types/cleek-options';
-// computed
+import { computed, getCurrentInstance, onMounted, ref } from 'vue';
+import type { Ref } from 'vue';
+import type { CleekOptions, Icon, IconPack, Size } from '../types/cleek-options';
+// components
 import CkIcon from './ck-icon.vue';
+// hooks
+import hooks from '../utils/global-hooks';
 
 type ModelValue = boolean | 1 | 0;
 
@@ -23,6 +26,7 @@ const emits = defineEmits<{
   (e: 'click'): void;
 }>();
 
+let cleekOptions: Ref<undefined | CleekOptions> = ref();
 const defaultSize = 's';
 
 const value = computed({
@@ -56,6 +60,14 @@ const iconClass = computed(() => {
   }
   return list;
 });
+const computedStyleContent = computed(() => {
+  const list = [];
+  if (cleekOptions.value?.darkMode) list.push({ color: cleekOptions.value?.darkModeColorText });
+  if (props.size && props.size !== defaultSize) {
+    list.push(`ck-switch__icon-size--${props.size}`);
+  }
+  return list;
+});
 
 function handleSwitchClick(e: Event) {
   if (props.preventAutoUpdate) {
@@ -64,6 +76,10 @@ function handleSwitchClick(e: Event) {
     emits('click');
   }
 }
+
+onMounted(() => {
+  cleekOptions.value = hooks.getCleekOptions(getCurrentInstance);
+});
 </script>
 
 <template>
@@ -101,7 +117,11 @@ function handleSwitchClick(e: Event) {
       :class="iconClass"
     />
   </div>
-  <span v-if="$slots.default" class="ck-switch__content">
+  <span
+    v-if="$slots.default"
+    class="ck-switch__content"
+    :style="computedStyleContent"
+  >
     <slot/>
   </span>
 </label>
