@@ -174,7 +174,7 @@ onMounted(() => {
 
 <template>
 <!-- columns manager -->
-<TableColumnsManager(
+<TableColumnsManager
   v-if="hasColumnsManager && columnsAreObj"
   v-model="isPopupActive.columnsManager"
   :isLoading="isLoading"

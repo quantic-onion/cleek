@@ -26,6 +26,9 @@ const props = defineProps<{
   // style
   rounded?: boolean;
   radius?: SizeInCSS;
+  // image-type
+  static: boolean;
+  dynamic: boolean;
 }>();
 
 let cleekOptions: Ref<undefined | CleekOptions> = ref();
@@ -111,8 +114,11 @@ function clickImg() {
   }
 }
 function getImg(src: string) {
-  let path = cleekOptions.value?.img.basePath || '';
-  return `${path}${src}`;
+  let basePath = cleekOptions.value?.img.basePath;
+  if (cleekOptions.value?.img.basePath) basePath = cleekOptions.value?.img.basePath;
+  if (!basePath) basePath = cleekOptions.value?.img.basePathStatic;
+  if (props.dynamic) basePath = cleekOptions.value?.img.basePathDynamic;
+  return `${basePath}${src}`;
 }
 
 onMounted(() => {

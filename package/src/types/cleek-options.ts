@@ -35,6 +35,8 @@ export type CleekOptions = {
   };
   img: {
     basePath: string;
+    basePathStatic: string;
+    basePathDynamic: string;
   };
   popup: {
     textColor: string;

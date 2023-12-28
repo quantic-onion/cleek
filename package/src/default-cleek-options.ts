@@ -28,6 +28,8 @@ const cleekOptions: CleekOptions = {
   },
   img: {
     basePath: '',
+    basePathStatic: '',
+    basePathDynamic: '',
   },
   popup: {
     textColor: '',
