@@ -27,9 +27,9 @@ const computedStyle = computed(() => {
     const width = hooks.getWidthByWidthBreaks(props.widthBreaks, windowWidth.value);
     if (width) list.push({ width });
   }
-  // // gap
-  // const gap = props.gap || cleekOptions.value?.div.gap;
-  // if (gap) list.push({ gap });
+  // gap
+  const gap = props.gap || cleekOptions.value?.div.gap;
+  if (gap) list.push({ gap });
   // block
   if (props.block) list.push({ display: 'block' });
   return list;
