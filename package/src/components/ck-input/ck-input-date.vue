@@ -47,7 +47,6 @@ const computedClass = computed(() => {
   // group
   // @ts-ignore
   classes.push(hooks.getGroupClass(props, windowWidth.value));
-
   // If the date picker is on a popup, we add a class to the container
   isOnPopup.value = document.querySelector('.ck-popup__content') ? true : false;
   if (isOnPopup.value) classes.push('ck-picker-popup');
@@ -66,6 +65,33 @@ function dateToString(date: Date) {
   const day = qmStr.padZeros(date.getDate(), 2);
   return `${year}-${month}-${day}`;
 }
+function setOpenStatus() {
+  const container = document.querySelector('.ck-input-date');
+  const pickerPopupElement = document.querySelector('.ck-picker-popup');
+  // const pickerCalendar = document.querySelector('.v3dp__popout-year');
+  // const pickerCalendar = document.querySelector('.v3dp__popout-month');
+  const pickerCalendar = document.querySelector('.v3dp__popout-day');
+  let rect = { y: 0 };
+  const popupContent = document.querySelector('.ck-popup__slot-body');
+  if (popupContent instanceof HTMLElement) {
+    popupContent.style.overflow = 'hidden';
+  }
+  if (container) {
+    rect = container.getBoundingClientRect();
+  }
+  const bottomEdge = window.innerHeight - rect.y;
+  if (pickerPopupElement && pickerCalendar) {
+    pickerCalendar.setAttribute('style', `top: ${rect.y + 60}px;`);
+    pickerPopupElement.setAttribute('style', `overflow: hidden;`);
+  }
+}
+
+function setClosedStatus() {
+  const popupContent = document.querySelector('.ck-popup__slot-body');
+  if (popupContent instanceof HTMLElement) {
+    popupContent.style.overflow = 'auto';
+  }
+}
 </script>
 
 <template>
@@ -77,19 +103,29 @@ function dateToString(date: Date) {
       </ck-label>
       <!-- typeable -->
       <div class="ck-picker-container">
-        <Datepicker v-model="inputValue" @change="emits('change', inputValue)" inputFormat="dd-MM-yyyy" />
+        <Datepicker
+          v-model="inputValue"
+          @change="emits('change', inputValue)"
+          @opened="setOpenStatus"
+          @closed="setClosedStatus"
+          inputFormat="dd-MM-yyyy"
+        />
       </div>
     </div>
   </ck-div>
 </template>
 
 <style lang="stylus" scoped>
+.ck-div
+  min-width auto
+  width auto
+.ck-picker-container
+  width 100%
 .ck-input-date--focus-absorber
   display none
 .ck-input-date
   display inline-flex
   flex-wrap wrap
-  width 100%
   /deep/ .v3dp__datepicker
     width 100%
     box-sizing border-box
@@ -103,9 +139,8 @@ function dateToString(date: Date) {
         border 1px solid rgb(218, 225, 231)
         box-sizing border-box
         border-radius 4px
-  .ck-picker-popup .ck-picker-container
-    /deep/ .v3dp__popout
-      position fixed
+  /deep/ .v3dp__popout
+    position fixed
   &.group--left
     /deep/ .v3dp__datepicker .v3dp__input_wrapper input
       border-radius-right 0

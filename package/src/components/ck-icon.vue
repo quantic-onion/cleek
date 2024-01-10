@@ -24,6 +24,7 @@ const emits = defineEmits(['click']);
 const computediconPack = computed(() => {
   const defaultPackage = 'font-awesome';
   if (!props.iconPack) return defaultPackage;
+  if (props.iconPack === 'cleek') return props.iconPack;
   if (props.iconPack === 'feather') return props.iconPack;
   return defaultPackage;
 });
@@ -36,7 +37,7 @@ const computedClass = computed(() => {
   return classes;
 });
 const computedStyle = computed(() => {
-  const styles = [];
+  const styles: any = [];
   // color
   if (props.color && !hooks.isColorTemplateVariable(props.color)) {
     styles.push({ color: props.color });
@@ -47,29 +48,65 @@ const computedStyle = computed(() => {
 function onClick(event: Event) {
   emits('click', event);
 }
+
+/// CLEEK CUSTOM ICON
+const iconMask = computed(() => {
+  const src = `/src/assets/icons/` + `${props.icon}.svg`;
+  return `mask: url(${src}) no-repeat center; -webkit-mask: url(${src}) no-repeat center;`;
+});
+
+const ckIconComputedClass = computed(() => {
+  const classes = [];
+  // color
+  if (!props.color) {
+    classes.push(`ck-component__color--primary`);
+  } else if (props.color && hooks.isColorTemplateVariable(props.color)) {
+    classes.push(`ck-component__color-background--${props.color}`);
+  }
+  switch (props.size) {
+    case 'sm':
+      classes.push(`ck-icon__cleek-small`);
+      break;
+    case 'md':
+      classes.push(`ck-icon__cleek-medium`);
+      break;
+    case 'lg':
+      classes.push(`ck-icon__cleek-large`);
+      break;
+    default:
+      classes.push(`ck-icon__cleek-small`);
+      break;
+  }
+  return classes;
+});
 </script>
 
 <template>
-<div
-  class="ck-icon"
-  :class="computedClass"
-  :style="computedStyle"
-  @click="onClick($event)"
->
-  <font-awesome-icon
-    v-if="computediconPack === 'font-awesome'"
-    :icon="icon"
-    :size="size"
-    :rotation="rotation"
-    :flip="flip"
-    :spin="spin"
-    :pulse="pulse"
-    :fixed-width="fixedWidth"
-  />
-</div>
+  <div class="ck-icon" :class="computedClass" :style="computedStyle" @click="onClick($event)">
+    <font-awesome-icon
+      v-if="computediconPack === 'font-awesome'"
+      :icon="icon"
+      :size="size"
+      :rotation="rotation"
+      :flip="flip"
+      :spin="spin"
+      :pulse="pulse"
+      :fixed-width="fixedWidth"
+    />
+    <div v-else-if="computediconPack === 'cleek'" :style="iconMask" :class="ckIconComputedClass" class="ck-icon__cleek" />
+  </div>
 </template>
 
 <style lang="stylus" scoped>
 .ck-icon
   display inline-flex
+.ck-icon__cleek-small
+  width 1rem
+  height 1rem
+.ck-icon__cleek-medium
+  width 2rem
+  height 2rem
+.ck-icon__cleek-large
+  width 3rem
+  height 3rem
 </style>
