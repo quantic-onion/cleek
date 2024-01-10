@@ -356,7 +356,7 @@ onMounted(() => {
     height 25px
     border-radius 5px
     width @height
-    margin-bottom 40px - @height / 2
+    margin-bottom ((40px - @height) / 2)
     margin-right 1.25rem
     color #666
     transition 0.3s
@@ -373,12 +373,12 @@ onMounted(() => {
 .ck-select
   &.has-icon-left
     select
-      padding-left 14px + 3 * $globalPadding
+      padding-left 14px + (3 * $globalPadding)
     .ck-select--placeholder
       padding-left 28px
   &.has-icon-right
     select
-      padding-right 14px + 3 * $globalPadding
+      padding-right 14px + (3 * $globalPadding)
     .ck-select--placeholder
       padding-right 28px
   // .ck-select__chevron-icon
