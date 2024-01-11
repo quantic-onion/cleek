@@ -239,7 +239,7 @@ onMounted(() => {
   <ck-icon
     v-if="iconRight && type !== 'password'"
     class="ck-input__icon-right"
-    color="lightgrey"
+    :color="iconColor ? iconColor : 'lightgrey'"
     :icon="iconRight"
     :icon-pack="iconPack"
   />

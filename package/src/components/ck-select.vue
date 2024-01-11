@@ -44,6 +44,7 @@ const props = defineProps<{
   icon?: Icon;
   iconRight?: Icon;
   iconPack?: IconPack;
+  iconColor?: Color;
   // label
   label?: string;
   labelAlign?: Align;
@@ -261,17 +262,17 @@ onMounted(() => {
   <ck-icon
     v-if="icon"
     class="ck-select__icon-left"
-    color="lightgrey"
     :icon="icon"
     :icon-pack="iconPack"
+    :color="iconColor ? iconColor : 'lightgrey'"
   />
   <!-- icon right -->
   <ck-icon
     v-if="iconRight"
     class="ck-select__icon-right"
-    color="lightgrey"
     :icon="iconRight"
     :icon-pack="iconPack"
+    :color="iconColor ? iconColor : 'lightgrey'"
   />
   <div v-if="isClearBtnVisible" class="ck-select__clear-btn" @click="setClearValue()">
     <ck-icon icon="times"/>

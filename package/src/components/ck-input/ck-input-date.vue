@@ -7,13 +7,19 @@ import type { Ref } from 'vue';
 import hooks from '../../utils/global-hooks';
 import useWindowWidth from '../../hooks/windowWidth';
 // types
-import type { Align, AlignVertical, WidthBreaks } from '../../types/cleek-options';
+import type { Align, AlignVertical, Color, Icon, WidthBreaks } from '../../types/cleek-options';
+import type { IconPack } from '@fortawesome/fontawesome-svg-core';
 
 type stringDate = null | string;
 
 const props = defineProps<{
   modelValue: stringDate;
   label?: string;
+  // icon
+  icon?: Icon;
+  iconRight?: Icon;
+  iconPack?: IconPack;
+  iconColor?: Color;
   // group
   widthBreaks?: WidthBreaks;
   group?: Align;
@@ -45,10 +51,10 @@ const isOnPopup = ref(false);
 const computedClass = computed(() => {
   const classes = [];
   // group
-  // @ts-ignore
   classes.push(hooks.getGroupClass(props, windowWidth.value));
-  console.log('classes', classes);
-  
+  // icon
+  if (props.icon) classes.push('has-icon-left');
+  if (props.iconRight) classes.push('has-icon-right');
   // If the date picker is on a popup, we add a class to the container
   isOnPopup.value = document.querySelector('.ck-popup__content') ? true : false;
   if (isOnPopup.value) classes.push('ck-picker-popup');
@@ -100,17 +106,34 @@ function setClosedStatus() {
   <ck-div :widthBreaks="widthBreaks">
     <div class="ck-input-date" :class="computedClass">
       <input ref="refFocusAbsorber" class="ck-input-date--focus-absorber" />
+      <!-- label -->
       <ck-label>
         {{ label }}
       </ck-label>
-      <!-- typeable -->
       <div class="ck-picker-container">
+        <!-- icon left -->
+        <ck-icon
+          v-if="icon"
+          class="ck-input__icon-left"
+          :color="iconColor ? iconColor : 'lightgrey'"
+          :icon="icon"
+          :icon-pack="iconPack"
+        />
+        <!-- typeable -->
         <Datepicker
           v-model="inputValue"
           @change="emits('change', inputValue)"
           @opened="setOpenStatus"
           @closed="setClosedStatus"
           inputFormat="dd-MM-yyyy"
+        />
+        <!-- icon right -->
+        <ck-icon
+          v-if="iconRight"
+          class="ck-input__icon-right"
+          :color="iconColor ? iconColor : 'lightgrey'"
+          :icon="iconRight"
+          :icon-pack="iconPack"
         />
       </div>
     </div>
@@ -124,6 +147,16 @@ function setClosedStatus() {
   width auto
 .ck-picker-container
   width 100%
+  position relative
+  > .ck-input__icon-left
+  > .ck-input__icon-right
+    position absolute
+    bottom 13px
+    z-index 1
+  > .ck-input__icon-left
+    left 1.5 * $globalPadding
+  > .ck-input__icon-right
+    right 1.5 * $globalPadding
 .ck-input-date--focus-absorber
   display none
 .ck-input-date
@@ -155,4 +188,10 @@ function setClosedStatus() {
   &.ck-component__group--center
     /deep/ .v3dp__datepicker .v3dp__input_wrapper input
       border-radius-x 0
+  &.has-icon-left
+    /deep/ .v3dp__datepicker .v3dp__input_wrapper input
+      padding-left 14px + 3 * $globalPadding
+  &.has-icon-right
+    /deep/ .v3dp__datepicker .v3dp__input_wrapper input
+      padding-right 14px + 3 * $globalPadding
 </style>

@@ -30,6 +30,8 @@ const isPopupActive = computed({
     <div className="date-container">
       <ck-input-date
         v-model="dateValue"
+        icon="user"
+        iconColor="primary"
         class="rs-form__input"
         group="left"
         label="Input date"
