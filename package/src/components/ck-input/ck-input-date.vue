@@ -47,6 +47,8 @@ const computedClass = computed(() => {
   // group
   // @ts-ignore
   classes.push(hooks.getGroupClass(props, windowWidth.value));
+  console.log('classes', classes);
+  
   // If the date picker is on a popup, we add a class to the container
   isOnPopup.value = document.querySelector('.ck-popup__content') ? true : false;
   if (isOnPopup.value) classes.push('ck-picker-popup');
@@ -116,6 +118,7 @@ function setClosedStatus() {
 </template>
 
 <style lang="stylus" scoped>
+@import '../../styles/index'
 .ck-div
   min-width auto
   width auto
@@ -141,14 +144,15 @@ function setClosedStatus() {
         border-radius 4px
   /deep/ .v3dp__popout
     position fixed
-  &.group--left
+  &.ck-component__group--left
     /deep/ .v3dp__datepicker .v3dp__input_wrapper input
       border-radius-right 0
+      border-radius-right 0
       border-right 0
-  &.group--right
+  &.ck-component__group--right
     /deep/ .v3dp__datepicker .v3dp__input_wrapper input
       border-radius-left 0
-  &.group--center
+  &.ck-component__group--center
     /deep/ .v3dp__datepicker .v3dp__input_wrapper input
       border-radius-x 0
 </style>

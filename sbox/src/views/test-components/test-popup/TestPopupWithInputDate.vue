@@ -12,6 +12,9 @@ const emits = defineEmits<{
 const dateValue = ref("");
 const time = ref("");
 const minutes = ref("");
+const widthBreaks = [600, '33.33%']
+
+
 const isPopupActive = computed({
   get() {
     return props.modelValue;
@@ -28,23 +31,50 @@ const isPopupActive = computed({
       <ck-input-date
         v-model="dateValue"
         class="rs-form__input"
-        :label="'test input'"
         group="left"
+        label="Input date"
         :disabled="false"
       />
       <!-- timeInMinutes -->
       <ck-input-time
         v-model="time"
         class="rs-form__input"
-        :label="'message(inputLabelTime)'"
         group="center"
+        label="Input time"
       />
       <!-- durationInMinutes -->
       <ck-input-time
         v-model="minutes"
         class="rs-form__input"
-        :label="'message(inputLabelDurationInMinutes)'"
         group="right"
+        label="Input Duration"
+      />
+    </div>
+
+    <div class="second-row">
+      <ck-input-date
+        v-model="dateValue"
+        class="rs-form__input"
+        group="left"
+        label="Input date"
+        :disabled="false"
+        :widthBreaks="widthBreaks"
+      />
+      <!-- timeInMinutes -->
+      <ck-input-time
+        v-model="time"
+        class="rs-form__input"
+        group="center"
+        label="Input time"
+        :widthBreaks="widthBreaks"
+      />
+      <!-- text -->
+      <ck-input
+        v-model="minutes"
+        class="rs-form__input"
+        group="right"
+        label="Input text"
+        :widthBreaks="widthBreaks"
       />
     </div>
   </ck-popup>
@@ -54,4 +84,7 @@ const isPopupActive = computed({
 .date-container
   display flex
   align-items flex-start
+.second-row
+  display flex
+  align-items flex-end
 </style>
