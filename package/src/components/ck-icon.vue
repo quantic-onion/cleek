@@ -5,13 +5,13 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 // hooks
 import hooks from '../utils/global-hooks';
 // @ts-ignore // fixme
-import type { Color, Icon, IconPack, SizeInCSS } from '../types/cleek-options';
+import type { Color, Icon, IconPack, Size, SizeInCSS } from '../types/cleek-options';
 
 const props = defineProps<{
   icon: Icon;
   iconPack?: IconPack;
   color?: Color;
-  size?: string; // SizeInCSS || 6x
+  size?: Size | SizeInCSS | string; // SizeInCSS || 6x
   flip?: 'horizontal' | 'vertical' | 'both';
   fixedWidth?: SizeInCSS;
   rotation?: 90 | 180 | 270 | '90' | '180' | '270';
@@ -63,20 +63,9 @@ const ckIconComputedClass = computed(() => {
   } else if (props.color && hooks.isColorTemplateVariable(props.color)) {
     classes.push(`ck-component__color-background--${props.color}`);
   }
-  switch (props.size) {
-    case 'sm':
-      classes.push(`ck-icon__cleek-small`);
-      break;
-    case 'md':
-      classes.push(`ck-icon__cleek-medium`);
-      break;
-    case 'lg':
-      classes.push(`ck-icon__cleek-large`);
-      break;
-    default:
-      classes.push(`ck-icon__cleek-small`);
-      break;
-  }
+  if (props.size) classes.push(`ck-icon__cleek-small`);
+  if (props.size === 'm') classes.push(`ck-icon__cleek-medium`);
+  if (props.size === 'l') classes.push(`ck-icon__cleek-large`);
   return classes;
 });
 </script>
@@ -86,12 +75,12 @@ const ckIconComputedClass = computed(() => {
     <font-awesome-icon
       v-if="computediconPack === 'font-awesome'"
       :icon="icon"
-      :size="size"
+      :size="(size as string)"
       :rotation="rotation"
       :flip="flip"
       :spin="spin"
       :pulse="pulse"
-      :fixed-width="fixedWidth"
+      :fixedWidth="(fixedWidth as string)"
     />
     <div v-else-if="computediconPack === 'cleek'" :style="iconMask" :class="ckIconComputedClass" class="ck-icon__cleek" />
   </div>
