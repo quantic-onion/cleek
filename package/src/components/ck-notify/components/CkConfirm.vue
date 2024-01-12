@@ -48,11 +48,12 @@ defineExpose({
   <div class="ck-confirm">
     <div class="ck-confirm__icon">
       <!-- <ck-img src="cleek/hexagon-exclamation.png" height="7rem"/> -->
-      <img
+      <!-- <img
         class="ck-confirm__icon--img"
         src="https://img.quanticonion.com/icons/hexagon-exclamation.png"
         height="7rem"
-      />
+      /> -->
+      <img src="@/assets/icons/hex-warning.svg" height="125"/>
     </div>
     <div class="ck-confirm__title">
       {{ title || defaultTitle }}

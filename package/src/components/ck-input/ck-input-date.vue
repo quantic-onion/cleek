@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue';
+import { computed, nextTick, ref } from 'vue';
 import Datepicker from 'vue3-datepicker';
 import { qmStr } from 'quantic-methods';
 import type { Ref } from 'vue';
@@ -33,6 +33,10 @@ const emits = defineEmits<{
 
 const { windowWidth } = useWindowWidth();
 const refFocusAbsorber: Ref<HTMLInputElement | null> = ref(null);
+
+const random = ref(Math.floor(Math.random() * 1000));
+const uniqueId = ref(`ck-input-date-${random.value}`);
+
 const inputValue = computed({
   get() {
     return convertToDate();
@@ -73,24 +77,28 @@ function dateToString(date: Date) {
   const day = qmStr.padZeros(date.getDate(), 2);
   return `${year}-${month}-${day}`;
 }
+
 function setOpenStatus() {
-  const container = document.querySelector('.ck-input-date');
-  const pickerPopupElement = document.querySelector('.ck-picker-popup');
-  // const pickerCalendar = document.querySelector('.v3dp__popout-year');
-  // const pickerCalendar = document.querySelector('.v3dp__popout-month');
-  const pickerCalendar = document.querySelector('.v3dp__popout-day');
+  const uniquePicker = document.getElementById(`${uniqueId.value}`);
+  const pickerCalendar = uniquePicker?.querySelector('.v3dp__popout-day');
   let rect = { y: 0 };
   const popupContent = document.querySelector('.ck-popup__slot-body');
   if (popupContent instanceof HTMLElement) {
     popupContent.style.overflow = 'hidden';
   }
-  if (container) {
-    rect = container.getBoundingClientRect();
+  if (uniquePicker) {
+    rect = uniquePicker.getBoundingClientRect();
   }
   const bottomEdge = window.innerHeight - rect.y;
-  if (pickerPopupElement && pickerCalendar) {
-    pickerCalendar.setAttribute('style', `top: ${rect.y + 60}px;`);
-    pickerPopupElement.setAttribute('style', `overflow: hidden;`);
+  if (uniquePicker && pickerCalendar) {
+    const containerHeight = 300;
+    const spaceBelow = bottomEdge - containerHeight;
+    if (spaceBelow < 0) {
+      pickerCalendar.setAttribute('style', `bottom: 0px`);
+    } else {
+      pickerCalendar.setAttribute('style', `top: ${rect.y + 60}px;`);
+    }
+    uniquePicker.setAttribute('style', `overflow: hidden;`);
   }
 }
 
@@ -104,12 +112,10 @@ function setClosedStatus() {
 
 <template>
   <ck-div :widthBreaks="widthBreaks">
-    <div class="ck-input-date" :class="computedClass">
+    <div class="ck-input-date" :class="computedClass" :id="uniqueId">
       <input ref="refFocusAbsorber" class="ck-input-date--focus-absorber" />
       <!-- label -->
-      <ck-label>
-        {{ label }}
-      </ck-label>
+      <ck-label> {{ label }} </ck-label>
       <div class="ck-picker-container">
         <!-- icon left -->
         <ck-icon
