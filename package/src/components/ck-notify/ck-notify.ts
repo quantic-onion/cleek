@@ -3,7 +3,7 @@ import CkConfirmComponent from './components/CkConfirm.vue';
 import CkAlertComponent from './components/CkAlert.vue';
 import CkNotifyComponent from './components/CkNotify.vue';
 
-const defaultDuration = 2000;
+const defaultDuration = 3000;
 
 export default {
   alert(msg: string) {

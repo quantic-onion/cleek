@@ -95,10 +95,11 @@ function checkRefresh() {
     />
     <!-- pages -->
     <div
+      v-if="(isLoading && listLength === 0) || itemsPerPageIsVisible"
       class="items-per-page"
       :class="{ 'ck-component__group--left': (isSearchVisible) }"
     >
-      <template v-if="isLoading !== false && listLength === 0">
+      <template v-if="isLoading && listLength === 0">
         <ck-icon class="px-2" icon="spinner" spin/>
       </template>
       <template v-else-if="itemsPerPageIsVisible">

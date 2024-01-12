@@ -36,6 +36,7 @@ const props = defineProps<{
   showRefreshBtn?: boolean;
   hideItemsPerPage?: boolean;
   // style
+  darkMode?: { type: boolean, default: undefined };
   notFullWidth?: boolean;
   striped?: boolean;
   cellPadding?: CellPadding;
@@ -66,6 +67,10 @@ const { windowWidth } = useWindowWidth();
 const isPopupActive = ref({
   columnsManager: false,
 });
+const isDarkModeActive = computed(() => {
+  if (typeof props.darkMode !== 'undefined') return props.darkMode;
+  return cleekOptions.value?.darkMode;
+});
 const defaultLoadingText = computed(() => {
   if (cleekOptions.value?.lang === 'es') return 'Cargando'; 
   return 'Loading';
@@ -81,7 +86,12 @@ const realTableVersion = computed(() => {
 });
 const realHeaderTextColor = computed(() => {
   if (props.headerTextColor) return props.headerTextColor;
-  if (cleekOptions.value) return cleekOptions.value.table.headerTextColor;
+  if (cleekOptions.value) { 
+    if (cleekOptions.value.table.headerTextColor) {
+      return cleekOptions.value.table.headerTextColor;
+    }
+    if (isDarkModeActive.value) return '#ccc'; // TODO move to defaults
+  }
 });
 const realHeaderBackgroundColor = computed(() => {
   if (props.headerBackgroundColor) return props.headerBackgroundColor;
@@ -159,6 +169,7 @@ const computedClassTable = computed(() => {
   if (props.cellPadding) list.push(`table__cell-padding--${props.cellPadding}`);
   if (props.cellPaddingY) list.push(`table__cell-padding-y--${props.cellPaddingY}`);
   if (props.notFullWidth) list.push('not-full-width');
+  if (isDarkModeActive.value) list.push('dark-mode');
   const striped = props.striped || cleekOptions.value?.table?.striped;
   if (striped) list.push('striped-table');
   return list;
@@ -267,6 +278,8 @@ onMounted(() => {
 </template>
 
 <style lang="stylus">
+@import '../../styles/index.styl'
+
 .header-row
   background-color transparent !important
 .ck-table__table-container .ck-table__table
@@ -289,9 +302,17 @@ onMounted(() => {
       background-color #f3f3f3
       // border-bottom 1px solid #e1e1e1
       // border-top 1px solid #e1e1e1
+  &.dark-mode
+    &.striped-table > tbody > tr
+      color $darkModeTextColor
+      background-color $darkModeColorItems
+      &:nth-child(even)
+        background-color $darkModeTableBgAlternativeColor
 </style>
 
 <style lang="stylus" scoped>
+@import '../../styles/index.styl'
+
 .ck-table__table-container
   max-width 100%
   overflow auto
@@ -326,4 +347,7 @@ onMounted(() => {
   font-weight 600
   font-size 1.1rem
   padding 3rem 1rem
+.dark-mode .no-result-text
+  color $darkModeTextColor
+  background-color $darkModeColorItems
 </style>

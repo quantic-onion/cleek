@@ -1,12 +1,14 @@
 <script setup lang="ts">
 // components
-import TestPopup from "@/views/test-components/test-popup/TestPopup.vue";
+import TestPopup from '@/views/test-components/test-popup/TestPopup.vue';
+import TestTable from '@/views/test-components/test-popup/TestTable.vue';
 </script>
 
 <template>
-  <TestPopup />
   <ck-icon iconPack="cleek" icon="heart" size="lg" color="primary" />
   <ck-icon iconPack="cleek" icon="heart-filled" size="md" color="secondary" />
+  <TestPopup />
+  <TestTable />
 </template>
 
 <style lang="stylus" scoped></style>
