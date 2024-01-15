@@ -9,11 +9,11 @@ const emits = defineEmits<{
   (e: "update:modelValue", value: boolean): void;
 }>();
 
-const dateValue = ref("");
+const dateValue1 = ref("");
+const dateValue2 = ref("");
 const time = ref("");
 const minutes = ref("");
-const widthBreaks = [600, '33.33%']
-
+const widthBreaks = [600, "33.33%"];
 
 const isPopupActive = computed({
   get() {
@@ -29,7 +29,7 @@ const isPopupActive = computed({
   <ck-popup v-model="isPopupActive" title="Test popup with input date">
     <div className="date-container">
       <ck-input-date
-        v-model="dateValue"
+        v-model="dateValue1"
         icon="user"
         iconColor="primary"
         class="rs-form__input"
@@ -55,8 +55,7 @@ const isPopupActive = computed({
 
     <div class="second-row">
       <ck-input-date
-        v-model="dateValue"
-        class="rs-form__input"
+        v-model="dateValue2"
         group="left"
         label="Input date"
         :disabled="false"
