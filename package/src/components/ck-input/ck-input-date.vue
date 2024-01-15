@@ -162,6 +162,7 @@ function setClosedStatus() {
 .ck-input-date
   display inline-flex
   flex-wrap wrap
+  width 100%
   /deep/ .v3dp__datepicker
     width 100%
     box-sizing border-box
