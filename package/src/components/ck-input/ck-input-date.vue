@@ -172,6 +172,10 @@ function setClosedStatus() {
   /deep/ .v3dp__datepicker
     width 100%
     box-sizing border-box
+    .v3dp__element__button__day:hover span
+      background var(--primary) !important
+    .selected span
+      background var(--primary) !important
     .v3dp__input_wrapper
       width 100%
       box-sizing border-box
