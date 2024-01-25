@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, nextTick, ref } from 'vue';
+import { computed, getCurrentInstance, nextTick, onMounted, ref } from 'vue';
 import Datepicker from 'vue3-datepicker';
 import { qmStr } from 'quantic-methods';
 import type { Ref } from 'vue';
@@ -7,10 +7,11 @@ import type { Ref } from 'vue';
 import hooks from '../../utils/global-hooks';
 import useWindowWidth from '../../hooks/windowWidth';
 // types
-import type { Align, AlignVertical, Color, Icon, WidthBreaks } from '../../types/cleek-options';
+import type { Align, AlignVertical, CleekOptions, Color, Icon, WidthBreaks } from '../../types/cleek-options';
 import type { IconPack } from '@fortawesome/fontawesome-svg-core';
 
 type stringDate = null | string;
+let cleekOptions: Ref<undefined | CleekOptions> = ref();
 
 const props = defineProps<{
   modelValue: stringDate;
@@ -65,6 +66,18 @@ const computedClass = computed(() => {
   return classes;
 });
 
+const deepComputedStyles = computed(() => {
+  const list = [];
+  // background-color
+  let backgroundColor = '';
+  if (cleekOptions.value?.popup.headerColor) backgroundColor = cleekOptions.value?.popup.headerColor;
+  if (cleekOptions.value?.darkMode) backgroundColor = cleekOptions.value?.darkModeColorItems;
+  if (backgroundColor && !hooks.isColorTemplateVariable(backgroundColor)) {
+    list.push({ backgroundColor: backgroundColor });
+  }
+  return list;
+});
+
 // TODO move this to qmDate
 function convertToDate() {
   if (!props.modelValue) return null;
@@ -108,6 +121,10 @@ function setClosedStatus() {
     popupContent.style.overflow = 'auto';
   }
 }
+
+onMounted(() => {
+  cleekOptions.value = hooks.getCleekOptions(getCurrentInstance);
+});
 </script>
 
 <template>
@@ -116,7 +133,7 @@ function setClosedStatus() {
       <input ref="refFocusAbsorber" class="ck-input-date--focus-absorber" />
       <!-- label -->
       <ck-label> {{ label }} </ck-label>
-      <div class="ck-picker-container">
+      <div class="ck-picker-container" :class="cleekOptions?.darkMode && 'picker-dark'">
         <!-- icon left -->
         <ck-icon
           v-if="icon"
@@ -132,6 +149,7 @@ function setClosedStatus() {
           @opened="setOpenStatus"
           @closed="setClosedStatus"
           inputFormat="dd-MM-yyyy"
+          :style="deepComputedStyles"
         />
         <!-- icon right -->
         <ck-icon
@@ -205,4 +223,15 @@ function setClosedStatus() {
   &.has-icon-right
     /deep/ .v3dp__datepicker .v3dp__input_wrapper input
       padding-right 14px + 3 * $globalPadding
+.picker-dark
+  /deep/ input
+    color white !important
+  /deep/ .v3dp__heading
+    button:hover
+      background $darkModeTableBgAlternativeColor
+  /deep/ .v3dp__popout
+    color white
+    background-color $darkModeColorItems
+    button:disabled
+      color $darkModeTableBgAlternativeColor
 </style>
