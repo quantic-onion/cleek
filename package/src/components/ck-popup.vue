@@ -31,6 +31,7 @@ const props = defineProps<{
   textColor?: Color;
   headerColor?: Color;
   headerAlign?: Align;
+  backgroundColor?: Color;
   fontSize?: string;
 }>();
 
@@ -83,6 +84,18 @@ const computedStyleContent = computed(() => {
     list.push(`ck-component__color--${textColor}`);
     list.push({ color: textColor });
   }
+  // background-color
+  let backgroundColor = 'white';
+
+  if (cleekOptions.value?.popup.headerColor) backgroundColor = cleekOptions.value?.popup.headerColor;
+
+  if (cleekOptions.value?.darkMode) backgroundColor = cleekOptions.value?.darkModeColorItems;
+
+  if (props.backgroundColor) backgroundColor = props.backgroundColor;
+  if (backgroundColor && !hooks.isColorTemplateVariable(backgroundColor)) {
+    list.push({ backgroundColor: backgroundColor });
+  }
+
   return list;
 });
 const computedStyleHeader = computed(() => {
@@ -94,6 +107,13 @@ const computedStyleHeader = computed(() => {
   if (props.headerColor) headerColor = props.headerColor;
   if (headerColor && !hooks.isColorTemplateVariable(headerColor)) {
     list.push({ backgroundColor: headerColor });
+  }
+  // text-color
+  let textColor = props.textColor || cleekOptions.value?.popup.textColor;
+  if (cleekOptions.value?.darkMode) textColor = cleekOptions.value?.darkModeColorText;
+  if (textColor && !hooks.isColorTemplateVariable(textColor)) {
+    list.push(`ck-component__color--${textColor}`);
+    list.push({ color: textColor });
   }
   return list;
 });
@@ -168,70 +188,48 @@ onMounted(() => {
 </script>
 
 <template>
-<teleport v-if="isActive" to="body">
-  <div class="ck-popup">
-    <div class="blackout"/>
-    <div class="popup-container" @mousedown="onBgClick()">
-      <div
-        class="ck-popup__content"
-        :style="computedStyleContent"
-        :class="computedClassContent"
-        @mousedown.stop=""
-      >
-        <div
-          class="ck-popup__slot-header"
-          :style="computedStyleHeader"
-          :class="computedClassHeader"
-        >
-          <!-- title -->
-          <h3 v-if="title" class="ck-popup__title">
-            {{ title }}
-          </h3>
-          <!-- header slot -->
-          <slot name="header"/>
-          <!-- close btn -->
-          <ck-icon
-            v-if="isCloseBtnVisible"
-            class="icon-close"
-            icon="times"
-            @click="isActive = false"
-          />
-        </div>
-        <div class="ck-popup__slot-body">
-          <slot/>
-        </div>
-        <div
-          v-if="$slots.footer || confirmButtons || acceptButton || cancelButton"
-          class="ck-popup__slot-footer"
-        >
-          <slot name="footer"/>
-          <div
-            v-if="confirmButtons || acceptButton || cancelButton"
-            class="ck-popup-slot-footer__confirm-buttons"
-          >
-            <ck-button
-              v-if="confirmButtons || cancelButton"
-              class="cancel-button"
-              color="danger"
-              :type="realCancelBtnType"
-              @click="onCancel()"
-            >
-              {{ realCancelBtnText }}
-            </ck-button>
-            <ck-button
-            v-if="confirmButtons || acceptButton"
-            :type="realAcceptBtnType"
-            :isLoading="isLoading"
-            @click="onAccept()"
-            >
-              {{ realAcceptBtnText }}
-            </ck-button>
+  <teleport v-if="isActive" to="body">
+    <div class="ck-popup">
+      <div class="blackout" />
+      <div class="popup-container" @mousedown="onBgClick()">
+        <div class="ck-popup__content" :style="computedStyleContent" :class="computedClassContent" @mousedown.stop="">
+          <div class="ck-popup__slot-header" :style="computedStyleHeader" :class="computedClassHeader">
+            <!-- title -->
+            <h3 v-if="title" class="ck-popup__title">{{ title }}</h3>
+            <!-- header slot -->
+            <slot name="header" />
+            <!-- close btn -->
+            <ck-icon v-if="isCloseBtnVisible" class="icon-close" icon="times" @click="isActive = false" />
+          </div>
+          <div class="ck-popup__slot-body" :style="computedStyleBody">
+            <slot />
+          </div>
+          <div v-if="$slots.footer || confirmButtons || acceptButton || cancelButton" class="ck-popup__slot-footer">
+            <slot name="footer" />
+            <div v-if="confirmButtons || acceptButton || cancelButton" class="ck-popup-slot-footer__confirm-buttons">
+              <ck-button
+                v-if="confirmButtons || cancelButton"
+                class="cancel-button"
+                color="danger"
+                :type="realCancelBtnType"
+                @click="onCancel()"
+              >
+                {{ realCancelBtnText }}
+              </ck-button>
+              <ck-button
+                v-if="confirmButtons || acceptButton"
+                :type="realAcceptBtnType"
+                :isLoading="isLoading"
+                @click="onAccept()"
+              >
+                {{ realAcceptBtnText }}
+              </ck-button>
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
-</teleport>
+  </teleport>
 </template>
 
 <style lang="stylus">
@@ -253,7 +251,6 @@ onMounted(() => {
   display flex
   justify-content center
   .ck-popup__content
-    background-color white
     min-width 30vw
     // width 500px
     max-width 95vw

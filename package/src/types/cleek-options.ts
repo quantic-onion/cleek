@@ -50,11 +50,12 @@ export type CleekOptions = {
   };
   select: {
     clearValue: any;
+    backgroundColor: Color;
   };
   table: {
     striped: boolean;
     version: TableVersion;
     headerTextColor?: Color;
     headerBackgroundColor?: Color;
-  }
+  };
 };

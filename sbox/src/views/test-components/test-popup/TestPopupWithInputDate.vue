@@ -14,7 +14,8 @@ const dateValue2 = ref("");
 const time = ref("");
 const minutes = ref("");
 const widthBreaks = [600, "33.33%"];
-
+const selectValue = "";
+const allPersons = [""];
 const isPopupActive = computed({
   get() {
     return props.modelValue;
@@ -28,6 +29,13 @@ const isPopupActive = computed({
 <template>
   <ck-popup v-model="isPopupActive" title="Test popup with input date">
     <div className="date-container">
+      <ck-select
+        v-model="selectValue"
+        :label="'inputLabelPerson'"
+        :options="allPersons"
+        :emptyOptionsMsg="'inputLabelPersonEmptyMessage'"
+        demo
+      />
       <ck-input-date
         v-model="dateValue1"
         icon="user"

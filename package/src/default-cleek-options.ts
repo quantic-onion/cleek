@@ -43,6 +43,7 @@ const cleekOptions: CleekOptions = {
   },
   select: {
     clearValue: 'auto',
+    backgroundColor: '',
   },
   table: {
     striped: false,

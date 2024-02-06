@@ -51,6 +51,7 @@ const props = defineProps<{
   // placeholder
   placeholder?: string;
   emptyOptionsMsg?: string;
+  backgroundColor?: Color;
 }>();
 
 const emits = defineEmits<{
@@ -70,6 +71,7 @@ const defaultClearValue = 'auto';
 // const defaultSearchable = 'auto';
 const defaultReduceNameProp = 'name';
 const defaultReduceValueProp = 'id';
+const defaultBackgroundColor = 'unset'; // move to default file
 
 const { windowWidth } = useWindowWidth();
 const search = ref('');
@@ -128,6 +130,20 @@ const computedStyleSelect = computed(() => {
   const borderColor = props.borderColor || cleekOptions.value?.styles.borderColor;
   if (borderColor && !hooks.isColorTemplateVariable(borderColor)) {
     list.push({ 'border-color': borderColor });
+  }
+  // background-color
+  let backgroundColor = '';
+  if (cleekOptions.value?.select.backgroundColor) backgroundColor = cleekOptions.value?.select.backgroundColor;
+  if (cleekOptions.value?.darkMode) backgroundColor = cleekOptions.value?.darkModeColorItems;
+  if (backgroundColor && !hooks.isColorTemplateVariable(backgroundColor)) {
+    list.push({ backgroundColor: backgroundColor });
+  }
+  // text-color
+  let textColor = cleekOptions.value?.popup.textColor;
+  if (cleekOptions.value?.darkMode) textColor = cleekOptions.value?.darkModeColorText;
+  if (textColor && !hooks.isColorTemplateVariable(textColor)) {
+    list.push(`ck-component__color--${textColor}`);
+    list.push({ color: textColor });
   }
   return list;
 });
@@ -257,54 +273,50 @@ onMounted(() => {
 </script>
 
 <template>
-<div class="ck-select" :style="computedStyle" :class="computedClass">
-  <!-- icon left -->
-  <ck-icon
-    v-if="icon"
-    class="ck-select__icon-left"
-    :icon="icon"
-    :icon-pack="iconPack"
-    :color="iconColor ? iconColor : 'lightgrey'"
-  />
-  <!-- icon right -->
-  <ck-icon
-    v-if="iconRight"
-    class="ck-select__icon-right"
-    :icon="iconRight"
-    :icon-pack="iconPack"
-    :color="iconColor ? iconColor : 'lightgrey'"
-  />
-  <div v-if="isClearBtnVisible" class="ck-select__clear-btn" @click="setClearValue()">
-    <ck-icon icon="times"/>
-  </div>
-  <!-- label -->
-  <ck-label v-if="label" :align="labelAlign" for="ck-input">
-    {{ label }}
-  </ck-label>
-  <!-- select -->
-  <select
-    v-model="value"
-    :class="computedClassSelect"
-    :style="computedStyleSelect"
-    :disabled="disabled || isOptionsListEmpty"
-    @click="onClick($event)"
-  >
-    <!-- option -->
-    <option
-      v-for="option in filteredOptions"
-      :value="getOptionValue(option)"
-      :key="option"
+  <div class="ck-select" :style="computedStyle" :class="computedClass">
+    <!-- icon left -->
+    <ck-icon
+      v-if="icon"
+      class="ck-select__icon-left"
+      :icon="icon"
+      :icon-pack="iconPack"
+      :color="iconColor ? iconColor : 'lightgrey'"
+    />
+    <!-- icon right -->
+    <ck-icon
+      v-if="iconRight"
+      class="ck-select__icon-right"
+      :icon="iconRight"
+      :icon-pack="iconPack"
+      :color="iconColor ? iconColor : 'lightgrey'"
+    />
+    <div v-if="isClearBtnVisible" class="ck-select__clear-btn" @click="setClearValue()">
+      <ck-icon icon="times" />
+    </div>
+    <!-- label -->
+    <ck-label v-if="label" :align="labelAlign" for="ck-input">
+      {{ label }}
+    </ck-label>
+    <!-- select -->
+    <select
+      v-model="value"
+      :class="computedClassSelect"
+      :style="computedStyleSelect"
+      :disabled="disabled || isOptionsListEmpty"
+      @click="onClick($event)"
     >
-      {{ getOptionName(option) }}
-    </option>
-  </select>
-  <span v-if="isEmptyOptionsMsgVisible" class="ck-select--placeholder">
-    {{ emptyOptionsMsg }}
-  </span>
-  <span v-else-if="isPlaceholderVisible" class="ck-select--placeholder">
-    {{ placeholder }}
-  </span>
-</div>
+      <!-- option -->
+      <option v-for="option in filteredOptions" :value="getOptionValue(option)" :key="option">
+        {{ getOptionName(option) }}
+      </option>
+    </select>
+    <span v-if="isEmptyOptionsMsgVisible" class="ck-select--placeholder">
+      {{ emptyOptionsMsg }}
+    </span>
+    <span v-else-if="isPlaceholderVisible" class="ck-select--placeholder">
+      {{ placeholder }}
+    </span>
+  </div>
 </template>
 
 <style lang="stylus" scoped>

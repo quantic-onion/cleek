@@ -144,6 +144,20 @@ const computedStyleInput = computed(() => {
   if (borderColor && !hooks.isColorTemplateVariable(borderColor)) {
     list.push({ 'border-color': borderColor });
   }
+  // background-color
+  let backgroundColor = '';
+  if (cleekOptions.value?.popup.headerColor) backgroundColor = cleekOptions.value?.popup.headerColor;
+  if (cleekOptions.value?.darkMode) backgroundColor = cleekOptions.value?.darkModeColorItems;
+  if (backgroundColor && !hooks.isColorTemplateVariable(backgroundColor)) {
+    list.push({ backgroundColor: backgroundColor });
+  }
+  // text-color
+  let textColor = props.textColor || cleekOptions.value?.popup.textColor;
+  if (cleekOptions.value?.darkMode) textColor = cleekOptions.value?.darkModeColorText;
+  if (textColor && !hooks.isColorTemplateVariable(textColor)) {
+    list.push(`ck-component__color--${textColor}`);
+    list.push({ color: textColor });
+  }
   return list;
 });
 
@@ -183,67 +197,68 @@ onMounted(() => {
 </script>
 
 <template>
-<div class="ck-input" :style="computedStyle">
-  <!-- label -->
-  <ck-label v-if="label" for="ck-input" :size="size" :align="realLabelAlign">
-    {{ label }}
-  </ck-label>
-  <!-- icon left -->
-  <ck-icon
-    v-if="icon"
-    class="ck-input__icon-left"
-    :color="iconColor ? iconColor : 'lightgrey'"
-    :icon="icon"
-    :icon-pack="iconPack"
-  />
-  <input
-    v-if="isShowingPassword"
-    v-model="value"
-    ref="realInput"
-    type="text"
-    :autocomplete="autocomplete ? 'on' : 'off'"
-    :placeholder="placeholder"
-    :class="computedClassInput"
-    :style="computedStyleInput"
-    :disabled="disabled"
-    @change="onChange($event)"
-    @input="onInput($event)"
-    @click="onClick($event)"
-    @focus="emits('focus', $event)"
-    @blur="emits('blur', $event)"
-  />
-  <input
-    v-else
-    v-model="value"
-    ref="realInput"
-    :autocomplete="autocomplete ? 'on' : 'off'"
-    :type="type || defaultType"
-    :placeholder="placeholder"
-    :class="computedClassInput"
-    :style="computedStyleInput"
-    :disabled="disabled"
-    @change="onChange($event)"
-    @input="onInput($event)"
-    @click="onClick($event)"
-    @focus="emits('focus', $event)"
-    @blur="emits('blur', $event)"
-  />
-  <div class="show-password"
-    v-if="type === 'password'"
-    :class="layout || cleekOptions?.styles.layout"
-    @click="isShowingPassword = !isShowingPassword"
-  >
-    <ck-icon :icon="isShowingPassword ? 'eye-slash' : 'eye'"/>
+  <div class="ck-input" :style="computedStyle">
+    <!-- label -->
+    <ck-label v-if="label" for="ck-input" :size="size" :align="realLabelAlign">
+      {{ label }}
+    </ck-label>
+    <!-- icon left -->
+    <ck-icon
+      v-if="icon"
+      class="ck-input__icon-left"
+      :color="iconColor ? iconColor : 'lightgrey'"
+      :icon="icon"
+      :icon-pack="iconPack"
+    />
+    <input
+      v-if="isShowingPassword"
+      v-model="value"
+      ref="realInput"
+      type="text"
+      :autocomplete="autocomplete ? 'on' : 'off'"
+      :placeholder="placeholder"
+      :class="computedClassInput"
+      :style="computedStyleInput"
+      :disabled="disabled"
+      @change="onChange($event)"
+      @input="onInput($event)"
+      @click="onClick($event)"
+      @focus="emits('focus', $event)"
+      @blur="emits('blur', $event)"
+    />
+    <input
+      v-else
+      v-model="value"
+      ref="realInput"
+      :autocomplete="autocomplete ? 'on' : 'off'"
+      :type="type || defaultType"
+      :placeholder="placeholder"
+      :class="computedClassInput"
+      :style="computedStyleInput"
+      :disabled="disabled"
+      @change="onChange($event)"
+      @input="onInput($event)"
+      @click="onClick($event)"
+      @focus="emits('focus', $event)"
+      @blur="emits('blur', $event)"
+    />
+    <div
+      class="show-password"
+      v-if="type === 'password'"
+      :class="layout || cleekOptions?.styles.layout"
+      @click="isShowingPassword = !isShowingPassword"
+    >
+      <ck-icon :icon="isShowingPassword ? 'eye-slash' : 'eye'" />
+    </div>
+    <!-- icon right -->
+    <ck-icon
+      v-if="iconRight && type !== 'password'"
+      class="ck-input__icon-right"
+      :color="iconColor ? iconColor : 'lightgrey'"
+      :icon="iconRight"
+      :icon-pack="iconPack"
+    />
   </div>
-  <!-- icon right -->
-  <ck-icon
-    v-if="iconRight && type !== 'password'"
-    class="ck-input__icon-right"
-    :color="iconColor ? iconColor : 'lightgrey'"
-    :icon="iconRight"
-    :icon-pack="iconPack"
-  />
-</div>
 </template>
 
 <style lang="stylus" scoped>
