@@ -163,7 +163,7 @@ onMounted(() => {
     &:hover
       border-color primary
   &.is-rounded img
-    border-radius 100%
+    border-radius 5000px
   img
     display block
     width auto
