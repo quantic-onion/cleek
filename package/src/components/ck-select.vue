@@ -259,7 +259,6 @@ function getOptionName(option: SelectOption) {
 function setClearValue() {
   value.value = realClearValue.value;
 }
-
 function setFocus() {
   // const el = this.$refs.vSelect.$el.children[0].children[0].children[1];
   // setTimeout(() => {

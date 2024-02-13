@@ -29,6 +29,7 @@ export type CleekOptions = {
   button: {
     type: ButtonType;
     layout: Layout;
+    backgroundColor: Color;
   };
   div: {
     gap: 0;

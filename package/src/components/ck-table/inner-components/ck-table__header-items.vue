@@ -90,6 +90,7 @@ function checkRefresh() {
       type="flat"
       icon="rotate-right"
       title="Recargar lista"
+      backgroundColor="transparent"
       :layout="layout"
       @click="emits('refreshList', true)"
     />

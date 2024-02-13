@@ -2,9 +2,11 @@
 // components
 import TestPopup from '@/views/test-components/test-popup/TestPopup.vue';
 import TestTable from '@/views/test-components/test-popup/TestTable.vue';
+import TestClick from '@/views/test-components/TestClick.vue';
 </script>
 
 <template>
+  <TestClick />
   <ck-icon iconPack="cleek" icon="heart" size="lg" color="primary" />
   <ck-icon iconPack="cleek" icon="heart-filled" size="md" color="secondary" />
   <TestPopup />

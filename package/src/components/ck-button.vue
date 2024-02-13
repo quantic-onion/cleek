@@ -51,9 +51,9 @@ const emits = defineEmits<{
 
 const { windowWidth } = useWindowWidth();
 
+const defaultBackgroundColor = 'transparent'; // move to default file
 const defaultButtonType = 'outlined'; // move to default file
 const defaultColor = 'primary'; // move to default file
-const defaultBackgroundColor = 'transparent'; // move to default file
 const defaultAlign = 'left'; // move to default file
 
 let cleekOptions: Ref<undefined | CleekOptions> = ref();
@@ -62,6 +62,11 @@ const realButtonType = computed(() => {
   if (props.type) return props.type;
   if (cleekOptions.value) return cleekOptions.value.button.type;
   return defaultButtonType;
+});
+const realBackgroundColor = computed(() => {
+  if (props.backgroundColor) return props.backgroundColor;
+  if (cleekOptions.value && !props.type) return cleekOptions.value.button.backgroundColor;
+  return defaultBackgroundColor;
 });
 const computedClass = computed(() => {
   const list = [];
@@ -77,9 +82,8 @@ const computedClass = computed(() => {
     }
   }
   // backgroundColor
-  const bgColor = props.backgroundColor || defaultBackgroundColor;
-  if (bgColor !== defaultBackgroundColor && hooks.isColorTemplateVariable(bgColor)) {
-    list.push(`ck-component__bg-color--${bgColor}`);
+  if (realBackgroundColor.value !== defaultBackgroundColor && hooks.isColorTemplateVariable(realBackgroundColor.value)) {
+    list.push(`ck-component__bg-color--${realBackgroundColor.value}`);
   }
   // align
   const align = props.align || defaultAlign;
@@ -111,9 +115,8 @@ const computedStyle = computed(() => {
   // width
   if (props.width && !isWidthDefined) list.push({ width: props.width });
   // backgroundColor
-  const bgColor = props.backgroundColor || defaultBackgroundColor;
-  if (bgColor !== defaultBackgroundColor && !hooks.isColorTemplateVariable(bgColor)) {
-    list.push({ 'background-color': bgColor });
+  if (realBackgroundColor.value !== defaultBackgroundColor && !hooks.isColorTemplateVariable(realBackgroundColor.value)) {
+    list.push({ 'background-color':realBackgroundColor.value });
   }
   return list;
 });

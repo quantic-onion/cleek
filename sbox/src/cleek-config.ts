@@ -17,7 +17,8 @@ export default {
     basePath: "/images/",
   },
   button: {
-    type: "filled",
+    type: "outlined",
+    backgroundColor: 'white',
   },
   select: {
     clearValue: null,

@@ -22,6 +22,7 @@ const cleekOptions: CleekOptions = {
   button: {
     type: 'outlined',
     layout: 'base',
+    backgroundColor: 'transparent',
   },
   div: {
     gap: 0,
