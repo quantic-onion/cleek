@@ -18,7 +18,6 @@ export default {
   },
   button: {
     type: "outlined",
-    backgroundColor: 'white',
   },
   select: {
     clearValue: null,

@@ -1,6 +1,10 @@
 <script setup lang="ts">
-import { computed } from 'vue';
-import type { Align } from '../types/cleek-options';
+import { computed, getCurrentInstance, onMounted, ref } from 'vue';
+import type { Ref } from 'vue';
+// types
+import type { Align, CleekOptions } from '../types/cleek-options';
+// hooks
+import hooks from '../utils/global-hooks';
 
 const props = defineProps<{
   for: string;
@@ -8,6 +12,7 @@ const props = defineProps<{
   size?: 's' | 'm' | 'l' | 'xl';
 }>();
 
+let cleekOptions: Ref<undefined | CleekOptions> = ref();
 const defaultSize = 'm';
 
 const computedClass = computed(() => {
@@ -20,6 +25,27 @@ const computedClass = computed(() => {
   list.push(`ck-size--${props.size || defaultSize}`);
   return list;
 });
+const computedStyle = computed(() => {
+  const list = [];
+  // text-color
+  let textColor = cleekOptions.value?.popup.textColor;
+  if (cleekOptions.value?.darkMode) textColor = cleekOptions.value?.darkModeColorText;
+  console.log('textColor', textColor);
+  if (textColor) {
+    if (hooks.isColorTemplateVariable(textColor)) {
+      console.log('option A')
+      list.push(`ck-component__color--${textColor}`);
+    } else {
+      console.log('option B')
+      list.push({ color: textColor });
+    }
+  }
+  return list;
+});
+
+onMounted(() => {
+  cleekOptions.value = hooks.getCleekOptions(getCurrentInstance);
+});
 </script>
 
 <template>
@@ -27,6 +53,7 @@ const computedClass = computed(() => {
 class="ck-label"
 :for="props.for"
 :class="computedClass"
+:style="computedStyle"
 >
   <slot/>
 </label>

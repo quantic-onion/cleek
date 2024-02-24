@@ -116,7 +116,9 @@ const computedStyle = computed(() => {
   if (props.width && !isWidthDefined) list.push({ width: props.width });
   // backgroundColor
   if (realBackgroundColor.value !== defaultBackgroundColor && !hooks.isColorTemplateVariable(realBackgroundColor.value)) {
-    list.push({ 'background-color':realBackgroundColor.value });
+    list.push({ 'background-color': realBackgroundColor.value });
+  } else if (cleekOptions.value?.darkMode) {
+    list.push({ 'background-color': cleekOptions.value?.darkModeColorItems });
   }
   return list;
 });

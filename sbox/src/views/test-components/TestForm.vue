@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 
+const inputOne = ref('Default val');
+const inputTwo = ref('');
 const selectedOption = ref(0);
 const refSelect = ref(null);
 
@@ -21,8 +23,11 @@ function testClick() {
   Click
 </ck-button>
 <ck-select
+  label="Label text"
   ref="refSelect"
   v-model="selectedOption"
   :options="options"
 />
+<ck-input v-model="inputOne" />
+<ck-input v-model="inputTwo" label="Input dos" />
 </template>

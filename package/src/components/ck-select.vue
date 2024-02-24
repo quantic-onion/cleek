@@ -141,9 +141,26 @@ const computedStyleSelect = computed(() => {
   // text-color
   let textColor = cleekOptions.value?.popup.textColor;
   if (cleekOptions.value?.darkMode) textColor = cleekOptions.value?.darkModeColorText;
-  if (textColor && !hooks.isColorTemplateVariable(textColor)) {
-    list.push(`ck-component__color--${textColor}`);
-    list.push({ color: textColor });
+  if (textColor) {
+    if (hooks.isColorTemplateVariable(textColor)) {
+      list.push(`ck-component__color--${textColor}`);
+    } else {
+      list.push({ color: textColor });
+    }
+  }
+  return list;
+});
+const computedStyleOption = computed(() => {
+  const list = [];
+  // text-color
+  let textColor = cleekOptions.value?.popup.textColor;
+  if (cleekOptions.value?.darkMode) textColor = cleekOptions.value?.darkModeColorText;
+  if (textColor) {
+    if (hooks.isColorTemplateVariable(textColor)) {
+      list.push(`ck-component__color--${textColor}`);
+    } else {
+      list.push({ color: textColor });
+    }
   }
   return list;
 });
@@ -305,7 +322,12 @@ onMounted(() => {
       @click="onClick($event)"
     >
       <!-- option -->
-      <option v-for="option in filteredOptions" :value="getOptionValue(option)" :key="option">
+      <option
+        v-for="option in filteredOptions"
+        :value="getOptionValue(option)"
+        :key="option"
+        :style="computedStyleOption"
+      >
         {{ getOptionName(option) }}
       </option>
     </select>
