@@ -52,7 +52,7 @@ onMounted(() => {
 
 <style lang="stylus">
 .ck-div
-  min-width 100%
+  width 100%
   display inline-flex
   align-items flex-end
   flex-wrap wrap

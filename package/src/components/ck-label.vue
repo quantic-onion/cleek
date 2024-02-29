@@ -30,13 +30,10 @@ const computedStyle = computed(() => {
   // text-color
   let textColor = cleekOptions.value?.popup.textColor;
   if (cleekOptions.value?.darkMode) textColor = cleekOptions.value?.darkModeColorText;
-  console.log('textColor', textColor);
   if (textColor) {
     if (hooks.isColorTemplateVariable(textColor)) {
-      console.log('option A')
       list.push(`ck-component__color--${textColor}`);
     } else {
-      console.log('option B')
       list.push({ color: textColor });
     }
   }
