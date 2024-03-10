@@ -299,7 +299,7 @@ onMounted(() => {
   &.striped-table > tbody > tr
     background-color white
     &:nth-child(even)
-      background-color #f3f3f3
+      background-color #f8f8f8
       // border-bottom 1px solid #e1e1e1
       // border-top 1px solid #e1e1e1
   &.dark-mode
