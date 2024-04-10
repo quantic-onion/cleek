@@ -182,9 +182,7 @@ function setSelect() {
 
 function checkSearchTime(oldValue: string | number) {
   setTimeout(() => {
-    if (value.value === oldValue) {
-      emits('delayChange', oldValue);
-    }
+    if (value.value === oldValue) emits('delayChange', oldValue);
   }, props.delayChangeTime || defaultDelayChangeTime);
 }
 
