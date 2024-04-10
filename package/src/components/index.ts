@@ -20,6 +20,7 @@ export { default as CkButton } from './ck-button.vue';
 export { default as CkCard } from './ck-card.vue';
 export { default as CkCheckbox } from './ck-checkbox.vue';
 export { default as CkChip } from './ck-chip.vue';
+export { default as CkCircle } from './ck-circle.vue';
 export { default as CkDiv } from './ck-div.vue';
 export { default as CkIcon } from './ck-icon.vue';
 export { default as CkImg } from './ck-img.vue';

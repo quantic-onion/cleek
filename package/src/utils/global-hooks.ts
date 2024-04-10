@@ -59,6 +59,8 @@ export default {
     if (color === 'danger') return true;
     if (color === 'dark') return true;
     if (color === 'light') return true;
+    if (color === 'primary-light') return true;
+    if (color === 'secondary-light') return true;
     return false;
   },
   isColumnDisplayed(column: ColumnItem) {

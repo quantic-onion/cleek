@@ -20,11 +20,24 @@ import 'floating-vue/dist/style.css';
 // vue components
 import * as components from './components/index.js';
 
+function hexToRgb(hex: string) {
+  // Remove the hash symbol (#) if it exists
+  hex = hex.replace(/^#/, '');
+  // Parse the hex value into individual red, green, and blue components
+  const r = parseInt(hex.substring(0, 2), 16);
+  const g = parseInt(hex.substring(2, 4), 16);
+  const b = parseInt(hex.substring(4, 6), 16);
+  // Return the RGB values as an object
+  return { r, g, b };
+}
+
 function setRootColors(colors) {
-  var r = document.querySelector(':root');
+  const r = document.querySelector(':root');
   for (const key in colors) {
-    const colorValue = colors[key];
-    r.style.setProperty(`--${key}`, colorValue);
+    const colorHex = colors[key];
+    const rgbColor = hexToRgb(colors[key]);
+    r.style.setProperty(`--${key}`, colorHex);
+    r.style.setProperty(`--${key}-rgb`, `${rgbColor.r}, ${rgbColor.g}, ${rgbColor.b}`);
   }
 }
 

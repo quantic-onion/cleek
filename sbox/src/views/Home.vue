@@ -1,11 +1,15 @@
 <script setup lang="ts">
 // components
+import TestChip from '@/views/test-components/TestChip.vue';
+import TestCircle from '@/views/test-components/TestCircle.vue';
 import TestPopup from '@/views/test-components/test-popup/TestPopup.vue';
 import TestTable from '@/views/test-components/test-popup/TestTable.vue';
 import TestForm from '@/views/test-components/TestForm.vue';
 </script>
 
 <template>
+  <TestCircle />
+  <TestChip />
   <TestForm />
   <ck-icon iconPack="cleek" icon="heart" size="lg" color="primary" />
   <ck-icon iconPack="cleek" icon="heart-filled" size="md" color="secondary" />

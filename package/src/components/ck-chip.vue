@@ -19,6 +19,7 @@ const props = defineProps<{
   iconPack?: IconPack;
 }>();
 
+const defaultTextColor = 'white';
 const defaultColor = 'primary';
 const defaultSize = 's';
 
@@ -43,7 +44,7 @@ const computedStyle = computed(() => {
   const list = [];
   if (props.color && !hooks.isColorTemplateVariable(props.color)) {
     list.push({ backgroundColor: props.color });
-    list.push({ color: props.textColor || 'white' });
+    list.push({ color: props.textColor || defaultTextColor });
   }
   return list;
 });
@@ -56,11 +57,11 @@ const computedStyle = computed(() => {
   :style="computedStyle"
   @click="emits('click', $event)"
 >
-  <ck-icon v-if="icon && !iconRight" class="pr-2" :icon="icon" :icon-pack="iconPack"/>
+  <ck-icon v-if="icon" class="pr-2" :icon="icon" :icon-pack="iconPack"/>
   <span>
     <slot/>
   </span>
-  <ck-icon v-if="icon && iconRight" class="pl-2" :icon="icon" :icon-pack="iconPack"/>
+  <ck-icon v-if="iconRight" class="pl-2" :icon="iconRight" :icon-pack="iconPack"/>
 </div>
 </template>
 

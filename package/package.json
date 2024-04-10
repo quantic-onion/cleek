@@ -1,6 +1,6 @@
 {
   "name": "cleek",
-  "version": "2.6.112",
+  "version": "2.7.2",
   "description": "Complete UX Vue library",
   "repository": "",
   "author": "Quantic Onion",
@@ -35,10 +35,10 @@
   "devDependencies": {
     "@prettier/plugin-pug": "^2.5.1",
     "@vitejs/plugin-vue": "^1.2.5",
+    "@vue/compiler-sfc": "^3.1.5",
     "@vue/eslint-config-prettier": "^7.1.0",
     "@vue/eslint-config-typescript": "^11.0.3",
     "@vue/language-plugin-pug": "^1.8.15",
-    "@vue/compiler-sfc": "^3.1.5",
     "@vue/tsconfig": "^0.1.3",
     "eslint": "^7.31.0",
     "eslint-config-prettier": "^8.3.0",

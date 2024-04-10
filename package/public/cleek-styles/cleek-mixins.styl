@@ -84,6 +84,10 @@ unselectable()
   -webkit-user-select none
   -o-user-select none
 
+dynamic-rgba(rgb-variable, opacity = 1)
+  // return rgba as a string so it doesn't get interpolated by stylus compiler
+  s('rgba(var(%s), %s)', rgb-variable, opacity)
+
 //
 //
 //
