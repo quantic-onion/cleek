@@ -29,6 +29,7 @@ const props = defineProps<{
   // functions
   capitalize?: boolean;
   autoSelect?: boolean;
+  delayChangeTime?: number;
   // label
   label?: string;
   labelAlign?: Align;
@@ -39,11 +40,13 @@ const emits = defineEmits<{
   (e: 'input', event: Event): void;
   (e: 'change', event: Event): void;
   (e: 'click', event: Event): void;
+  (e: 'delayChange', value: string): void;
 }>();
 
 let cleekOptions: Ref<undefined | CleekOptions> = ref();
 const refTextarea: Ref<null | HTMLTextAreaElement> = ref(null);
 const { windowWidth } = useWindowWidth();
+const defaultDelayChangeTime = 300;
 
 const inputValue = computed({
   get() {
@@ -52,6 +55,7 @@ const inputValue = computed({
   set(val: string) {
     if (props.capitalize) val = qmStr.capitalize(val);
     emits('update:modelValue', val);
+    checkSearchTime(val);
   },
 });
 const computedClassTextarea = computed(() => {
@@ -105,28 +109,34 @@ const onChange = (event: Event) => {
   emits('change', event);
 };
 
+function checkSearchTime(oldValue: string) {
+  setTimeout(() => {
+    if (inputValue.value === oldValue) emits('delayChange', oldValue);
+  }, props.delayChangeTime || defaultDelayChangeTime);
+}
+
 onMounted(() => {
   cleekOptions.value = hooks.getCleekOptions(getCurrentInstance);
 });
 </script>
 
 <template>
-<div class="ck-textarea">
-  <ck-label v-if="label" :label-align="labelAlign">
-    {{ label }}
-  </ck-label>
-  <textarea
-    v-model="inputValue"
-    ref="refTextarea"
-    :placeholder="placeholder"
-    :disabled="disabled"
-    :class="computedClassTextarea"
-    :style="computedStyleTextarea"
-    @click="onClick($event)"
-    @input="onInput($event)"
-    @change="onChange($event)"
-  />
-</div>
+  <div class="ck-textarea">
+    <ck-label v-if="label" :label-align="labelAlign">
+      {{ label }}
+    </ck-label>
+    <textarea
+      v-model="inputValue"
+      ref="refTextarea"
+      :placeholder="placeholder"
+      :disabled="disabled"
+      :class="computedClassTextarea"
+      :style="computedStyleTextarea"
+      @click="onClick($event)"
+      @input="onInput($event)"
+      @change="onChange($event)"
+    />
+  </div>
 </template>
 
 <style lang="stylus" scoped>
