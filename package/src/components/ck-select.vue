@@ -286,7 +286,6 @@ onMounted(() => {
 
 <template>
   <div class="ck-select" :style="computedStyle" :class="computedClass">
-    valueIsDefault {{ valueIsDefault }}
     <!-- icon left -->
     <ck-icon
       v-if="icon"
