@@ -28,6 +28,9 @@ const props = defineProps<{
   autocomplete?: boolean;
   disabled?: boolean;
   placeholder?: string;
+  plusMinusButtons?: boolean;
+  min?: number;
+  max?: number;
   // label
   label?: string;
   labelAlign?: Align;
@@ -72,6 +75,8 @@ defineExpose({ setFocus, setSelect });
 let cleekOptions: Ref<undefined | CleekOptions> = ref();
 
 const defaultType = 'text';
+const plusMinusButtonsDefaultWithInput = '120px';
+const plusMinusButtonsDefaultAlign = 'center';
 const defaultDelayChangeTime = 300;
 
 const realInput: Ref<null | HTMLInputElement> = ref(null);
@@ -86,6 +91,8 @@ const value = computed({
   set(val: string | number) {
     if (props.capitalize) val = qmStr.capitalize(`${val}`);
     if (props.justInteger) val = parseInt(`${+val}`);
+    if (props.min && +val < +props.min) val = +props.min;
+    if (props.max && +val > +props.max) val = +props.max;
     emits('update:modelValue', val);
     checkSearchTime(val);
   },
@@ -94,6 +101,7 @@ const value = computed({
 const realLabelAlign = computed(() => {
   if (props.labelAlign) return props.labelAlign;
   if (props.align) return props.align;
+  if (props.plusMinusButtons) return plusMinusButtonsDefaultAlign;
   return 'left';
 });
 
@@ -118,7 +126,9 @@ const computedClassInput = computed(() => {
   if (props.icon) list.push('has-icon-left');
   if (props.iconRight) list.push('has-icon-right');
   // align
-  if (props.align) list.push(`align--${props.align}`);
+  let align = props.align;
+  if (props.plusMinusButtons) align = plusMinusButtonsDefaultAlign;
+  if (align) list.push(`align--${align}`);
   // hideBorder
   if (props.hideBorder) list.push('no-border');
   // layout
@@ -164,7 +174,10 @@ const computedStyleInput = computed(() => {
 const computedStyle = computed(() => {
   const list = [];
   // width
-  list.push({ width: props.width });
+  let width = '';
+  if (props.width) width = props.width;
+  if (props.plusMinusButtons) width = plusMinusButtonsDefaultWithInput;
+  if (width) list.push({ width: width });
   // width-break
   if (props.widthBreaks) {
     const width = hooks.getWidthByWidthBreaks(props.widthBreaks, windowWidth.value);
@@ -207,6 +220,16 @@ onMounted(() => {
       :color="iconColor ? iconColor : 'lightgrey'"
       :icon="icon"
       :icon-pack="iconPack"
+      size="s"
+    />
+    <ck-button
+      v-if="plusMinusButtons"
+      size="s"
+      icon="minus"
+      group="left"
+      type="filled"
+      class="ck-input-plus-minus-buttons"
+      @click="value = (+value) - 1"
     />
     <input
       v-if="isShowingPassword"
@@ -256,6 +279,15 @@ onMounted(() => {
       :icon="iconRight"
       :icon-pack="iconPack"
     />
+    <ck-button
+      v-if="plusMinusButtons"
+      size="s"
+      icon="plus"
+      group="right"
+      type="filled"
+      class="ck-input-plus-minus-buttons"
+      @click="value = (+value) + 1"
+    />
   </div>
 </template>
 
@@ -263,8 +295,9 @@ onMounted(() => {
 @import '../styles/.variables.styl'
 
 .ck-input
-  display inline-block
+  display inline-flex
   position relative
+  align-items flex-end
   > input
     width 100%
     padding $globalPadding
@@ -341,6 +374,9 @@ onMounted(() => {
     left 1.5 * $globalPadding
   > .ck-input__icon-right
     right 1.5 * $globalPadding
+
+.ck-input-plus-minus-buttons
+  margin-bottom 0.5rem
 
 // remove arrows | chrome
 input::-webkit-outer-spin-button

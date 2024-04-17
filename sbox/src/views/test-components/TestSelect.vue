@@ -10,7 +10,6 @@ const selectedOption = ref(null);
 </script>
 
 <template>
-  ESTE ES EL TEST DE LOS SELECTS
 <ck-select
   v-model="selectedOption"
   :options="options"
