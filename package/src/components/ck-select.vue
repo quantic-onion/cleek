@@ -221,20 +221,16 @@ const realClearValue = computed(() => {
 });
 const valueIsDefault = computed(() => {
   if (logicClearValue.value !== 'auto') return value.value === logicClearValue.value;
-  switch (typeof props.modelValue) {
-    case 'number':
-      return props.modelValue === 0;
-    case 'string':
-      return props.modelValue === '';
-    case 'object': // array is also object
-      if (!props.modelValue) return null;
-      if (props.modelValue.constructor === Array) {
-        return props.modelValue.length === 0;
-      }
-      return Object.keys(props.modelValue).length === 0;
-    default:
-      return props.modelValue === null;
+  const currentValue = props.modelValue;
+  if (typeof currentValue === 'number') return currentValue === 0;
+  if (typeof currentValue === 'string') return currentValue === '';
+  if (typeof currentValue === 'object') {
+    if (!currentValue) return currentValue === null;
+    // array is also object
+    if (Array.isArray(currentValue)) return currentValue.length === 0;
+    return Object.keys(currentValue).length === 0;
   }
+  return currentValue === null;
 });
 const isPlaceholderVisible = computed(() => {
   if (!props.placeholder) return;
@@ -290,6 +286,7 @@ onMounted(() => {
 
 <template>
   <div class="ck-select" :style="computedStyle" :class="computedClass">
+    valueIsDefault {{ valueIsDefault }}
     <!-- icon left -->
     <ck-icon
       v-if="icon"

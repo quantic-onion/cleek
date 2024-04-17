@@ -1,5 +1,6 @@
 <script setup lang="ts">
 // components
+import TestSelect from '@/views/test-components/TestSelect.vue';
 import TestChip from '@/views/test-components/TestChip.vue';
 import TestCircle from '@/views/test-components/TestCircle.vue';
 import TestPopup from '@/views/test-components/test-popup/TestPopup.vue';
@@ -8,6 +9,7 @@ import TestForm from '@/views/test-components/TestForm.vue';
 </script>
 
 <template>
+  <TestSelect />
   <TestCircle />
   <TestChip />
   <TestForm />
