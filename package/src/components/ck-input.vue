@@ -213,81 +213,85 @@ onMounted(() => {
     <ck-label v-if="label" for="ck-input" :size="size" :align="realLabelAlign">
       {{ label }}
     </ck-label>
-    <!-- icon left -->
-    <ck-icon
-      v-if="icon"
-      class="ck-input__icon-left"
-      :color="iconColor ? iconColor : 'lightgrey'"
-      :icon="icon"
-      :icon-pack="iconPack"
-      size="s"
-    />
-    <ck-button
-      v-if="plusMinusButtons"
-      size="s"
-      icon="minus"
-      group="left"
-      type="filled"
-      class="ck-input-plus-minus-buttons"
-      @click="value = (+value) - 1"
-    />
-    <input
-      v-if="isShowingPassword"
-      v-model="value"
-      ref="realInput"
-      type="text"
-      :autocomplete="autocomplete ? 'on' : 'off'"
-      :placeholder="placeholder"
-      :class="computedClassInput"
-      :style="computedStyleInput"
-      :disabled="disabled"
-      @change="onChange($event)"
-      @input="onInput($event)"
-      @click="onClick($event)"
-      @focus="emits('focus', $event)"
-      @blur="emits('blur', $event)"
-    />
-    <input
-      v-else
-      v-model="value"
-      ref="realInput"
-      :autocomplete="autocomplete ? 'on' : 'off'"
-      :type="type || defaultType"
-      :placeholder="placeholder"
-      :class="computedClassInput"
-      :style="computedStyleInput"
-      :disabled="disabled"
-      @change="onChange($event)"
-      @input="onInput($event)"
-      @click="onClick($event)"
-      @focus="emits('focus', $event)"
-      @blur="emits('blur', $event)"
-    />
-    <div
-      class="show-password"
-      v-if="type === 'password'"
-      :class="layout || cleekOptions?.styles.layout"
-      @click="isShowingPassword = !isShowingPassword"
-    >
-      <ck-icon :icon="isShowingPassword ? 'eye-slash' : 'eye'" />
+    <div class="ck-input__content">
+      <!-- button minus -->
+      <ck-button
+        v-if="plusMinusButtons"
+        size="s"
+        icon="minus"
+        group="left"
+        type="filled"
+        class="ck-input-plus-minus-buttons"
+        @click="value = (+value) - 1"
+      />
+      <!-- icon left -->
+      <ck-icon
+        v-if="icon"
+        class="ck-input__icon-left"
+        :color="iconColor ? iconColor : 'lightgrey'"
+        :icon="icon"
+        :icon-pack="iconPack"
+        size="s"
+      />
+      <input
+        v-if="isShowingPassword"
+        v-model="value"
+        ref="realInput"
+        type="text"
+        :autocomplete="autocomplete ? 'on' : 'off'"
+        :placeholder="placeholder"
+        :class="computedClassInput"
+        :style="computedStyleInput"
+        :disabled="disabled"
+        @change="onChange($event)"
+        @input="onInput($event)"
+        @click="onClick($event)"
+        @focus="emits('focus', $event)"
+        @blur="emits('blur', $event)"
+      />
+      <input
+        v-else
+        v-model="value"
+        ref="realInput"
+        :autocomplete="autocomplete ? 'on' : 'off'"
+        :type="type || defaultType"
+        :placeholder="placeholder"
+        :class="computedClassInput"
+        :style="computedStyleInput"
+        :disabled="disabled"
+        @change="onChange($event)"
+        @input="onInput($event)"
+        @click="onClick($event)"
+        @focus="emits('focus', $event)"
+        @blur="emits('blur', $event)"
+      />
+      <div
+        class="show-password"
+        v-if="type === 'password'"
+        :class="layout || cleekOptions?.styles.layout"
+        @click="isShowingPassword = !isShowingPassword"
+      >
+        <ck-icon :icon="isShowingPassword ? 'eye-slash' : 'eye'" />
+      </div>
+      <!-- icon right -->
+      <ck-icon
+        v-if="iconRight && type !== 'password'"
+        class="ck-input__icon-right"
+        :color="iconColor ? iconColor : 'lightgrey'"
+        :icon="iconRight"
+        :icon-pack="iconPack"
+      />
+      <!-- button plus -->
+      <ck-button
+        v-if="plusMinusButtons"
+        size="s"
+        icon="plus"
+        group="right"
+        type="filled"
+        class="ck-input-plus-minus-buttons"
+        @click="value = (+value) + 1"
+      />
     </div>
-    <!-- icon right -->
-    <ck-icon
-      v-if="iconRight && type !== 'password'"
-      class="ck-input__icon-right"
-      :color="iconColor ? iconColor : 'lightgrey'"
-      :icon="iconRight"
-      :icon-pack="iconPack"
-    />
-    <ck-button
-      v-if="plusMinusButtons"
-      size="s"
-      icon="plus"
-      group="right"
-      type="filled"
-      class="ck-input-plus-minus-buttons"
-      @click="value = (+value) + 1"
-    />
   </div>
 </template>
 
@@ -295,88 +299,89 @@ onMounted(() => {
 @import '../styles/.variables.styl'
 
 .ck-input
-  display inline-flex
+  display inline-block
   position relative
   align-items flex-end
-  > input
-    width 100%
-    padding $globalPadding
-    font-size $globalFontSize-s
-    border-radius $globalBorderRadius
-    border 1px solid $globalBorderColor
-    min-height 40px
-    box-sizing border-box
-    &::placeholder
-      color $color-placeholder
-    &:-ms-input-placeholder
-      color $color-placeholder
-    &::-ms-input-placeholder
-      color $color-placeholder
-    &:focus-visible
-      outline-color var(--primary)
-    &.rounded
-      border-radius 10rem
-    &.squared
-      border-radius 0
-    &.align--center
-      text-align center
-    &.align--right
-      text-align right
-    &.no-border
-      border-color transparent !important
-    &.has-icon-left
-      padding-left 14px + 3 * $globalPadding
-    &.has-icon-right
-      padding-right 14px + 3 * $globalPadding
-    &.ck-input-size__s
-      font-size 0.7rem
-      min-height unset
-      padding 0.35rem 0.5rem
-    &.ck-input-size__l
-      font-size 1.3rem
-      padding 0.75rem 1.5rem
-      border-radius 0.5rem
-    &.ck-input-size__xl
-      font-size 1.5rem
-      padding 0.75rem 1.5rem
-      border-radius 0.5rem
-    &:disabled
-      cursor not-allowed
-      border-color $color-disabled
-      color $color-disabled
-      background-color #e0e0e0
-  > .ck-input__icon-left
-  > .ck-input__icon-right
-    position absolute
-    bottom 13px
-    z-index 1
-  > .show-password
-    background-color #eee
-    color #666
-    cursor pointer
-    position absolute
-    right 1px
-    bottom 1px
-    height 38px
-    width @height
-    display flex
+  .ck-input__content
+    display inline-flex
     align-items center
     justify-content center
-    transition 0.3s
-    border-left 1px solid $globalBorderColor
-    &:hover
-      background-color #f0f0f0
-    &.rounded
-      border-radius 10rem
-    &.squared
-      border-radius 0
-  > .ck-input__icon-left
-    left 1.5 * $globalPadding
-  > .ck-input__icon-right
-    right 1.5 * $globalPadding
-
-.ck-input-plus-minus-buttons
-  margin-bottom 0.5rem
+    > input
+      width 100%
+      padding $globalPadding
+      font-size $globalFontSize-s
+      border-radius $globalBorderRadius
+      border 1px solid $globalBorderColor
+      min-height 40px
+      box-sizing border-box
+      &::placeholder
+        color $color-placeholder
+      &:-ms-input-placeholder
+        color $color-placeholder
+      &::-ms-input-placeholder
+        color $color-placeholder
+      &:focus-visible
+        outline-color var(--primary)
+      &.rounded
+        border-radius 10rem
+      &.squared
+        border-radius 0
+      &.align--center
+        text-align center
+      &.align--right
+        text-align right
+      &.no-border
+        border-color transparent !important
+      &.has-icon-left
+        padding-left 14px + 3 * $globalPadding
+      &.has-icon-right
+        padding-right 14px + 3 * $globalPadding
+      &.ck-input-size__s
+        font-size 0.7rem
+        min-height unset
+        padding 0.35rem 0.5rem
+      &.ck-input-size__l
+        font-size 1.3rem
+        padding 0.75rem 1.5rem
+        border-radius 0.5rem
+      &.ck-input-size__xl
+        font-size 1.5rem
+        padding 0.75rem 1.5rem
+        border-radius 0.5rem
+      &:disabled
+        cursor not-allowed
+        border-color $color-disabled
+        color $color-disabled
+        background-color #e0e0e0
+    > .ck-input__icon-left
+    > .ck-input__icon-right
+      position absolute
+      bottom 13px
+      z-index 1
+    > .show-password
+      background-color #eee
+      color #666
+      cursor pointer
+      position absolute
+      right 1px
+      bottom 1px
+      height 38px
+      width @height
+      display flex
+      align-items center
+      justify-content center
+      transition 0.3s
+      border-left 1px solid $globalBorderColor
+      &:hover
+        background-color #f0f0f0
+      &.rounded
+        border-radius 10rem
+      &.squared
+        border-radius 0
+    > .ck-input__icon-left
+      left 1.5 * $globalPadding
+    > .ck-input__icon-right
+      right 1.5 * $globalPadding
 
 // remove arrows | chrome
 input::-webkit-outer-spin-button
