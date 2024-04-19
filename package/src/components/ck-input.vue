@@ -306,6 +306,7 @@ onMounted(() => {
     display inline-flex
     align-items center
     justify-content center
+    width 100%
     > input
       width 100%
       padding $globalPadding
