@@ -91,8 +91,8 @@ const value = computed({
   set(val: string | number) {
     if (props.capitalize) val = qmStr.capitalize(`${val}`);
     if (props.justInteger) val = parseInt(`${+val}`);
-    if (props.min && +val < +props.min) val = +props.min;
-    if (props.max && +val > +props.max) val = +props.max;
+    if (typeof props.min !== 'undefined' && (+val < +props.min)) val = +props.min;
+    if (typeof props.max !== 'undefined' && (+val > +props.max)) val = +props.max;
     emits('update:modelValue', val);
     checkSearchTime(val);
   },
