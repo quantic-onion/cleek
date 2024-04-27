@@ -72,10 +72,10 @@ const ckIconComputedClass = computed(() => {
 
 <template>
   <div class="ck-icon" :class="computedClass" :style="computedStyle" @click="onClick($event)">
+    <!-- :size="(size as string)" -->
     <font-awesome-icon
       v-if="computediconPack === 'font-awesome'"
       :icon="icon"
-      :size="(size as string)"
       :rotation="rotation"
       :flip="flip"
       :spin="spin"

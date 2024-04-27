@@ -4,10 +4,12 @@ import { ref } from 'vue';
 const num1 = ref(0);
 const num2 = ref(0);
 const text = ref('');
+const email = ref('lisandromdc@gmail.com');
 </script>
 
 <template>
   <ck-input label="buttons input" v-model="num1" plusMinusButtons type="number" :min="0" />
   <ck-input label="buttons input" v-model="num2" plusMinusButtons type="number" :min="0" />
   <ck-input label="text input" v-model="text" />
+  <ck-input label="email withouto withspaces" v-model="email" disallowSpaces />
 </template>
