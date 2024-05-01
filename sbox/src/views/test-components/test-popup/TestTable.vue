@@ -1,4 +1,7 @@
 <script setup lang="ts">
+// components
+import ContainerTest from '../components/ContainerTest.vue';
+
 const columnsList = [
   'Columna 1',
   'Columna 2',
@@ -8,17 +11,19 @@ const columnsList = [
 ]
 </script>
 <template>
-<ck-table
-  :columns="columnsList"
-  :listLength="0"
->
-  <!-- <ck-tr v-for="num in [...Array(5).keys()]">
-    <ck-td>num - 1</ck-td>
-    <ck-td>num - 2</ck-td>
-    <ck-td>num - 3</ck-td>
-    <ck-td>num - 4</ck-td>
-    <ck-td>num - 5</ck-td>
-  </ck-tr> -->
+  <ContainerTest title="TABLE">
+    <ck-table
+      :columns="columnsList"
+      :listLength="0"
+    >
+      <!-- <ck-tr v-for="num in [...Array(5).keys()]">
+        <ck-td>num - 1</ck-td>
+        <ck-td>num - 2</ck-td>
+        <ck-td>num - 3</ck-td>
+        <ck-td>num - 4</ck-td>
+        <ck-td>num - 5</ck-td>
+      </ck-tr> -->
 
-</ck-table>
+    </ck-table>
+  </ContainerTest>
 </template>

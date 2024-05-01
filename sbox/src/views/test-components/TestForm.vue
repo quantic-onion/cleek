@@ -1,5 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue';
+// components
+import ContainerTest from './components/ContainerTest.vue';
 
 const inputOne = ref('Default val');
 const inputTwo = ref('');
@@ -19,15 +21,17 @@ function testClick() {
 </script>
 
 <template>
-<ck-button @click="testClick()">
-  Click
-</ck-button>
-<ck-select
-  label="Label text"
-  ref="refSelect"
-  v-model="selectedOption"
-  :options="options"
-/>
-<ck-input v-model="inputOne" />
-<ck-input v-model="inputTwo" label="Input dos" />
+  <ContainerTest title="FORM">
+    <ck-button @click="testClick()">
+      Click
+    </ck-button>
+    <ck-select
+      label="Label text"
+      ref="refSelect"
+      v-model="selectedOption"
+      :options="options"
+    />
+    <ck-input v-model="inputOne" />
+    <ck-input v-model="inputTwo" label="Input dos" />
+  </ContainerTest>
 </template>

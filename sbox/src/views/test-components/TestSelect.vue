@@ -1,5 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue';
+// components
+import ContainerTest from './components/ContainerTest.vue';
 
 const options = [
   { id: 1, name: 'Lisandro' },
@@ -10,9 +12,11 @@ const selectedOption = ref(null);
 </script>
 
 <template>
-<ck-select
-  v-model="selectedOption"
-  :options="options"
-  placeholder="Seleccione una opción"
-/>
+  <ContainerTest title="SELECT">
+    <ck-select
+      v-model="selectedOption"
+      :options="options"
+      placeholder="Seleccione una opción"
+    />
+  </ContainerTest>
 </template>

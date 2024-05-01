@@ -1,5 +1,7 @@
 <script setup lang="ts">
 // components
+import TestIcon from '@/views/test-components/TestIcon.vue';
+import TestSidebar from '@/views/test-components/TestSidebar.vue';
 import TestInput from '@/views/test-components/TestInput.vue';
 import TestSelect from '@/views/test-components/TestSelect.vue';
 import TestChip from '@/views/test-components/TestChip.vue';
@@ -10,15 +12,22 @@ import TestForm from '@/views/test-components/TestForm.vue';
 </script>
 
 <template>
-  <TestInput />
-  <TestSelect />
-  <TestCircle />
-  <TestChip />
-  <TestForm />
-  <ck-icon iconPack="cleek" icon="heart" size="lg" color="primary" />
-  <ck-icon iconPack="cleek" icon="heart-filled" size="md" color="secondary" />
-  <TestPopup />
-  <TestTable />
+  <div class="home">
+    <TestIcon />
+    <TestSidebar />
+    <TestInput />
+    <TestSelect />
+    <TestCircle />
+    <TestChip />
+    <TestForm />
+    <TestPopup />
+    <TestTable />
+  </div>
 </template>
 
-<style lang="stylus" scoped></style>
+<style lang="stylus" scoped>
+.home
+  display flex
+  gap 0.5rem
+  flex-wrap wrap
+</style>

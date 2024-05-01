@@ -1,9 +1,10 @@
 <script setup lang="ts">
-import { ckNotify } from "cleek";
-
-import { ref } from "vue";
+import { ref } from 'vue';
+import { ckNotify } from 'cleek';
 // components
-import TestPopupWithInputDate from "./TestPopupWithInputDate.vue";
+import ContainerTest from '../components/ContainerTest.vue';
+// components
+import TestPopupWithInputDate from './TestPopupWithInputDate.vue';
 
 const isPopupActive = ref({
   inputDate: false,
@@ -20,7 +21,15 @@ const open = () => {
 
 <template>
   <TestPopupWithInputDate v-model="isPopupActive.inputDate" />
-  <ck-icon iconPack="cleek" icon="hex-warning" size="l" color="primary" />
-
-  <ck-button @click="open()"> Test popup with input date </ck-button>
+  <ContainerTest title="POPUP">
+    <ck-icon
+      iconPack="cleek"
+      icon="hex-warning"
+      size="l"
+      color="primary"
+    />
+    <ck-button @click="open()">
+      Test popup with input date
+    </ck-button>
+  </ContainerTest>
 </template>
