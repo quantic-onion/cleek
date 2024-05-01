@@ -34,6 +34,8 @@ const computedClass = computed(() => {
   if (props.color && hooks.isColorTemplateVariable(props.color)) {
     classes.push(`ck-component__color--${props.color}`);
   }
+  // size
+  if (props.size) classes.push(`ck-icon__size-${props.size}`);
   return classes;
 });
 const computedStyle = computed(() => {
@@ -54,7 +56,6 @@ const iconMask = computed(() => {
   const src = `/src/assets/icons/` + `${props.icon}.svg`;
   return `mask: url(${src}) no-repeat center; -webkit-mask: url(${src}) no-repeat center;`;
 });
-
 const ckIconComputedClass = computed(() => {
   const classes = [];
   // color
@@ -63,6 +64,7 @@ const ckIconComputedClass = computed(() => {
   } else if (props.color && hooks.isColorTemplateVariable(props.color)) {
     classes.push(`ck-component__color-background--${props.color}`);
   }
+  console.log('TAMAÑO', props.icon, props.size);
   if (props.size) classes.push(`ck-icon__cleek-small`);
   if (props.size === 'm') classes.push(`ck-icon__cleek-medium`);
   if (props.size === 'l') classes.push(`ck-icon__cleek-large`);
@@ -71,7 +73,12 @@ const ckIconComputedClass = computed(() => {
 </script>
 
 <template>
-  <div class="ck-icon" :class="computedClass" :style="computedStyle" @click="onClick($event)">
+  <div
+    class="ck-icon"
+    :class="computedClass"
+    :style="computedStyle"
+    @click="onClick($event)"
+  >
     <!-- :size="(size as string)" -->
     <font-awesome-icon
       v-if="computediconPack === 'font-awesome'"
@@ -82,13 +89,32 @@ const ckIconComputedClass = computed(() => {
       :pulse="pulse"
       :fixedWidth="(fixedWidth as string)"
     />
-    <div v-else-if="computediconPack === 'cleek'" :style="iconMask" :class="ckIconComputedClass" class="ck-icon__cleek" />
+    <div
+      v-else-if="computediconPack === 'cleek'"
+      :style="iconMask"
+      :class="ckIconComputedClass"
+      class="ck-icon__cleek"
+    />
   </div>
 </template>
 
 <style lang="stylus" scoped>
 .ck-icon
   display inline-flex
+// size
+.ck-icon__size-xs
+  font-size 0.5rem
+.ck-icon__size-s
+  font-size 0.75rem
+.ck-icon__size-m
+  font-size 1rem
+.ck-icon__size-l
+  font-size 1.5rem
+.ck-icon__size-xl
+  font-size 2.5rem
+.ck-icon__size-xxl
+  font-size 4rem
+// size cleek icon
 .ck-icon__cleek-small
   width 1rem
   height 1rem

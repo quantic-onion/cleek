@@ -14,6 +14,7 @@ const props = defineProps<{
   headerAlign?: boolean;
   closeBtnAlign?: 'left' | 'right';
   notCloseBtn?: boolean;
+  isLoading?: boolean;
 }>();
 
 const emits = defineEmits<{
@@ -65,7 +66,11 @@ const computedStyleHeader = computed(() => {
 </script>
 
 <template>
-<div v-if="isActive" class="ck-sidebar-background" @click.self="isActive = false">
+<div
+  v-if="isActive"
+  class="ck-sidebar-background"
+  @click.self="isActive = false"
+>
   <div class="sidebar-content" :class="computedClass" :style="computedStyle">
     <!-- header -->
     <div
@@ -81,8 +86,11 @@ const computedStyleHeader = computed(() => {
       <ck-icon class="close-btn" icon="times"/>
     </div>
     <!-- content -->
-    <div>
-      <slot/>
+    <div class="loader-container" v-if="isLoading">
+      <ck-icon icon="spinner" size="xxl" spin color="primary" />
+    </div>
+    <div v-else>
+      <slot />
     </div>
   </div>
 </div>
@@ -154,6 +162,11 @@ const computedStyleHeader = computed(() => {
         transition 0.2s
         &:hover
           background-color rgba(black, 0.15)
+    .loader-container
+      display flex
+      justify-content center
+      align-items center
+      height 100%
     .scroll-area
       padding-bottom 5rem
       height calc(100%)
