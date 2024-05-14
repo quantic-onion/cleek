@@ -1,68 +1,88 @@
-margin-x(margin)
-  margin-right margin
-  margin-left margin
-margin-y(margin)
-  margin-top margin
-  margin-bottom margin
-padding-x(padding)
-  padding-right padding
-  padding-left padding
-padding-y(padding)
-  padding-top padding
-  padding-bottom padding
-border-x(width, type, color)
-  border-left width type color
-  border-right width type color
-border-y(width, type, color)
-  border-top width type color
-  border-bottom width type color
-border-radius-left(radius)
-  border-top-left-radius radius
-  border-bottom-left-radius radius
-border-radius-right(radius)
-  border-top-right-radius radius
-  border-bottom-right-radius radius
-border-radius-top(radius)
-  border-top-left-radius radius
-  border-top-right-radius radius
-border-radius-bottom(radius)
-  border-bottom-left-radius radius
-  border-bottom-right-radius radius
-width-height(val)
-  width val
-  height val
-min-max-width(val)
-  min-width val
-  max-width val
-min-max-height(val)
-  min-height val
-  max-height val
-margin-padding(val)
-  margin val
-  padding val
-margin-padding-left(val)
-  margin-left val
-  padding-left val
-margin-padding-right(val)
-  margin-right val
-  padding-right val
-margin-padding-top(val)
-  margin-top val
-  padding-top val
-margin-padding-bottom(val)
-  margin-bottom val
-  padding-bottom val
-
-my-box-shadow(val = 0.05, color = black)
-  box-shadow 0 4px 20px 0 rgba(color, val)
-ck-box-shadow(val = 0.05, color = black)
-  box-shadow 0 4px 20px 0 rgba(color, val)
-
-// flex shortcuts
-justify-align-center()
-  align-items center
-  justify-content center
-
+// margin
+margin-x($margin-x)
+  margin-left $margin-x
+  margin-right $margin-x
+margin-y($margin-y)
+  margin-top $margin-y
+  margin-bottom $margin-y
+margin-left-right($margin-left, $margin-right)
+  margin-left $margin-left
+  margin-right $margin-right
+margin-top-bottom($margin-top, $margin-bottom)
+  margin-top $margin-top
+  margin-bottom $margin-bottom
+// padding
+padding-x($padding-x)
+  padding-left $padding-x
+  padding-right $padding-x
+padding-y($padding-y)
+  padding-top $padding-y
+  padding-bottom $padding-y
+padding-left-right($padding-left, $padding-right)
+  padding-left $padding-left
+  padding-right $padding-right
+padding-top-bottom($padding-top, $padding-bottom)
+  padding-top $padding-top
+  padding-bottom $padding-bottom
+// border
+border-x($width, $type, $color)
+  border-left $width $type $color
+  border-right $width $type $color
+border-y($width, $type, $color)
+  border-top $width $type $color
+  border-bottom $width $type $color
+// border-radius
+border-radius-left($radius)
+  border-top-left-radius $radius
+  border-bottom-left-radius $radius
+border-radius-right($radius)
+  border-top-right-radius $radius
+  border-bottom-right-radius $radius
+border-radius-top($radius)
+  border-top-left-radius $radius
+  border-top-right-radius $radius
+border-radius-bottom($radius)
+  border-bottom-left-radius $radius
+  border-bottom-right-radius $radius
+// width - height
+width-height($val)
+  width $val
+  height $val
+min-max-width($val)
+  min-width $val
+  max-width $val
+min-max-height($val)
+  min-height $val
+  max-height $val
+// margin - padding
+margin-padding($val)
+  margin $val
+  padding $val
+margin-padding-left($val)
+  margin-left $val
+  padding-left $val
+margin-padding-right($val)
+  margin-right $val
+  padding-right $val
+margin-padding-top($val)
+  margin-top $val
+  padding-top $val
+margin-padding-bottom($val)
+  margin-bottom $val
+  padding-bottom $val
+// box-shadow
+my-box-shadow($val = 0.05, $color = black)
+  box-shadow 0 4px 20px 0 rgba($color, $val)
+ck-box-shadow($val = 0.05, $color = black)
+  box-shadow 0 4px 20px 0 rgba($color, $val)
+// flex
+flex($flex-direction = row, $justify-content = flex-start, $align-items = stretch, $gap = 0, $flex-wrap = nowrap)
+  display flex
+  flex-direction $flex-direction
+  justify-content $justify-content
+  align-items $align-items
+  gap $gap
+  flex-wrap $flex-wrap
 flex-center()
   display flex
   align-items center
@@ -72,11 +92,6 @@ inline-flex-center()
   align-items center
   justify-content center
 
-flex-all-center() // should be deleted
-  flex-center()
-inline-flex-all-center() // should be deleted
-  inline-flex-center()
-
 unselectable()
   user-select none
   -moz-user-select none
@@ -84,9 +99,9 @@ unselectable()
   -webkit-user-select none
   -o-user-select none
 
-dynamic-rgba(rgb-variable, opacity = 1)
+dynamic-rgba($rgb-variable, $opacity = 1)
   // return rgba as a string so it doesn't get interpolated by stylus compiler
-  s('rgba(var(%s), %s)', rgb-variable, opacity)
+  s('rgba(var(%s), %s)', $rgb-variable, $opacity)
 
 //
 //
