@@ -49,3 +49,16 @@ export { default as ckNotify } from './ck-notify/ck-notify';
 // export { default as EVENTS } from '../utils/events'
 // export { default as EventBus } from '../utils/mitt'
 // export { lockScroll, unlockScroll } from '../utils/scrollLock'
+
+export class TableData {
+  search = '';
+  currentPage = 1;
+  listLength = 0;
+  itemsPerPage = 20;
+
+  constructor(itemsPerPage: number) {
+    if (itemsPerPage) {
+      this.itemsPerPage = itemsPerPage;
+    }
+  }
+}
