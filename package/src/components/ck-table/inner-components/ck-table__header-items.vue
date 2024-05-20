@@ -72,6 +72,10 @@ const computedClass = computed(() => {
   return list;
 });
 
+function clickRefreshListBtn() {
+  if (props.isLoading) return;
+  emits('refreshList', true)
+}
 function checkRefresh() {
   const search = searchLocal.value;
   setTimeout(() => {
@@ -88,11 +92,12 @@ function checkRefresh() {
     <ck-button
       v-if="refreshBtnIsVisible"
       type="flat"
-      icon="rotate-right"
       title="Recargar lista"
       backgroundColor="transparent"
       :layout="layout"
-      @click="emits('refreshList', true)"
+      :icon="isLoading ? 'spinner' : 'rotate-right'"
+      :isLoading="!!isLoading"
+      @click="clickRefreshListBtn()"
     />
     <!-- pages -->
     <div

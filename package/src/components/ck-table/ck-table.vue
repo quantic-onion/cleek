@@ -72,8 +72,8 @@ const isDarkModeActive = computed(() => {
   return cleekOptions.value?.darkMode;
 });
 const defaultLoadingText = computed(() => {
-  if (cleekOptions.value?.lang === 'es') return 'Cargando'; 
-  return 'Loading';
+  if (cleekOptions.value?.lang === 'es') return 'Cargando...'; 
+  return 'Loading...';
 });
 const defaultNoResultsText = computed(() => {
   if (cleekOptions.value?.lang === 'es') return 'No se encontraron resultados';
@@ -206,6 +206,7 @@ onMounted(() => {
       :hideItemsPerPage="hideItemsPerPage"
       :layout="realLayout"
       :version="realTableVersion"
+      :isLoading="isLoading"
       @refreshList="refreshList($event)"
       @openColumnsManager="openColumnsManager()"
     />
@@ -238,15 +239,10 @@ onMounted(() => {
         <slot/>
         <slot name="desktop"/>
         <!-- noResultsText - if not used, listLength = undefined -->
-        <ck-tr v-if="isLoading">
+        <ck-tr v-if="isLoading && !listLength">
           <ck-td class="no-result-text" colspan="100%" align="center">
             <ck-icon class="mr-2" icon="spinner" spin/>
-            {{ loadingText || defaultLoadingText }}...
-          </ck-td>
-        </ck-tr>
-        <ck-tr v-else-if="isLoading !== false && listLength === 0">
-          <ck-td class="no-result-text" colspan="100%" align="center">
-            {{ noResultsText || defaultNoResultsText }}
+            {{ loadingText || defaultLoadingText }}
           </ck-td>
         </ck-tr>
       </tbody>

@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { onMounted, ref } from 'vue';
+import { TableData } from 'cleek';
 // components
 import ContainerTest from '../components/ContainerTest.vue';
 
@@ -9,12 +11,37 @@ const columnsList = [
   'Columna 4',
   'Columna 5',
 ]
+const isLoading = ref(false);
+const tableData = ref(new TableData(10));
+
+function refreshList(pageChange = false) {
+  console.log('refreshList', pageChange);
+  fakeLoadData();
+}
+function fakeLoadData() {
+  isLoading.value = true;
+  setTimeout(() => {
+    isLoading.value = false;
+    tableData.value.itemsPerPage = 22;
+    tableData.value.listLength = 100;
+  }, 2 * 1000);
+}
+
+onMounted(() => {
+  fakeLoadData();
+});
 </script>
 <template>
   <ContainerTest title="TABLE">
     <ck-table
+      v-model:search="tableData.search"
+      v-model:currentPage="tableData.currentPage"
+      hasColumnsManager
+      :isLoading="isLoading"
+      :itemsPerPage="tableData.itemsPerPage"
+      :listLength="tableData.listLength"
       :columns="columnsList"
-      :listLength="0"
+      @refreshList="refreshList($event)"
     >
       <!-- <ck-tr v-for="num in [...Array(5).keys()]">
         <ck-td>num - 1</ck-td>
