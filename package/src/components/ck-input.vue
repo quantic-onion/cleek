@@ -296,8 +296,6 @@ onMounted(() => {
 </template>
 
 <style lang="stylus" scoped>
-@import '../styles/.variables.styl'
-
 .ck-input
   display inline-block
   position relative

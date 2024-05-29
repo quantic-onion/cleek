@@ -1,33 +1,35 @@
-// {
-//   "compilerOptions": {
-//     // "allowJs": true,
-//     "declaration": true,
-//     "outDir": "./dist",
-//     "target": "es2015",
-//     "useDefineForClassFields": true,
-//     "module": "commonjs",
-//     "lib": ["ESNext", "DOM"],
-//     "moduleResolution": "Node",
-//     "strict": true,
-//     "sourceMap": true,
-//     "resolveJsonModule": true,
-//     "esModuleInterop": true,
-//     // "noEmit": true,
-//     "noUnusedLocals": true,
-//     "noUnusedParameters": true,
-//     "noImplicitReturns": true
-//   },
-// }
-
 {
-  "extends": "@vue/tsconfig/tsconfig.web.json",
-  "include": ["./src/components/**/*", "./src/utils/**/*"],
-  "exclude": ["./src/components/not-avaible/**/*"],
   "compilerOptions": {
-    "composite": true,
-    "baseUrl": ".",
+    // Project structure
+    "rootDir": "./src",
+    "outDir": "./dist",
+    "baseUrl": "./",
     "paths": {
-      "@/*": ["./src/*"]
-    }
-  }
+      "@/*": ["src/*"]
+    },
+    // Modules
+    "module": "ESNext",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+    "isolatedModules": true,
+    "allowSyntheticDefaultImports": true,
+    // TypeScript features
+    "target": "ESNext",
+    "lib": ["ESNext", "DOM", "DOM.Iterable"],
+    "jsx": "preserve",
+    "useDefineForClassFields": true,
+    "types": ["vite/client", "node"],
+    // Declarations
+    "declaration": true,
+    "declarationDir": "./dist/types",
+    "emitDeclarationOnly": true,
+    // JavaScript interoperability
+    "allowJs": false,
+    // Type checking
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true
+  },
+  "include": ["./src"],
+  "exclude": ["node_modules", "dist"]
 }
