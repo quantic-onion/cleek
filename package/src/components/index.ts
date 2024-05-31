@@ -55,6 +55,8 @@ export class TableData {
   currentPage = 1;
   listLength = 0;
   itemsPerPage = 20;
+  isLoading = false;
+  isEmpty = false;
 
   constructor(itemsPerPage: number) {
     if (itemsPerPage) {
