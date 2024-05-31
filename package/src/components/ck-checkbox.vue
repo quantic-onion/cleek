@@ -59,6 +59,8 @@ function onTrigger() {
 </template>
 
 <style lang="stylus" scoped>
+@import '../styles/.variables.styl'
+
 .ck-checkbox span
   margin-left 0.25rem
 .ck-checkbox

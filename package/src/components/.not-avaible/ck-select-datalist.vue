@@ -163,6 +163,7 @@ form.ck-select(action="/action_page.php" method="get")
 </template>
 
 <style lang="stylus" scoped>
+@import '../styles/.variables.styl'
 .ck-select
   display inline-block
   position relative

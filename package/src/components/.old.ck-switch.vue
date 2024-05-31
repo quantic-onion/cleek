@@ -61,6 +61,7 @@ function onTrigger() {
 }
 </script>
 <style lang="stylus" scoped>
+@import '../styles/.variables.styl'
 $height = 24px // s
 $width = 48px // s
 $height = 34px // m

@@ -128,6 +128,7 @@ onMounted(() => {
 </template>
 
 <style lang="stylus" scoped>
+@import '../styles/.variables.styl'
 $transitionTime = 0.4s
 
 .ck-switch
