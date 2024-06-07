@@ -4,11 +4,13 @@ import TestPopup from '@/views/test-components/test-popup/TestPopup.vue';
 // stores
 import { useLayoutStore } from '@/stores/layout.stores.ts';
 
+export const darkMode = JSON.parse(localStorage.layout).isDarkModeActive;
+
 // const { isDarkModeActive } = storeToRefs(useLayoutStore());
 
 export default {
   lang: "es",
-  darkMode: localStorage.layout ? JSON.parse(localStorage.layout).isDarkModeActive : false,
+  darkMode: darkMode,
   colors: {
     primary: "#DA135D",
     secondary: "#00ceff",
@@ -18,6 +20,7 @@ export default {
   },
   button: {
     type: "outlined",
+    textColor: darkMode ? '#f5f5f5' : '',
   },
   select: {
     clearValue: null,

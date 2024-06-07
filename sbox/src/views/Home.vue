@@ -6,6 +6,7 @@ import TestInput from '@/views/test-components/TestInput.vue';
 import TestSelect from '@/views/test-components/TestSelect.vue';
 import TestChip from '@/views/test-components/TestChip.vue';
 import TestCircle from '@/views/test-components/TestCircle.vue';
+import TestButton from '@/views/test-components/TestButton.vue';
 import TestPopup from '@/views/test-components/test-popup/TestPopup.vue';
 import TestTable from '@/views/test-components/test-popup/TestTable.vue';
 import TestForm from '@/views/test-components/TestForm.vue';
@@ -18,6 +19,7 @@ import TestForm from '@/views/test-components/TestForm.vue';
     <TestInput />
     <TestSelect />
     <TestCircle />
+    <TestButton />
     <TestChip />
     <TestForm />
     <TestPopup />

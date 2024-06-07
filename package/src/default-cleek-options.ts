@@ -23,6 +23,7 @@ const cleekOptions: CleekOptions = {
     type: 'outlined',
     layout: 'base',
     backgroundColor: 'transparent',
+    textColor: '',
   },
   div: {
     gap: 0,

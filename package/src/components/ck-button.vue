@@ -27,6 +27,7 @@ const props = defineProps<{
   // style
   type?: ButtonType;
   color?: Color;
+  textColor?: Color;
   backgroundColor?: Color;
   align?: Align;
   size?: 'xs' | 's' | 'm' | 'l' | 'xl';
@@ -68,6 +69,11 @@ const realBackgroundColor = computed(() => {
   if (cleekOptions.value && !props.type) return cleekOptions.value.button.backgroundColor;
   return defaultBackgroundColor;
 });
+const realTextColor = computed(() => {
+  if (props.textColor) return props.textColor;
+  if (cleekOptions.value && !props.type) return cleekOptions.value.button.textColor;
+  return '';
+});
 const computedClass = computed(() => {
   const list = [];
   // group
@@ -84,6 +90,9 @@ const computedClass = computed(() => {
   // backgroundColor
   if (realBackgroundColor.value !== defaultBackgroundColor && hooks.isColorTemplateVariable(realBackgroundColor.value)) {
     list.push(`ck-component__bg-color--${realBackgroundColor.value}`);
+  }
+  if (realTextColor.value && hooks.isColorTemplateVariable(realTextColor.value)) {
+    list.push(`ck-component__color--${realTextColor.value}`);
   }
   // align
   const align = props.align || defaultAlign;
@@ -112,13 +121,15 @@ const computedStyle = computed(() => {
       list.push({ width });
     }
   }
+  // textColor
+  if (realTextColor.value && !hooks.isColorTemplateVariable(realTextColor.value)) {
+    list.push({ color: realTextColor.value });
+  }
   // width
   if (props.width && !isWidthDefined) list.push({ width: props.width });
   // backgroundColor
   if (realBackgroundColor.value !== defaultBackgroundColor && !hooks.isColorTemplateVariable(realBackgroundColor.value)) {
     list.push({ 'background-color': realBackgroundColor.value });
-  } else if (cleekOptions.value?.darkMode) {
-    list.push({ 'background-color': cleekOptions.value?.darkModeColorItems });
   }
   return list;
 });
