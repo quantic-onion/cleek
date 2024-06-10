@@ -135,7 +135,7 @@ const computedStyleHeader = computed(() => {
       align-items center
       padding-left 1.5rem
       padding-right @padding-left
-      box-shadow 0 0.3rem 0.8rem 0 rgba(0, 0, 0, 0.25)
+      box-shadow 0 0.3rem 0.8rem 0 rgba(0, 0, 0, 0.1)
       position relative
       &:hover
         cursor pointer

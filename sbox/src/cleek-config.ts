@@ -4,7 +4,7 @@ import TestPopup from '@/views/test-components/test-popup/TestPopup.vue';
 // stores
 import { useLayoutStore } from '@/stores/layout.stores.ts';
 
-export const darkMode = JSON.parse(localStorage.layout).isDarkModeActive;
+export const darkMode = !localStorage.layout ? false : JSON.parse(localStorage.layout).isDarkModeActive;
 
 // const { isDarkModeActive } = storeToRefs(useLayoutStore());
 

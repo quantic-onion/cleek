@@ -26,6 +26,12 @@ const computedClass = computed(() => {
   if (props.align) list.push(`align--${props.align}`);
   return list;
 });
+const currentStepGroup = computed(() => {
+  if (props.maxStep === 1) return '';
+  if (currentStep.value === 1) return 'left';
+  if (currentStep.value === props.maxStep) return 'right';
+  return 'center';
+});
 
 function goToPreviousStep() {
   if (currentStep.value <= 1) return;
@@ -39,16 +45,30 @@ function goToNextStep() {
 
 <template>
 <div class="ck-pagination" :class="computedClass">
-  <ck-button group="left" icon="arrow-left" @click="goToPreviousStep()"/>
   <ck-button
-    v-for="stepNumber in maxStep"
-    group="center"
-    :type="currentStep === stepNumber ? 'filled' : 'outlined'"
-    @click="currentStep = stepNumber"
-  >
-    {{ stepNumber }}
-  </ck-button>
-  <ck-button group="right" icon="arrow-right" @click="goToNextStep()"/>
+    group="left"
+    icon="arrow-left"
+    :type="currentStep === 1 ? 'flat' : ''"
+    @click="goToPreviousStep()"
+  />
+  <!-- previous steps -->
+  <ck-button v-if="currentStep - 2 >= 1" group="center" @click="currentStep = currentStep - 2">{{ currentStep - 2 }}</ck-button>
+  <ck-button v-if="currentStep - 1 >= 1" group="center" @click="currentStep = currentStep - 1">{{ currentStep - 1 }}</ck-button>
+  <!-- current step -->
+  <ck-button
+    type="filled"
+    :group="currentStepGroup"
+  >{{ currentStep }}</ck-button>
+  <!-- next steps -->
+  <ck-button v-if="currentStep + 1 <= maxStep" group="center" @click="currentStep = currentStep + 1">{{ currentStep + 1 }}</ck-button>
+  <ck-button v-if="currentStep + 2 <= maxStep" group="center" @click="currentStep = currentStep + 2">{{ currentStep + 2 }}</ck-button>
+  <!-- next button -->
+  <ck-button
+    group="right"
+    icon="arrow-right"
+    :type="currentStep === maxStep ? 'flat' : ''"
+    @click="goToNextStep()"
+  />
 </div>
 </template>
 

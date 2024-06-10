@@ -1,5 +1,6 @@
 <script setup lang="ts">
 // components
+import TestPagination from '@/views/test-components/TestPagination.vue';
 import TestIcon from '@/views/test-components/TestIcon.vue';
 import TestSidebar from '@/views/test-components/TestSidebar.vue';
 import TestInput from '@/views/test-components/TestInput.vue';
@@ -14,6 +15,7 @@ import TestForm from '@/views/test-components/TestForm.vue';
 
 <template>
   <div class="home">
+    <TestPagination />
     <TestIcon />
     <TestSidebar />
     <TestInput />
