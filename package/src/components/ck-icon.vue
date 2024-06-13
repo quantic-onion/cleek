@@ -64,7 +64,6 @@ const ckIconComputedClass = computed(() => {
   } else if (props.color && hooks.isColorTemplateVariable(props.color)) {
     classes.push(`ck-component__color-background--${props.color}`);
   }
-  console.log('TAMAÑO', props.icon, props.size);
   if (props.size) classes.push(`ck-icon__cleek-small`);
   if (props.size === 'm') classes.push(`ck-icon__cleek-medium`);
   if (props.size === 'l') classes.push(`ck-icon__cleek-large`);

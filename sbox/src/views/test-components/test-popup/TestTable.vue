@@ -15,7 +15,6 @@ const isLoading = ref(false);
 const tableData = ref(new TableData(10));
 
 function refreshList(pageChange = false) {
-  console.log('refreshList', pageChange);
   fakeLoadData();
 }
 function fakeLoadData() {
