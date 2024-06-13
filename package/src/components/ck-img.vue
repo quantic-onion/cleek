@@ -31,6 +31,10 @@ const props = defineProps<{
   dynamic: boolean;
 }>();
 
+const emits = defineEmits<{
+  (e: 'click', event: MouseEvent): void;
+}>();
+
 let cleekOptions: Ref<undefined | CleekOptions> = ref();
 const altNeeded = ref(false);
 const isMounted = ref(false);
@@ -132,7 +136,7 @@ onMounted(() => {
   class="ck-img"
   :class="computedClass"
   :style="computedStyle"
-  @click="clickImg()"
+  @click="emits('click', $event)"
 >
   <img
     :src="imageUrl"
