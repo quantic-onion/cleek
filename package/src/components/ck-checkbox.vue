@@ -1,10 +1,16 @@
 <script setup lang="ts">
 import { computed } from '@vue/runtime-core';
+// types
+import type { Color } from '../types/cleek-options';
+// hooks
+import hooks from '../utils/global-hooks';
 
 const props = defineProps<{
   modelValue: boolean;
   label?: string;
   disabled?: boolean;
+  color?: Color;
+  colorText?: Color;
 }>();
 
 const emits = defineEmits<{
@@ -26,6 +32,34 @@ const checkboxAttributes = computed(() => {
     tabindex: props.disabled ? undefined : '0',
   };
 });
+const computedClass = computed(() => {
+  const list = [];
+  if (props.color && hooks.isColorTemplateVariable(props.color)) {
+    list.push(`ck-component__border-color--${props.color}`);
+  }
+  return list;
+});
+const computedStyle = computed(() => {
+  const list = [];
+  if (props.color && !hooks.isColorTemplateVariable(props.color)) {
+    list.push({ borderColor: props.color });
+  }
+  return list;
+});
+const computedClassLabel = computed(() => {
+  const list = [];
+  if (props.colorText && hooks.isColorTemplateVariable(props.colorText)) {
+    list.push(`ck-component__color--${props.colorText}`);
+  }
+  return list;
+});
+const computedStyleLabel = computed(() => {
+  const list = [];
+  if (props.colorText && !hooks.isColorTemplateVariable(props.colorText)) {
+    list.push({ color: props.colorText });
+  }
+  return list;
+});
 
 function onChange(event: Event) {
   emits('change', event);
@@ -36,26 +70,35 @@ function onTrigger() {
 </script>
 
 <template>
-<label
-  v-bind="checkboxAttributes"
-  class="ck-checkbox"
-  @keydown.space.prevent
-  @keyup.enter="onTrigger()"
-  @keyup.space="onTrigger()"
->
-  <input
-    class="ck-checkbox__input"
-    aria-hidden="true"
-    type="checkbox"
-    :disabled="disabled"
-    :checked="value"
-    @change="value = $event.target.checked; onChange($event)"
-  />
-  <div class="ck-checkbox__element"/>
-  <span v-if="$slots.default" class="c-Checkbox__label">
-    <slot/>
-  </span>
-</label>
+  <label
+    v-bind="checkboxAttributes"
+    class="ck-checkbox"
+    @keydown.space.prevent
+    @keyup.enter="onTrigger()"
+    @keyup.space="onTrigger()"
+  >
+    <input
+      class="ck-checkbox__input"
+      aria-hidden="true"
+      type="checkbox"
+      :disabled="disabled"
+      :checked="value"
+      @change="value = $event.target.checked; onChange($event)"
+    />
+    <div
+      class="ck-checkbox__element"
+      :class="computedClass"
+      :style="computedStyle"
+    />
+    <span
+      v-if="$slots.default"
+      class="c-Checkbox__label"
+      :class="computedClassLabel"
+      :style="computedStyleLabel"
+    >
+      <slot/>
+    </span>
+  </label>
 </template>
 
 <style lang="stylus" scoped>
