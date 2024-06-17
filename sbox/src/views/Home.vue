@@ -6,6 +6,7 @@ import TestSidebar from '@/views/test-components/TestSidebar.vue';
 import TestInput from '@/views/test-components/TestInput.vue';
 import TestSelect from '@/views/test-components/TestSelect.vue';
 import TestCheckbox from '@/views/test-components/TestCheckbox.vue';
+import TestSwitch from '@/views/test-components/TestSwitch.vue';
 import TestChip from '@/views/test-components/TestChip.vue';
 import TestCircle from '@/views/test-components/TestCircle.vue';
 import TestButton from '@/views/test-components/TestButton.vue';
@@ -16,6 +17,7 @@ import TestForm from '@/views/test-components/TestForm.vue';
 
 <template>
   <div class="home">
+    <TestSwitch />
     <TestCheckbox />
     <TestPagination />
     <TestIcon />

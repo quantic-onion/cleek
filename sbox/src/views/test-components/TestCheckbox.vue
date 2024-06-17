@@ -31,7 +31,7 @@ watch(values, async () => {
 </script>
 
 <template>
-  <ContainerTest title="ICON">
+  <ContainerTest title="CHECKBOX">
     <div v-if="isDisplayingCheckbox" class="test-checkbox__container">
       <div class="test-checkbox__row">
         <ck-checkbox v-for="color in allColors" :key="color" :color="color" v-model="values[color]">
