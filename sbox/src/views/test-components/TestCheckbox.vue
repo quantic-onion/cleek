@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { nextTick, ref, watch } from 'vue';
 // components
 import ContainerTest from './components/ContainerTest.vue';
 
@@ -12,6 +12,7 @@ const allColors = [
   'light',
   'purple',
 ];
+const isDisplayingCheckbox = ref(true);
 const values = ref({
   primary: true,
   secondary: true,
@@ -21,15 +22,17 @@ const values = ref({
   light: false,
   purple: false,
 });
+
+watch(values, async () => {
+  isDisplayingCheckbox.value = false;
+  await nextTick(); // this is to fix a cleek problem when updating the value from outside
+  isDisplayingCheckbox.value = true;
+}, { deep: true });
 </script>
 
 <template>
-  values {{ values }}
-  <button @click="values.primary = !values.primary">
-    TEST
-  </button>
   <ContainerTest title="ICON">
-    <div class="test-checkbox__container">
+    <div v-if="isDisplayingCheckbox" class="test-checkbox__container">
       <div class="test-checkbox__row">
         <ck-checkbox v-for="color in allColors" :key="color" :color="color" v-model="values[color]">
           {{ color }}
