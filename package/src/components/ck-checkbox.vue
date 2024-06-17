@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed } from '@vue/runtime-core';
+import { computed, ref, watch } from '@vue/runtime-core';
 // types
 import type { Color } from '../types/cleek-options';
 // hooks
@@ -18,11 +18,14 @@ const emits = defineEmits<{
   (e: 'change', event: Event): void;
 }>();
 
-const value = computed({
+const isSelected = ref(props.modelValue);
+
+const isChecked = computed({
   get() {
     return props.modelValue;
   },
   set(val: boolean) {
+    isSelected.value = val;
     emits('update:modelValue', val);
   },
 });
@@ -36,6 +39,9 @@ const computedClass = computed(() => {
   const list = [];
   if (props.color && hooks.isColorTemplateVariable(props.color)) {
     list.push(`ck-component__border-color--${props.color}`);
+    if (isSelected.value) {
+      list.push(`ck-component__color-background--${props.color}`);
+    }
   }
   return list;
 });
@@ -43,6 +49,9 @@ const computedStyle = computed(() => {
   const list = [];
   if (props.color && !hooks.isColorTemplateVariable(props.color)) {
     list.push({ borderColor: props.color });
+    if (isSelected.value) {
+      list.push({ backgroundColor: props.color });
+    }
   }
   return list;
 });
@@ -61,11 +70,16 @@ const computedStyleLabel = computed(() => {
   return list;
 });
 
+watch(() => isChecked.value, (val) => {
+  isSelected.value = val;
+});
+
 function onChange(event: Event) {
+  isChecked.value = event.target.checked; 
   emits('change', event);
 }
 function onTrigger() {
-  value.value = !value.value;
+  // isChecked.value = !isChecked.value;
 }
 </script>
 
@@ -73,6 +87,7 @@ function onTrigger() {
   <label
     v-bind="checkboxAttributes"
     class="ck-checkbox"
+    :class="{ 'is-selected': isChecked }"
     @keydown.space.prevent
     @keyup.enter="onTrigger()"
     @keyup.space="onTrigger()"
@@ -82,9 +97,10 @@ function onTrigger() {
       aria-hidden="true"
       type="checkbox"
       :disabled="disabled"
-      :checked="value"
-      @change="value = $event.target.checked; onChange($event)"
-    />
+      :checked="isChecked"
+      @change="onChange($event)"
+      />
+      <!-- @change="isChecked = $event.target.checked; onChange($event)" -->
     <div
       class="ck-checkbox__element"
       :class="computedClass"
@@ -126,6 +142,8 @@ function onTrigger() {
   border-radius 4px
   border-color var(--primary)
   transition 0.15s
+  &.is-empty
+    background-color transparent !important
 
 .ck-checkbox__element::after
   content ''
