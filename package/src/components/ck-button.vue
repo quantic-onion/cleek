@@ -91,6 +91,7 @@ const computedClass = computed(() => {
   if (realBackgroundColor.value !== defaultBackgroundColor && hooks.isColorTemplateVariable(realBackgroundColor.value)) {
     list.push(`ck-component__bg-color--${realBackgroundColor.value}`);
   }
+  // textColor
   if (realTextColor.value && hooks.isColorTemplateVariable(realTextColor.value)) {
     list.push(`ck-component__color--${realTextColor.value}`);
   }
@@ -130,6 +131,18 @@ const computedStyle = computed(() => {
   // backgroundColor
   if (realBackgroundColor.value !== defaultBackgroundColor && !hooks.isColorTemplateVariable(realBackgroundColor.value)) {
     list.push({ 'background-color': realBackgroundColor.value });
+  }
+  if (props.color && !hooks.isColorTemplateVariable(props.color)) {
+    if (realButtonType.value === 'outlined') {
+      list.push({ 'border-color': props.color });
+      list.push({ 'color': props.color });
+    } else if (realButtonType.value === 'filled') {
+      list.push({ 'color': 'white' });
+      list.push({ 'border-color': props.color });
+      list.push({ 'background-color': props.color });
+    } else if (realButtonType.value === 'flat') {
+      list.push({ 'color': props.color });
+    }
   }
   return list;
 });

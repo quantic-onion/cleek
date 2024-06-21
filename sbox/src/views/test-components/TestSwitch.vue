@@ -2,16 +2,9 @@
 import { nextTick, ref, watch } from 'vue';
 // components
 import ContainerTest from './components/ContainerTest.vue';
+// data
+import { allColors } from '@/all-colors';
 
-const allColors = [
-  'primary',
-  'secondary',
-  'success',
-  'warning',
-  'dark',
-  'light',
-  'purple',
-];
 const isDisplayingSwitch = ref(true);
 const valueDoNotUpdate = ref(false);
 const remainingSecondsToUpdate = ref(0);

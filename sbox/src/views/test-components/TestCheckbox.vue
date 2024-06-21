@@ -2,16 +2,9 @@
 import { nextTick, ref, watch } from 'vue';
 // components
 import ContainerTest from './components/ContainerTest.vue';
+// data
+import { allColors } from '@/all-colors';
 
-const allColors = [
-  'primary',
-  'secondary',
-  'success',
-  'warning',
-  'dark',
-  'light',
-  'purple',
-];
 const isDisplayingCheckbox = ref(true);
 const values = ref({
   primary: true,
