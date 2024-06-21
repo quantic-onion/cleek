@@ -112,7 +112,8 @@ const computedStyleHeader = computed(() => {
     background-color white
     z-index 10000
     left 0
-    height 100%
+    height 100vh
+    overflow-y auto
     position fixed
     width 450px
     @media (max-width: 1023px)
