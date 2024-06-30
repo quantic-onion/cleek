@@ -205,11 +205,12 @@ onMounted(() => {
             <slot />
           </div>
           <div v-if="$slots.footer || confirmButtons || acceptButton || cancelButton" class="ck-popup__slot-footer">
-            <slot name="footer" />
+            <div>
+              <slot name="footer" />
+            </div>
             <div v-if="confirmButtons || acceptButton || cancelButton" class="ck-popup-slot-footer__confirm-buttons">
               <ck-button
                 v-if="confirmButtons || cancelButton"
-                class="cancel-button"
                 color="danger"
                 :type="realCancelBtnType"
                 @click="onCancel()"
@@ -314,11 +315,14 @@ onMounted(() => {
       border-top 1px solid #CCC
       padding-x 1rem
       width 100%
+      display flex
+      justify-content space-between
+      box-sizing border-box
+      align-items center
       .ck-popup-slot-footer__confirm-buttons
-        display flex
+        display inline-flex
         justify-content flex-end
-        .cancel-button
-          margin-right 0.5rem
+        gap 0.5rem
 
 // fullscreen
 @media (max-width: 600px)

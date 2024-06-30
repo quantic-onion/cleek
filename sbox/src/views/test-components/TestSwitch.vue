@@ -7,6 +7,9 @@ import { allColors } from '@/all-colors';
 
 const isDisplayingSwitch = ref(true);
 const valueDoNotUpdate = ref(false);
+const valueIcon1 = ref(false);
+const valueIcon2 = ref(false);
+const valueIcon3 = ref(false);
 const remainingSecondsToUpdate = ref(0);
 const values = ref({
   primary: true,
@@ -59,6 +62,12 @@ function handleDoNotUpdate() {
         @click="handleDoNotUpdate()"
       />
       <p v-if="remainingSecondsToUpdate">Se actualizará en {{ remainingSecondsToUpdate }} segundos</p>
+    </div>
+    <div>
+      <p>Icon</p>
+      <ck-switch v-model="valueIcon1" icon="dollar-sign" />
+      <ck-switch v-model="valueIcon2" icon="user" />
+      <ck-switch v-model="valueIcon3" icon="euro-sign" />
     </div>
   </ContainerTest>
 </template>

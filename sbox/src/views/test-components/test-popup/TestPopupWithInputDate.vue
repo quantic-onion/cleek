@@ -1,33 +1,34 @@
 <script setup lang="ts">
-import { computed, ref } from "vue";
+import { computed, ref } from 'vue';
 
 const props = defineProps<{
   modelValue: boolean;
 }>();
 
 const emits = defineEmits<{
-  (e: "update:modelValue", value: boolean): void;
+  (e: 'update:modelValue', value: boolean): void;
 }>();
 
-const dateValue1 = ref("");
-const dateValue2 = ref("");
-const time = ref("");
-const minutes = ref("");
-const widthBreaks = [600, "33.33%"];
-const selectValue = "";
-const allPersons = [""];
-const isPopupActive = computed({
+const dateValue1 = ref('');
+const dateValue2 = ref('');
+const time = ref('');
+const minutes = ref('');
+const widthBreaks = [600, '33.33%'];
+const selectValue = '';
+const allPersons = [''];
+
+const isActive = computed({
   get() {
     return props.modelValue;
   },
   set(val) {
-    emits("update:modelValue", val);
+    emits('update:modelValue', val);
   },
 });
 </script>
 
 <template>
-  <ck-popup v-model="isPopupActive" title="Test popup with input date">
+  <ck-popup v-model="isActive" title="Test popup with input date">
     <div className="date-container">
       <ck-select
         v-model="selectValue"
