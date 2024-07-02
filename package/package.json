@@ -1,24 +1,23 @@
 {
   "name": "cleek",
-  "version": "2.8.7",
   "description": "Complete UX Vue library",
-  "repository": "",
+  "version": "2.8.7",
   "author": "Quantic Onion",
   "license": "MIT",
+  "repository": "",
+  "type": "module",
   "files": [
     "dist"
   ],
   "main": "./dist/cleek.umd.js",
   "module": "./dist/cleek.es.js",
-  "types": "./dist/main.d.ts",
   "exports": {
     ".": {
       "import": "./dist/cleek.es.js",
       "require": "./dist/cleek.umd.js"
     }
   },
-  "unpkg": "./dist/cleek.umd.js",
-  "jsdelivr": "./dist/cleek.umd.js",
+  "types": "./dist/main.d.ts",
   "scripts": {
     "dev": "vitepress dev docs",
     "typecheck": "vue-tsc --noEmit -p tsconfig.json --composite false",
