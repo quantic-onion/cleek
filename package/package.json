@@ -46,8 +46,7 @@
     "tippy.js": "^6.3.1",
     "vue": "^3.4.31",
     "vue-perfect-scrollbar": "^0.2.1",
-    "vue3-datepicker": "^0.4.0",
-    "vuex": "^4.0.2"
+    "vue3-datepicker": "^0.4.0"
   },
   "devDependencies": {
     "@prettier/plugin-pug": "^2.5.1",
