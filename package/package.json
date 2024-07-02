@@ -9,15 +9,18 @@
   "files": [
     "dist"
   ],
-  "main": "./dist/cleek.umd.js",
-  "module": "./dist/cleek.es.js",
+  "main": "./dist/main.cjs.js",
+  "module": "./dist/main.es.js",
   "exports": {
     ".": {
-      "import": "./dist/cleek.es.js",
-      "require": "./dist/cleek.umd.js"
-    }
+      "require": "./dist/main.cjs.js",
+      "import": "./dist/main.es.js",
+      "types": "./dist/types/main.d.ts"
+    },
+    "./main.css": "./dist/main.css",
+    "./package.json": "./package.json"
   },
-  "types": "./dist/main.d.ts",
+  "types": "./dist/types/main.d.ts",
   "scripts": {
     "dev": "vitepress dev docs",
     "typecheck": "vue-tsc --noEmit -p tsconfig.json --composite false",
@@ -37,19 +40,21 @@
     "@fortawesome/free-regular-svg-icons": "^6.1.1",
     "@fortawesome/free-solid-svg-icons": "^6.1.1",
     "@fortawesome/vue-fontawesome": "^3.0.0-5",
+    "@vitejs/plugin-vue": "^5.0.5",
     "@vuepic/vue-datepicker": "^3.5.3",
     "floating-vue": "^5.2.2",
     "mitt": "^3.0.0",
     "quantic-methods": "^1.6.38",
     "tabbable": "^5.2.0",
     "tippy.js": "^6.3.1",
+    "vite-plugin-dts": "^3.9.1",
     "vue": "^3.4.31",
     "vue-perfect-scrollbar": "^0.2.1",
     "vue3-datepicker": "^0.4.0"
   },
   "devDependencies": {
     "@prettier/plugin-pug": "^2.5.1",
-    "@vitejs/plugin-vue": "^1.2.5",
+    "@types/node": "^20.14.9",
     "@vue/compiler-sfc": "^3.1.5",
     "@vue/eslint-config-prettier": "^7.1.0",
     "@vue/eslint-config-typescript": "^11.0.3",
@@ -69,7 +74,7 @@
     "stylelint-stylus": "^0.18.0",
     "stylus": "^0.59.0",
     "typescript": "^5.5.3",
-    "vite": "^2.4.3",
+    "vite": "^5.3.2",
     "vitepress": "^0.21.4",
     "vue-tsc": "^0.38.2"
   }
