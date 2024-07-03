@@ -371,6 +371,7 @@ onMounted(() => {
       justify-content center
       transition 0.3s
       border-left 1px solid $globalBorderColor
+      border-radius $globalBorderRadius
       &:hover
         background-color #f0f0f0
       &.rounded
