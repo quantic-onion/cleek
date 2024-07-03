@@ -1,7 +1,7 @@
 {
   "name": "cleek",
   "description": "Complete UX Vue library",
-  "version": "2.8.7",
+  "version": "2.8.8",
   "author": "Quantic Onion",
   "license": "MIT",
   "repository": "",
@@ -32,7 +32,8 @@
     "patch-publish": "npm run build && npm version patch && npm publish",
     "lint": "eslint --ext .js,.vue --ignore-path .gitignore --fix src",
     "stylelint": "stylelint . --fix --ignore-path .stylelintignore",
-    "format": "prettier .  --write"
+    "format": "prettier . --write",
+    "deploy": "node deploy.js"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.1.1",
