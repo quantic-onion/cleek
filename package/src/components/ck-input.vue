@@ -1,7 +1,6 @@
 <script setup lang="ts">
-import { computed, getCurrentInstance, onMounted, ref } from 'vue';
+import { ref, computed, onMounted, getCurrentInstance } from 'vue';
 import { qmStr } from 'quantic-methods';
-import type { Ref } from 'vue';
 // components
 import CkLabel from './ck-label.vue';
 import CkIcon from './ck-icon.vue';
@@ -72,14 +71,14 @@ const emits = defineEmits<{
 
 defineExpose({ setFocus, setSelect });
 
-let cleekOptions: Ref<undefined | CleekOptions> = ref();
+let cleekOptions = ref<CleekOptions>();
 
 const defaultType = 'text';
 const plusMinusButtonsDefaultWithInput = '120px';
 const plusMinusButtonsDefaultAlign = 'center';
 const defaultDelayChangeTime = 300;
 
-const realInput: Ref<null | HTMLInputElement> = ref(null);
+const realInput = ref<HTMLInputElement>(null);
 const isShowingPassword = ref(false);
 
 const { windowWidth } = useWindowWidth();
@@ -91,8 +90,8 @@ const value = computed({
   set(val: string | number) {
     if (props.capitalize) val = qmStr.capitalize(`${val}`);
     if (props.justInteger) val = parseInt(`${+val}`);
-    if (typeof props.min !== 'undefined' && (+val < +props.min)) val = +props.min;
-    if (typeof props.max !== 'undefined' && (+val > +props.max)) val = +props.max;
+    if (typeof props.min !== 'undefined' && +val < +props.min) val = +props.min;
+    if (typeof props.max !== 'undefined' && +val > +props.max) val = +props.max;
     emits('update:modelValue', val);
     checkSearchTime(val);
   },
@@ -106,16 +105,16 @@ const realLabelAlign = computed(() => {
 });
 
 // events
-const onClick = (event: Event) => {
+function onClick(event: Event) {
   if (props.autoSelect) realInput.value?.select();
   emits('click', event);
-};
-const onInput = (event: Event) => {
+}
+function onInput(event: Event) {
   emits('input', event);
-};
-const onChange = (event: Event) => {
+}
+function onChange(event: Event) {
   emits('change', event);
-};
+}
 
 // style
 const computedClassInput = computed(() => {
@@ -192,7 +191,6 @@ function setFocus() {
 function setSelect() {
   realInput.value?.select();
 }
-
 function checkSearchTime(oldValue: string | number) {
   setTimeout(() => {
     if (value.value === oldValue) emits('delayChange', oldValue);
@@ -222,7 +220,7 @@ onMounted(() => {
         group="left"
         type="filled"
         class="ck-input-plus-minus-buttons"
-        @click="value = (+value) - 1"
+        @click="value = +value - 1"
       />
       <!-- icon left -->
       <ck-icon
@@ -289,7 +287,7 @@ onMounted(() => {
         group="right"
         type="filled"
         class="ck-input-plus-minus-buttons"
-        @click="value = (+value) + 1"
+        @click="value = +value + 1"
       />
     </div>
   </div>
