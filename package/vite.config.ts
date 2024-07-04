@@ -5,12 +5,9 @@ import dts from 'vite-plugin-dts';
 
 export default defineConfig({
   resolve: {
-    alias: [
-      {
-        find: '@',
-        replacement: resolve(__dirname, './src'),
-      },
-    ],
+    alias: {
+      '@': resolve('src'),
+    },
   },
   css: {
     preprocessorOptions: {
@@ -24,7 +21,7 @@ export default defineConfig({
   build: {
     lib: {
       entry: {
-        main: resolve(__dirname, 'src/main.ts'),
+        main: resolve('src/main.ts'),
       },
       name: 'Cleek',
       fileName: (format, entryName) => `${entryName}.${format}.js`,
