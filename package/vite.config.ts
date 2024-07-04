@@ -1,5 +1,6 @@
 import { resolve } from 'path';
 import { defineConfig } from 'vite';
+// plugins
 import vue from '@vitejs/plugin-vue';
 import dts from 'vite-plugin-dts';
 
