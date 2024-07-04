@@ -1,14 +1,14 @@
 <script setup lang="ts">
-import { computed } from "vue";
-import { storeToRefs } from "pinia";
+import { computed } from 'vue';
+import { storeToRefs } from 'pinia';
 // stores
-import { useLayoutStore } from "@/stores/layout.stores.ts";
+import { useLayoutStore } from '@/stores/layout.stores.ts';
 
 const { isDarkModeActive } = storeToRefs(useLayoutStore());
 
 const computedStyle = computed(() => {
   const list = [];
-  if (isDarkModeActive.value) list.push({ backgroundColor: "#23282E" });
+  if (isDarkModeActive.value) list.push({ backgroundColor: '#23282E' });
   return list;
 });
 </script>
