@@ -17,7 +17,7 @@ export default defineConfig({
         additionalData: `
           @import "cleek/dist/cleek-styles/clear-app.styl";
           @import "cleek/dist/cleek-styles/cleek-mixins.styl";
-          @import "cleek/dist/cleek-styles/tiny-tailwind.styl";
+          @import "cleek/dist/cleek-styles/tiny-tailwind";
         `,
       },
     },
