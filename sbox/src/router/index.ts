@@ -14,6 +14,12 @@ const router = createRouter({
         },
       ],
     },
+    {
+      path: '/:catchAll(.*)',
+      redirect: () => {
+        return '/';
+      },
+    },
   ],
 });
 
