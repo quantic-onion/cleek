@@ -391,7 +391,4 @@ input::-webkit-inner-spin-button
 // remove arrows | firefox
 input[type=number]
   -moz-appearance textfield
-
-// all styles
-@require '../styles/index'
 </style>

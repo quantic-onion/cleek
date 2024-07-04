@@ -234,8 +234,6 @@ onMounted(() => {
 </template>
 
 <style lang="stylus">
-@require '../styles/index'
-
 .blackout
 .popup-container
   background-color RGBA(0, 0, 0, 0.2)

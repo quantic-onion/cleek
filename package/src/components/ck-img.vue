@@ -148,8 +148,6 @@ onMounted(() => {
 </template>
 
 <style lang="stylus" scoped>
-@require '../styles/index'
-
 .ck-img
   display inline-flex
   border-radius 0.5rem

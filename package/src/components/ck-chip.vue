@@ -66,8 +66,6 @@ const computedStyle = computed(() => {
 </template>
 
 <style lang="stylus" scoped>
-@require '../styles/index'
-
 .ck-chip
   text-align center
   display inline-flex

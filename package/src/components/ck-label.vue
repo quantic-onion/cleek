@@ -57,8 +57,6 @@ class="ck-label"
 </template>
 
 <style lang="stylus" scoped>
-@require '../styles/index'
-
 .ck-label
   width 100%
   padding-x 0.5rem

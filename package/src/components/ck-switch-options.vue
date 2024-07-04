@@ -90,8 +90,6 @@ function getOptionValue(option: Option) {
 </template>
 
 <style lang="stylus" scoped>
-@require '../styles/index'
-
 $borderWidth = 2px
 $borderRadius = 5px
 $borderColor = var(--primary)
