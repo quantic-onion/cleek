@@ -83,7 +83,7 @@ const isColumnDisplayed = computed(() => {
 <style lang="stylus" scoped>
 .ck-td
   padding 0.5rem
-  border-bottom 1px solid $globalBorderColor
+  // border-bottom 1px solid $globalBorderColor
   &:last-of-type
     border none
   &.overflow-auto

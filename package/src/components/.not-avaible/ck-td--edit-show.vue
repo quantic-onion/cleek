@@ -103,7 +103,7 @@ function setFocusChildren(event) {
 <style lang="stylus" scoped>
 .ck-td
   padding 0.5rem
-  border-bottom 1px solid $globalBorderColor
+  // border-bottom 1px solid $globalBorderColor
   background #fff
   .ck-td__slot-show
     cursor pointer
