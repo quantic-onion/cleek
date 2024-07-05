@@ -71,7 +71,7 @@ const computedStyleHeader = computed(() => {
   class="ck-sidebar-background"
   @click.self="isActive = false"
 >
-  <div class="sidebar-content" :class="computedClass" :style="computedStyle">
+  <div class="ck-sidebar" :class="computedClass" :style="computedStyle">
     <!-- header -->
     <div
       v-if="title"
@@ -89,8 +89,11 @@ const computedStyleHeader = computed(() => {
     <div class="loader-container" v-if="isLoading">
       <ck-icon icon="spinner" size="xxl" spin color="primary" />
     </div>
-    <div v-else>
+    <div v-else class="ck-sidebar__content">
       <slot />
+    </div>
+    <div v-if="$slots.footer" class="ck-sidbar__footer">
+      <slot name="footer"></slot>
     </div>
   </div>
 </div>
@@ -108,14 +111,15 @@ const computedStyleHeader = computed(() => {
   transition all 0.3s ease
   opacity 1
   left 0
-  .sidebar-content
+  .ck-sidebar
     background-color white
     z-index 10000
     left 0
     height 100vh
-    overflow-y auto
     position fixed
     width 450px
+    display flex
+    flex-direction column
     @media (max-width: 1023px)
       width 400px
     @media (max-width: 900px)
@@ -129,15 +133,16 @@ const computedStyleHeader = computed(() => {
     .sidebar-header
       display flex
       color white
-      font-size 1.4rem
+      font-size 1.1rem
       background-color var(--primary)
       height 3rem
       display flex
       align-items center
-      padding-left 1.5rem
+      padding-left 1rem
       padding-right @padding-left
       box-shadow 0 0.3rem 0.8rem 0 rgba(0, 0, 0, 0.1)
       position relative
+      flex-shrink 0
       &:hover
         cursor pointer
       &.close-btn--hidden
@@ -163,6 +168,12 @@ const computedStyleHeader = computed(() => {
         transition 0.2s
         &:hover
           background-color rgba(black, 0.15)
+    .ck-sidebar__content
+      overflow-y auto
+    .ck-sidbar__footer
+      flex-shrink 0
+      padding 1rem
+      ck-box-shadow(0.15)
     .loader-container
       display flex
       justify-content center
