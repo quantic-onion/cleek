@@ -236,7 +236,7 @@ onMounted(() => {
 <style lang="stylus">
 .blackout
 .popup-container
-  background-color RGBA(0, 0, 0, 0.2)
+  background-color $color-overlay
   position fixed
   z-index 9999
   top 0

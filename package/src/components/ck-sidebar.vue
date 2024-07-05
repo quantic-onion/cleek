@@ -85,16 +85,16 @@ const computedStyleHeader = computed(() => {
 
 <style lang="stylus" scoped>
 .ck-sidebar-background
-  z-index 1000
   position fixed
-  background rgba(0, 0, 0, 0.5)
-  width 100%
-  height 100%
+  top 0
   bottom 0
-  -webkit-transition all 0.3s ease
-  transition all 0.3s ease
-  opacity 1
   left 0
+  right 0
+  z-index 1000
+  background-color $color-overlay
+  opacity 1
+  transition all 0.3s ease
+  -webkit-transition all 0.3s ease
   .ck-sidebar
     background-color white
     z-index 10000
