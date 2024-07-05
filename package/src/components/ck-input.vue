@@ -319,7 +319,7 @@ onMounted(() => {
       &::-ms-input-placeholder
         color $color-placeholder
       &:focus-visible
-        outline-color var(--primary)
+        outline 2px solid var(--primary)
       &.rounded
         border-radius 10rem
       &.squared
