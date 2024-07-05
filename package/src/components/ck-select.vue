@@ -358,6 +358,8 @@ onMounted(() => {
       border-color var(--primary)
       outline 0
       border-radius-bottom(1px)
+    &:disabled
+      input-disabled()
     option
       color #333
       font-size 0.9rem

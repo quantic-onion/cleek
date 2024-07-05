@@ -347,10 +347,7 @@ onMounted(() => {
         padding 0.75rem 1.5rem
         border-radius 0.5rem
       &:disabled
-        cursor not-allowed
-        border-color $color-disabled
-        color $color-disabled
-        background-color #e0e0e0
+        input-disabled()
     .ck-input__icon-left
     .ck-input__icon-right
       position absolute
