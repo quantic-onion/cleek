@@ -127,9 +127,7 @@ onMounted(() => {
 </label>
 </template>
 
-<style lang="stylus" scoped>
-@import '../styles/.variables.styl'
-$transitionTime = 0.4s
+<style lang="stylus" scoped>$transitionTime = 0.4s
 
 .ck-switch
   cursor pointer

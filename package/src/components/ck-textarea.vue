@@ -140,8 +140,6 @@ onMounted(() => {
 </template>
 
 <style lang="stylus" scoped>
-@import '../styles/.variables.styl'
-
 .ck-textarea
   display flex
   flex-direction column
