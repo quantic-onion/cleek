@@ -5,7 +5,7 @@ import type { Color } from '../types/cleek-options';
 // hooks
 import hooks from '../utils/global-hooks';
 
-const isActive = defineModel({ required: true });
+const isActive = defineModel<boolean>({ required: true });
 
 const props = defineProps<{
   title?: string;
