@@ -5,8 +5,9 @@ import type { Color } from '../types/cleek-options';
 // hooks
 import hooks from '../utils/global-hooks';
 
+const isActive = defineModel({ required: true });
+
 const props = defineProps<{
-  modelValue: boolean;
   title?: string;
   width?: string;
   rightSide?: boolean;
@@ -16,19 +17,6 @@ const props = defineProps<{
   notCloseBtn?: boolean;
   isLoading?: boolean;
 }>();
-
-const emits = defineEmits<{
-  (e: 'update:modelValue', value: boolean): void;
-}>();
-
-const isActive = computed({
-  get() {
-    return props.modelValue;
-  },
-  set(val: boolean) {
-    emits('update:modelValue', val);
-  },
-});
 
 const computedClass = computed(() => {
   return {
@@ -66,37 +54,33 @@ const computedStyleHeader = computed(() => {
 </script>
 
 <template>
-<div
-  v-if="isActive"
-  class="ck-sidebar-background"
-  @click.self="isActive = false"
->
-  <div class="ck-sidebar" :class="computedClass" :style="computedStyle">
-    <!-- header -->
-    <div
-      v-if="title"
-      class="sidebar-header"
-      :class="computedClassHeader"
-      :style="computedStyleHeader"
-      @click="isActive = false"
-    >
-      <div v-if="title" class="sidebar-header-title">
-        {{ title }}
+  <div v-if="isActive" class="ck-sidebar-background" @click.self="isActive = false">
+    <div class="ck-sidebar" :class="computedClass" :style="computedStyle">
+      <!-- header -->
+      <div
+        v-if="title"
+        class="sidebar-header"
+        :class="computedClassHeader"
+        :style="computedStyleHeader"
+        @click="isActive = false"
+      >
+        <div v-if="title" class="sidebar-header-title">
+          {{ title }}
+        </div>
+        <ck-icon class="close-btn" icon="times" />
       </div>
-      <ck-icon class="close-btn" icon="times"/>
-    </div>
-    <!-- content -->
-    <div class="loader-container" v-if="isLoading">
-      <ck-icon icon="spinner" size="xxl" spin color="primary" />
-    </div>
-    <div v-else class="ck-sidebar__content">
-      <slot />
-    </div>
-    <div v-if="$slots.footer" class="ck-sidbar__footer">
-      <slot name="footer"></slot>
+      <!-- content -->
+      <div class="loader-container" v-if="isLoading">
+        <ck-icon icon="spinner" size="xxl" spin color="primary" />
+      </div>
+      <div v-else class="ck-sidebar__content">
+        <slot />
+      </div>
+      <div v-if="$slots.footer" class="ck-sidbar__footer">
+        <slot name="footer"></slot>
+      </div>
     </div>
   </div>
-</div>
 </template>
 
 <style lang="stylus" scoped>
