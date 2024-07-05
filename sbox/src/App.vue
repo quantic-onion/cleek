@@ -1,10 +1,11 @@
 <script setup lang="ts"></script>
 
 <template>
-  <ck-input type="password" />
+  <router-view />
 </template>
 
 <style lang="stylus">
 body
-  padding 5rem
+  margin 0
+  font-family 'Montserrat', sans-serif
 </style>
