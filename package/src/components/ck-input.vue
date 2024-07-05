@@ -299,18 +299,19 @@ onMounted(() => {
   position relative
   align-items flex-end
   .ck-input__content
+    $border-width = 1px
     display inline-flex
     align-items center
     justify-content center
     width 100%
-    > input
+    input
+      font-size $globalFontSize-s
+      box-sizing border-box
+      min-height 2.2rem
       width 100%
       padding $globalPadding
-      font-size $globalFontSize-s
       border-radius $globalBorderRadius
-      border 1px solid $globalBorderColor
-      min-height 40px
-      box-sizing border-box
+      border $border-width solid $globalBorderColor
       &::placeholder
         color $color-placeholder
       &:-ms-input-placeholder
@@ -350,35 +351,32 @@ onMounted(() => {
         border-color $color-disabled
         color $color-disabled
         background-color #e0e0e0
-    > .ck-input__icon-left
-    > .ck-input__icon-right
+    .ck-input__icon-left
+    .ck-input__icon-right
       position absolute
       bottom 13px
       z-index 1
-    > .show-password
-      background-color #eee
+    .show-password
       color #666
-      cursor pointer
+      background-color #eee
       position absolute
-      right 1px
-      bottom 1px
-      height 38px
-      width @height
-      display flex
-      align-items center
-      justify-content center
-      transition 0.3s
-      border-left 1px solid $globalBorderColor
+      top $border-width
+      bottom $border-width
+      right $border-width
+      padding 0 0.4rem
       border-radius $globalBorderRadius
+      flex-center()
+      transition 0.3s
       &:hover
+        cursor pointer
         background-color #f0f0f0
       &.rounded
         border-radius 10rem
       &.squared
         border-radius 0
-    > .ck-input__icon-left
+    .ck-input__icon-left
       left 1.5 * $globalPadding
-    > .ck-input__icon-right
+    .ck-input__icon-right
       right 1.5 * $globalPadding
 
 // remove arrows | chrome
