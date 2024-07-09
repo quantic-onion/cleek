@@ -1,8 +1,7 @@
 <script setup lang="ts">
-import { computed, getCurrentInstance, nextTick, onMounted, ref } from 'vue';
+import { ref, computed, onMounted, getCurrentInstance } from 'vue';
 import Datepicker from 'vue3-datepicker';
 import { qmStr } from 'quantic-methods';
-import type { Ref } from 'vue';
 // hooks
 import hooks from '../../utils/global-hooks';
 import useWindowWidth from '../../hooks/windowWidth';
@@ -11,11 +10,11 @@ import type { Align, AlignVertical, CleekOptions, Color, Icon, WidthBreaks } fro
 import type { IconPack } from '@fortawesome/fontawesome-svg-core';
 
 type stringDate = null | string;
-let cleekOptions: Ref<undefined | CleekOptions> = ref();
 
 const props = defineProps<{
   modelValue: stringDate;
   label?: string;
+  clearable?: boolean;
   // icon
   icon?: Icon;
   iconRight?: Icon;
@@ -33,8 +32,8 @@ const emits = defineEmits<{
 }>();
 
 const { windowWidth } = useWindowWidth();
-const refFocusAbsorber: Ref<HTMLInputElement | null> = ref(null);
-
+const cleekOptions = ref<CleekOptions>();
+const refFocusAbsorber = ref<HTMLInputElement>();
 const random = ref(Math.floor(Math.random() * 1000));
 const uniqueId = ref(`ck-input-date-${random.value}`);
 
@@ -150,6 +149,7 @@ onMounted(() => {
           @closed="setClosedStatus"
           inputFormat="dd-MM-yyyy"
           :style="deepComputedStyles"
+          :clearable="clearable"
         />
         <!-- icon right -->
         <ck-icon
