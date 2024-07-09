@@ -1,6 +1,5 @@
 <script setup lang="ts">
-import { computed, getCurrentInstance, onMounted, ref } from 'vue';
-import type { Ref } from 'vue';
+import { ref, computed, onMounted, getCurrentInstance } from 'vue';
 import type { CleekOptions, Icon, IconPack, Size } from '../types/cleek-options';
 // components
 import CkIcon from './ck-icon.vue';
@@ -23,10 +22,10 @@ const props = defineProps<{
 }>();
 
 const emits = defineEmits<{
-  (e: 'click'): void;
+  click: [];
 }>();
 
-let cleekOptions: Ref<undefined | CleekOptions> = ref();
+let cleekOptions = ref<CleekOptions>();
 const defaultSize = 's';
 
 const computedClass = computed(() => {
