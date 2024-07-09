@@ -63,8 +63,9 @@ function handleSwitchClick(e: Event) {
   if (props.preventAutoUpdate) {
     e.preventDefault();
     e.stopPropagation();
-    emits('click');
+    return;
   }
+  emits('click');
 }
 
 onMounted(() => {
