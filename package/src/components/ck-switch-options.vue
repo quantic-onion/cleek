@@ -1,51 +1,45 @@
 <script setup lang="ts">
-import { computed } from 'vue';
+import { computed, watch } from 'vue';
 // components
 import CkLabel from './ck-label.vue';
 // hooks
 import functions from '../utils/global-hooks';
 import useWindowWidth from '../hooks/windowWidth';
+// types
+import type { Align } from '../types/cleek-options';
 
 type Option = boolean | number | object | string;
 
-const defaultProp = 'name';
-// @ts-ignore
-const defaultReduceFunction = (option) => option.id;
+const selectedOption = defineModel<Option>({ required: true });
 
-const props = defineProps<{
-  modelValue: Option;
-  options?: Option[];
-  // reduce functions
-  prop?: string;
-  notReduce?: boolean;
-  reduceFunction?: (option: Option) => any;
-  // label
-  label?: string;
-  labelAlign?: string;
-  // group
-  widthBreaks?: [number, string][];
-  group?: 'left' | 'right' | 'center';
-  groupVertical?: 'top' | 'bottom' | 'center';
-  // style
-  sameWidthOptions?: boolean;
-}>();
+const props = withDefaults(
+  defineProps<{
+    options?: Option[];
+    // reduce functions
+    prop?: string;
+    notReduce?: boolean;
+    reduceFunction?: (option: Option) => any;
+    // label
+    label?: string;
+    labelAlign?: Align;
+    // group
+    widthBreaks?: [number, string][];
+    group?: 'left' | 'right' | 'center';
+    groupVertical?: 'top' | 'bottom' | 'center';
+    // style
+    sameWidthOptions?: boolean;
+  }>(),
+  {
+    prop: 'name',
+  },
+);
 
-const emits = defineEmits<{
-  (e: 'update:modelValue', value: Option): void;
-  (e: 'change', value: Option): void;
+const emit = defineEmits<{
+  change: [value: Option];
 }>();
 
 const { windowWidth } = useWindowWidth();
 
-const selectedOption = computed({
-  get() {
-    return props.modelValue;
-  },
-  set(val: Option) {
-    emits('update:modelValue', val);
-    emits('change', val);
-  },
-});
 const computedClass = computed(() => {
   const list = [];
   // group
@@ -58,6 +52,11 @@ const computedItemStyle = computed(() => {
   return list;
 });
 
+watch(selectedOption, (val) => emit('change', val));
+
+function defaultReduceFunction(option) {
+  return option.id;
+}
 function getOptionValue(option: Option) {
   if (props.notReduce) return option;
   if (props.reduceFunction) {
@@ -68,25 +67,25 @@ function getOptionValue(option: Option) {
 </script>
 
 <template>
-<div class="ck-switch-options__container-exterior">
-  <!-- label -->
-  <ck-label v-if="label" :align="labelAlign">
-    {{ label }}
-  </ck-label>
-  <!-- switch options -->
-  <div class="ck-switch-options__container" :class="computedClass">
-    <div
-      v-for="(option, index) in options"
-      class="ck-switch-options__option"
-      :key="`ck-switch-options${index}`"
-      :class="{ selected: selectedOption == getOptionValue(option) }"
-      :style="computedItemStyle"
-      @click="selectedOption = getOptionValue(option)"
-    >
-      {{ option[prop || defaultProp] }}
+  <div class="ck-switch-options__container-exterior">
+    <!-- label -->
+    <ck-label v-if="label" :align="labelAlign">
+      {{ label }}
+    </ck-label>
+    <!-- switch options -->
+    <div class="ck-switch-options__container" :class="computedClass">
+      <div
+        v-for="(option, index) in options"
+        class="ck-switch-options__option"
+        :key="`ck-switch-options${index}`"
+        :class="{ selected: selectedOption == getOptionValue(option) }"
+        :style="computedItemStyle"
+        @click="selectedOption = getOptionValue(option)"
+      >
+        {{ option[prop] }}
+      </div>
     </div>
   </div>
-</div>
 </template>
 
 <style lang="stylus" scoped>

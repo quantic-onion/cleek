@@ -7,7 +7,7 @@ import type { Align, CleekOptions } from '../types/cleek-options';
 import hooks from '../utils/global-hooks';
 
 const props = defineProps<{
-  for: string;
+  for?: string;
   align: Align;
   size?: 's' | 'm' | 'l' | 'xl';
 }>();
@@ -46,14 +46,9 @@ onMounted(() => {
 </script>
 
 <template>
-<label
-class="ck-label"
-:for="props.for"
-:class="computedClass"
-:style="computedStyle"
->
-  <slot/>
-</label>
+  <label class="ck-label" :for="props.for" :class="computedClass" :style="computedStyle">
+    <slot />
+  </label>
 </template>
 
 <style lang="stylus" scoped>
