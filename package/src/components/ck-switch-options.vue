@@ -120,6 +120,8 @@ $borderColor = var(--primary)
     &:hover
       cursor pointer
       // background-color rgba(var(--primary), .1) FIXRGBA
+    &:last-of-type
+      border-right 0
     &:hover
       opacity 0.9
     &.selected
