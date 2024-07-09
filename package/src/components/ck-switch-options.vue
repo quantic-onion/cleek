@@ -114,20 +114,16 @@ $borderColor = var(--primary)
     text-align center
     font-weight 500
     color #666
-    // padding 7px
     padding 5px 15px
-    cursor pointer
-    transition transform 0.2s /* Animation */
     flex-grow 1
-    transition 0.4s
+    transition transform 0.2s
     &:hover
+      cursor pointer
       // background-color rgba(var(--primary), .1) FIXRGBA
-    // margin-bottom $borderWidth
     &:first-of-type
       border-top-left-radius $borderRadius
       border-bottom-left-radius $borderRadius
     &:last-of-type
-      border-right 0
       border-top-right-radius $borderRadius
       border-bottom-right-radius $borderRadius
     &:hover
