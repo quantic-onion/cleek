@@ -9,8 +9,9 @@ import hooks from '../utils/global-hooks';
 
 type ModelValue = boolean | 1 | 0;
 
+const value = defineModel<boolean>({ required: true });
+
 const props = defineProps<{
-  modelValue: ModelValue;
   preventAutoUpdate?: boolean;
   disabled?: boolean;
   outlined?: boolean;
@@ -22,21 +23,11 @@ const props = defineProps<{
 }>();
 
 const emits = defineEmits<{
-  (e: 'update:modelValue', value: ModelValue): void;
   (e: 'click'): void;
 }>();
 
 let cleekOptions: Ref<undefined | CleekOptions> = ref();
 const defaultSize = 's';
-
-const value = computed({
-  get() {
-    return props.modelValue;
-  },
-  set(val: ModelValue) {
-    emits('update:modelValue', val);
-  },
-});
 
 const computedClass = computed(() => {
   const list = [];
@@ -83,51 +74,31 @@ onMounted(() => {
 </script>
 
 <template>
-<label
-  v-bind="computedAttributes"
-  class="ck-switch"
-  :class="computedClass"
-  @keydown.space.prevent
->
-  <input
-    class="ck-switch__input"
-    type="checkbox"
-    v-model="value"
-    aria-hidden="true"
-    :disabled="disabled"
-    @click="handleSwitchClick($event)"
-  />
-  <div class="ck-switch__slider-container">
-    <!-- slider -->
-    <div class="ck-switch__slider"/>
-    <!-- icon-left -->
-    <ck-icon
-      v-if="icon && value"
-      class="ck-switch__icon-left"
-      :icon="icon"
-      :icon-pack="iconPack"
-      :class="iconClass"
+  <label v-bind="computedAttributes" class="ck-switch" :class="computedClass" @keydown.space.prevent>
+    <input
+      class="ck-switch__input"
+      type="checkbox"
+      v-model="value"
+      aria-hidden="true"
+      :disabled="disabled"
+      @click="handleSwitchClick($event)"
     />
-    <!-- icon-right -->
-    <ck-icon
-      v-if="icon && !value"
-      class="ck-switch__icon-right"
-      :icon="icon"
-      :icon-pack="iconPack"
-      :class="iconClass"
-    />
-  </div>
-  <span
-    v-if="$slots.default"
-    class="ck-switch__content"
-    :style="computedStyleContent"
-  >
-    <slot/>
-  </span>
-</label>
+    <div class="ck-switch__slider-container">
+      <!-- slider -->
+      <div class="ck-switch__slider" />
+      <!-- icon-left -->
+      <ck-icon v-if="icon && value" class="ck-switch__icon-left" :icon="icon" :icon-pack="iconPack" :class="iconClass" />
+      <!-- icon-right -->
+      <ck-icon v-if="icon && !value" class="ck-switch__icon-right" :icon="icon" :icon-pack="iconPack" :class="iconClass" />
+    </div>
+    <span v-if="$slots.default" class="ck-switch__content" :style="computedStyleContent">
+      <slot />
+    </span>
+  </label>
 </template>
 
-<style lang="stylus" scoped>$transitionTime = 0.4s
+<style lang="stylus" scoped>
+$transitionTime = 0.4s
 
 .ck-switch
   cursor pointer
