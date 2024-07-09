@@ -120,12 +120,6 @@ $borderColor = var(--primary)
     &:hover
       cursor pointer
       // background-color rgba(var(--primary), .1) FIXRGBA
-    &:first-of-type
-      border-top-left-radius $borderRadius
-      border-bottom-left-radius $borderRadius
-    &:last-of-type
-      border-top-right-radius $borderRadius
-      border-bottom-right-radius $borderRadius
     &:hover
       opacity 0.9
     &.selected
