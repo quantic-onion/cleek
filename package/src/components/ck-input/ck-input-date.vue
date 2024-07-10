@@ -123,6 +123,9 @@ function setClosedStatus() {
     popupContent.style.overflow = 'auto';
   }
 }
+function handleIconRightClick() {
+  if (props.clearable) inputValue.value = null;
+}
 
 onMounted(() => {
   cleekOptions.value = hooks.getCleekOptions(getCurrentInstance);
@@ -154,11 +157,13 @@ onMounted(() => {
         />
         <!-- icon right -->
         <ck-icon
-          v-if="iconRight"
+          v-if="clearable || iconRight"
           class="ck-input__icon-right"
-          :color="iconColor ? iconColor : 'lightgrey'"
-          :icon="iconRight"
-          :icon-pack="iconPack"
+          :class="{ 'icon-right__clearable': clearable }"
+          :color="clearable ? 'grey' : iconColor ? iconColor : 'lightgrey'"
+          :icon="clearable ? 'xmark' : iconRight"
+          :icon-pack="clearable ? 'font-awesome' : iconPack"
+          @click="handleIconRightClick()"
         />
       </div>
     </div>
@@ -181,6 +186,8 @@ onMounted(() => {
     left 1.5 * $globalPadding
   .ck-input__icon-right
     right 1.5 * $globalPadding
+  .icon-right__clearable
+    cursor pointer
 .ck-input-date--focus-absorber
   display none
 .ck-input-date
