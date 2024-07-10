@@ -54,7 +54,7 @@ const computedStyleHeader = computed(() => {
 </script>
 
 <template>
-  <div v-if="isActive" class="ck-sidebar-background" @click.self="isActive = false">
+  <div v-if="isActive" class="ck-sidebar-background" :class="{ 'ck-sidebar__active': isActive }" @click.self="isActive = false">
     <div class="ck-sidebar" :class="computedClass" :style="computedStyle">
       <!-- header -->
       <div
@@ -84,8 +84,9 @@ const computedStyleHeader = computed(() => {
 </template>
 
 <style lang="stylus">
-*
-  overflow hidden
+.ck-sidebar__active
+  *
+    overflow hidden
 </style>
 
 <style lang="stylus" scoped>
