@@ -90,6 +90,7 @@ function convertToDate(dateString: DateString) {
   return new Date(`${justDate}T00:00:00`);
 }
 function dateToString(date: Date) {
+  if (!date) return null;
   const year = date.getFullYear();
   const month = qmStr.padZeros(date.getMonth() + 1, 2);
   const day = qmStr.padZeros(date.getDate(), 2);
