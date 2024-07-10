@@ -28,7 +28,7 @@ const props = defineProps<{
 
 const emit = defineEmits<{
   'update:modelValue': [modelValue: DateString];
-  change: [modelValue: DateString];
+  change: [value: DateString];
 }>();
 
 const { windowWidth } = useWindowWidth();
