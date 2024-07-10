@@ -159,7 +159,7 @@ onMounted(() => {
         />
         <!-- icon right -->
         <ck-icon
-          v-if="clearable || iconRight"
+          v-if="(clearable && modelValue != clearValue) || iconRight"
           class="ck-input__icon-right"
           :class="{ 'icon-right__clearable': clearable }"
           :color="clearable ? 'grey' : iconColor ? iconColor : 'lightgrey'"
