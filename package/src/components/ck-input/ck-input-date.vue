@@ -165,21 +165,20 @@ onMounted(() => {
 </template>
 
 <style lang="stylus" scoped>
-@import '../../styles/index'
 .ck-div
   min-width auto
   width auto
 .ck-picker-container
   width 100%
   position relative
-  > .ck-input__icon-left
-  > .ck-input__icon-right
+  .ck-input__icon-left
+  .ck-input__icon-right
     position absolute
     bottom 13px
     z-index 1
-  > .ck-input__icon-left
+  .ck-input__icon-left
     left 1.5 * $globalPadding
-  > .ck-input__icon-right
+  .ck-input__icon-right
     right 1.5 * $globalPadding
 .ck-input-date--focus-absorber
   display none
