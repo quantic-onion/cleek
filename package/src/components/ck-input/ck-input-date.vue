@@ -40,7 +40,7 @@ const uniqueId = ref(`ck-input-date-${random.value}`);
 
 const inputValue = computed({
   get() {
-    return convertToDate();
+    return convertToDate(props.modelValue);
   },
   set(val: Date) {
     emit('update:modelValue', dateToString(val));
@@ -71,19 +71,22 @@ const deepComputedStyles = computed(() => {
   return list;
 });
 
-watch(() => props.modelValue, (val) => {
-  if (refInput.value) {
-    refInput.value.style.display = 'block';
-    refInput.value.focus();
-    refInput.value.style.display = 'none';
-  }
-  emit('change', val);
-});
+watch(
+  () => props.modelValue,
+  (val) => {
+    if (refInput.value) {
+      refInput.value.style.display = 'block';
+      refInput.value.focus();
+      refInput.value.style.display = 'none';
+    }
+    emit('change', val);
+  },
+);
 
 // TODO move this to qmDate
-function convertToDate() {
-  if (!props.modelValue) return null;
-  const justDate = `${props.modelValue}`.slice(0, 10);
+function convertToDate(dateString: DateString) {
+  if (!dateString) return null;
+  const justDate = `${dateString}`.slice(0, 10);
   return new Date(`${justDate}T00:00:00`);
 }
 function dateToString(date: Date) {
