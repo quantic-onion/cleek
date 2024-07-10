@@ -35,6 +35,7 @@ const { windowWidth } = useWindowWidth();
 const cleekOptions = ref<CleekOptions>();
 const refInput = ref<HTMLInputElement>();
 const random = ref(Math.floor(Math.random() * 1000));
+const isOnPopup = ref(false);
 const uniqueId = ref(`ck-input-date-${random.value}`);
 
 const inputValue = computed({
@@ -51,7 +52,6 @@ const inputValue = computed({
   },
 });
 
-const isOnPopup = ref(false);
 const computedClass = computed(() => {
   const classes = [];
   // group
@@ -64,7 +64,6 @@ const computedClass = computed(() => {
   if (isOnPopup.value) classes.push('ck-picker-popup');
   return classes;
 });
-
 const deepComputedStyles = computed(() => {
   const list = [];
   // background-color
@@ -89,7 +88,6 @@ function dateToString(date: Date) {
   const day = qmStr.padZeros(date.getDate(), 2);
   return `${year}-${month}-${day}`;
 }
-
 function setOpenStatus() {
   const uniquePicker = document.getElementById(`${uniqueId.value}`);
   const pickerCalendar = uniquePicker?.querySelector('.v3dp__popout-day');
@@ -113,7 +111,6 @@ function setOpenStatus() {
     uniquePicker.setAttribute('style', `overflow: hidden;`);
   }
 }
-
 function setClosedStatus() {
   const popupContent = document.querySelector('.ck-popup__slot-body');
   if (popupContent instanceof HTMLElement) {
