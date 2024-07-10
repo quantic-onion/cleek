@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed } from 'vue';
+import { computed, watch } from 'vue';
 // types
 import type { Color } from '../types/cleek-options';
 // hooks
@@ -50,6 +50,14 @@ const computedStyleHeader = computed(() => {
     list.push({ 'background-color': props.headerColor });
   }
   return list;
+});
+
+watch(isActive, (val) => {
+  if (val) {
+    document.body.style.overflow = 'hidden';
+  } else {
+    document.body.style.overflow = 'auto';
+  }
 });
 </script>
 
