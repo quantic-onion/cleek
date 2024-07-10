@@ -151,7 +151,6 @@ onMounted(() => {
           @closed="setClosedStatus"
           inputFormat="dd-MM-yyyy"
           :style="deepComputedStyles"
-          :clearable="clearable"
         />
         <!-- icon right -->
         <ck-icon
