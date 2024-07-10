@@ -7,6 +7,7 @@ import TestInput from './test-components/TestInput.vue';
 import TestSelect from './test-components/TestSelect.vue';
 import TestCheckbox from './test-components/TestCheckbox.vue';
 import TestSwitch from './test-components/TestSwitch.vue';
+import TestSwitchOptions from './test-components/TestSwitchOptions.vue';
 import TestChip from './test-components/TestChip.vue';
 import TestCircle from './test-components/TestCircle.vue';
 import TestButton from './test-components/TestButton.vue';
@@ -18,6 +19,7 @@ import TestForm from './test-components/TestForm.vue';
 <template>
   <div class="home-view">
     <TestSwitch />
+    <TestSwitchOptions />
     <TestCheckbox />
     <TestPagination />
     <TestIcon />

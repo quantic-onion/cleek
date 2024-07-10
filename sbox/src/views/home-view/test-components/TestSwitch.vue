@@ -12,13 +12,16 @@ const valueIcon2 = ref(false);
 const valueIcon3 = ref(false);
 const remainingSecondsToUpdate = ref(0);
 const values = ref({
-  primary: true,
-  secondary: true,
-  success: false,
-  warning: false,
-  dark: false,
-  light: false,
-  purple: false,
+  'primary': false,
+  'secondary': false,
+  'success': false,
+  'warning': false,
+  'danger': false,
+  'dark': false,
+  'light': false,
+  'purple': false,
+  'primary-light': false,
+  'secondary-light': false,
 });
 
 watch(values, async () => {

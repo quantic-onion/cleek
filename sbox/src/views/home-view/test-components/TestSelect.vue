@@ -18,5 +18,11 @@ const selectedOption = ref(null);
       :options="options"
       placeholder="Seleccione una opción"
     />
+    <ck-select
+      v-model="selectedOption"
+      :options="options"
+      disabled
+      placeholder="Seleccione una opción"
+    />
   </ContainerTest>
 </template>
