@@ -35,7 +35,6 @@ const { windowWidth } = useWindowWidth();
 const cleekOptions = ref<CleekOptions>();
 const refInput = ref<HTMLInputElement>();
 const random = ref(Math.floor(Math.random() * 1000));
-const isOnPopup = ref(false);
 const uniqueId = ref(`ck-input-date-${random.value}`);
 
 const inputValue = computed({
@@ -55,8 +54,7 @@ const computedClass = computed(() => {
   if (props.icon) classes.push('has-icon-left');
   if (props.iconRight) classes.push('has-icon-right');
   // If the date picker is on a popup, we add a class to the container
-  isOnPopup.value = document.querySelector('.ck-popup__content') ? true : false;
-  if (isOnPopup.value) classes.push('ck-picker-popup');
+  if (!!document.querySelector('.ck-popup__content')) classes.push('ck-picker-popup');
   return classes;
 });
 const deepComputedStyles = computed(() => {
