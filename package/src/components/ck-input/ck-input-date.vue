@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed, onMounted, getCurrentInstance } from 'vue';
+import { ref, computed, watch, onMounted, getCurrentInstance } from 'vue';
 import Datepicker from 'vue3-datepicker';
 import { qmStr } from 'quantic-methods';
 // hooks
@@ -43,11 +43,6 @@ const inputValue = computed({
     return convertToDate();
   },
   set(val: Date) {
-    if (refInput.value) {
-      refInput.value.style.display = 'block';
-      refInput.value.focus();
-      refInput.value.style.display = 'none';
-    }
     emit('update:modelValue', dateToString(val));
   },
 });
@@ -74,6 +69,15 @@ const deepComputedStyles = computed(() => {
     list.push({ backgroundColor: backgroundColor });
   }
   return list;
+});
+
+watch(() => props.modelValue, (val) => {
+  if (refInput.value) {
+    refInput.value.style.display = 'block';
+    refInput.value.focus();
+    refInput.value.style.display = 'none';
+  }
+  emit('change', val);
 });
 
 // TODO move this to qmDate
@@ -141,7 +145,6 @@ onMounted(() => {
         <!-- typeable -->
         <Datepicker
           v-model="inputValue"
-          @change="emit('change', inputValue)"
           @opened="setOpenStatus"
           @closed="setClosedStatus"
           inputFormat="dd-MM-yyyy"
