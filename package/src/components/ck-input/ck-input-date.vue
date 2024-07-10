@@ -14,7 +14,9 @@ type DateString = null | string;
 const props = defineProps<{
   modelValue: DateString;
   label?: string;
+  // clearable
   clearable?: boolean;
+  clearValue?: DateString;
   // icon
   icon?: Icon;
   iconRight?: Icon;
@@ -124,7 +126,7 @@ function setClosedStatus() {
   }
 }
 function handleIconRightClick() {
-  if (props.clearable) inputValue.value = null;
+  if (props.clearable) inputValue.value = convertToDate(props.clearValue);
 }
 
 onMounted(() => {
