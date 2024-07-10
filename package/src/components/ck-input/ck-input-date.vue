@@ -26,9 +26,9 @@ const props = defineProps<{
   groupVertical?: AlignVertical;
 }>();
 
-const emits = defineEmits<{
-  (e: 'update:modelValue', modelValue: DateString): void;
-  (e: 'change', modelValue: DateString): void;
+const emit = defineEmits<{
+  'update:modelValue': [modelValue: DateString];
+  change: [modelValue: DateString];
 }>();
 
 const { windowWidth } = useWindowWidth();
@@ -48,7 +48,7 @@ const inputValue = computed({
       refInput.value.focus();
       refInput.value.style.display = 'none';
     }
-    emits('update:modelValue', dateToString(val));
+    emit('update:modelValue', dateToString(val));
   },
 });
 
@@ -141,7 +141,7 @@ onMounted(() => {
         <!-- typeable -->
         <Datepicker
           v-model="inputValue"
-          @change="emits('change', inputValue)"
+          @change="emit('change', inputValue)"
           @opened="setOpenStatus"
           @closed="setClosedStatus"
           inputFormat="dd-MM-yyyy"
