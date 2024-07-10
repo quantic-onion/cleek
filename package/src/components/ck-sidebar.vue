@@ -2,8 +2,9 @@
 import { computed, watch } from 'vue';
 // types
 import type { Color } from '../types/cleek-options';
-// hooks
-import hooks from '../utils/global-hooks';
+// utils
+import hooks from '@/utils/global-hooks';
+import { setBodyOverflow } from '@/utils/css-helpers';
 
 const isActive = defineModel<boolean>({ required: true });
 
@@ -52,13 +53,7 @@ const computedStyleHeader = computed(() => {
   return list;
 });
 
-watch(isActive, (val) => {
-  if (val) {
-    document.body.style.overflow = 'hidden';
-  } else {
-    document.body.style.overflow = 'visible';
-  }
-});
+watch(isActive, (val) => setBodyOverflow(!val));
 </script>
 
 <template>

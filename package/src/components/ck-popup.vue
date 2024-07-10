@@ -1,16 +1,17 @@
 <script setup lang="ts">
-import { computed, getCurrentInstance, onMounted, ref } from 'vue';
-import type { Ref } from 'vue';
+import { ref, computed, watch, onMounted, getCurrentInstance } from 'vue';
 // components
 import CkButton from './ck-button.vue';
 import CkIcon from './ck-icon.vue';
 // types
 import type { Align, Color, Layout, CleekOptions, ButtonType } from '../types/cleek-options';
-// hooks
-import hooks from '../utils/global-hooks';
+// utils
+import hooks from '@/utils/global-hooks';
+import { setBodyOverflow } from '@/utils/css-helpers';
+
+const isActive = defineModel<boolean>({ required: true });
 
 const props = defineProps<{
-  modelValue: boolean;
   title?: string;
   confirmButtons?: boolean;
   acceptButton?: boolean;
@@ -35,27 +36,13 @@ const props = defineProps<{
   fontSize?: string;
 }>();
 
-const emits = defineEmits<{
-  (e: 'update:modelValue', value: boolean): void;
-  (e: 'cancel'): void;
-  (e: 'accept'): void;
+const emit = defineEmits<{
+  accept: [];
+  cancel: [];
 }>();
 
-// const perfectScrollbarSettings = { // perfectscrollbar settings
-//   maxScrollbarLength: 60,
-//   wheelSpeed: 0.60,
-// };
+const cleekOptions = ref<CleekOptions>();
 
-let cleekOptions: Ref<undefined | CleekOptions> = ref();
-
-const isActive = computed({
-  get() {
-    return props.modelValue;
-  },
-  set(val: boolean) {
-    emits('update:modelValue', val);
-  },
-});
 const computedClassContent = computed(() => {
   const list = [];
   // layout
@@ -86,16 +73,12 @@ const computedStyleContent = computed(() => {
   }
   // background-color
   let backgroundColor = 'white';
-
   if (cleekOptions.value?.popup.headerColor) backgroundColor = cleekOptions.value?.popup.headerColor;
-
   if (cleekOptions.value?.darkMode) backgroundColor = cleekOptions.value?.darkModeColorItems;
-
   if (props.backgroundColor) backgroundColor = props.backgroundColor;
   if (backgroundColor && !hooks.isColorTemplateVariable(backgroundColor)) {
     list.push({ backgroundColor: backgroundColor });
   }
-
   return list;
 });
 const computedStyleHeader = computed(() => {
@@ -169,12 +152,14 @@ const realCancelBtnText = computed(() => {
   return 'Cancel';
 });
 
+watch(isActive, (val) => setBodyOverflow(!val));
+
 function onCancel() {
-  emits('cancel');
+  emit('cancel');
   if (!props.preventCloseOnCancel) isActive.value = false;
 }
 function onAccept() {
-  emits('accept');
+  emit('accept');
 }
 function onBgClick() {
   // hacerle un movimiento de rebote como en vuesax
@@ -209,12 +194,7 @@ onMounted(() => {
               <slot name="footer" />
             </div>
             <div v-if="confirmButtons || acceptButton || cancelButton" class="ck-popup-slot-footer__confirm-buttons">
-              <ck-button
-                v-if="confirmButtons || cancelButton"
-                color="danger"
-                :type="realCancelBtnType"
-                @click="onCancel()"
-              >
+              <ck-button v-if="confirmButtons || cancelButton" color="danger" :type="realCancelBtnType" @click="onCancel()">
                 {{ realCancelBtnText }}
               </ck-button>
               <ck-button
