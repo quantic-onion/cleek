@@ -9,10 +9,10 @@ import useWindowWidth from '../../hooks/windowWidth';
 import type { Align, AlignVertical, CleekOptions, Color, Icon, WidthBreaks } from '../../types/cleek-options';
 import type { IconPack } from '@fortawesome/fontawesome-svg-core';
 
-type stringDate = null | string;
+type DateString = null | string;
 
 const props = defineProps<{
-  modelValue: stringDate;
+  modelValue: DateString;
   label?: string;
   clearable?: boolean;
   // icon
@@ -27,8 +27,8 @@ const props = defineProps<{
 }>();
 
 const emits = defineEmits<{
-  (e: 'update:modelValue', modelValue: stringDate): void;
-  (e: 'change', modelValue: stringDate): void;
+  (e: 'update:modelValue', modelValue: DateString): void;
+  (e: 'change', modelValue: DateString): void;
 }>();
 
 const { windowWidth } = useWindowWidth();
