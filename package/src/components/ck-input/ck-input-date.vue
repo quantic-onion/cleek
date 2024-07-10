@@ -33,7 +33,7 @@ const emits = defineEmits<{
 
 const { windowWidth } = useWindowWidth();
 const cleekOptions = ref<CleekOptions>();
-const refFocusAbsorber = ref<HTMLInputElement>();
+const refInput = ref<HTMLInputElement>();
 const random = ref(Math.floor(Math.random() * 1000));
 const uniqueId = ref(`ck-input-date-${random.value}`);
 
@@ -42,10 +42,10 @@ const inputValue = computed({
     return convertToDate();
   },
   set(val: Date) {
-    if (refFocusAbsorber.value) {
-      refFocusAbsorber.value.style.display = 'block';
-      refFocusAbsorber.value.focus();
-      refFocusAbsorber.value.style.display = 'none';
+    if (refInput.value) {
+      refInput.value.style.display = 'block';
+      refInput.value.focus();
+      refInput.value.style.display = 'none';
     }
     emits('update:modelValue', dateToString(val));
   },
@@ -129,7 +129,7 @@ onMounted(() => {
 <template>
   <ck-div :widthBreaks="widthBreaks">
     <div class="ck-input-date" :class="computedClass" :id="uniqueId">
-      <input ref="refFocusAbsorber" class="ck-input-date--focus-absorber" />
+      <input ref="refInput" class="ck-input-date--focus-absorber" />
       <!-- label -->
       <ck-label> {{ label }} </ck-label>
       <div class="ck-picker-container" :class="cleekOptions?.darkMode && 'picker-dark'">
