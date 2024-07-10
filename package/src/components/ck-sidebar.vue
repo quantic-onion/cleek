@@ -83,6 +83,11 @@ const computedStyleHeader = computed(() => {
   </div>
 </template>
 
+<style lang="stylus">
+*
+  overflow hidden
+</style>
+
 <style lang="stylus" scoped>
 .ck-sidebar-background
   position fixed
