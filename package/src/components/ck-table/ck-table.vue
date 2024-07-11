@@ -274,8 +274,6 @@ onMounted(() => {
 </template>
 
 <style lang="stylus">
-@import '../../styles/index.styl'
-
 .header-row
   background-color transparent !important
 .ck-table__table-container .ck-table__table
@@ -307,8 +305,6 @@ onMounted(() => {
 </style>
 
 <style lang="stylus" scoped>
-@import '../../styles/index.styl'
-
 .ck-table__table-container
   max-width 100%
   overflow auto

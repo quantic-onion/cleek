@@ -169,7 +169,6 @@ class="ck-table__pagination-container"
 </template>
 
 <style lang="stylus" scoped>
-@import '../../../styles/index'
 $item-size = 40px
 $border-color = #aaa
 .ck-table__pagination-container

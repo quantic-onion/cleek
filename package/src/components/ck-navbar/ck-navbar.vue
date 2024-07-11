@@ -57,8 +57,6 @@ onMounted(() => {
 </template>
 
 <style lang="stylus" scoped>
-@import '../../styles/index.styl'
-
 .ck-navbar
   width 100%
   top 0

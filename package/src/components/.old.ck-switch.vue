@@ -60,7 +60,9 @@ function onTrigger() {
   value.value = !value.value;
 }
 </script>
-<style lang="stylus" scoped>$height = 24px // s
+
+<style lang="stylus" scoped>
+$height = 24px // s
 $width = 48px // s
 $height = 34px // m
 $width = 60px // m

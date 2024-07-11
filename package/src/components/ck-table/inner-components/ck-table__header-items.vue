@@ -139,7 +139,6 @@ function checkRefresh() {
 </template>
 
 <style lang="stylus" scoped>
-@import '../../../styles/index'
 .ck-table__header-items
   display flex
   .items-per-page
