@@ -15,6 +15,9 @@ export { default as CkInputDate } from './ck-input/ck-input-date.vue';
 export { default as CkInputTime } from './ck-input/ck-input-time.vue';
 // export { default as CkDropdownContent } from './ck-dropdown/ck-dropdown-content.vue';
 // export { default as CkDropdownItem } from './ck-dropdown/ck-dropdown-item.vue';
+// tabs
+export { default as CkTab } from './ck-tabs/ck-tab.vue';
+export { default as CkTabs } from './ck-tabs/ck-tabs.vue';
 
 export { default as CkButton } from './ck-button.vue';
 export { default as CkCard } from './ck-card.vue';

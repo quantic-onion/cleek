@@ -14,10 +14,12 @@ import TestButton from './test-components/TestButton.vue';
 import TestPopup from './test-components/test-popup/TestPopup.vue';
 import TestTable from './test-components/test-popup/TestTable.vue';
 import TestForm from './test-components/TestForm.vue';
+import TestTabs from './test-components/TestTabs.vue';
 </script>
 
 <template>
   <div class="home-view">
+    <TestTabs />
     <TestSwitch />
     <TestSwitchOptions />
     <TestCheckbox />

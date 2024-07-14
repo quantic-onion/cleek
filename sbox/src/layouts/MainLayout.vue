@@ -31,5 +31,5 @@ const computedStyle = computed(() => {
   background-color #ccc
   padding 2rem
   padding-top 5rem
-  height 100vh
+  min-height 100vh
 </style>
