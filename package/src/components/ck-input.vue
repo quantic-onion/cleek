@@ -307,7 +307,7 @@ onMounted(() => {
     input
       font-size $globalFontSize-s
       box-sizing border-box
-      min-height 2.2rem
+      min-height 40px
       width 100%
       padding $globalPadding
       border-radius $globalBorderRadius
@@ -354,14 +354,16 @@ onMounted(() => {
       bottom 13px
       z-index 1
     .show-password
+      position absolute
+      right $border-width
+      bottom $border-width
+      height 38px
+      width @height
+      padding 0 0.4rem
+      border-left 1px solid $globalBorderColor
+      border-radius $globalBorderRadius
       color #666
       background-color #eee
-      position absolute
-      top $border-width
-      bottom $border-width
-      right $border-width
-      padding 0 0.4rem
-      border-radius $globalBorderRadius
       flex-center()
       transition 0.3s
       &:hover

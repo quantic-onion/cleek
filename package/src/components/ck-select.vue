@@ -336,7 +336,8 @@ onMounted(() => {
   </div>
 </template>
 
-<style lang="stylus" scoped>.ck-select
+<style lang="stylus" scoped>
+.ck-select
   display inline-block
   position relative
   select

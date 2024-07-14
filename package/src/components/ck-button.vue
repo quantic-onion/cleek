@@ -188,8 +188,6 @@ onMounted(() => {
 </template>
 
 <style lang="stylus" scoped>
-@import '../styles/.variables.styl';
-
 button
   cursor pointer
   display inline-flex

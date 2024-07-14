@@ -162,7 +162,8 @@ form.ck-select(action="/action_page.php" method="get")
     option(@click="onClickOption(option)" :key="getOptionKey(option)" :value="getOptionName(option)" v-for="option in options")
 </template>
 
-<style lang="stylus" scoped>.ck-select
+<style lang="stylus" scoped>
+.ck-select
   display inline-block
   position relative
   input

@@ -59,6 +59,3 @@ ElementsShower(title="Botones" subtitle="ck-button")
   ck-button(group="right" icon="user" icon-right="dove")
     | Both icons
 </template>
-
-<style lang="stylus" scoped>
-</style>
