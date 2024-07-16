@@ -59,6 +59,7 @@ watch(isActive, (val) => setBodyOverflow(!val));
 <template>
   <div v-if="isActive" class="ck-sidebar-background" @click.self="isActive = false">
     <div class="ck-sidebar" :class="computedClass" :style="computedStyle">
+      <slot name="header"></slot>
       <!-- header -->
       <div
         v-if="title"
