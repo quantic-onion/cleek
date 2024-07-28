@@ -18,6 +18,7 @@ const props = defineProps<{
 const emits = defineEmits<{
   (e: 'update:modelValue', value: string): void;
   (e: 'change', event: Event): void;
+  (e: 'click', event: Event): void;
 }>();
 
 const value = computed({
@@ -26,6 +27,7 @@ const value = computed({
   },
   set(val: string) {
     emits('update:modelValue', val);
+    emits('change', val);
   },
 });
 const radioAttributes = computed(() => {
@@ -51,7 +53,7 @@ const computedClass = computed(() => {
 
 function handleChange(option: Option, event: Event) {
   option.value = value;
-  emits('change', event);
+  emits('change', value);
 }
 </script>
 
