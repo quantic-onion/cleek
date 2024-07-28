@@ -226,7 +226,7 @@ onMounted(() => {
   height 100vh
 .popup-container
   background-color none
-  z-index 99999
+  z-index 9999
   display flex
   justify-content center
   .ck-popup__content
