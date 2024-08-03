@@ -233,12 +233,12 @@ onMounted(() => {
     min-width 30vw
     max-width 95vw
     border-radius 0.5rem
+    overflow hidden
     @media (min-width: 1150px)
       max-width 80vw
     &.rounded
-      border-radius 2rem
+      border-radius 2rem !important
       .ck-popup__slot-header
-        border-radius-top 2rem
         padding-left 2rem
         padding-right 3.5rem
         padding-y 1rem
@@ -246,7 +246,7 @@ onMounted(() => {
           border-radius 3rem
           right 0.75rem
     &.squared
-      border-radius 0
+      border-radius 0 !important
     .ck-popup__slot-header
       min-height 3rem
       padding-y 0.6rem
@@ -258,7 +258,6 @@ onMounted(() => {
       display flex
       justify-content space-between
       align-items center
-      border-radius 10px 10px 0 0
       box-shadow 0 5px 10px -2px RGBA(0, 0, 0, 0.05)
       position relative
       &.header-align--center
