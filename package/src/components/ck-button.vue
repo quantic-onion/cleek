@@ -124,7 +124,7 @@ const computedStyle = computed(() => {
   }
   // textColor
   if (realTextColor.value && !hooks.isColorTemplateVariable(realTextColor.value)) {
-    list.push({ color: realTextColor.value });
+    list.push({ color: `${realTextColor.value} !important` });
   }
   // width
   if (props.width && !isWidthDefined) list.push({ width: props.width });

@@ -104,6 +104,7 @@ function handleChange(option: Option, event: Event) {
   border 1px solid
   border-radius 24px
   border-color black
+  flex-shrink 0
 .c-Radio__element::after
   content ''
   display block

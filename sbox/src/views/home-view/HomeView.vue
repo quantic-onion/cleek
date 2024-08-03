@@ -12,6 +12,7 @@ import TestChip from './test-components/TestChip.vue';
 import TestCircle from './test-components/TestCircle.vue';
 import TestButton from './test-components/TestButton.vue';
 import TestPopup from './test-components/test-popup/TestPopup.vue';
+import TestRadio from './test-components/TestRadio.vue';
 import TestTable from './test-components/test-popup/TestTable.vue';
 import TestForm from './test-components/TestForm.vue';
 import TestTabs from './test-components/TestTabs.vue';
@@ -19,6 +20,7 @@ import TestTabs from './test-components/TestTabs.vue';
 
 <template>
   <div class="home-view">
+    <TestRadio />
     <TestTabs />
     <TestSwitch />
     <TestSwitchOptions />
