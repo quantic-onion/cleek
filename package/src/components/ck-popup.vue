@@ -225,19 +225,16 @@ onMounted(() => {
   width 100vw
   height 100vh
 .popup-container
-  background-color none
   z-index 9999
-  display flex
-  justify-content center
+  flex(row, center, center)
   .ck-popup__content
+    display flex
+    flex-direction column
     min-width 30vw
-    // width 500px
     max-width 95vw
+    border-radius 0.5rem
     @media (min-width: 1150px)
       max-width 80vw
-    margin auto
-    border-radius 10px
-    padding-bottom 15px
     &.rounded
       border-radius 2rem
       .ck-popup__slot-header
@@ -283,20 +280,17 @@ onMounted(() => {
           cursor pointer
           background-color #ddd
     .ck-popup__slot-body
-      max-height 75vh
+      max-height 70vh
       text-align left
-      padding-x 2rem
-      padding-y 2rem
+      padding 1.5rem
+      padding-bottom 2rem
       overflow-y auto
     .ck-popup__slot-footer
-      padding-top 1rem
+      flex(row, space-between, center, 1rem)
+      padding 1rem
       border-top 1px solid #CCC
-      padding-x 1rem
       width 100%
-      display flex
-      justify-content space-between
       box-sizing border-box
-      align-items center
       .ck-popup-slot-footer__confirm-buttons
         display inline-flex
         justify-content flex-end
@@ -309,9 +303,16 @@ onMounted(() => {
     .ck-popup__content
       width 100%
       max-width 100% !important
-      min-height 100vh
       border-radius 0
-    .ck-popup__slot-body
-      padding-bottom 4rem
-      padding-top 1rem
+      .ck-popup__slot-body
+        padding 1rem
+        padding-bottom 1.5rem
+@media (max-width: 400px)
+  .popup-container
+    .ck-popup__content
+      .ck-popup__slot-body
+        padding 0.5rem
+        padding-bottom 1rem
+      .ck-popup__slot-footer
+        padding-bottom 0.5rem
 </style>
