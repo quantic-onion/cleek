@@ -39,7 +39,7 @@ const computedStyle = computed(() => {
     styles.push({ height: props.sizeInPx });
     styles.push({ width: props.sizeInPx });
   }
-  if (!props.color || hooks.isColorTemplateVariable(props.color)) {
+  if (props.color || hooks.isColorTemplateVariable(props.color)) {
     styles.push({ backgroundColor: props.color });
     styles.push({ color: props.textColor || defaultTextColor });
   }
