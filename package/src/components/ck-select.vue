@@ -7,7 +7,7 @@ import CkLabel from './ck-label.vue';
 import CkIcon from './ck-icon.vue';
 // hooks
 import hooks from '../utils/global-hooks';
-import useWindowWidth from '../hooks/window-width';
+import useWindowWidth from '../hooks/windowWidth';
 // types
 import type { Align, AlignVertical, Color, CleekOptions, Icon, IconPack, Layout, WidthBreaks } from '../types/cleek-options';
 

@@ -4,7 +4,7 @@ import Datepicker from 'vue3-datepicker';
 import { qmStr } from 'quantic-methods';
 // hooks
 import hooks from '../../utils/global-hooks';
-import useWindowWidth from '../../hooks/window-width';
+import useWindowWidth from '../../hooks/windowWidth';
 // types
 import type { Align, AlignVertical, CleekOptions, Color, Icon, WidthBreaks } from '../../types/cleek-options';
 import type { IconPack } from '@fortawesome/fontawesome-svg-core';

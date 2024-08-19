@@ -4,7 +4,7 @@ import { computed, watch } from 'vue';
 import CkLabel from './ck-label.vue';
 // hooks
 import functions from '../utils/global-hooks';
-import useWindowWidth from '../hooks/window-width';
+import useWindowWidth from '../hooks/windowWidth';
 // types
 import type { Align } from '../types/cleek-options';
 

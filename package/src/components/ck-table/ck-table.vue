@@ -15,7 +15,7 @@ import type { ColumnItem } from '../../types/table';
 import type { Align, Color, CleekOptions, Layout, TableVersion } from '../../types/cleek-options';
 // hooks
 import hooks from '../../utils/global-hooks';
-import useWindowWidth from '../../hooks/window-width';
+import useWindowWidth from '../../hooks/windowWidth';
 
 type Columns = ColumnItem[] | object;
 type CellPadding = 's' | 'm' | 'l' | 'none';

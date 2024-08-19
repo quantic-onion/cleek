@@ -7,7 +7,7 @@ import CkLabel from './ck-label.vue';
 import type { Align, AlignVertical, Color, CleekOptions, Layout, SizeInCSS } from '../types/cleek-options';
 // hooks
 import hooks from '../utils/global-hooks';
-import useWindowWidth from '../hooks/window-width';
+import useWindowWidth from '../hooks/windowWidth';
 import { qmStr } from 'quantic-methods';
 
 const props = defineProps<{

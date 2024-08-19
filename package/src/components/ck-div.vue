@@ -5,7 +5,7 @@ import type { Ref } from 'vue';
 import type { CleekOptions, SizeInCSS } from '../types/cleek-options';
 // hooks
 import hooks from '../utils/global-hooks';
-import useWindowWidth from '../hooks/window-width';
+import useWindowWidth from '../hooks/windowWidth';
 
 const props = defineProps<{
   widthBreaks?: [number, string][];
