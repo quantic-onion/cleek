@@ -307,7 +307,7 @@ onMounted(() => {
 <style lang="stylus" scoped>
 .ck-table__table-container
   max-width 100%
-  overflow auto
+  // overflow auto
   &.not-overflow
     overflow initial
   .ck-table__table
