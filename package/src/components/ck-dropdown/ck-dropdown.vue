@@ -34,7 +34,7 @@ const computedClassPopper = computed(() => {
   return list;
 });
 
-function openClose() {
+function handleTriggerClick() {
   if (isOpen.value) return; // always is closed by event listener
   // check next click, to close
   const closeListerner = (event: Event) => {
@@ -55,7 +55,7 @@ onMounted(() => {
 <template>
 <div class="ck-dropdown" :class="computedClass">
   <!-- button -->
-  <div class="ck-dropdown__trigger" @click="openClose()">
+  <div class="ck-dropdown__trigger" @click="handleTriggerClick()">
     <slot name="trigger"/>
   </div>
   <!-- menu -->
