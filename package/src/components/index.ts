@@ -38,7 +38,7 @@ export { default as CkSwitchOptions } from './ck-switch-options.vue';
 export { default as CkTextarea } from './ck-textarea.vue';
 // export { default as CkRouterLink } from './not-avaible/ck-router-link.vue';
 
-export { default as useWindowWidth } from '../hooks/windowWidth';
+export { default as useWindowWidth } from '../hooks/window-width';
 export { default as ckNotify } from './ck-notify/ck-notify';
 
 // export { default as Input } from './not-avaible/Input.vue'

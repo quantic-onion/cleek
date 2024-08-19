@@ -5,7 +5,7 @@ import type { Ref } from 'vue';
 import CkIcon from './ck-icon.vue';
 // hooks
 import hooks from '../utils/global-hooks';
-import useWindowWidth from '../hooks/windowWidth';
+import useWindowWidth from '../hooks/window-width';
 // types
 import type {
   Align,
