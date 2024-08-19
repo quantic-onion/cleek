@@ -1,6 +1,5 @@
 <script setup lang="ts">
-import { computed, getCurrentInstance, onMounted, ref } from 'vue';
-import type { Ref } from 'vue';
+import { ref, computed, getCurrentInstance, onMounted } from 'vue';
 // types
 import type { Align, CleekOptions, Layout } from '../../types/cleek-options';
 // hooks
@@ -14,8 +13,7 @@ const props = defineProps<{
 }>();
 
 // const defaultTriggerType = 'click';
-let cleekOptions: Ref<undefined | CleekOptions> = ref();
-
+const cleekOptions = ref<CleekOptions>();
 const isOpen = ref(false);
 const popperRef = ref(null);
 
@@ -53,27 +51,19 @@ onMounted(() => {
 </script>
 
 <template>
-<div class="ck-dropdown" :class="computedClass">
-  <!-- button -->
-  <div class="ck-dropdown__trigger" @click="handleTriggerClick()">
-    <slot name="trigger"/>
+  <div class="ck-dropdown" :class="computedClass">
+    <!-- button -->
+    <div class="ck-dropdown__trigger" @click="handleTriggerClick()">
+      <slot name="trigger" />
+    </div>
+    <!-- menu -->
+    <div class="ck-dropdown__popper-container">
+      <section v-if="isOpen" ref="popperRef" class="ck-dropdown__popper" :class="computedClassPopper">
+        <div class="ck-dropdown__popper--arrow" :class="{ 'ck-dropdown__popper--arrow--dark': dark }" />
+        <slot name="popper" />
+      </section>
+    </div>
   </div>
-  <!-- menu -->
-  <div class="ck-dropdown__popper-container">
-    <section
-      v-if="isOpen"
-      ref="popperRef"
-      class="ck-dropdown__popper"
-      :class="computedClassPopper"
-    >
-      <div
-        class="ck-dropdown__popper--arrow"
-        :class="{ 'ck-dropdown__popper--arrow--dark': dark }"
-      />
-      <slot name="popper"/>
-    </section>
-  </div>
-</div>
 </template>
 
 <style lang="stylus" scoped>
