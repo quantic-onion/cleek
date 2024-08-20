@@ -15,8 +15,6 @@ import '@vuepic/vue-datepicker/dist/main.css';
 // floating-vue
 import FloatingVue from 'floating-vue';
 import 'floating-vue/dist/style.css';
-// portal-vue
-import PortalVue from 'portal-vue';
 
 // fontawesome
 library.add(fas);
@@ -67,7 +65,6 @@ const install: Exclude<Plugin['install'], undefined> = function installCleek(app
   app.config.globalProperties.$cleekOptions = getCleekOptions(options);
   // plugins
   app.use(FloatingVue);
-  app.use(PortalVue);
   // vue components
   Object.entries(components).forEach(([componentName, component]) => {
     app.component(componentName, component);
