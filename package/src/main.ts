@@ -1,5 +1,4 @@
 import { App, Plugin } from 'vue';
-import { store } from './store';
 import FloatingVue from 'floating-vue';
 // import ckNotifyComponent from './components/ck-notify/ck-notify.vue';
 import defaultCleekOptions from './default-cleek-options';
@@ -32,7 +31,7 @@ function hexToRgb(hex: string) {
 }
 
 function setRootColors(colors) {
-  const r = document.querySelector(':root');
+  const r = document.querySelector(':root') as any;
   for (const key in colors) {
     const colorHex = colors[key];
     const rgbColor = hexToRgb(colors[key]);
