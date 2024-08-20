@@ -1,23 +1,27 @@
 import { App, Plugin } from 'vue';
-import FloatingVue from 'floating-vue';
-// import ckNotifyComponent from './components/ck-notify/ck-notify.vue';
+// cleek-options
 import defaultCleekOptions from './default-cleek-options';
+import { CleekOptions } from './types/cleek-options';
+// vue components
+import * as components from './components/index.js';
+export * from './components/index.js'; // to allow the use of individual components
+// fontawesome
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { fas } from '@fortawesome/free-solid-svg-icons';
 import { far } from '@fortawesome/free-regular-svg-icons';
 import { fab } from '@fortawesome/free-brands-svg-icons';
 // datepicker
 import '@vuepic/vue-datepicker/dist/main.css';
-// types
-import { CleekOptions } from './types/cleek-options';
+// floating-vue
+import FloatingVue from 'floating-vue';
+import 'floating-vue/dist/style.css';
+// portal-vue
+import PortalVue from 'portal-vue';
 
+// fontawesome
 library.add(fas);
 library.add(far);
 library.add(fab);
-import 'floating-vue/dist/style.css';
-
-// vue components
-import * as components from './components/index.js';
 
 function hexToRgb(hex: string) {
   // Remove the hash symbol (#) if it exists
@@ -29,7 +33,6 @@ function hexToRgb(hex: string) {
   // Return the RGB values as an object
   return { r, g, b };
 }
-
 function setRootColors(colors) {
   const r = document.querySelector(':root') as any;
   for (const key in colors) {
@@ -39,7 +42,6 @@ function setRootColors(colors) {
     r.style.setProperty(`--${key}-rgb`, `${rgbColor.r}, ${rgbColor.g}, ${rgbColor.b}`);
   }
 }
-
 function getCleekOptions(userOptions: CleekOptions) {
   const options = defaultCleekOptions;
   for (const categoryName in defaultCleekOptions) {
@@ -60,30 +62,16 @@ function getCleekOptions(userOptions: CleekOptions) {
   return options;
 }
 
-const cleekGlobalComponent = {
-  notify: {
-    ckNotify() {},
-    ckSuccess() {},
-    ckDanger() {},
-    ckWarning() {},
-  },
-};
-
 // install function executed by Vue.use()
 const install: Exclude<Plugin['install'], undefined> = function installCleek(app: App, options: CleekOptions) {
   app.config.globalProperties.$cleekOptions = getCleekOptions(options);
+  // plugins
   app.use(FloatingVue);
-  // app.config.globalProperties.$cleek = ckNotifyComponent;
-  // app.config.globalProperties.$cleek = cleekGlobalComponent;
+  app.use(PortalVue);
   // vue components
   Object.entries(components).forEach(([componentName, component]) => {
     app.component(componentName, component);
   });
 };
 
-// Create module definition for Vue.use()
 export default install;
-
-// To allow individual component use, export components
-// each can be registered via Vue.component()
-export * from './components/index.js';
