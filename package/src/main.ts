@@ -12,6 +12,8 @@ import { far } from '@fortawesome/free-regular-svg-icons';
 import { fab } from '@fortawesome/free-brands-svg-icons';
 // datepicker
 import '@vuepic/vue-datepicker/dist/main.css';
+// click-outside
+import vClickOutside from 'click-outside-vue3';
 // floating-vue
 import FloatingVue from 'floating-vue';
 import 'floating-vue/dist/style.css';
@@ -64,6 +66,7 @@ function getCleekOptions(userOptions: CleekOptions) {
 const install: Exclude<Plugin['install'], undefined> = function installCleek(app: App, options: CleekOptions) {
   app.config.globalProperties.$cleekOptions = getCleekOptions(options);
   // plugins
+  app.use(vClickOutside);
   app.use(FloatingVue);
   // vue components
   Object.entries(components).forEach(([componentName, component]) => {

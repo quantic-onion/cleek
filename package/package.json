@@ -43,6 +43,7 @@
     "@fortawesome/vue-fontawesome": "^3.0.0-5",
     "@vitejs/plugin-vue": "^5.0.5",
     "@vuepic/vue-datepicker": "^3.5.3",
+    "click-outside-vue3": "^4.0.1",
     "floating-vue": "^5.2.2",
     "mitt": "^3.0.0",
     "quantic-methods": "^1.6.38",
