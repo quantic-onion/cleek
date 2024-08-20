@@ -79,11 +79,10 @@ onMounted(() => {
     cursor pointer
     height 100%
   .ck-dropdown__popper-container
-    width 100%
-    z-index 999
-    position absolute
-    top 100%
     position relative
+    top 100%
+    z-index 999
+    width 100%
     background-color red
     .ck-dropdown__popper
       position absolute
