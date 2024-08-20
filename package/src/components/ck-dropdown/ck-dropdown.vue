@@ -6,50 +6,42 @@ import type { Align, CleekOptions, Layout } from '../../types/cleek-options';
 import hooks from '@/utils/global-hooks';
 import { lockScroll, unlockScroll } from '@/utils/lock-scroll';
 
-const props = defineProps<{
-  // triggerType?: string; // hover
-  dark?: boolean;
-  align?: Align;
-  layout?: Layout;
-}>();
+const props = withDefaults(
+  defineProps<{
+    dark?: boolean;
+    align?: Align;
+    layout?: Layout;
+  }>(),
+  {
+    align: 'center',
+  },
+);
 
-// const defaultTriggerType = 'click';
 const cleekOptions = ref<CleekOptions>();
 const isOpen = ref(false);
-const popperRef = ref(null);
+const dropdownRef = ref<HTMLElement>();
+const contentRef = ref<HTMLElement>();
+const contentMarginLeft = ref('0');
 
-const computedClass = computed(() => {
-  const list = [];
-  if (props.align) list.push(`align-${props.align}`);
-  return list;
-});
-const computedClassPopper = computed(() => {
+const computedClassContent = computed(() => {
   const list = [];
   // dark
-  if (props.dark) list.push('ck-dropdown__popper--dark');
+  if (props.dark) list.push('ck-dropdown--content__dark');
   // layout
   const layout = props.layout || cleekOptions.value?.styles.layout;
-  if (layout) list.push(`layout--${layout}`);
+  if (layout) list.push(`ck-dropdown--content__${layout}`);
   return list;
 });
 
+watch(contentRef, (val) => {
+  if (val)
+    contentMarginLeft.value =
+      (dropdownRef.value.getBoundingClientRect().width - contentRef.value.getBoundingClientRect().width) / 2 + 'px';
+});
 watch(isOpen, (val) => {
   if (val) lockScroll();
   else unlockScroll();
 });
-
-function handleTriggerClick() {
-  if (isOpen.value) return; // always is closed by event listener
-  // check next click, to close
-  const closeListerner = (event: Event) => {
-    if (popperRef.value != event.target) isOpen.value = false;
-    window.removeEventListener('click', closeListerner);
-  };
-  setTimeout(() => {
-    window.addEventListener('click', closeListerner);
-  });
-  isOpen.value = true;
-}
 
 onMounted(() => {
   cleekOptions.value = hooks.getCleekOptions(getCurrentInstance);
@@ -57,17 +49,21 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="ck-dropdown" :class="computedClass">
-    <!-- button -->
-    <div class="ck-dropdown__trigger" @click="handleTriggerClick()">
+  <div ref="dropdownRef" class="ck-dropdown" :class="[`ck-dropdown__${align}`]">
+    <!-- trigger -->
+    <div class="ck-dropdown--trigger" @click="isOpen = true">
       <slot name="trigger" />
     </div>
-    <!-- menu -->
-    <div class="ck-dropdown__popper-container">
-      <section v-if="isOpen" ref="popperRef" class="ck-dropdown__popper" :class="computedClassPopper">
-        <div class="ck-dropdown__popper--arrow" :class="{ 'ck-dropdown__popper--arrow--dark': dark }" />
-        <slot name="popper" />
-      </section>
+    <!-- content -->
+    <div
+      ref="contentRef"
+      class="ck-dropdown--content"
+      v-if="isOpen"
+      :class="computedClassContent"
+      v-click-outside="() => (isOpen = false)"
+    >
+      <div class="ck-dropdown--arrow" :class="{ 'ck-dropdown--arrow__dark': dark }" />
+      <slot name="content" />
     </div>
   </div>
 </template>
@@ -75,76 +71,42 @@ onMounted(() => {
 <style lang="stylus" scoped>
 .ck-dropdown
   position relative
-  .ck-dropdown__trigger
+  .ck-dropdown--trigger
     cursor pointer
-    height 100%
-  .ck-dropdown__popper-container
-    position relative
+  .ck-dropdown--content
+    position absolute
     top 100%
-    z-index 999
-    width 100%
-    background-color red
-    .ck-dropdown__popper
+    left 0
+    z-index 1000
+    min-height 1rem
+    min-width 1rem
+    margin-top 1.5rem
+    margin-left v-bind('contentMarginLeft')
+    padding 0.5rem
+    border 1px solid #eee
+    border-radius 0.4rem
+    &__dark
+      color #eee
+      background #333
+      border none
+    &__rounded
+      border-radius 100%
+    &__squared
+      border-radius 0
+    .ck-dropdown--arrow
       position absolute
-      z-index 1
-      min-width 10px
-      min-height 10px
-      border-radius 8px
-      border 1px solid #eee
-      box-shadow 10px 10px 0 0 rgba(black, 0.03)
-      background white
-      padding 0.5rem
-      animation menu 0.3s ease forwards
-      &.layout--rounded
-        border-radius 1.75rem
-      &.layout--squared
-        border-radius 0
-      // dark
-      &.ck-dropdown__popper--dark
-        background #333
-        border none
-        color #eee
-    .ck-dropdown__popper--arrow
-      width 20px
-      height 20px
-      position absolute
-      top -10px
-      left 20px
+      top 0
+      left 50%
+      height 1rem
+      width @height
+      margin-top -(@height / 2)
+      margin-left -(@width / 2)
       border-left 1px solid #eee
-      border-top 1px solid #eee
+      border-top @border-left
       background white
       transform rotate(45deg)
-      border-radius 4px 0 0 0
-      &.ck-dropdown__popper--arrow--dark
+      border-radius 0.2rem 0 0 0
+      &__dark
         background #333
         border none
-
-  @keyframes menu
-    from
-      transform translate3d(0, 30px, 0)
-    to
-      transform translate3d(0, 20px, 0)
-  &.align-right
-    .ck-dropdown__popper-container
-      top 0
-      .ck-dropdown__popper
-        right 0
-        .ck-dropdown__popper--arrow
-          left unset
-          right 20px
-  &.align-center
-    .ck-dropdown__popper-container
-      top 0
-      .ck-dropdown__popper
-        left 0
-        right 0
-        margin-left auto
-        margin-right auto
-        display flex
-        justify-content center
-        .ck-dropdown__popper--arrow
-          left 0
-          right 0
-          margin-left auto
-          margin-right auto
 </style>
