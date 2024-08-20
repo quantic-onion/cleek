@@ -1,9 +1,10 @@
 <script setup lang="ts">
-import { ref, computed, getCurrentInstance, onMounted } from 'vue';
+import { ref, computed, watch, getCurrentInstance, onMounted } from 'vue';
 // types
 import type { Align, CleekOptions, Layout } from '../../types/cleek-options';
-// hooks
-import hooks from '../../utils/global-hooks';
+// utils
+import hooks from '@/utils/global-hooks';
+import { lockScroll, unlockScroll } from '@/utils/lock-scroll';
 
 const props = defineProps<{
   // triggerType?: string; // hover
@@ -30,6 +31,11 @@ const computedClassPopper = computed(() => {
   const layout = props.layout || cleekOptions.value?.styles.layout;
   if (layout) list.push(`layout--${layout}`);
   return list;
+});
+
+watch(isOpen, (val) => {
+  if (val) lockScroll();
+  else unlockScroll();
 });
 
 function handleTriggerClick() {
