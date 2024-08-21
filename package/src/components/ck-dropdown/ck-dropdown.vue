@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref, computed, watch, getCurrentInstance, onMounted } from 'vue';
+import type { CSSProperties } from 'vue';
 // types
 import type { Align, CleekOptions, Layout } from '../../types/cleek-options';
 // utils
@@ -15,16 +16,10 @@ const cleekOptions = ref<CleekOptions>();
 const isOpen = ref(false);
 const dropdownRef = ref<HTMLElement>();
 const contentRef = ref<HTMLElement>();
-const contentMarginLeft = ref('0');
-const openBelow = ref(true);
+const dropdownContentStyle = ref<CSSProperties>();
 
 const computedClassContent = computed(() => {
   const list = [];
-  // open
-  if (openBelow.value) list.push('ck-dropdown--content__below');
-  else list.push('ck-dropdown--content__above');
-  // align
-  if (props.align) list.push(`ck-dropdown--content__${props.align}`);
   // dark
   if (props.dark) list.push('ck-dropdown--content__dark');
   // layout
@@ -33,11 +28,38 @@ const computedClassContent = computed(() => {
   return list;
 });
 
-watch(contentRef, (val) => {
-  if (val) contentMarginLeft.value = -val.getBoundingClientRect().width / 2 + 'px';
-});
 watch(isOpen, (val) => {
-  if (val) openBelow.value = dropdownRef.value.getBoundingClientRect().top < window.innerHeight / 2;
+  if (val) {
+    const clientHeight = document.documentElement.clientHeight;
+    const clientWidth = document.documentElement.clientWidth;
+    const dropdownRect = dropdownRef.value.getBoundingClientRect();
+    const styles: CSSProperties = {};
+    // open
+    const openBelow = dropdownRect.top < clientHeight / 2;
+    if (openBelow) {
+      styles['top'] = `${dropdownRect.bottom}px`;
+      styles['margin-top'] = '1rem';
+    } else {
+      styles['bottom'] = `${clientHeight - dropdownRect.top}px`;
+      styles['margin-bottom'] = '1rem';
+    }
+    // align (left - right)
+    if (props.align === 'left') {
+      styles['left'] = `${dropdownRect.left}px`;
+    } else if (props.align === 'right') {
+      styles['right'] = `${clientWidth - dropdownRect.right}px`;
+    }
+    dropdownContentStyle.value = styles;
+  }
+});
+watch(contentRef, (val) => {
+  if (val) {
+    if (props.align !== 'left' && props.align !== 'right') {
+      // align (center)
+      const dropdownRect = dropdownRef.value.getBoundingClientRect();
+      dropdownContentStyle.value.left = `${dropdownRect.left + dropdownRect.width / 2 - val.getBoundingClientRect().width / 2}px`;
+    }
+  }
 });
 
 onMounted(() => {
@@ -53,15 +75,18 @@ onMounted(() => {
       <slot name="trigger" />
     </div>
     <!-- content -->
-    <div
-      ref="contentRef"
-      class="ck-dropdown--content"
-      v-if="isOpen"
-      :class="computedClassContent"
-      v-click-outside="() => (isOpen = false)"
-    >
-      <slot name="content" />
-    </div>
+    <teleport to="body">
+      <div
+        v-if="isOpen"
+        ref="contentRef"
+        class="ck-dropdown--content"
+        :class="computedClassContent"
+        :style="dropdownContentStyle"
+        v-click-outside="() => (isOpen = false)"
+      >
+        <slot name="content" />
+      </div>
+    </teleport>
   </div>
 </template>
 
@@ -71,40 +96,26 @@ onMounted(() => {
   .ck-dropdown--trigger
     user-select none
     cursor pointer
-  .ck-dropdown--content
-    position absolute
-    left 50%
-    z-index 1000
-    margin-left v-bind('contentMarginLeft')
-    padding 0.5rem
-    border 1px solid #eee
-    border-radius 0.4rem
-    color black
-    background white
-    // open
-    &__above
-      bottom 100%
-      margin-bottom 1rem
-    &__below
-      top 100%
-      margin-top 1rem
-    // align
-    &__left
-      left 0
-      right auto
-      margin-left 0
-    &__right
-      left auto
-      right 0
-      margin-left 0
-    // dark
-    &__dark
-      color #eee
-      background #333
-      border none
-    // layout
-    &__squared
-      border-radius 0
-    &__rounded
-      border-radius 100%
+</style>
+
+<style lang="stylus">
+.ck-dropdown--content
+  position fixed
+  z-index 1000
+  padding 0.4rem
+  border 1px solid #eee
+  border-radius 0.4rem
+  overflow hidden
+  color black
+  background white
+  // dark
+  &__dark
+    color #eee
+    background #333
+    border none
+  // layout
+  &__squared
+    border-radius 0
+  &__rounded
+    border-radius 1.75rem
 </style>
