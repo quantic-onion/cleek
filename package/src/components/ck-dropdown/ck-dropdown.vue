@@ -4,27 +4,22 @@ import { ref, computed, watch, getCurrentInstance, onMounted } from 'vue';
 import type { Align, CleekOptions, Layout } from '../../types/cleek-options';
 // utils
 import hooks from '@/utils/global-hooks';
-import { lockScroll, unlockScroll } from '@/utils/lock-scroll';
 
-const props = withDefaults(
-  defineProps<{
-    dark?: boolean;
-    align?: Align;
-    layout?: Layout;
-  }>(),
-  {
-    align: 'center',
-  },
-);
+const props = defineProps<{
+  align?: Align;
+  dark?: boolean;
+  layout?: Layout;
+}>();
 
 const cleekOptions = ref<CleekOptions>();
 const isOpen = ref(false);
-const triggerRef = ref<HTMLElement>();
 const contentRef = ref<HTMLElement>();
 const contentMarginLeft = ref('0');
 
 const computedClassContent = computed(() => {
   const list = [];
+  // align
+  if (props.align) list.push(`ck-dropdown--content__${props.align}`);
   // dark
   if (props.dark) list.push('ck-dropdown--content__dark');
   // layout
@@ -34,15 +29,7 @@ const computedClassContent = computed(() => {
 });
 
 watch(contentRef, (val) => {
-  if (val && props.align === 'center') {
-    const triggerWidth = triggerRef.value.getBoundingClientRect().width;
-    const contentWidth = contentRef.value.getBoundingClientRect().width;
-    contentMarginLeft.value = (triggerWidth - contentWidth) / 2 + 'px';
-  }
-});
-watch(isOpen, (val) => {
-  if (val) lockScroll();
-  else unlockScroll();
+  if (val) contentMarginLeft.value = -val.getBoundingClientRect().width / 2 + 'px';
 });
 
 onMounted(() => {
@@ -51,9 +38,9 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="ck-dropdown" :class="[`ck-dropdown__${align}`]">
+  <div class="ck-dropdown">
     <!-- trigger -->
-    <div ref="triggerRef" class="ck-dropdown--trigger" @click="isOpen = true">
+    <div class="ck-dropdown--trigger" @click="isOpen = true">
       <slot name="trigger" />
     </div>
     <!-- content -->
@@ -64,7 +51,6 @@ onMounted(() => {
       :class="computedClassContent"
       v-click-outside="() => (isOpen = false)"
     >
-      <div class="ck-dropdown--arrow" :class="{ 'ck-dropdown--arrow__dark': dark }" />
       <slot name="content" />
     </div>
   </div>
@@ -77,42 +63,34 @@ onMounted(() => {
     user-select none
     cursor pointer
   .ck-dropdown--content
-    arrow-size = 1rem
     position absolute
     top 100%
-    left 0
+    left 50%
     z-index 1000
-    min-height 1rem
-    min-width 1rem
-    margin-top arrow-size * 2
+    margin-top 1rem
     margin-left v-bind('contentMarginLeft')
     padding 0.5rem
     border 1px solid #eee
     border-radius 0.4rem
     color black
     background white
+    // align
+    &__left
+      left 0
+      right auto
+      margin-left 0
+    &__right
+      left auto
+      right 0
+      margin-left 0
+    // dark
     &__dark
       color #eee
       background #333
       border none
-    &__rounded
-      border-radius 100%
+    // layout
     &__squared
       border-radius 0
-    .ck-dropdown--arrow
-      position absolute
-      top 0
-      left 50%
-      height arrow-size
-      width arrow-size
-      margin-top -(arrow-size / 2)
-      margin-left -(arrow-size / 2)
-      border-left 1px solid #eee
-      border-top @border-left
-      background white
-      transform rotate(45deg)
-      border-radius 0.2rem 0 0 0
-      &__dark
-        background #333
-        border none
+    &__rounded
+      border-radius 100%
 </style>
