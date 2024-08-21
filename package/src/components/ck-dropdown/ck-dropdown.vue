@@ -21,7 +21,7 @@ const openBelow = ref(true);
 const computedClassContent = computed(() => {
   const list = [];
   // open
-  if (openBelow) list.push('ck-dropdown--content__below');
+  if (openBelow.value) list.push('ck-dropdown--content__below');
   else list.push('ck-dropdown--content__above');
   // align
   if (props.align) list.push(`ck-dropdown--content__${props.align}`);
