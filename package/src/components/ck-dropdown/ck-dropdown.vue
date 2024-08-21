@@ -21,10 +21,8 @@ const cleekOptions = ref<CleekOptions>();
 const isOpen = ref(false);
 const triggerRef = ref<HTMLElement>();
 const contentRef = ref<HTMLElement>();
-const triggerWidth = ref(0);
-const contentWidth = ref(0);
+const contentMarginLeft = ref('0');
 
-const contentMarginLeft = computed(() => (triggerWidth.value - contentWidth.value) / 2 + 'px');
 const computedClassContent = computed(() => {
   const list = [];
   // dark
@@ -35,11 +33,12 @@ const computedClassContent = computed(() => {
   return list;
 });
 
-watch(triggerRef, (val) => {
-  if (val) triggerWidth.value = val.getBoundingClientRect().width;
-});
 watch(contentRef, (val) => {
-  if (val) contentWidth.value = val.getBoundingClientRect().width;
+  if (val && props.align === 'center') {
+    const triggerWidth = triggerRef.value.getBoundingClientRect().width;
+    const contentWidth = contentRef.value.getBoundingClientRect().width;
+    contentMarginLeft.value = (triggerWidth - contentWidth) / 2 + 'px';
+  }
 });
 watch(isOpen, (val) => {
   if (val) lockScroll();
@@ -78,11 +77,14 @@ onMounted(() => {
     user-select none
     cursor pointer
   .ck-dropdown--content
+    arrow-size = 1rem
     position absolute
     top 100%
     left 0
     z-index 1000
-    margin-top 1.5rem
+    min-height 1rem
+    min-width 1rem
+    margin-top arrow-size * 2
     margin-left v-bind('contentMarginLeft')
     padding 0.5rem
     border 1px solid #eee
@@ -101,10 +103,10 @@ onMounted(() => {
       position absolute
       top 0
       left 50%
-      height 1rem
-      width @height
-      margin-top -(@height / 2)
-      margin-left -(@width / 2)
+      height arrow-size
+      width arrow-size
+      margin-top -(arrow-size / 2)
+      margin-left -(arrow-size / 2)
       border-left 1px solid #eee
       border-top @border-left
       background white
