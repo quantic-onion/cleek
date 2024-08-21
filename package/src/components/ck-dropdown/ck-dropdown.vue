@@ -13,11 +13,16 @@ const props = defineProps<{
 
 const cleekOptions = ref<CleekOptions>();
 const isOpen = ref(false);
+const dropdownRef = ref<HTMLElement>();
 const contentRef = ref<HTMLElement>();
 const contentMarginLeft = ref('0');
+const openBelow = ref(true);
 
 const computedClassContent = computed(() => {
   const list = [];
+  // open
+  if (openBelow) list.push('ck-dropdown--content__below');
+  else list.push('ck-dropdown--content__above');
   // align
   if (props.align) list.push(`ck-dropdown--content__${props.align}`);
   // dark
@@ -31,14 +36,18 @@ const computedClassContent = computed(() => {
 watch(contentRef, (val) => {
   if (val) contentMarginLeft.value = -val.getBoundingClientRect().width / 2 + 'px';
 });
+watch(isOpen, (val) => {
+  if (val) openBelow.value = dropdownRef.value.getBoundingClientRect().top < window.innerHeight / 2;
+});
 
 onMounted(() => {
   cleekOptions.value = hooks.getCleekOptions(getCurrentInstance);
+  window.addEventListener('scroll', () => (isOpen.value = false));
 });
 </script>
 
 <template>
-  <div class="ck-dropdown">
+  <div ref="dropdownRef" class="ck-dropdown">
     <!-- trigger -->
     <div class="ck-dropdown--trigger" @click="isOpen = true">
       <slot name="trigger" />
@@ -64,16 +73,21 @@ onMounted(() => {
     cursor pointer
   .ck-dropdown--content
     position absolute
-    top 100%
     left 50%
     z-index 1000
-    margin-top 1rem
     margin-left v-bind('contentMarginLeft')
     padding 0.5rem
     border 1px solid #eee
     border-radius 0.4rem
     color black
     background white
+    // open
+    &__above
+      bottom 100%
+      margin-bottom 1rem
+    &__below
+      top 100%
+      margin-top 1rem
     // align
     &__left
       left 0
