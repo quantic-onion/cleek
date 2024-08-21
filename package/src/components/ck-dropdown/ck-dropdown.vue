@@ -19,10 +19,12 @@ const props = withDefaults(
 
 const cleekOptions = ref<CleekOptions>();
 const isOpen = ref(false);
-const dropdownRef = ref<HTMLElement>();
+const triggerRef = ref<HTMLElement>();
 const contentRef = ref<HTMLElement>();
-const contentMarginLeft = ref('0');
+const triggerWidth = ref(0);
+const contentWidth = ref(0);
 
+const contentMarginLeft = computed(() => (triggerWidth.value - contentWidth.value) / 2 + 'px');
 const computedClassContent = computed(() => {
   const list = [];
   // dark
@@ -33,10 +35,11 @@ const computedClassContent = computed(() => {
   return list;
 });
 
+watch(triggerRef, (val) => {
+  if (val) triggerWidth.value = val.getBoundingClientRect().width;
+});
 watch(contentRef, (val) => {
-  if (val)
-    contentMarginLeft.value =
-      (dropdownRef.value.getBoundingClientRect().width - contentRef.value.getBoundingClientRect().width) / 2 + 'px';
+  if (val) contentWidth.value = val.getBoundingClientRect().width;
 });
 watch(isOpen, (val) => {
   if (val) lockScroll();
@@ -49,9 +52,9 @@ onMounted(() => {
 </script>
 
 <template>
-  <div ref="dropdownRef" class="ck-dropdown" :class="[`ck-dropdown__${align}`]">
+  <div class="ck-dropdown" :class="[`ck-dropdown__${align}`]">
     <!-- trigger -->
-    <div class="ck-dropdown--trigger" @click="isOpen = true">
+    <div ref="triggerRef" class="ck-dropdown--trigger" @click="isOpen = true">
       <slot name="trigger" />
     </div>
     <!-- content -->
@@ -72,19 +75,20 @@ onMounted(() => {
 .ck-dropdown
   position relative
   .ck-dropdown--trigger
+    user-select none
     cursor pointer
   .ck-dropdown--content
     position absolute
     top 100%
     left 0
     z-index 1000
-    min-height 1rem
-    min-width 1rem
     margin-top 1.5rem
     margin-left v-bind('contentMarginLeft')
     padding 0.5rem
     border 1px solid #eee
     border-radius 0.4rem
+    color black
+    background white
     &__dark
       color #eee
       background #333
