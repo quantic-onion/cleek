@@ -104,9 +104,9 @@ const computedStyleBody = computed(() => {
   const list = [];
   // background-color
   let backgroundColor = '';
-  if (cleekOptions.value?.popup.backgroundColor) backgroundColor = cleekOptions.value?.popup.headerColor;
+  if (cleekOptions.value?.popup.backgroundColor) backgroundColor = cleekOptions.value?.popup.backgroundColor;
   if (cleekOptions.value?.darkMode) backgroundColor = cleekOptions.value?.darkModeColorItems;
-  if (props.headerColor) backgroundColor = props.headerColor;
+  if (props.backgroundColor) backgroundColor = props.backgroundColor;
   if (backgroundColor && !hooks.isColorTemplateVariable(backgroundColor)) {
     list.push({ backgroundColor: backgroundColor });
   }

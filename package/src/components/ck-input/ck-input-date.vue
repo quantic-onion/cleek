@@ -63,7 +63,6 @@ const deepComputedStyles = computed(() => {
   const list = [];
   // background-color
   let backgroundColor = '';
-  if (cleekOptions.value?.popup.headerColor) backgroundColor = cleekOptions.value?.popup.headerColor;
   if (cleekOptions.value?.darkMode) backgroundColor = cleekOptions.value?.darkModeColorItems;
   if (backgroundColor && !hooks.isColorTemplateVariable(backgroundColor)) {
     list.push({ backgroundColor: backgroundColor });
