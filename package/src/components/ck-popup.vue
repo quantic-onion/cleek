@@ -73,7 +73,7 @@ const computedStyleContent = computed(() => {
   }
   // background-color
   let backgroundColor = 'white';
-  if (cleekOptions.value?.popup.headerColor) backgroundColor = cleekOptions.value?.popup.headerColor;
+  if (cleekOptions.value?.popup.backgroundColor) backgroundColor = cleekOptions.value?.popup.backgroundColor;
   if (cleekOptions.value?.darkMode) backgroundColor = cleekOptions.value?.darkModeColorItems;
   if (props.backgroundColor) backgroundColor = props.backgroundColor;
   if (backgroundColor && !hooks.isColorTemplateVariable(backgroundColor)) {
