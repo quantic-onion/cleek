@@ -51,6 +51,7 @@ const props = defineProps<{
   layout?: Layout;
   borderColor?: Color;
   textColor?: Color;
+  optional?: boolean;
   // functions
   autofocus?: boolean;
   capitalize?: boolean;
@@ -208,7 +209,7 @@ onMounted(() => {
   <div class="ck-input" :style="computedStyle">
     <!-- label -->
     <ck-label v-if="label" for="ck-input" :size="size" :align="realLabelAlign">
-      {{ label }}
+      {{ label }} <span v-if="optional" class="ck-input__optional-label">opcional</span>
     </ck-label>
     <div class="ck-input__content">
       <!-- button minus -->
@@ -297,6 +298,11 @@ onMounted(() => {
   display inline-block
   position relative
   align-items flex-end
+  .ck-input__optional-label
+    color #aaa
+    font-size 0.75rem
+    padding-left 0.25rem
+    margin-left auto
   .ck-input__content
     $border-width = 1px
     display inline-flex
