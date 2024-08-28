@@ -14,6 +14,7 @@ type DateString = null | string;
 const props = defineProps<{
   modelValue: DateString;
   label?: string;
+  optional?: boolean;
   // clearable
   clearable?: boolean;
   clearValue?: DateString;
@@ -138,7 +139,9 @@ onMounted(() => {
     <div class="ck-input-date" :class="computedClass" :id="uniqueId">
       <input ref="refInput" class="ck-input-date--focus-absorber" />
       <!-- label -->
-      <ck-label> {{ label }} </ck-label>
+      <ck-label>
+        {{ label }} <span v-if="optional" class="ck-input-date__optional-label">opcional</span>
+      </ck-label>
       <div class="ck-picker-container" :class="cleekOptions?.darkMode && 'picker-dark'">
         <!-- icon left -->
         <ck-icon
@@ -172,6 +175,11 @@ onMounted(() => {
 </template>
 
 <style lang="stylus" scoped>
+.ck-input-date__optional-label
+  color #aaa
+  font-size 0.75rem
+  padding-left 0.25rem
+  margin-left auto
 .ck-div
   min-width auto
   width auto
