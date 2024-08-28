@@ -48,6 +48,7 @@ const props = defineProps<{
   // label
   label?: string;
   labelAlign?: Align;
+  optional?: boolean;
   // placeholder
   placeholder?: string;
   emptyOptionsMsg?: string;
@@ -306,8 +307,8 @@ onMounted(() => {
       <ck-icon icon="times" />
     </div>
     <!-- label -->
-    <ck-label v-if="label" :align="labelAlign" for="ck-input">
-      {{ label }}
+    <ck-label v-if="label" :align="labelAlign" for="ck-select">
+      {{ label }} <span v-if="optional" class="ck-select__optional-label">opcional</span>
     </ck-label>
     <!-- select -->
     <select
@@ -337,9 +338,15 @@ onMounted(() => {
 </template>
 
 <style lang="stylus" scoped>
+
 .ck-select
   display inline-block
   position relative
+  .ck-select__optional-label
+    color #aaa
+    font-size 0.75rem
+    padding-left 0.25rem
+    margin-left auto
   select
     cursor text
     width 100%
