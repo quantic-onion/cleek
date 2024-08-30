@@ -11,6 +11,7 @@ const props = defineProps<{
   title?: string;
   subtitle?: string;
   block?: boolean;
+  clickable?: boolean;
   layout?: Layout;
 }>();
 
@@ -37,6 +38,7 @@ const computedClass = computed(() => {
   const list = [];
   const layout = props.layout || cleekOptions.value?.styles.layout;
   if (layout) list.push(`layout--${layout}`);
+  if (props.clickable) list.push('clickable');
   return list;
 });
 
@@ -82,6 +84,11 @@ onMounted(() => {
   padding 1rem
   border-radius 1rem
   width 100%
+  &.clickable
+    cursor pointer
+    transition 0.3s
+    &:hover
+      ck-box-shadow(0.35)
   .ck-card__header
     display flex
     align-items center

@@ -14,6 +14,9 @@ const isActive = ref(true);
     <ck-card title="Title">
       Content
     </ck-card>
+    <ck-card title="Clickable" clickable>
+      Clickable
+    </ck-card>
     <ck-card title="Closeable" v-model="isActive">
       closeable
     </ck-card>
