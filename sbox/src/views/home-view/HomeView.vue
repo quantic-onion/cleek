@@ -16,6 +16,7 @@ import TestRadio from './test-components/TestRadio.vue';
 import TestTable from './test-components/test-popup/TestTable.vue';
 import TestForm from './test-components/TestForm.vue';
 import TestTabs from './test-components/TestTabs.vue';
+import TestCards from './test-components/TestCards.vue';
 </script>
 
 <template>
@@ -36,6 +37,7 @@ import TestTabs from './test-components/TestTabs.vue';
     <TestForm />
     <TestPopup />
     <TestTable />
+    <TestCards />
   </div>
 </template>
 

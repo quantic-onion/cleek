@@ -7,11 +7,10 @@ import type { CleekOptions, Layout } from '@/types/cleek-options';
 import hooks from '../utils/global-hooks';
 
 const props = defineProps<{
-  modelValue?: boolean;
+  modelValue?: any; // boolean (i cannot use boolean to differentiate between false and undefined)
   title?: string;
   subtitle?: string;
   block?: boolean;
-  hideCloseBtn?: boolean;
   layout?: Layout;
 }>();
 
@@ -22,8 +21,10 @@ const emits = defineEmits<{
 
 let cleekOptions: Ref<undefined | CleekOptions> = ref();
 
+const isCloseable = computed(() => typeof props.modelValue !== 'undefined');
 const isActive = computed({
   get() {
+    if (!isCloseable.value) return true;
     if (props.modelValue === null) return true;
     return !!props.modelValue;
   },
@@ -31,11 +32,6 @@ const isActive = computed({
     emits('update:modelValue', val);
     if (!val) emits('closeCard');
   },
-});
-const computedHideCloseBtn = computed(() => {
-  if (props.hideCloseBtn) return true;
-  if (props.modelValue === null) return true;
-  return false;
 });
 const computedClass = computed(() => {
   const list = [];
@@ -50,35 +46,33 @@ onMounted(() => {
 </script>
 
 <template>
-<div
-  v-if="isActive"
-  class="ck-card"
-  :class="computedClass"
->
-  <div
-    v-if="title || !computedHideCloseBtn"
-    class="ck-card__header"
-  >
-    <div v-if="title" class="ck-card__header-title">
-      {{ title }}
-    </div>
+  <div v-if="isActive" class="ck-card" :class="computedClass">
+    <!-- header -->
     <div
-      v-if="!computedHideCloseBtn"
-      class="ck-card__close-btn"
-      @click="isActive = false"
+      v-if="title || isCloseable"
+      class="ck-card__header"
+      :class="{ 'is-close-button-visible': isCloseable }"
     >
-      <ck-icon icon="times"/>
+      <!-- title -->
+      <div v-if="title" class="ck-card__header-title">
+        {{ title }}
+      </div>
+      <!-- close btn -->
+      <div v-if="isCloseable" class="ck-card__close-btn" @click="isActive = false">
+        <ck-icon icon="times"/>
+      </div>
+    </div>
+    <div class="ck-card__body">
+      <!-- subtitle -->
+      <div v-if="subtitle" class="ck-card__header-subtitle">
+        {{ subtitle }}
+      </div>
+      <!-- content -->
+      <div class="ck-card__content" :class="{ 'content-block': block }">
+        <slot/>
+      </div>
     </div>
   </div>
-  <div class="ck-card__body">
-    <div v-if="subtitle" class="ck-card__header-subtitle">
-      {{ subtitle }}
-    </div>
-    <div class="ck-card__content" :class="{ 'content-block': block }">
-      <slot/>
-    </div>
-  </div>
-</div>
 </template>
 
 <style lang="stylus" scoped>
@@ -92,15 +86,15 @@ onMounted(() => {
     display flex
     align-items center
     justify-content space-between
+    padding-bottom 0.5rem
+    gap 1.5rem
+    &.is-close-button-visible
+      margin-right -0.5rem
+      margin-top -0.5rem
+      padding-bottom 0
     .ck-card__header-title
-      display inline-block
-      font-size 1.25rem
-      margin-left 0.5rem
-      padding-left 0.5rem
-      padding-right 1.5rem
-      padding-bottom 0.1rem
-      margin-bottom 0.5rem
-      border-bottom 1px solid #999
+      font-size 1.1rem
+      font-weight 500
     .ck-card__close-btn
       width 35px
       height @width

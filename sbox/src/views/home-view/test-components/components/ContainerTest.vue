@@ -3,13 +3,17 @@ import { darkMode } from '@/cleek-config';
 
 const props = defineProps<{
   title: string;
+  gap?: string;
 }>();
 </script>
 
 <template>
-  <div class="container-test" :class="{ 'dark-mode': darkMode }">
+  <div
+    class="container-test"
+    :class="{ 'dark-mode': darkMode }"
+  >
     <h5>{{ title }}</h5>
-    <div>
+    <div :style="{ 'gap': gap, 'display': gap ? 'flex' : '' }">
       <slot />
     </div>
   </div>
