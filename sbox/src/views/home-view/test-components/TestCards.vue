@@ -8,8 +8,18 @@ const isActive = ref(true);
 
 <template>
   <ContainerTest title="CARDS" gap="0.5rem">
-    <ck-card title="This is an example of a title">
-      This is an example of the content
+    <ck-card>
+      <template #header>
+        <div class="flex justify-between">
+          <span>
+            This is an <b>complex</b> title
+          </span>
+          <span>
+            +
+          </span>
+        </div>
+      </template>
+      Data
     </ck-card>
     <ck-card title="Title">
       Content

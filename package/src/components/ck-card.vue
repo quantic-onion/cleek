@@ -51,11 +51,11 @@ onMounted(() => {
   <div v-if="isActive" class="ck-card" :class="computedClass">
     <!-- header -->
     <div
-      v-if="title || isCloseable"
+      v-if="title || $slots.header || isCloseable"
       class="ck-card__header"
       :class="{ 'is-close-button-visible': isCloseable }"
     >
-      <!-- title -->
+      <!-- header -->
       <div v-if="title || $slots.header" class="ck-card__header-title">
         {{ title }}
         <slot name="header"></slot>
