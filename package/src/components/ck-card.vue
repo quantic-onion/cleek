@@ -56,8 +56,9 @@ onMounted(() => {
       :class="{ 'is-close-button-visible': isCloseable }"
     >
       <!-- title -->
-      <div v-if="title" class="ck-card__header-title">
+      <div v-if="title || $slots.header" class="ck-card__header-title">
         {{ title }}
+        <slot name="header"></slot>
       </div>
       <!-- close btn -->
       <div v-if="isCloseable" class="ck-card__close-btn" @click="isActive = false">
