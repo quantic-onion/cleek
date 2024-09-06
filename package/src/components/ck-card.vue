@@ -58,8 +58,8 @@ onMounted(() => {
       <!-- header -->
       <div v-if="title || $slots.header" class="ck-card__header-title">
         {{ title }}
-        <slot name="header"></slot>
       </div>
+      <slot name="header"></slot>
       <!-- close btn -->
       <div v-if="isCloseable" class="ck-card__close-btn" @click="isActive = false">
         <ck-icon icon="times"/>
