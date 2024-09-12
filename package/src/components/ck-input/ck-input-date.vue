@@ -15,6 +15,7 @@ const props = defineProps<{
   modelValue: DateString;
   label?: string;
   optional?: boolean;
+  disabled?: boolean;
   // clearable
   clearable?: boolean;
   clearValue?: DateString;
