@@ -14,6 +14,7 @@ type DateString = null | string;
 const props = defineProps<{
   modelValue: DateString;
   label?: string;
+  disabled?: boolean;
   // clearable
   clearable?: boolean;
   clearValue?: DateString;
@@ -156,6 +157,7 @@ onMounted(() => {
           @closed="setClosedStatus"
           inputFormat="dd-MM-yyyy"
           :style="deepComputedStyles"
+          :disabled="disabled"
         />
         <!-- icon right -->
         <ck-icon
