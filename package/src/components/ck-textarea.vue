@@ -26,6 +26,7 @@ const props = defineProps<{
   textColor?: Color;
   width?: SizeInCSS;
   height?: SizeInCSS;
+  optional?: boolean;
   // functions
   capitalize?: boolean;
   autoSelect?: boolean;
@@ -123,7 +124,7 @@ onMounted(() => {
 <template>
   <div class="ck-textarea">
     <ck-label v-if="label" :label-align="labelAlign">
-      {{ label }}
+      {{ label }} <span v-if="optional" class="ck-textarea__optional-label">opcional</span>
     </ck-label>
     <textarea
       v-model="inputValue"
@@ -140,6 +141,11 @@ onMounted(() => {
 </template>
 
 <style lang="stylus" scoped>
+.ck-textarea__optional-label
+  color #aaa
+  font-size 0.75rem
+  padding-left 0.25rem
+  margin-left auto
 .ck-textarea
   display flex
   flex-direction column

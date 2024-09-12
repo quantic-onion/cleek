@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, ref, watch } from '@vue/runtime-core';
 // types
-import type { Color } from '../types/cleek-options';
+import type { Color, Size } from '../types/cleek-options';
 // hooks
 import hooks from '../utils/global-hooks';
 
@@ -11,6 +11,7 @@ const props = defineProps<{
   disabled?: boolean;
   color?: Color;
   colorText?: Color;
+  size?: Size;
 }>();
 
 const emits = defineEmits<{
@@ -34,6 +35,12 @@ const checkboxAttributes = computed(() => {
     'aria-disabled': props.disabled,
     tabindex: props.disabled ? undefined : '0',
   };
+});
+const computedClassContainer = computed(() => {
+  const list = [];
+  if (isChecked.value) list.push('is-selected');
+  if (props.size) list.push(`size--${props.size}`);
+  return list;
 });
 const computedClass = computed(() => {
   const list = [];
@@ -87,7 +94,7 @@ function onTrigger() {
   <label
     v-bind="checkboxAttributes"
     class="ck-checkbox"
-    :class="{ 'is-selected': isChecked }"
+    :class="computedClassContainer"
     @keydown.space.prevent
     @keyup.enter="onTrigger()"
     @keyup.space="onTrigger()"
@@ -118,8 +125,6 @@ function onTrigger() {
 </template>
 
 <style lang="stylus" scoped>
-.ck-checkbox span
-  margin-left 0.25rem
 .ck-checkbox
   cursor pointer
   position relative
@@ -127,9 +132,26 @@ function onTrigger() {
   align-items center
   width -moz-fit-content
   width fit-content
-
-.ck-checkbox input
-  display none
+  input
+    display none
+  span
+    margin-left 0.25rem
+  &.size--xs
+    .ck-checkbox__element
+      width 1rem
+      height @width
+      &::after
+        transform rotate(45deg) scale(0.67)
+        left 1px
+        top -8px
+  &.size--s
+    .ck-checkbox__element
+      width 1.25rem
+      height @width
+      &::after
+        transform rotate(45deg) scale(0.9)
+        left 1px
+        top -6px
 
 .ck-checkbox__element
   position relative

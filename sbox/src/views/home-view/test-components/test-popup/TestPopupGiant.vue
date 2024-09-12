@@ -26,6 +26,7 @@ const isActive = computed({
     v-model="isActive"
     title="Popup giant"
     confirmButtons
+    headerColor="lightblue"
   >
     <div class="content-item">Item</div>
     <div class="content-item">Item</div>

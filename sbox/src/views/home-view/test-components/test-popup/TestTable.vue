@@ -51,5 +51,24 @@ onMounted(() => {
       </ck-tr> -->
 
     </ck-table>
+    <ck-table
+      :columns="columnsList"
+      hideHeaderActions
+    >
+      <template #header>
+        <div class="header-container">
+          <ck-chip>Left</ck-chip>
+          <ck-chip>Right</ck-chip>
+        </div>
+      </template>
+    </ck-table>
   </ContainerTest>
 </template>
+
+<style lang="stylus" scoped>
+.header-container
+  margin-top 2rem
+  display flex
+  justify-content space-between
+  width 100%
+</style>

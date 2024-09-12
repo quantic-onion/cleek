@@ -211,7 +211,11 @@ onMounted(() => {
       @openColumnsManager="openColumnsManager()"
     />
     <!-- header slot -->
-    <div v-if="$slots.header" class="ck-table__header--slot">
+    <div
+      v-if="$slots.header"
+      class="ck-table__header--slot"
+      :class="{ 'full-width': hideHeaderActions }"
+    >
       <slot name="header"/>
     </div>
   </div>
@@ -330,6 +334,8 @@ onMounted(() => {
     align-items flex-end
     flex-wrap wrap
     gap 0.5rem
+    &.full-width
+      width 100%
 .ck-table__pagination
   margin-top 1rem
 

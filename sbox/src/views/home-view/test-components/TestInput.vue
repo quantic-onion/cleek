@@ -15,7 +15,7 @@ const selectedDate = ref(null);
   <ContainerTest title="INPUT">
     <ck-input label="buttons input" v-model="num1" plusMinusButtons type="number" :min="0" />
     <ck-input label="buttons input" v-model="num2" plusMinusButtons type="number" :min="0" />
-    <ck-input label="text input" v-model="text" />
+    <ck-input label="text input" v-model="text" optional />
     <ck-input label="email without withspaces" v-model="email" disallowSpaces />
     <ck-input type="password" label="pass" v-model="pass" />
     <ck-input-date clearable label="date" v-model="selectedDate" />

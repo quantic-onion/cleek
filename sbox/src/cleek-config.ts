@@ -29,6 +29,14 @@ export default {
     striped: true,
     version: "colored",
   },
+  popup: {
+    // textColor: 'secondary',
+    // headerAlign: 'center',
+    headerColor: '#FBD184',
+    // acceptBtnType: 'filled',
+    // maxWidth: '800px',
+    // fontSize: '1.2rem',
+  },
   // div: {
   //   gap: '1rem',
   // },
