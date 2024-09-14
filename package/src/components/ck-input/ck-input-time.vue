@@ -11,6 +11,7 @@ type numberTime = number | undefined;
 const props = defineProps<{
   modelValue: numberTime;
   label?: string;
+  disabled?: boolean;
   // group
   widthBreaks?: WidthBreaks;
   group?: Align;
@@ -40,6 +41,7 @@ const inputValue = computed({
   :label="label"
   :group="group"
   :widthBreaks="widthBreaks"
+  :disabled="disabled"
   @change="emits('change', inputValue)"
 />
 </template>
