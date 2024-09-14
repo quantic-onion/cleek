@@ -12,7 +12,8 @@ const columnsList = [
   'Columna 5',
 ]
 const isLoading = ref(false);
-const tableData = ref(new TableData(10));
+const tableData1 = ref(new TableData(10));
+const tableData2 = ref(new TableData(10));
 
 function refreshList(pageChange = false) {
   fakeLoadData();
@@ -21,8 +22,8 @@ function fakeLoadData() {
   isLoading.value = true;
   setTimeout(() => {
     isLoading.value = false;
-    tableData.value.itemsPerPage = 22;
-    tableData.value.listLength = 100;
+    tableData1.value.itemsPerPage = 22;
+    tableData1.value.listLength = 100;
   }, 2 * 1000);
 }
 
@@ -32,43 +33,61 @@ onMounted(() => {
 </script>
 <template>
   <ContainerTest title="TABLE">
-    <ck-table
-      v-model:search="tableData.search"
-      v-model:currentPage="tableData.currentPage"
-      hasColumnsManager
-      :isLoading="isLoading"
-      :itemsPerPage="tableData.itemsPerPage"
-      :listLength="tableData.listLength"
-      :columns="columnsList"
-      @refreshList="refreshList($event)"
-    >
-      <!-- <ck-tr v-for="num in [...Array(5).keys()]">
-        <ck-td>num - 1</ck-td>
-        <ck-td>num - 2</ck-td>
-        <ck-td>num - 3</ck-td>
-        <ck-td>num - 4</ck-td>
-        <ck-td>num - 5</ck-td>
-      </ck-tr> -->
+    <div class="test-tables__content">
+      <ck-table
+        v-model:search="tableData1.search"
+        v-model:currentPage="tableData1.currentPage"
+        hasColumnsManager
+        :isLoading="isLoading"
+        :itemsPerPage="tableData1.itemsPerPage"
+        :listLength="tableData1.listLength"
+        :columns="columnsList"
+        @refreshList="refreshList($event)"
+      >
+        <!-- <ck-tr v-for="num in [...Array(5).keys()]">
+          <ck-td>num - 1</ck-td>
+          <ck-td>num - 2</ck-td>
+          <ck-td>num - 3</ck-td>
+          <ck-td>num - 4</ck-td>
+          <ck-td>num - 5</ck-td>
+        </ck-tr> -->
 
-    </ck-table>
-    <ck-table
-      :columns="columnsList"
-      hideHeaderActions
-    >
-      <template #header>
-        <div class="header-container">
-          <ck-chip>Left</ck-chip>
-          <ck-chip>Right</ck-chip>
-        </div>
-      </template>
-    </ck-table>
+      </ck-table>
+      <!-- table 2 -->
+      <ck-table
+        v-model:search="tableData2.search"
+        v-model:currentPage="tableData2.currentPage"
+        hasColumnsManager
+        :isLoading="tableData2.isLoading"
+        :itemsPerPage="tableData2.itemsPerPage"
+        :listLength="tableData2.listLength"
+        :columns="columnsList"
+        @refreshList="refreshList($event)"
+      >
+      </ck-table>
+      <!-- table 3 -->
+      <ck-table
+        :columns="columnsList"
+        hideHeaderActions
+      >
+        <template #header>
+          <div class="header-container">
+            <ck-chip>Left</ck-chip>
+            <ck-chip>Right</ck-chip>
+          </div>
+        </template>
+      </ck-table>
+    </div>
   </ContainerTest>
 </template>
 
 <style lang="stylus" scoped>
 .header-container
-  margin-top 2rem
   display flex
   justify-content space-between
   width 100%
+.test-tables__content
+  display flex
+  flex-direction column
+  gap 2rem
 </style>

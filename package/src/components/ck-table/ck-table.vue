@@ -148,6 +148,11 @@ const currentPageLocal = computed({
     emits('update:currentPage', val);
   },
 });
+const isNoResultsTextDisplayed = computed(() => {
+  if (typeof props.listLength === 'undefined') return false;
+  if (props.listLength) return false;
+  return true;
+});
 const realLayout = computed(() => props.layout || cleekOptions.value?.styles.layout);
 // isMobileVisible
 const isMobileVisible = computed(() => {
@@ -242,11 +247,18 @@ onMounted(() => {
       <tbody>
         <slot/>
         <slot name="desktop"/>
-        <!-- noResultsText - if not used, listLength = undefined -->
-        <ck-tr v-if="isLoading && !listLength">
+        <!-- loadingText - noResultsText -->
+        <ck-tr v-if="isLoading || isNoResultsTextDisplayed">
           <ck-td class="no-result-text" colspan="100%" align="center">
-            <ck-icon class="mr-2" icon="spinner" spin/>
-            {{ loadingText || defaultLoadingText }}
+            <!-- loadingText -->
+            <template v-if="isLoading">
+              <ck-icon class="mr-2" icon="spinner" spin/>
+              {{ loadingText || defaultLoadingText }}
+            </template>
+            <!-- noResultsText -->
+            <template v-else-if="isNoResultsTextDisplayed">
+              {{ noResultsText || defaultNoResultsText }}
+            </template>
           </ck-td>
         </ck-tr>
       </tbody>

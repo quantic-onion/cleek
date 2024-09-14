@@ -12,7 +12,7 @@ const isActive = ref(true);
       <template #header>
         <div class="flex justify-between">
           <span>
-            This is an <b>complex</b> title
+            This is a <b>complex</b> title
           </span>
           <span>
             +
