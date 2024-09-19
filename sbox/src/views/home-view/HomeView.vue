@@ -1,5 +1,6 @@
 <script setup lang="ts">
 // components
+import TestToggle from './test-components/TestToggle.vue';
 import TestPagination from './test-components/TestPagination.vue';
 import TestIcon from './test-components/TestIcon.vue';
 import TestSidebar from './test-components/TestSidebar.vue';
@@ -21,6 +22,7 @@ import TestCards from './test-components/TestCards.vue';
 
 <template>
   <div class="home-view">
+    <TestToggle />
     <TestRadio />
     <TestTabs />
     <TestSwitch />

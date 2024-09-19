@@ -162,6 +162,7 @@ watch(isActive, (val) => setBodyOverflow(!val));
       flex-shrink 0
       padding 1rem
       ck-box-shadow(0.15)
+      margin-top auto
     .loader-container
       display flex
       justify-content center

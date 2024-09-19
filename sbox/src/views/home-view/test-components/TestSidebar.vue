@@ -4,6 +4,7 @@ import { ref } from 'vue';
 import ContainerTest from './components/ContainerTest.vue';
 
 const isSidebarActive = ref(false);
+const isSidebarActiveWithFooter = ref(false);
 const isUsingCustomHeader = ref(false);
 const isLoading = ref(false);
 const isUsingFooter = ref(false);
@@ -18,10 +19,28 @@ function closeWithLoading() {
 
 <template>
   <ContainerTest title="SIDEBAR">
-    <ck-button @click="isSidebarActive = true">
+    <ck-button size="s" @click="isSidebarActive = true">
       Open sidebar
     </ck-button>
+    <ck-button size="s" @click="isSidebarActiveWithFooter = true">
+      Open sidebar with footer
+    </ck-button>
   </ContainerTest>
+
+  <!-- sidebar with footer -->
+  <ck-sidebar
+    v-model="isSidebarActiveWithFooter"
+    title="Sidebar with footer"
+  >
+    <span>Content</span>
+    <span>Content</span>
+    <span>Content</span>
+    <template #footer>
+      Este es el footer
+    </template>
+  </ck-sidebar>
+
+  <!-- other sidebar -->
   <ck-sidebar
     v-model="isSidebarActive"
     :isLoading="isLoading"
@@ -72,6 +91,9 @@ function closeWithLoading() {
     <div class="content content--last-3">3</div>
     <template v-if="isUsingFooter" #footer>
       PRUEBITA DEL FOOTER
+    </template>
+    <template #footer>
+      Este es el footer
     </template>
   </ck-sidebar>
 </template>

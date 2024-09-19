@@ -18,6 +18,8 @@ export { default as CkInputTime } from './ck-input/ck-input-time.vue';
 // tabs
 export { default as CkTab } from './ck-tabs/ck-tab.vue';
 export { default as CkTabs } from './ck-tabs/ck-tabs.vue';
+// toggle
+export { default as CkToggle } from './ck-toggle/ck-toggle.vue';
 
 export { default as CkButton } from './ck-button.vue';
 export { default as CkCard } from './ck-card.vue';
