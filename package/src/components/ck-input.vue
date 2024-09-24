@@ -55,6 +55,7 @@ const props = defineProps<{
   // functions
   autofocus?: boolean;
   capitalize?: boolean;
+  toUpperCase?: boolean;
   autoSelect?: boolean;
   delayChangeTime?: number;
   justInteger?: boolean;
@@ -90,6 +91,7 @@ const value = computed({
   },
   set(val: string | number) {
     if (props.capitalize) val = qmStr.capitalize(`${val}`);
+    if (props.toUpperCase) val = `${val}`.toUpperCase();
     if (props.justInteger) val = parseInt(`${+val}`);
     if (typeof props.min !== 'undefined' && +val < +props.min) val = +props.min;
     if (typeof props.max !== 'undefined' && +val > +props.max) val = +props.max;
