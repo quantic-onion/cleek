@@ -74,7 +74,7 @@ const { windowWidth } = useWindowWidth();
 const isPopupActive = ref({
   columnsManager: false,
 });
-const checkboxIsVisible = computed(() => typeof selectedRows.value !== 'undefined');
+const isSelectable = computed(() => !!selectedRows.value);
 const isDarkModeActive = computed(() => {
   if (typeof props.darkMode !== 'undefined') return props.darkMode;
   return cleekOptions.value?.darkMode;
@@ -253,9 +253,9 @@ selectedRows {{ selectedRows }}
   >
     <table class="ck-table__table" :class="computedClassTable">
       <!-- header -->
-      <thead v-if="checkboxIsVisible || (filteredColumnsList.length && !($slots.mobile && isMobileVisible))">
+      <thead v-if="isSelectable || (filteredColumnsList.length && !($slots.mobile && isMobileVisible))">
         <ck-tr class="header-row">
-          <ck-th v-if="checkboxIsVisible" autoWidth>
+          <ck-th v-if="isSelectable" autoWidth>
             <ck-checkbox
               usesThirdState
               size="s"
@@ -290,7 +290,7 @@ selectedRows {{ selectedRows }}
         <slot name="desktop"/>
         <!-- slot row -->
         <ck-tr v-for="(row, rowIndex) in rows" :key="row[rowSelectorKey]">
-          <ck-td v-if="checkboxIsVisible" autoWidth>
+          <ck-td v-if="isSelectable" autoWidth>
             <ck-checkbox
               size="s"
               :modelValue="selectedRows.isRowSelected(row[rowSelectorKey])"
