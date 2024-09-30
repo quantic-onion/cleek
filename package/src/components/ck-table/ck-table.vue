@@ -289,7 +289,7 @@ selectedRows {{ selectedRows }}
         <slot/>
         <slot name="desktop"/>
         <!-- slot row -->
-        <ck-tr v-for="(row, rowIndex) in rows" :key="row[rowSelectorKey]">
+        <ck-tr v-for="row in rows" :key="row[rowSelectorKey]">
           <ck-td v-if="isSelectable" autoWidth>
             <ck-checkbox
               size="s"
