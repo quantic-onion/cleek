@@ -266,7 +266,7 @@ selectedRows {{ selectedRows }}
           <ck-th v-if="selectedRows?.ids?.size" :colspan="filteredColumnsList.length">
             <div class="selected-rows-actions">
               <ck-chip size="s" iconRight="times" @click="selectedRows.removeAll()">
-                {{ selectedRows.ids.size }} seleccionado{{ selectedRows.ids.size > 1 ? 's' : '' }}
+                {{ selectedRows.ids.size }} seleccionado{{ selectedRows.ids.size === 1 ? '' : 's' }}
               </ck-chip>
               <slot name="selectedRowsActions"></slot>
               <ck-button size="s" color="dark">
