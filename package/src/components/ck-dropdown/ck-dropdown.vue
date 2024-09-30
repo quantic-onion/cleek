@@ -38,10 +38,10 @@ watch(isOpen, (val) => {
     const openBelow = dropdownRect.top < clientHeight / 2;
     if (openBelow) {
       styles['top'] = `${dropdownRect.bottom}px`;
-      styles['margin-top'] = '1rem';
+      styles['margin-top'] = '0.5rem';
     } else {
       styles['bottom'] = `${clientHeight - dropdownRect.top}px`;
-      styles['margin-bottom'] = '1rem';
+      styles['margin-bottom'] = '0.5rem';
     }
     // align (left - right)
     if (props.align === 'left') {

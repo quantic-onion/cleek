@@ -69,3 +69,47 @@ export class TableData {
     }
   }
 }
+
+type RowId = number;
+
+export class SelectedRows {
+  ids = new Set([]);
+  toggleable = true;
+
+  constructor(list: RowId[], settings?: { toggleable: boolean }) {
+    this.ids = new Set(list);
+    if (settings) this.toggleable = settings.toggleable;
+  }
+
+  isRowSelected(id: RowId) {
+    return this.ids.has(id);
+  }
+  isAnyRowsSelected(ids: RowId[]) {
+    return ids.some((id) => this.isRowSelected(id));
+  }
+  areAllRowsSelecteds(ids: RowId[]) {
+    return ids.every((id) => this.isRowSelected(id));
+  }
+  switchValue(id: RowId) {
+    if (this.isRowSelected(id)) {
+      this.removeRow(id);
+    } else {
+      this.addRow(id);
+    }
+  }
+  addRow(id: RowId) {
+    this.ids.add(id);
+  }
+  removeRow(id: RowId) {
+    this.ids.delete(id);
+  }
+  addManyRows(ids: RowId[]) {
+    ids.forEach((id) => this.ids.add(id));
+  }
+  removeManyRows(ids: RowId[]) {
+    ids.forEach((id) => this.ids.delete(id));
+  }
+  removeAll() {
+    this.ids.clear();
+  }
+}

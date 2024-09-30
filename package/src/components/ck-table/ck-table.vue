@@ -16,11 +16,18 @@ import type { Align, Color, CleekOptions, Layout, TableVersion } from '../../typ
 // hooks
 import hooks from '../../utils/global-hooks';
 import useWindowWidth from '../../hooks/windowWidth';
+// class
+import { SelectedRows } from '../index';
 
 type Columns = ColumnItem[] | object;
 type CellPadding = 's' | 'm' | 'l' | 'none';
 
+const rowSelectorKey = 'id';
+
+const selectedRows = defineModel<SelectedRows>('selectedRows');
+
 const props = defineProps<{
+  rows: any[];
   columns?: Columns;
   hasColumnsManager?: boolean;
   // pagination - header items
@@ -67,6 +74,7 @@ const { windowWidth } = useWindowWidth();
 const isPopupActive = ref({
   columnsManager: false,
 });
+const checkboxIsVisible = computed(() => typeof selectedRows.value !== 'undefined');
 const isDarkModeActive = computed(() => {
   if (typeof props.darkMode !== 'undefined') return props.darkMode;
   return cleekOptions.value?.darkMode;
@@ -179,9 +187,21 @@ const computedClassTable = computed(() => {
   if (striped) list.push('striped-table');
   return list;
 });
-// function testCurrentPage(cosito) {
-//   this.emits('update:currentPage', cosito);
-// }
+const isFullPageSelected = computed(() => {
+  const ids = props.rows.map((row) => row[rowSelectorKey]);
+  if (selectedRows.value.areAllRowsSelecteds(ids)) return true;
+  if (selectedRows.value.isAnyRowsSelected(ids)) return undefined;
+  return false;
+});
+
+function selectOrUnselectAll() {
+  const ids = props.rows.map((row) => row[rowSelectorKey]);
+  if (isFullPageSelected.value) {
+    selectedRows.value.removeManyRows(ids);
+  } else {
+    selectedRows.value.addManyRows(ids);
+  }
+}
 
 onMounted(() => {
   cleekOptions.value = hooks.getCleekOptions(getCurrentInstance);
@@ -197,6 +217,7 @@ onMounted(() => {
   :columnsArray="columnsArray"
   :columns="columns || []"
 />
+selectedRows {{ selectedRows }}
 <div class="ck-table">
   <div v-if="$slots.header || !hideHeaderActions" class="ck-table__header">
     <!-- header items -->
@@ -232,9 +253,29 @@ onMounted(() => {
   >
     <table class="ck-table__table" :class="computedClassTable">
       <!-- header -->
-      <thead v-if="filteredColumnsList.length && !($slots.mobile && isMobileVisible)">
+      <thead v-if="checkboxIsVisible || (filteredColumnsList.length && !($slots.mobile && isMobileVisible))">
         <ck-tr class="header-row">
+          <ck-th v-if="checkboxIsVisible" autoWidth>
+            <ck-checkbox
+              usesThirdState
+              size="s"
+              :modelValue="isFullPageSelected"
+              @click="selectOrUnselectAll()"
+            />
+          </ck-th>
+          <ck-th v-if="selectedRows?.ids?.size" :colspan="filteredColumnsList.length">
+            <div class="selected-rows-actions">
+              <ck-chip size="s" iconRight="times" @click="selectedRows.removeAll()">
+                {{ selectedRows.ids.size }} seleccionado{{ selectedRows.ids.size > 1 ? 's' : '' }}
+              </ck-chip>
+              <slot name="selectedRowsActions"></slot>
+              <ck-button size="s" color="dark">
+                seleccionar todas las páginas
+              </ck-button>
+            </div>
+          </ck-th>
           <ck-table-title
+            v-else
             v-for="col in filteredColumnsList"
             :key="col.title"
             :col="col"
@@ -247,6 +288,18 @@ onMounted(() => {
       <tbody>
         <slot/>
         <slot name="desktop"/>
+        <!-- slot row -->
+        <ck-tr v-for="(row, rowIndex) in rows" :key="row[rowSelectorKey]">
+          <ck-td v-if="checkboxIsVisible" autoWidth>
+            <ck-checkbox
+              size="s"
+              :modelValue="selectedRows.isRowSelected(row[rowSelectorKey])"
+              @click="selectedRows.switchValue(row[rowSelectorKey])"
+            />
+          </ck-td>
+          <slot :row="row" name="row">
+          </slot>
+        </ck-tr>
         <!-- loadingText - noResultsText -->
         <ck-tr v-if="isLoading || isNoResultsTextDisplayed">
           <ck-td class="no-result-text" colspan="100%" align="center">
@@ -268,7 +321,6 @@ onMounted(() => {
       </tfoot>
     </table>
   </div>
-  <!-- @update:currentPage="testCurrentPage($event)" -->
 
   <!-- mobile -->
   <div v-if="isMobileVisible" class="ck-table--mobile-container">
@@ -360,4 +412,10 @@ onMounted(() => {
 .dark-mode .no-result-text
   color $darkModeTextColor
   background-color $darkModeColorItems
+
+.selected-rows-actions
+  display flex
+  justify-content space-between
+  align-items center
+  width 100%
 </style>

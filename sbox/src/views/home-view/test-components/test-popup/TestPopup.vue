@@ -15,10 +15,6 @@ const isPopupActive = ref({
 });
 
 const openPopup = () => {
-  // ckNotify.confirm("Test"),
-  // () => {
-  // console.log("CONFIRMO");
-  // };
   isPopupActive.value.inputDate = true;
 };
 function openPopupWithFooter() {

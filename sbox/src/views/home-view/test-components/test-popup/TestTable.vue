@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue';
-import { TableData } from 'cleek';
+import { TableData, SelectedRows } from 'cleek';
 // components
 import ContainerTest from '../components/ContainerTest.vue';
 
@@ -11,9 +11,15 @@ const columnsList = [
   'Columna 4',
   'Columna 5',
 ]
+const selectedRows = ref(new SelectedRows([]));
 const isLoading = ref(false);
 const tableData1 = ref(new TableData(10));
 const tableData2 = ref(new TableData(10));
+const rows = [
+  { id: 1, name: 'Col data 1' },
+  { id: 2, name: 'Col data 2' },
+  { id: 3, name: 'Col data 3' },
+]
 
 function refreshList(pageChange = false) {
   fakeLoadData();
@@ -33,6 +39,11 @@ onMounted(() => {
 </script>
 <template>
   <ContainerTest title="TABLE">
+    <ck-table :rows="rows" :selectedRows="selectedRows">
+      <template #row="{ row: user }">
+        <ck-td>__{{ user.id }}__ {{ user.name }}</ck-td>
+      </template>
+    </ck-table>
     <div class="test-tables__content">
       <ck-table
         v-model:search="tableData1.search"

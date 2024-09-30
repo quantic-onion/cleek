@@ -5,8 +5,10 @@ import type { Color, Size } from '../types/cleek-options';
 // hooks
 import hooks from '../utils/global-hooks';
 
+const isChecked = defineModel<boolean | null>();
+
 const props = defineProps<{
-  modelValue: boolean;
+  // modelValue: boolean;
   label?: string;
   disabled?: boolean;
   color?: Color;
@@ -15,21 +17,21 @@ const props = defineProps<{
 }>();
 
 const emits = defineEmits<{
-  (e: 'update:modelValue', value: boolean): void;
+  // (e: 'update:modelValue', value: boolean): void;
   (e: 'change', event: Event): void;
 }>();
 
-const isSelected = ref(props.modelValue);
+// const isSelected = ref(props.modelValue);
 
-const isChecked = computed({
-  get() {
-    return props.modelValue;
-  },
-  set(val: boolean) {
-    isSelected.value = val;
-    emits('update:modelValue', val);
-  },
-});
+// const isChecked = computed({
+//   get() {
+//     return props.modelValue;
+//   },
+//   set(val: boolean) {
+//     // isSelected.value = val;
+//     emits('update:modelValue', val);
+//   },
+// });
 const checkboxAttributes = computed(() => {
   return {
     'aria-disabled': props.disabled,
@@ -46,7 +48,7 @@ const computedClass = computed(() => {
   const list = [];
   if (props.color && hooks.isColorTemplateVariable(props.color)) {
     list.push(`ck-component__border-color--${props.color}`);
-    if (isSelected.value) {
+    if (isChecked.value) {
       list.push(`ck-component__color-background--${props.color}`);
     }
   }
@@ -56,7 +58,7 @@ const computedStyle = computed(() => {
   const list = [];
   if (props.color && !hooks.isColorTemplateVariable(props.color)) {
     list.push({ borderColor: props.color });
-    if (isSelected.value) {
+    if (isChecked.value) {
       list.push({ backgroundColor: props.color });
     }
   }
@@ -77,9 +79,9 @@ const computedStyleLabel = computed(() => {
   return list;
 });
 
-watch(() => isChecked.value, (val) => {
-  isSelected.value = val;
-});
+// watch(() => isChecked.value, (val) => {
+//   isSelected.value = val;
+// });
 
 function onChange(event: Event) {
   isChecked.value = event.target.checked; 
@@ -87,6 +89,9 @@ function onChange(event: Event) {
 }
 function onTrigger() {
   // isChecked.value = !isChecked.value;
+}
+function updateValue() {
+  isChecked.value = !isChecked.value;
 }
 </script>
 
@@ -98,6 +103,7 @@ function onTrigger() {
     @keydown.space.prevent
     @keyup.enter="onTrigger()"
     @keyup.space="onTrigger()"
+    @click.prevent="updateValue()"
   >
     <input
       class="ck-checkbox__input"
@@ -106,18 +112,21 @@ function onTrigger() {
       :disabled="disabled"
       :checked="isChecked"
       @change="onChange($event)"
-      />
+      @click.prevent
+    />
       <!-- @change="isChecked = $event.target.checked; onChange($event)" -->
     <div
       class="ck-checkbox__element"
       :class="computedClass"
       :style="computedStyle"
+      @click.prevent
     />
     <span
       v-if="$slots.default"
       class="c-Checkbox__label"
       :class="computedClassLabel"
       :style="computedStyleLabel"
+      @click.prevent
     >
       <slot/>
     </span>
