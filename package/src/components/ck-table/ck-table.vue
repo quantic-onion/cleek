@@ -301,7 +301,7 @@ selectedRows {{ selectedRows }}
           </slot>
         </ck-tr>
         <!-- loadingText - noResultsText -->
-        <ck-tr v-if="isLoading || isNoResultsTextDisplayed">
+        <ck-tr v-if="isNoResultsTextDisplayed">
           <ck-td class="no-result-text" colspan="100%" align="center">
             <!-- loadingText -->
             <template v-if="isLoading">
