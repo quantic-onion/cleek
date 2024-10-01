@@ -73,16 +73,13 @@ const emits = defineEmits<{
 
 defineExpose({ setFocus, setSelect });
 
-let cleekOptions = ref<CleekOptions>();
-
 const defaultType = 'text';
 const plusMinusButtonsDefaultWithInput = '120px';
 const plusMinusButtonsDefaultAlign = 'center';
 const defaultDelayChangeTime = 300;
-
-const realInput = ref<HTMLInputElement>(null);
+const cleekOptions = ref<CleekOptions>();
+const inputRef = ref<HTMLInputElement>();
 const isShowingPassword = ref(false);
-
 const { windowWidth } = useWindowWidth();
 
 const value = computed({
@@ -109,7 +106,7 @@ const realLabelAlign = computed(() => {
 
 // events
 function onClick(event: Event) {
-  if (props.autoSelect) realInput.value?.select();
+  if (props.autoSelect) inputRef.value?.select();
   emits('click', event);
 }
 function onInput(event: Event) {
@@ -188,15 +185,19 @@ const computedStyle = computed(() => {
 });
 
 function setFocus() {
-  realInput.value?.focus();
+  inputRef.value?.focus();
 }
 function setSelect() {
-  realInput.value?.select();
+  inputRef.value?.select();
 }
 function checkSearchTime(oldValue: string | number) {
   setTimeout(() => {
     if (value.value === oldValue) emits('delayChange', oldValue);
   }, props.delayChangeTime || defaultDelayChangeTime);
+}
+function handleInputFocus($event) {
+  emits('focus', $event);
+  if (props.type === 'number' && !value.value) setSelect();
 }
 
 onMounted(() => {
@@ -236,7 +237,7 @@ onMounted(() => {
       <input
         v-if="isShowingPassword"
         v-model="value"
-        ref="realInput"
+        ref="inputRef"
         type="text"
         :autocomplete="autocomplete ? 'on' : 'off'"
         :placeholder="placeholder"
@@ -246,13 +247,13 @@ onMounted(() => {
         @change="onChange($event)"
         @input="onInput($event)"
         @click="onClick($event)"
-        @focus="emits('focus', $event)"
+        @focus="handleInputFocus($event)"
         @blur="emits('blur', $event)"
       />
       <input
         v-else
         v-model="value"
-        ref="realInput"
+        ref="inputRef"
         :autocomplete="autocomplete ? 'on' : 'off'"
         :type="type || defaultType"
         :placeholder="placeholder"
@@ -262,7 +263,7 @@ onMounted(() => {
         @change="onChange($event)"
         @input="onInput($event)"
         @click="onClick($event)"
-        @focus="emits('focus', $event)"
+        @focus="handleInputFocus($event)"
         @blur="emits('blur', $event)"
       />
       <div
