@@ -10,6 +10,7 @@ import type { Align, Layout, CleekOptions } from '../../../types/cleek-options';
 import hooks from '../../../utils/global-hooks';
 
 const props = defineProps<{
+  totalPages: number;
   currentPage: number;
   align: Align;
   itemsPerPage: number;
@@ -46,9 +47,7 @@ const hasArrowLeft = computed(() => {
   //   return listLeft.value[0] !== 1;
 });
 const hasArrowRight = computed(() => !!listRight.value.length);
-const totalPages = computed(() => {
-  return Math.ceil(props.listLength / props.itemsPerPage);
-});
+
 const listLeft = computed(() => {
   if (!props.listLength) return [];
   const list = [];
@@ -65,7 +64,7 @@ const listRight = computed(() => {
   const listLength = (itemsShowed - 1) / 2;
   for (const num of Array(listLength).keys()) {
     const listItem = props.currentPage + num + 1;
-    if (listItem <= totalPages.value) list.push(listItem);
+    if (listItem <= props.totalPages) list.push(listItem);
   }
   return list;
 });
@@ -90,7 +89,7 @@ watch(
 function updatePageByInput(eventTarget: HTMLInputElement) {
   let newValue = +eventTarget.value;
   // validate
-  if (newValue > totalPages.value) newValue = totalPages.value;
+  if (newValue > props.totalPages) newValue = props.totalPages;
   if (newValue < 1) newValue = 1;
   // set value
   if (props.currentPage === newValue) {
@@ -111,7 +110,6 @@ onMounted(() => {
 
 <template>
 <div
-v-if="currentPage && totalPages > 1"
 class="ck-table__pagination-container"
 :class="computedClass"
 >

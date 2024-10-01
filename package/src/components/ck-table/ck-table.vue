@@ -79,6 +79,9 @@ const isDarkModeActive = computed(() => {
   if (typeof props.darkMode !== 'undefined') return props.darkMode;
   return cleekOptions.value?.darkMode;
 });
+const totalPages = computed(() => {
+  return Math.ceil(props.listLength / props.itemsPerPage);
+});
 const defaultLoadingText = computed(() => {
   if (cleekOptions.value?.lang === 'es') return 'Cargando...'; 
   return 'Loading...';
@@ -217,7 +220,6 @@ onMounted(() => {
   :columnsArray="columnsArray"
   :columns="columns || []"
 />
-selectedRows {{ selectedRows }}
 <div class="ck-table">
   <div v-if="$slots.header || !hideHeaderActions" class="ck-table__header">
     <!-- header items -->
@@ -255,33 +257,50 @@ selectedRows {{ selectedRows }}
       <!-- header -->
       <thead v-if="isSelectable || (filteredColumnsList.length && !($slots.mobile && isMobileVisible))">
         <ck-tr class="header-row">
-          <ck-th v-if="isSelectable" autoWidth>
-            <ck-checkbox
-              usesThirdState
-              size="s"
-              :modelValue="isFullPageSelected"
-              @click="selectOrUnselectAll()"
-            />
-          </ck-th>
-          <ck-th v-if="selectedRows?.ids?.size" :colspan="filteredColumnsList.length">
+          <ck-th v-if="selectedRows?.ids?.size" colspan="100%">
             <div class="selected-rows-actions">
-              <ck-chip size="s" iconRight="times" @click="selectedRows.removeAll()">
-                {{ selectedRows.ids.size }} seleccionado{{ selectedRows.ids.size === 1 ? '' : 's' }}
-              </ck-chip>
+              <div class="selected-rows-actions__left">
+                <ck-checkbox
+                  class="main-checkbox"
+                  usesThirdState
+                  size="xs"
+                  color="#BABDBF"
+                  :modelValue="isFullPageSelected"
+                  @click="selectOrUnselectAll()"
+                />
+                <ck-chip class="nowrap cursor-pointer" size="s" iconRight="times" @click="selectedRows.removeAll()">
+                  {{ selectedRows.ids.size }} seleccionado{{ selectedRows.ids.size === 1 ? '' : 's' }}
+                </ck-chip>
+              </div>
               <slot name="selectedRowsActions"></slot>
-              <ck-button size="s" color="dark">
+              <ck-button
+                v-if="currentPage && totalPages > 1"
+                size="s"
+                color="dark"
+              >
                 seleccionar todas las páginas
               </ck-button>
             </div>
           </ck-th>
-          <ck-table-title
-            v-else
-            v-for="col in filteredColumnsList"
-            :key="col.title"
-            :col="col"
-            :textColor="realHeaderTextColor"
-            :backgroundColor="realHeaderBackgroundColor"
-          />
+          <template v-else>
+            <ck-th v-if="isSelectable" autoWidth>
+              <ck-checkbox
+                class="main-checkbox"
+                usesThirdState
+                size="xs"
+                color="#BABDBF"
+                :modelValue="isFullPageSelected"
+                @click="selectOrUnselectAll()"
+              />
+            </ck-th>
+            <ck-table-title
+              v-for="col in filteredColumnsList"
+              :key="col.title"
+              :col="col"
+              :textColor="realHeaderTextColor"
+              :backgroundColor="realHeaderBackgroundColor"
+            />
+          </template>
         </ck-tr>
       </thead>
       <!-- body -->
@@ -292,7 +311,8 @@ selectedRows {{ selectedRows }}
         <ck-tr v-for="row in rows" :key="row[rowSelectorKey]">
           <ck-td v-if="isSelectable" autoWidth>
             <ck-checkbox
-              size="s"
+              size="xs"
+              color="#BABDBF"
               :modelValue="selectedRows.isRowSelected(row[rowSelectorKey])"
               @click="selectedRows.switchValue(row[rowSelectorKey])"
             />
@@ -329,8 +349,10 @@ selectedRows {{ selectedRows }}
 
   <!-- pagination -->
   <TablePagination
+    v-if="currentPage && totalPages > 1"
     v-model:currentPage="currentPageLocal"
     class="ck-table__pagination"
+    :totalPages="totalPages"
     :currentPage="currentPage"
     :itemsPerPage="itemsPerPage"
     :listLength="listLength"
@@ -418,4 +440,12 @@ selectedRows {{ selectedRows }}
   justify-content space-between
   align-items center
   width 100%
+  gap 0.5rem
+  .selected-rows-actions__left
+    display flex
+    align-items center
+    gap 0.5rem
+.main-checkbox
+  margin-left -1px
+  margin-bottom -1px
 </style>
