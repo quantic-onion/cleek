@@ -82,7 +82,7 @@ const emit = defineEmits<{
   delayChange: [value: ModelValue];
 }>();
 
-defineExpose({ setFocus, setSelect });
+defineExpose({ focus, select });
 
 const { windowWidth } = useWindowWidth();
 const cleekOptions = ref<CleekOptions>();
@@ -177,10 +177,10 @@ const computedStyleInput = computed(() => {
   return list;
 });
 
-function setFocus() {
+function focus() {
   inputRef.value?.focus();
 }
-function setSelect() {
+function select() {
   inputRef.value?.select();
 }
 function handleInputClick(event: Event) {
@@ -195,7 +195,7 @@ function handleInputhange(event: Event) {
 }
 function handleInputFocus($event) {
   emit('focus', $event);
-  if (props.type === 'number' && !inputValue.value) setSelect();
+  if (props.type === 'number' && !inputValue.value) select();
 }
 function checkSearchTime(oldValue: ModelValue) {
   setTimeout(() => {
@@ -206,7 +206,7 @@ function checkSearchTime(oldValue: ModelValue) {
 onMounted(() => {
   cleekOptions.value = hooks.getCleekOptions(getCurrentInstance);
   if (props.autofocus) {
-    setFocus();
+    focus();
   }
 });
 </script>
