@@ -21,9 +21,9 @@ import type {
   WidthBreaks,
 } from '../types/cleek-options';
 
-type ModelValue = string | number;
+type Value = string | number;
 
-const modelValue = defineModel<ModelValue>({ required: true });
+const modelValue = defineModel<Value>({ required: true });
 
 const props = withDefaults(
   defineProps<{
@@ -79,7 +79,7 @@ const emit = defineEmits<{
   change: [event: Event];
   focus: [event: Event];
   blur: [event: Event];
-  changeDelayed: [value: ModelValue];
+  changeDelayed: [value: Value];
 }>();
 
 defineExpose({ focus, select });
@@ -197,7 +197,7 @@ function handleInputFocus($event) {
   emit('focus', $event);
   if (props.type === 'number' && !inputValue.value) select();
 }
-function setTimeoutForChangeDelayed(oldValue: ModelValue) {
+function setTimeoutForChangeDelayed(oldValue: Value) {
   setTimeout(() => {
     if (inputValue.value === oldValue) emit('changeDelayed', oldValue);
   }, props.delayChangeTime);
