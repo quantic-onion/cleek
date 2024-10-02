@@ -84,7 +84,7 @@ const inputRef = ref<HTMLInputElement>();
 const isShowingPassword = ref(false);
 const { windowWidth } = useWindowWidth();
 
-const value = computed({
+const inputValue = computed({
   get() {
     return modelValue.value;
   },
@@ -194,12 +194,12 @@ function setSelect() {
 }
 function checkSearchTime(oldValue: ModelValue) {
   setTimeout(() => {
-    if (value.value === oldValue) emit('delayChange', oldValue);
+    if (inputValue.value === oldValue) emit('delayChange', oldValue);
   }, props.delayChangeTime || defaultDelayChangeTime);
 }
 function handleInputFocus($event) {
   emit('focus', $event);
-  if (props.type === 'number' && !value.value) setSelect();
+  if (props.type === 'number' && !inputValue.value) setSelect();
 }
 
 onMounted(() => {
@@ -225,7 +225,7 @@ onMounted(() => {
         group="left"
         type="filled"
         class="ck-input-plus-minus-buttons"
-        @click="value = +value - 1"
+        @click="inputValue = +inputValue - 1"
       />
       <!-- icon left -->
       <ck-icon
@@ -238,7 +238,7 @@ onMounted(() => {
       />
       <input
         v-if="isShowingPassword"
-        v-model="value"
+        v-model="inputValue"
         ref="inputRef"
         type="text"
         :autocomplete="autocomplete ? 'on' : 'off'"
@@ -254,7 +254,7 @@ onMounted(() => {
       />
       <input
         v-else
-        v-model="value"
+        v-model="inputValue"
         ref="inputRef"
         :autocomplete="autocomplete ? 'on' : 'off'"
         :type="type || defaultType"
@@ -292,7 +292,7 @@ onMounted(() => {
         group="right"
         type="filled"
         class="ck-input-plus-minus-buttons"
-        @click="value = +value + 1"
+        @click="inputValue = +inputValue + 1"
       />
     </div>
   </div>
