@@ -177,6 +177,12 @@ const computedStyleInput = computed(() => {
   return list;
 });
 
+function setFocus() {
+  inputRef.value?.focus();
+}
+function setSelect() {
+  inputRef.value?.select();
+}
 function handleInputClick(event: Event) {
   if (props.autoSelect) inputRef.value?.select();
   emit('click', event);
@@ -190,12 +196,6 @@ function handleInputhange(event: Event) {
 function handleInputFocus($event) {
   emit('focus', $event);
   if (props.type === 'number' && !inputValue.value) setSelect();
-}
-function setFocus() {
-  inputRef.value?.focus();
-}
-function setSelect() {
-  inputRef.value?.select();
 }
 function checkSearchTime(oldValue: ModelValue) {
   setTimeout(() => {
