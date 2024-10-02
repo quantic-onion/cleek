@@ -205,9 +205,7 @@ function setTimeoutForChangeDelayed(oldValue: ModelValue) {
 
 onMounted(() => {
   cleekOptions.value = hooks.getCleekOptions(getCurrentInstance);
-  if (props.autofocus) {
-    focus();
-  }
+  if (props.autofocus) focus();
 });
 </script>
 
