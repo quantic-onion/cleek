@@ -105,27 +105,26 @@ const inputValue = computed({
     checkSearchTime(val);
   },
 });
-
 const realLabelAlign = computed(() => {
   if (props.labelAlign) return props.labelAlign;
   if (props.align) return props.align;
   if (props.plusMinusButtons) return plusMinusButtonsDefaultAlign;
   return 'left';
 });
-
-// events
-function onClick(event: Event) {
-  if (props.autoSelect) inputRef.value?.select();
-  emit('click', event);
-}
-function onInput(event: Event) {
-  emit('input', event);
-}
-function onChange(event: Event) {
-  emit('change', event);
-}
-
-// style
+const computedStyle = computed(() => {
+  const list = [];
+  // width
+  let width = '';
+  if (props.width) width = props.width;
+  if (props.plusMinusButtons) width = plusMinusButtonsDefaultWithInput;
+  if (width) list.push({ width: width });
+  // width-break
+  if (props.widthBreaks) {
+    const width = hooks.getWidthByWidthBreaks(props.widthBreaks, windowWidth.value);
+    if (width) list.push({ width });
+  }
+  return list;
+});
 const computedClassInput = computed(() => {
   const list = [];
   // group
@@ -178,21 +177,16 @@ const computedStyleInput = computed(() => {
   return list;
 });
 
-const computedStyle = computed(() => {
-  const list = [];
-  // width
-  let width = '';
-  if (props.width) width = props.width;
-  if (props.plusMinusButtons) width = plusMinusButtonsDefaultWithInput;
-  if (width) list.push({ width: width });
-  // width-break
-  if (props.widthBreaks) {
-    const width = hooks.getWidthByWidthBreaks(props.widthBreaks, windowWidth.value);
-    if (width) list.push({ width });
-  }
-  return list;
-});
-
+function onClick(event: Event) {
+  if (props.autoSelect) inputRef.value?.select();
+  emit('click', event);
+}
+function onInput(event: Event) {
+  emit('input', event);
+}
+function onChange(event: Event) {
+  emit('change', event);
+}
 function setFocus() {
   inputRef.value?.focus();
 }
