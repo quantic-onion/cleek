@@ -25,44 +25,53 @@ type ModelValue = string | number;
 
 const modelValue = defineModel<ModelValue>({ required: true });
 
-const props = defineProps<{
-  type?: InputType;
-  autocomplete?: boolean;
-  disabled?: boolean;
-  placeholder?: string;
-  plusMinusButtons?: boolean;
-  min?: number;
-  max?: number;
-  // label
-  label?: string;
-  labelAlign?: Align;
-  // icon
-  icon?: Icon;
-  iconRight?: Icon;
-  iconPack?: IconPack;
-  iconColor?: Color;
-  // group
-  group?: Align;
-  groupVertical?: AlignVertical;
-  widthBreaks?: WidthBreaks;
-  // style
-  fontSize?: SizeInCSS;
-  size?: 's' | 'm' | 'l' | 'xl'; // default m
-  hideBorder?: boolean;
-  width?: string;
-  align?: Align;
-  layout?: Layout;
-  borderColor?: Color;
-  textColor?: Color;
-  optional?: boolean;
-  // functions
-  autofocus?: boolean;
-  capitalize?: boolean;
-  toUpperCase?: boolean;
-  autoSelect?: boolean;
-  delayChangeTime?: number;
-  justInteger?: boolean;
-}>();
+const props = withDefaults(
+  defineProps<{
+    type?: InputType;
+    autocomplete?: boolean;
+    disabled?: boolean;
+    placeholder?: string;
+    plusMinusButtons?: boolean;
+    min?: number;
+    max?: number;
+    // label
+    label?: string;
+    labelAlign?: Align;
+    // icon
+    icon?: Icon;
+    iconRight?: Icon;
+    iconPack?: IconPack;
+    iconColor?: Color;
+    // group
+    group?: Align;
+    groupVertical?: AlignVertical;
+    widthBreaks?: WidthBreaks;
+    // style
+    fontSize?: SizeInCSS;
+    size?: 's' | 'm' | 'l' | 'xl';
+    hideBorder?: boolean;
+    width?: string;
+    align?: Align;
+    layout?: Layout;
+    borderColor?: Color;
+    textColor?: Color;
+    optional?: boolean;
+    // functions
+    autofocus?: boolean;
+    capitalize?: boolean;
+    toUpperCase?: boolean;
+    autoSelect?: boolean;
+    delayChangeTime?: number;
+    justInteger?: boolean;
+  }>(),
+  {
+    type: 'text',
+    // style
+    size: 'm',
+    // functions
+    delayChangeTime: 300,
+  },
+);
 
 const emit = defineEmits<{
   click: [event: Event];
@@ -75,14 +84,12 @@ const emit = defineEmits<{
 
 defineExpose({ setFocus, setSelect });
 
-const defaultType = 'text';
-const plusMinusButtonsDefaultWithInput = '120px';
-const plusMinusButtonsDefaultAlign = 'center';
-const defaultDelayChangeTime = 300;
+const { windowWidth } = useWindowWidth();
 const cleekOptions = ref<CleekOptions>();
 const inputRef = ref<HTMLInputElement>();
 const isShowingPassword = ref(false);
-const { windowWidth } = useWindowWidth();
+const plusMinusButtonsDefaultWithInput = '120px';
+const plusMinusButtonsDefaultAlign = 'center';
 
 const inputValue = computed({
   get() {
@@ -195,7 +202,7 @@ function setSelect() {
 function checkSearchTime(oldValue: ModelValue) {
   setTimeout(() => {
     if (inputValue.value === oldValue) emit('delayChange', oldValue);
-  }, props.delayChangeTime || defaultDelayChangeTime);
+  }, props.delayChangeTime);
 }
 function handleInputFocus($event) {
   emit('focus', $event);
@@ -257,7 +264,7 @@ onMounted(() => {
         v-model="inputValue"
         ref="inputRef"
         :autocomplete="autocomplete ? 'on' : 'off'"
-        :type="type || defaultType"
+        :type="type"
         :placeholder="placeholder"
         :class="computedClassInput"
         :style="computedStyleInput"
