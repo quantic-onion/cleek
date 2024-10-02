@@ -64,13 +64,13 @@ const props = defineProps<{
   justInteger?: boolean;
 }>();
 
-const emits = defineEmits<{
-  (e: 'click', event: Event): void;
-  (e: 'input', event: Event): void;
-  (e: 'change', event: Event): void;
-  (e: 'focus', event: Event): void;
-  (e: 'blur', event: Event): void;
-  (e: 'delayChange', value: ModelValue): void;
+const emit = defineEmits<{
+  click: [event: Event];
+  input: [event: Event];
+  change: [event: Event];
+  focus: [event: Event];
+  blur: [event: Event];
+  delayChange: [value: ModelValue];
 }>();
 
 defineExpose({ setFocus, setSelect });
@@ -109,13 +109,13 @@ const realLabelAlign = computed(() => {
 // events
 function onClick(event: Event) {
   if (props.autoSelect) inputRef.value?.select();
-  emits('click', event);
+  emit('click', event);
 }
 function onInput(event: Event) {
-  emits('input', event);
+  emit('input', event);
 }
 function onChange(event: Event) {
-  emits('change', event);
+  emit('change', event);
 }
 
 // style
@@ -194,11 +194,11 @@ function setSelect() {
 }
 function checkSearchTime(oldValue: ModelValue) {
   setTimeout(() => {
-    if (value.value === oldValue) emits('delayChange', oldValue);
+    if (value.value === oldValue) emit('delayChange', oldValue);
   }, props.delayChangeTime || defaultDelayChangeTime);
 }
 function handleInputFocus($event) {
-  emits('focus', $event);
+  emit('focus', $event);
   if (props.type === 'number' && !value.value) setSelect();
 }
 
@@ -250,7 +250,7 @@ onMounted(() => {
         @input="onInput($event)"
         @click="onClick($event)"
         @focus="handleInputFocus($event)"
-        @blur="emits('blur', $event)"
+        @blur="emit('blur', $event)"
       />
       <input
         v-else
@@ -266,7 +266,7 @@ onMounted(() => {
         @input="onInput($event)"
         @click="onClick($event)"
         @focus="handleInputFocus($event)"
-        @blur="emits('blur', $event)"
+        @blur="emit('blur', $event)"
       />
       <div
         class="show-password"
