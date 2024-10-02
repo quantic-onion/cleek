@@ -102,7 +102,7 @@ const inputValue = computed({
     if (typeof props.min !== 'undefined' && +val < +props.min) val = +props.min;
     if (typeof props.max !== 'undefined' && +val > +props.max) val = +props.max;
     modelValue.value = val;
-    checkSearchTime(val);
+    setTimeoutForChangeDelayed(val);
   },
 });
 const finalLabelAlign = computed(() => {
@@ -197,7 +197,7 @@ function handleInputFocus($event) {
   emit('focus', $event);
   if (props.type === 'number' && !inputValue.value) select();
 }
-function checkSearchTime(oldValue: ModelValue) {
+function setTimeoutForChangeDelayed(oldValue: ModelValue) {
   setTimeout(() => {
     if (inputValue.value === oldValue) emit('changeDelayed', oldValue);
   }, props.delayChangeTime);
