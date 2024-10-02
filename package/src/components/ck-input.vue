@@ -21,8 +21,11 @@ import type {
   WidthBreaks,
 } from '../types/cleek-options';
 
+type ModelValue = string | number;
+
+const modelValue = defineModel<ModelValue>({ required: true });
+
 const props = defineProps<{
-  modelValue: string | number;
   type?: InputType;
   autocomplete?: boolean;
   disabled?: boolean;
@@ -62,13 +65,12 @@ const props = defineProps<{
 }>();
 
 const emits = defineEmits<{
-  (e: 'update:modelValue', value: string | number): void;
   (e: 'click', event: Event): void;
   (e: 'input', event: Event): void;
   (e: 'change', event: Event): void;
   (e: 'focus', event: Event): void;
   (e: 'blur', event: Event): void;
-  (e: 'delayChange', value: string | number): void;
+  (e: 'delayChange', value: ModelValue): void;
 }>();
 
 defineExpose({ setFocus, setSelect });
@@ -84,15 +86,15 @@ const { windowWidth } = useWindowWidth();
 
 const value = computed({
   get() {
-    return props.modelValue;
+    return modelValue.value;
   },
-  set(val: string | number) {
+  set(val) {
     if (props.capitalize) val = qmStr.capitalize(`${val}`);
     if (props.toUpperCase) val = `${val}`.toUpperCase();
     if (props.justInteger) val = parseInt(`${+val}`);
     if (typeof props.min !== 'undefined' && +val < +props.min) val = +props.min;
     if (typeof props.max !== 'undefined' && +val > +props.max) val = +props.max;
-    emits('update:modelValue', val);
+    modelValue.value = val;
     checkSearchTime(val);
   },
 });
@@ -190,7 +192,7 @@ function setFocus() {
 function setSelect() {
   inputRef.value?.select();
 }
-function checkSearchTime(oldValue: string | number) {
+function checkSearchTime(oldValue: ModelValue) {
   setTimeout(() => {
     if (value.value === oldValue) emits('delayChange', oldValue);
   }, props.delayChangeTime || defaultDelayChangeTime);
