@@ -43,7 +43,7 @@ const props = defineProps<{
   groupVertical?: AlignVertical;
   widthBreaks?: WidthBreaks;
   // style
-  fontSize: SizeInCSS;
+  fontSize?: SizeInCSS;
   size?: 's' | 'm' | 'l' | 'xl'; // default m
   hideBorder?: boolean;
   width?: string;
