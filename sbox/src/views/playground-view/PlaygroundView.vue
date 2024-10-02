@@ -6,7 +6,9 @@ const value = ref(true);
 </script>
 
 <template>
-  <div class="playground-view"></div>
+  <div class="playground-view">
+    
+  </div>
 </template>
 
 <style lang="stylus" scoped>
