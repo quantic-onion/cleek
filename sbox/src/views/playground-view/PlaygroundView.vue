@@ -1,13 +1,13 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import { CkInput } from 'cleek';
+import {  } from 'cleek';
 
-const value = ref(0);
+const value = ref('');
 </script>
 
 <template>
   <div class="playground-view">
-    <ck-input v-model="value" type="number" />
+    
   </div>
 </template>
 

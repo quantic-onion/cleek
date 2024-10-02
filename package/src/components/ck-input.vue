@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed, onMounted, getCurrentInstance } from 'vue';
+import { ref, computed, watch, onMounted, getCurrentInstance } from 'vue';
 import { qmStr } from 'quantic-methods';
 // components
 import CkLabel from './ck-label.vue';
@@ -76,9 +76,9 @@ const props = withDefaults(
 const emit = defineEmits<{
   click: [event: Event];
   input: [event: Event];
-  change: [event: Event];
   focus: [event: Event];
   blur: [event: Event];
+  change: [value: Value];
   changeDelayed: [value: Value];
 }>();
 
@@ -87,24 +87,11 @@ defineExpose({ focus, select });
 const { windowWidth } = useWindowWidth();
 const cleekOptions = ref<CleekOptions>();
 const inputRef = ref<HTMLInputElement>();
+const inputValue = ref<Value>('');
 const isShowingPassword = ref(false);
 const plusMinusButtonsDefaultWithInput = '120px';
 const plusMinusButtonsDefaultAlign = 'center';
 
-const inputValue = computed({
-  get() {
-    return modelValue.value;
-  },
-  set(val) {
-    if (props.capitalize) val = qmStr.capitalize(`${val}`);
-    if (props.toUpperCase) val = `${val}`.toUpperCase();
-    if (props.justInteger) val = parseInt(`${+val}`);
-    if (typeof props.min !== 'undefined' && +val < +props.min) val = +props.min;
-    if (typeof props.max !== 'undefined' && +val > +props.max) val = +props.max;
-    modelValue.value = val;
-    setTimeoutForChangeDelayed(val);
-  },
-});
 const finalLabelAlign = computed(() => {
   if (props.labelAlign) return props.labelAlign;
   if (props.align) return props.align;
@@ -177,6 +164,8 @@ const computedStyleInput = computed(() => {
   return list;
 });
 
+watch(modelValue, (val) => setValues(val), { immediate: true });
+
 function focus() {
   inputRef.value?.focus();
 }
@@ -184,22 +173,44 @@ function select() {
   inputRef.value?.select();
 }
 function handleInputClick(event: Event) {
-  if (props.autoSelect) inputRef.value?.select();
   emit('click', event);
+  if (props.autoSelect) inputRef.value?.select();
 }
-function handleInputInput(event: Event) {
-  emit('input', event);
+function handleInputInput($event: Event) {
+  emit('input', $event);
+  changeValues(inputValue.value);
 }
-function handleInputhange(event: Event) {
-  emit('change', event);
-}
-function handleInputFocus($event) {
+function handleInputFocus($event: Event) {
   emit('focus', $event);
-  if (props.type === 'number' && !inputValue.value) select();
+  if (props.type === 'number' && !inputValue.value) inputValue.value = '';
 }
-function setTimeoutForChangeDelayed(oldValue: Value) {
+function handleInputBlur($event: Event) {
+  emit('blur', $event);
+  if (props.type === 'number' && !inputValue.value) inputValue.value = modelValue.value;
+}
+function getFinalModelValue(modelVal: Value) {
+  let finalValue = modelVal;
+  if (props.capitalize) finalValue = qmStr.capitalize(`${finalValue}`);
+  if (props.toUpperCase) finalValue = `${finalValue}`.toUpperCase();
+  if (props.justInteger) finalValue = parseInt(`${+finalValue}`);
+  if (typeof props.min !== 'undefined' && +finalValue < +props.min) finalValue = +props.min;
+  if (typeof props.max !== 'undefined' && +finalValue > +props.max) finalValue = +props.max;
+  return finalValue;
+}
+function setValues(modelVal: Value) {
+  const finalModeValue = getFinalModelValue(modelVal);
+  modelValue.value = finalModeValue;
+  inputValue.value = finalModeValue;
+  return finalModeValue;
+}
+function changeValues(inputVal: Value) {
+  const finalModelValue = setValues(inputVal);
+  emit('change', finalModelValue);
+  setTimeoutForChangeDelayed(finalModelValue);
+}
+function setTimeoutForChangeDelayed(oldModelVal: Value) {
   setTimeout(() => {
-    if (inputValue.value === oldValue) emit('changeDelayed', oldValue);
+    if (modelValue.value === oldModelVal) emit('changeDelayed', oldModelVal);
   }, props.delayChangeTime);
 }
 
@@ -224,7 +235,7 @@ onMounted(() => {
         group="left"
         type="filled"
         class="ck-input-plus-minus-buttons"
-        @click="inputValue = +inputValue - 1"
+        @click="changeValues(+inputValue - 1)"
       />
       <!-- icon left -->
       <ck-icon
@@ -245,11 +256,10 @@ onMounted(() => {
         :class="computedClassInput"
         :style="computedStyleInput"
         :disabled="disabled"
-        @change="handleInputhange($event)"
-        @input="handleInputInput($event)"
         @click="handleInputClick($event)"
+        @input="handleInputInput($event)"
         @focus="handleInputFocus($event)"
-        @blur="emit('blur', $event)"
+        @blur="handleInputBlur($event)"
       />
       <input
         v-else
@@ -261,11 +271,10 @@ onMounted(() => {
         :class="computedClassInput"
         :style="computedStyleInput"
         :disabled="disabled"
-        @change="handleInputhange($event)"
-        @input="handleInputInput($event)"
         @click="handleInputClick($event)"
+        @input="handleInputInput($event)"
         @focus="handleInputFocus($event)"
-        @blur="emit('blur', $event)"
+        @blur="handleInputBlur($event)"
       />
       <div
         class="show-password"
@@ -291,7 +300,7 @@ onMounted(() => {
         group="right"
         type="filled"
         class="ck-input-plus-minus-buttons"
-        @click="inputValue = +inputValue + 1"
+        @click="changeValues(+inputValue + 1)"
       />
     </div>
   </div>
