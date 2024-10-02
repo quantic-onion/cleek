@@ -105,7 +105,7 @@ const inputValue = computed({
     checkSearchTime(val);
   },
 });
-const realLabelAlign = computed(() => {
+const finalLabelAlign = computed(() => {
   if (props.labelAlign) return props.labelAlign;
   if (props.align) return props.align;
   if (props.plusMinusButtons) return plusMinusButtonsDefaultAlign;
@@ -214,7 +214,7 @@ onMounted(() => {
 <template>
   <div class="ck-input" :style="computedStyle">
     <!-- label -->
-    <ck-label v-if="label" for="ck-input" :size="size" :align="realLabelAlign">
+    <ck-label v-if="label" for="ck-input" :size="size" :align="finalLabelAlign">
       {{ label }} <span v-if="optional" class="ck-input__optional-label">opcional</span>
     </ck-label>
     <div class="ck-input__content">
