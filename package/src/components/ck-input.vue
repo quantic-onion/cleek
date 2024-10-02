@@ -177,15 +177,19 @@ const computedStyleInput = computed(() => {
   return list;
 });
 
-function onClick(event: Event) {
+function handleInputClick(event: Event) {
   if (props.autoSelect) inputRef.value?.select();
   emit('click', event);
 }
-function onInput(event: Event) {
+function handleInputInput(event: Event) {
   emit('input', event);
 }
-function onChange(event: Event) {
+function handleInputhange(event: Event) {
   emit('change', event);
+}
+function handleInputFocus($event) {
+  emit('focus', $event);
+  if (props.type === 'number' && !inputValue.value) setSelect();
 }
 function setFocus() {
   inputRef.value?.focus();
@@ -197,10 +201,6 @@ function checkSearchTime(oldValue: ModelValue) {
   setTimeout(() => {
     if (inputValue.value === oldValue) emit('delayChange', oldValue);
   }, props.delayChangeTime);
-}
-function handleInputFocus($event) {
-  emit('focus', $event);
-  if (props.type === 'number' && !inputValue.value) setSelect();
 }
 
 onMounted(() => {
@@ -247,9 +247,9 @@ onMounted(() => {
         :class="computedClassInput"
         :style="computedStyleInput"
         :disabled="disabled"
-        @change="onChange($event)"
-        @input="onInput($event)"
-        @click="onClick($event)"
+        @change="handleInputhange($event)"
+        @input="handleInputInput($event)"
+        @click="handleInputClick($event)"
         @focus="handleInputFocus($event)"
         @blur="emit('blur', $event)"
       />
@@ -263,9 +263,9 @@ onMounted(() => {
         :class="computedClassInput"
         :style="computedStyleInput"
         :disabled="disabled"
-        @change="onChange($event)"
-        @input="onInput($event)"
-        @click="onClick($event)"
+        @change="handleInputhange($event)"
+        @input="handleInputInput($event)"
+        @click="handleInputClick($event)"
         @focus="handleInputFocus($event)"
         @blur="emit('blur', $event)"
       />
