@@ -79,7 +79,7 @@ const emit = defineEmits<{
   change: [event: Event];
   focus: [event: Event];
   blur: [event: Event];
-  delayChange: [value: ModelValue];
+  changeDelayed: [value: ModelValue];
 }>();
 
 defineExpose({ focus, select });
@@ -199,7 +199,7 @@ function handleInputFocus($event) {
 }
 function checkSearchTime(oldValue: ModelValue) {
   setTimeout(() => {
-    if (inputValue.value === oldValue) emit('delayChange', oldValue);
+    if (inputValue.value === oldValue) emit('changeDelayed', oldValue);
   }, props.delayChangeTime);
 }
 
