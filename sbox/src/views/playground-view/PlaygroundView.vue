@@ -2,11 +2,13 @@
 import { ref } from 'vue';
 import {  } from 'cleek';
 
-const value = ref(true);
+const value = ref('');
 </script>
 
 <template>
-  <div class="playground-view"></div>
+  <div class="playground-view">
+    
+  </div>
 </template>
 
 <style lang="stylus" scoped>

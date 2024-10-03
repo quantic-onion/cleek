@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed, onMounted, getCurrentInstance } from 'vue';
+import { ref, computed, watch, onMounted, getCurrentInstance } from 'vue';
 import { qmStr } from 'quantic-methods';
 // components
 import CkLabel from './ck-label.vue';
@@ -21,102 +21,97 @@ import type {
   WidthBreaks,
 } from '../types/cleek-options';
 
-const props = defineProps<{
-  modelValue: string | number;
-  type?: InputType;
-  autocomplete?: boolean;
-  disabled?: boolean;
-  placeholder?: string;
-  plusMinusButtons?: boolean;
-  min?: number;
-  max?: number;
-  // label
-  label?: string;
-  labelAlign?: Align;
-  // icon
-  icon?: Icon;
-  iconRight?: Icon;
-  iconPack?: IconPack;
-  iconColor?: Color;
-  // group
-  group?: Align;
-  groupVertical?: AlignVertical;
-  widthBreaks?: WidthBreaks;
-  // style
-  fontSize: SizeInCSS;
-  size?: 's' | 'm' | 'l' | 'xl'; // default m
-  hideBorder?: boolean;
-  width?: string;
-  align?: Align;
-  layout?: Layout;
-  borderColor?: Color;
-  textColor?: Color;
-  optional?: boolean;
-  // functions
-  autofocus?: boolean;
-  capitalize?: boolean;
-  toUpperCase?: boolean;
-  autoSelect?: boolean;
-  delayChangeTime?: number;
-  justInteger?: boolean;
+type Value = string | number;
+
+const modelValue = defineModel<Value>({ required: true });
+
+const props = withDefaults(
+  defineProps<{
+    type?: InputType;
+    autocomplete?: boolean;
+    disabled?: boolean;
+    placeholder?: string;
+    plusMinusButtons?: boolean;
+    min?: number;
+    max?: number;
+    // label
+    label?: string;
+    labelAlign?: Align;
+    // icon
+    icon?: Icon;
+    iconRight?: Icon;
+    iconPack?: IconPack;
+    iconColor?: Color;
+    // group
+    group?: Align;
+    groupVertical?: AlignVertical;
+    widthBreaks?: WidthBreaks;
+    // style
+    fontSize?: SizeInCSS;
+    size?: 's' | 'm' | 'l' | 'xl';
+    hideBorder?: boolean;
+    width?: string;
+    align?: Align;
+    layout?: Layout;
+    borderColor?: Color;
+    textColor?: Color;
+    optional?: boolean;
+    // functions
+    autofocus?: boolean;
+    capitalize?: boolean;
+    toUpperCase?: boolean;
+    autoSelect?: boolean;
+    delayChangeTime?: number;
+    justInteger?: boolean;
+  }>(),
+  {
+    type: 'text',
+    // style
+    size: 'm',
+    // functions
+    delayChangeTime: 300,
+  },
+);
+
+const emit = defineEmits<{
+  click: [event: Event];
+  input: [event: Event];
+  focus: [event: Event];
+  blur: [event: Event];
+  change: [value: Value];
+  changeDelayed: [value: Value];
 }>();
 
-const emits = defineEmits<{
-  (e: 'update:modelValue', value: string | number): void;
-  (e: 'click', event: Event): void;
-  (e: 'input', event: Event): void;
-  (e: 'change', event: Event): void;
-  (e: 'focus', event: Event): void;
-  (e: 'blur', event: Event): void;
-  (e: 'delayChange', value: string | number): void;
-}>();
+defineExpose({ focus, select });
 
-defineExpose({ setFocus, setSelect });
-
-const defaultType = 'text';
-const plusMinusButtonsDefaultWithInput = '120px';
-const plusMinusButtonsDefaultAlign = 'center';
-const defaultDelayChangeTime = 300;
+const { windowWidth } = useWindowWidth();
 const cleekOptions = ref<CleekOptions>();
 const inputRef = ref<HTMLInputElement>();
+const inputValue = ref<Value>('');
 const isShowingPassword = ref(false);
-const { windowWidth } = useWindowWidth();
+const plusMinusButtonsDefaultWithInput = '120px';
+const plusMinusButtonsDefaultAlign = 'center';
 
-const value = computed({
-  get() {
-    return props.modelValue;
-  },
-  set(val: string | number) {
-    if (props.capitalize) val = qmStr.capitalize(`${val}`);
-    if (props.toUpperCase) val = `${val}`.toUpperCase();
-    if (props.justInteger) val = parseInt(`${+val}`);
-    if (typeof props.min !== 'undefined' && +val < +props.min) val = +props.min;
-    if (typeof props.max !== 'undefined' && +val > +props.max) val = +props.max;
-    emits('update:modelValue', val);
-    checkSearchTime(val);
-  },
-});
-
-const realLabelAlign = computed(() => {
+const finalLabelAlign = computed(() => {
   if (props.labelAlign) return props.labelAlign;
   if (props.align) return props.align;
   if (props.plusMinusButtons) return plusMinusButtonsDefaultAlign;
   return 'left';
 });
-
-// events
-function onClick(event: Event) {
-  if (props.autoSelect) inputRef.value?.select();
-  emits('click', event);
-}
-function onInput(event: Event) {
-  emits('input', event);
-}
-function onChange(event: Event) {
-  emits('change', event);
-}
-
-// style
+const computedStyle = computed(() => {
+  const list = [];
+  // width
+  let width = '';
+  if (props.width) width = props.width;
+  if (props.plusMinusButtons) width = plusMinusButtonsDefaultWithInput;
+  if (width) list.push({ width: width });
+  // width-break
+  if (props.widthBreaks) {
+    const width = hooks.getWidthByWidthBreaks(props.widthBreaks, windowWidth.value);
+    if (width) list.push({ width });
+  }
+  return list;
+});
 const computedClassInput = computed(() => {
   const list = [];
   // group
@@ -169,49 +164,66 @@ const computedStyleInput = computed(() => {
   return list;
 });
 
-const computedStyle = computed(() => {
-  const list = [];
-  // width
-  let width = '';
-  if (props.width) width = props.width;
-  if (props.plusMinusButtons) width = plusMinusButtonsDefaultWithInput;
-  if (width) list.push({ width: width });
-  // width-break
-  if (props.widthBreaks) {
-    const width = hooks.getWidthByWidthBreaks(props.widthBreaks, windowWidth.value);
-    if (width) list.push({ width });
-  }
-  return list;
-});
+watch(modelValue, (val) => setValues(val), { immediate: true });
 
-function setFocus() {
+function focus() {
   inputRef.value?.focus();
 }
-function setSelect() {
+function select() {
   inputRef.value?.select();
 }
-function checkSearchTime(oldValue: string | number) {
-  setTimeout(() => {
-    if (value.value === oldValue) emits('delayChange', oldValue);
-  }, props.delayChangeTime || defaultDelayChangeTime);
+function handleInputClick(event: Event) {
+  emit('click', event);
+  if (props.autoSelect) inputRef.value?.select();
 }
-function handleInputFocus($event) {
-  emits('focus', $event);
-  if (props.type === 'number' && !value.value) setSelect();
+function handleInputInput($event: Event) {
+  emit('input', $event);
+  changeValues(inputValue.value);
+}
+function handleInputFocus($event: Event) {
+  emit('focus', $event);
+  if (props.type === 'number' && !inputValue.value) inputValue.value = '';
+}
+function handleInputBlur($event: Event) {
+  emit('blur', $event);
+  if (props.type === 'number' && !inputValue.value) inputValue.value = modelValue.value;
+}
+function getFinalModelValue(modelVal: Value) {
+  let finalValue = modelVal;
+  if (props.capitalize) finalValue = qmStr.capitalize(`${finalValue}`);
+  if (props.toUpperCase) finalValue = `${finalValue}`.toUpperCase();
+  if (props.justInteger) finalValue = parseInt(`${+finalValue}`);
+  if (typeof props.min !== 'undefined' && +finalValue < +props.min) finalValue = +props.min;
+  if (typeof props.max !== 'undefined' && +finalValue > +props.max) finalValue = +props.max;
+  return finalValue;
+}
+function setValues(modelVal: Value) {
+  const finalModeValue = getFinalModelValue(modelVal);
+  modelValue.value = finalModeValue;
+  inputValue.value = finalModeValue;
+  return finalModeValue;
+}
+function changeValues(inputVal: Value) {
+  const finalModelValue = setValues(inputVal);
+  emit('change', finalModelValue);
+  setTimeoutForChangeDelayed(finalModelValue);
+}
+function setTimeoutForChangeDelayed(oldModelVal: Value) {
+  setTimeout(() => {
+    if (modelValue.value === oldModelVal) emit('changeDelayed', oldModelVal);
+  }, props.delayChangeTime);
 }
 
 onMounted(() => {
   cleekOptions.value = hooks.getCleekOptions(getCurrentInstance);
-  if (props.autofocus) {
-    setFocus();
-  }
+  if (props.autofocus) focus();
 });
 </script>
 
 <template>
   <div class="ck-input" :style="computedStyle">
     <!-- label -->
-    <ck-label v-if="label" for="ck-input" :size="size" :align="realLabelAlign">
+    <ck-label v-if="label" for="ck-input" :size="size" :align="finalLabelAlign">
       {{ label }} <span v-if="optional" class="ck-input__optional-label">opcional</span>
     </ck-label>
     <div class="ck-input__content">
@@ -223,7 +235,7 @@ onMounted(() => {
         group="left"
         type="filled"
         class="ck-input-plus-minus-buttons"
-        @click="value = +value - 1"
+        @click="changeValues(+inputValue - 1)"
       />
       <!-- icon left -->
       <ck-icon
@@ -236,7 +248,7 @@ onMounted(() => {
       />
       <input
         v-if="isShowingPassword"
-        v-model="value"
+        v-model="inputValue"
         ref="inputRef"
         type="text"
         :autocomplete="autocomplete ? 'on' : 'off'"
@@ -244,27 +256,25 @@ onMounted(() => {
         :class="computedClassInput"
         :style="computedStyleInput"
         :disabled="disabled"
-        @change="onChange($event)"
-        @input="onInput($event)"
-        @click="onClick($event)"
+        @click="handleInputClick($event)"
+        @input="handleInputInput($event)"
         @focus="handleInputFocus($event)"
-        @blur="emits('blur', $event)"
+        @blur="handleInputBlur($event)"
       />
       <input
         v-else
-        v-model="value"
+        v-model="inputValue"
         ref="inputRef"
         :autocomplete="autocomplete ? 'on' : 'off'"
-        :type="type || defaultType"
+        :type="type"
         :placeholder="placeholder"
         :class="computedClassInput"
         :style="computedStyleInput"
         :disabled="disabled"
-        @change="onChange($event)"
-        @input="onInput($event)"
-        @click="onClick($event)"
+        @click="handleInputClick($event)"
+        @input="handleInputInput($event)"
         @focus="handleInputFocus($event)"
-        @blur="emits('blur', $event)"
+        @blur="handleInputBlur($event)"
       />
       <div
         class="show-password"
@@ -290,7 +300,7 @@ onMounted(() => {
         group="right"
         type="filled"
         class="ck-input-plus-minus-buttons"
-        @click="value = +value + 1"
+        @click="changeValues(+inputValue + 1)"
       />
     </div>
   </div>
