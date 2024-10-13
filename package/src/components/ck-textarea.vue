@@ -41,7 +41,7 @@ const emits = defineEmits<{
   (e: 'input', event: Event): void;
   (e: 'change', event: Event): void;
   (e: 'click', event: Event): void;
-  (e: 'delayChange', value: string): void;
+  (e: 'changeDelayed', value: string): void;
 }>();
 
 let cleekOptions: Ref<undefined | CleekOptions> = ref();
@@ -112,7 +112,7 @@ const onChange = (event: Event) => {
 
 function checkSearchTime(oldValue: string) {
   setTimeout(() => {
-    if (inputValue.value === oldValue) emits('delayChange', oldValue);
+    if (inputValue.value === oldValue) emits('changeDelayed', oldValue);
   }, props.delayChangeTime || defaultDelayChangeTime);
 }
 

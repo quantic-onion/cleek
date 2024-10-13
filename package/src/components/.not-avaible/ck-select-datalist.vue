@@ -5,7 +5,7 @@ import functions from '../utils/global-hooks.ts';
 import CkLabel from './ck-label.vue';
 import CkIcon from './ck-icon.vue';
 // name: 'CkSelect',
-// methods called by outside: setFocus
+// methods called by outside: focus
 const props = defineProps({
   modelValue: { default: null, type: [Boolean, Number, Object, Array] },
   prop: { type: String, default: 'name' }, // prop of the object showed in HTML
@@ -132,7 +132,7 @@ const realReduceFunction = (option) => {
   return props.reduceFunction(option);
 };
 
-const setFocus = () => {
+const focus = () => {
   // const el = this.$refs.vSelect.$el.children[0].children[0].children[1];
   // setTimeout(() => {
   //   el.focus();

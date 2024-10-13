@@ -9,7 +9,7 @@ import PropsAndEmitsShower from '@/components/PropsAndEmitsShower.vue';
 // data
 import { propsAndEmits } from '@/props-and-emits';
 type CkInput = {
-  setFocus: () => void;
+  focus: () => void;
   setSelect: () => void;
 }; // import { CkInput } from 'cleek';
 
@@ -32,7 +32,7 @@ const delayChange1 = ref('');
 const delayChange2 = ref('');
 
 function testFocus() {
-  refInputTestFocus.value?.setFocus();
+  refInputTestFocus.value?.focus();
 }
 function testSelect() {
   refInputTestSelect.value?.setSelect();
@@ -165,7 +165,7 @@ ComponentShower(title="Disabled")
 ComponentShower(title="Methods")
   ComponentShowerRow(title="autoSelect")
     ck-input(v-model="testAutoSelect" label="autoSelect" autoSelect)
-  ComponentShowerRow(title="input.setFocus()")
+  ComponentShowerRow(title="input.focus()")
     ck-input(v-model="testFocusVal" label="Focus" ref="refInputTestFocus")
     ck-button(@click="testFocus()")
       | Focus
@@ -178,8 +178,8 @@ ComponentShower(title="Methods")
 ComponentShower(title="Emits")
   ck-input(label="input" @input="ckNotify.notifySuccess('input')")
   ck-input(label="change" @change="ckNotify.notifySuccess('change')")
-  ck-input(v-model="delayChange1" label="delayChange" @delayChange="ckNotify.notifySuccess('delayChange')")
-  ck-input(v-model="delayChange2" label="delayChange (custom time 1s)" :delayChangeTime="1000" @delayChange="ckNotify.notifySuccess('delayChange (custom time 1s)')")
+  ck-input(v-model="delayChange1" label="changeDelayed" @changeDelayed="ckNotify.notifySuccess('changeDelayed')")
+  ck-input(v-model="delayChange2" label="changeDelayed (custom time 1s)" :delayChangeTime="1000" @changeDelayed="ckNotify.notifySuccess('changeDelayed (custom time 1s)')")
   ck-input(label="click" @click="ckNotify.notifySuccess('click')")
   ck-input(label="focus" @focus="ckNotify.notifySuccess('focus')")
   ck-input(label="blur" @blur="ckNotify.notifySuccess('blur')")

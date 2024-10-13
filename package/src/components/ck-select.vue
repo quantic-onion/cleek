@@ -62,7 +62,7 @@ const emits = defineEmits<{
 }>(); // TERMINAR CLICK / CHANGE
 
 defineExpose({
-  setFocus,
+  focus,
 });
 
 let cleekOptions: Ref<undefined | CleekOptions> = ref();
@@ -273,7 +273,7 @@ function getOptionName(option: SelectOption) {
 function setClearValue() {
   value.value = realClearValue.value;
 }
-function setFocus() {
+function focus() {
   // const el = this.$refs.vSelect.$el.children[0].children[0].children[1];
   // setTimeout(() => {
   //   el.focus();

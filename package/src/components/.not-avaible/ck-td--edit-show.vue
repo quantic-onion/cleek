@@ -95,7 +95,7 @@ function setFocusChildren(event) {
   setTimeout(() => {
     const elEdit = elParent.children[0];
     const elEditContent = elEdit.children[0];
-    if (elEditContent.setFocus) elEditContent.setFocus();
+    if (elEditContent.focus) elEditContent.focus();
   }, 1);
 }
 </script>

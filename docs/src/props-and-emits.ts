@@ -587,7 +587,7 @@ export const propsAndEmits: {
       {
         property: 'delayChangeTime',
         type: 'number',
-        description: 'delayChange emit function time',
+        description: 'changeDelayed emit function time',
         default: '300',
       },
     ], // props
