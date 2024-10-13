@@ -177,8 +177,10 @@ function handleInputClick(event: Event) {
   if (props.autoSelect) inputRef.value?.select();
 }
 function handleInputInput($event: Event) {
-  emit('input', $event);
   changeValues(inputValue.value);
+  setTimeout(() => {
+    emit('input', $event);
+  }, 1);
 }
 function handleInputFocus($event: Event) {
   emit('focus', $event);

@@ -18,7 +18,7 @@ const props = defineProps<{
 
 const emits = defineEmits<{
   // (e: 'update:modelValue', value: boolean): void;
-  (e: 'change', event: Event): void;
+  (e: 'change'): void;
 }>();
 
 // const isSelected = ref(props.modelValue);
@@ -83,15 +83,12 @@ const computedStyleLabel = computed(() => {
 //   isSelected.value = val;
 // });
 
-function onChange(event: Event) {
-  isChecked.value = event.target.checked; 
-  emits('change', event);
-}
 function onTrigger() {
   // isChecked.value = !isChecked.value;
 }
 function updateValue() {
   isChecked.value = !isChecked.value;
+  emits('change');
 }
 </script>
 
@@ -111,7 +108,6 @@ function updateValue() {
       type="checkbox"
       :disabled="disabled"
       :checked="isChecked"
-      @change="onChange($event)"
       @click.prevent
     />
       <!-- @change="isChecked = $event.target.checked; onChange($event)" -->

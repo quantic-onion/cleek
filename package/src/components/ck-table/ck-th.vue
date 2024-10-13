@@ -61,6 +61,7 @@ const computedStyle = computed(() => {
     font-size 0.8rem
     &.align-center
       justify-content center
+      text-align center
       margin-x auto
     &.align-left
       justify-content flex-start

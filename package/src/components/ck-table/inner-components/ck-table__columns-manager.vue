@@ -29,29 +29,18 @@ const emits = defineEmits<{
 let columnsCheckable: Ref<ColumnCheckableItem[]> = ref([]);
 
 const isActive = computed({
-  get() {
-    return props.modelValue;
-  },
-  set(val: boolean) {
-    emits('update:modelValue', val);
-  },
+  get() { return props.modelValue; },
+  set(val: boolean) { emits('update:modelValue', val); },
 });
 
-watch(
-  () => isActive.value,
-  (val) => {
-    if (!val) return;
-    setColumnsCheckable();
-  },
-);
-
-watch(
-  () => isActive.value,
-  (val) => {
-    if (!val) return;
-    setColumnsCheckable();
-  },
-);
+watch(() => isActive.value, (val) => {
+  if (!val) return;
+  setColumnsCheckable();
+});
+watch(() => isActive.value, (val) => {
+  if (!val) return;
+  setColumnsCheckable();
+});
 
 function setColumnsCheckable() {
   const list: ColumnCheckableItem[] = [];

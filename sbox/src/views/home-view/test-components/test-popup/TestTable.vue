@@ -4,7 +4,11 @@ import { TableData, SelectedRows } from 'cleek';
 // components
 import ContainerTest from '../components/ContainerTest.vue';
 
-const columnsListSelectable = ['ID', 'Name'];
+const columnsListSelectable = ref({
+  id: { title: 'ID' },
+  name: { title: 'Name' },
+  hidden: { title: 'Hidden Col', isDisplayed: false },
+});
 const columnsList = [
   'Columna 1',
   'Columna 2',
@@ -40,10 +44,16 @@ onMounted(() => {
 </script>
 <template>
   <ContainerTest title="TABLE">
-    <ck-table :columns="columnsListSelectable" :rows="rows" :selectedRows="selectedRows">
+    <ck-table
+      hasColumnsManager
+      :columns="columnsListSelectable"
+      :rows="rows"
+      :selectedRows="selectedRows"
+    >
       <template #row="{ row: user }">
-        <ck-td>{{ user.id }}</ck-td>
-        <ck-td>{{ user.name }}</ck-td>
+        <ck-td :col="columnsListSelectable.id">{{ user.id }}</ck-td>
+        <ck-td :col="columnsListSelectable.name">{{ user.name }}</ck-td>
+        <ck-td :col="columnsListSelectable.hidden">This column is hidden by default</ck-td>
       </template>
     </ck-table>
     <div class="test-tables__content">
@@ -70,7 +80,6 @@ onMounted(() => {
       <ck-table
         v-model:search="tableData2.search"
         v-model:currentPage="tableData2.currentPage"
-        hasColumnsManager
         :isLoading="tableData2.isLoading"
         :itemsPerPage="tableData2.itemsPerPage"
         :listLength="tableData2.listLength"
