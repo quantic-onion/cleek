@@ -84,6 +84,7 @@ function changeValue() {
       type="checkbox"
       :disabled="disabled"
       :checked="value"
+      :indeterminate="value === null"
       @change="emit('change', $event)"
       @click.prevent
     />
@@ -120,18 +121,24 @@ function changeValue() {
         transform rotate(45deg) scale(0.9)
         left 1px
         top -6px
-
 .ck-checkbox__element
   position relative
   display block
-  width 24px
   height 24px
+  width @height
+  box-sizing border-box
   border 2px solid
   border-radius 4px
   border-color var(--primary)
   transition 0.15s
+.ck-checkbox__label
+  user-select none
+  margin-left 8px
 
-.ck-checkbox__element::after
+/* Checked */
+.ck-checkbox__input:checked + .ck-checkbox__element
+  background-color var(--primary)
+.ck-checkbox__input:checked + .ck-checkbox__element::after
   content ''
   display block
   position absolute
@@ -144,38 +151,34 @@ function changeValue() {
   border-color white
   transform-origin bottom left
   transform rotate(45deg)
-  opacity 0
   box-sizing border-box
 
-.ck-checkbox__label
-  user-select none
-  margin-left 8px
-
-/* Checked */
-
-.ck-checkbox__input:checked + .ck-checkbox__element
+/* Indeterminate */
+.ck-checkbox__input:indeterminate + .ck-checkbox__element
   background-color var(--primary)
-
-.ck-checkbox__input:checked + .ck-checkbox__element::after
-  opacity 1
+.ck-checkbox__input:indeterminate + .ck-checkbox__element::after
+  content ''
+  display block
+  position absolute
+  top 50%
+  left 50%
+  height 3px
+  width 10px
+  transform translate(-50%, -50%)
+  background-color white
 
 /* Disabled */
-
 .ck-checkbox[aria-disabled='true']
   cursor not-allowed
-
 .ck-checkbox[aria-disabled='true'] .ck-checkbox__element
   border-color #757575
   background-color #e0e0e0
-
 .ck-checkbox[aria-disabled='true']
   .ck-checkbox__input:checked
   + .ck-checkbox__element
     background-color #757575
-
   .ck-checkbox[aria-disabled='true'] .ck-checkbox__element::after
     border-color #757575
-
   .ck-checkbox[aria-disabled='true']
     .ck-checkbox__input:checked
     + .ck-checkbox__element::after
