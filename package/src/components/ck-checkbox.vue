@@ -18,9 +18,20 @@ const props = defineProps<{
 }>();
 
 const emit = defineEmits<{
-  change: [value: Value];
+  change: [event: Event];
 }>();
 
+const checkboxAttributes = computed(() => {
+  return {
+    'aria-disabled': props.disabled,
+    tabindex: props.disabled ? undefined : '0',
+  };
+});
+const checkboxClass = computed(() => {
+  const list = [];
+  if (props.size) list.push(`size--${props.size}`);
+  return list;
+});
 const elementClass = computed(() => {
   const list = [];
   if (props.color && hooks.isColorTemplateVariable(props.color)) {
@@ -53,42 +64,120 @@ const labelStyle = computed(() => {
 });
 
 function changeValue() {
-  const newValue = !value.value;
-  value.value = newValue;
-  emit('change', newValue);
+  value.value = !value.value;
 }
 </script>
 
 <template>
-  <label class="checkbox" :class="{ checkbox__disabled: disabled }">
-    <input class="checkbox--input" type="checkbox" :checked="value" :disabled="disabled" @click="changeValue()" />
-    <div class="checkbox--element" :class="elementClass" :style="elementStyle" />
-    <span v-if="label" class="checkbox--label" :class="labelClass" :style="labelStyle" v-text="label" />
+  <label
+    v-bind="checkboxAttributes"
+    class="ck-checkbox"
+    :class="checkboxClass"
+    @keydown.space.prevent
+    @keyup.enter="changeValue()"
+    @keyup.space="changeValue()"
+    @click.prevent="changeValue()"
+  >
+    <input
+      class="ck-checkbox__input"
+      aria-hidden="true"
+      type="checkbox"
+      :disabled="disabled"
+      :checked="value"
+      @change="emit('change', $event)"
+      @click.prevent
+    />
+    <div class="ck-checkbox__element" :class="elementClass" :style="elementStyle" @click.prevent />
+    <span v-if="label" class="ck-checkbox__label" :class="labelClass" :style="labelStyle" v-text="label" @click.prevent />
   </label>
 </template>
 
 <style lang="stylus" scoped>
-.checkbox
-  user-select none
+.ck-checkbox
+  cursor pointer
+  position relative
+  display inline-flex
+  align-items center
+  width -moz-fit-content
   width fit-content
-  flex(row, flex-start, center, 0.25rem)
-  .checkbox--input
-    height 0
-    width 0
-    &:checked + .checkbox--element
-      background-color var(--primary)
-    &:checked + .checkbox--element::after
-      opacity 1
-  .checkbox--element
-    cursor pointer
-    height 1.4rem
-    width @height
-    border 2px solid var(--primary)
-    border-radius 0.25rem
-    transition 0.15s
-.checkbox__disabled
-  .checkbox--element
-    cursor not-allowed
-    background-color #e0e0e0
+  input
+    display none
+  span
+    margin-left 0.25rem
+  &.size--xs
+    .ck-checkbox__element
+      width 1rem
+      height @width
+      &::after
+        transform rotate(45deg) scale(0.67)
+        left 1px
+        top -8px
+  &.size--s
+    .ck-checkbox__element
+      width 1.25rem
+      height @width
+      &::after
+        transform rotate(45deg) scale(0.9)
+        left 1px
+        top -6px
+
+.ck-checkbox__element
+  position relative
+  display block
+  width 24px
+  height 24px
+  border 2px solid
+  border-radius 4px
+  border-color var(--primary)
+  transition 0.15s
+
+.ck-checkbox__element::after
+  content ''
+  display block
+  position absolute
+  left 2px
+  top -4px
+  width 8px
+  height 14px
+  border-width 0 3px 3px 0
+  border-style solid
+  border-color white
+  transform-origin bottom left
+  transform rotate(45deg)
+  opacity 0
+  box-sizing border-box
+
+.ck-checkbox__label
+  user-select none
+  margin-left 8px
+
+/* Checked */
+
+.ck-checkbox__input:checked + .ck-checkbox__element
+  background-color var(--primary)
+
+.ck-checkbox__input:checked + .ck-checkbox__element::after
+  opacity 1
+
+/* Disabled */
+
+.ck-checkbox[aria-disabled='true']
+  cursor not-allowed
+
+.ck-checkbox[aria-disabled='true'] .ck-checkbox__element
+  border-color #757575
+  background-color #e0e0e0
+
+.ck-checkbox[aria-disabled='true']
+  .ck-checkbox__input:checked
+  + .ck-checkbox__element
+    background-color #757575
+
+  .ck-checkbox[aria-disabled='true'] .ck-checkbox__element::after
     border-color #757575
+
+  .ck-checkbox[aria-disabled='true']
+    .ck-checkbox__input:checked
+    + .ck-checkbox__element::after
+      border-color #e0e0e0
 </style>
