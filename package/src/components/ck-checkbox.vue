@@ -30,7 +30,7 @@ const checkboxAttributes = computed(() => {
 });
 const checkboxClass = computed(() => {
   const list = [];
-  if (props.size) list.push(`size--${props.size}`);
+  if (props.size) list.push(`size__${props.size}`);
   return list;
 });
 const elementClass = computed(() => {
@@ -81,8 +81,8 @@ function changeValue() {
     @click.prevent="changeValue()"
   >
     <input
-      class="ck-checkbox__input"
-      :class="{ 'ck-checkbox__input--indeterminate': value === null }"
+      class="ck-checkbox--input"
+      :class="{ 'ck-checkbox--input__indeterminate': value === null }"
       aria-hidden="true"
       type="checkbox"
       :disabled="disabled"
@@ -90,8 +90,8 @@ function changeValue() {
       @change="emit('change', $event)"
       @click.prevent
     />
-    <div class="ck-checkbox__element" :class="elementClass" :style="elementStyle" @click.prevent />
-    <span v-if="label" class="ck-checkbox__label" :class="labelClass" :style="labelStyle" v-text="label" @click.prevent />
+    <div class="ck-checkbox--element" :class="elementClass" :style="elementStyle" @click.prevent />
+    <span v-if="label" class="ck-checkbox--label" :class="labelClass" :style="labelStyle" v-text="label" @click.prevent />
   </label>
 </template>
 
@@ -107,23 +107,23 @@ function changeValue() {
     display none
   span
     margin-left 0.25rem
-  &.size--xs
-    .ck-checkbox__element
+  &.size__xs
+    .ck-checkbox--element
       width 1rem
       height @width
       &::after
         transform rotate(45deg) scale(0.67)
         left 1px
         top -8px
-  &.size--s
-    .ck-checkbox__element
+  &.size__s
+    .ck-checkbox--element
       width 1.25rem
       height @width
       &::after
         transform rotate(45deg) scale(0.9)
         left 1px
         top -6px
-.ck-checkbox__element
+.ck-checkbox--element
   position relative
   display block
   height 24px
@@ -133,14 +133,14 @@ function changeValue() {
   border-radius 4px
   border-color var(--primary)
   transition 0.15s
-.ck-checkbox__label
+.ck-checkbox--label
   user-select none
   margin-left 8px
 
 /* Checked */
-.ck-checkbox__input:checked + .ck-checkbox__element
+.ck-checkbox--input:checked + .ck-checkbox--element
   background-color var(--primary)
-.ck-checkbox__input:checked + .ck-checkbox__element::after
+.ck-checkbox--input:checked + .ck-checkbox--element::after
   content ''
   display block
   position absolute
@@ -156,9 +156,9 @@ function changeValue() {
   box-sizing border-box
 
 /* Indeterminate */
-.ck-checkbox__input--indeterminate + .ck-checkbox__element
+.ck-checkbox--input__indeterminate + .ck-checkbox--element
   background-color var(--primary)
-.ck-checkbox__input--indeterminate + .ck-checkbox__element::after
+.ck-checkbox--input__indeterminate + .ck-checkbox--element::after
   content ''
   display block
   position absolute
@@ -172,17 +172,17 @@ function changeValue() {
 /* Disabled */
 .ck-checkbox[aria-disabled='true']
   cursor not-allowed
-.ck-checkbox[aria-disabled='true'] .ck-checkbox__element
+.ck-checkbox[aria-disabled='true'] .ck-checkbox--element
   border-color #757575
   background-color #e0e0e0
 .ck-checkbox[aria-disabled='true']
-  .ck-checkbox__input:checked
-  + .ck-checkbox__element
+  .ck-checkbox--input:checked
+  + .ck-checkbox--element
     background-color #757575
-  .ck-checkbox[aria-disabled='true'] .ck-checkbox__element::after
+  .ck-checkbox[aria-disabled='true'] .ck-checkbox--element::after
     border-color #757575
   .ck-checkbox[aria-disabled='true']
-    .ck-checkbox__input:checked
-    + .ck-checkbox__element::after
+    .ck-checkbox--input:checked
+    + .ck-checkbox--element::after
       border-color #e0e0e0
 </style>
