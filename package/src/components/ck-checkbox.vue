@@ -12,6 +12,7 @@ const value = defineModel<Value>({ required: true });
 const props = defineProps<{
   label?: string;
   disabled?: boolean;
+  preventAutoUpdate?: boolean;
   color?: Color;
   colorText?: Color;
   size?: Size;
@@ -64,6 +65,7 @@ const labelStyle = computed(() => {
 });
 
 function changeValue() {
+  if (props.preventAutoUpdate) return;
   value.value = !value.value;
 }
 </script>
