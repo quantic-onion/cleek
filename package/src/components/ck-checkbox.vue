@@ -138,8 +138,6 @@ function changeValue() {
   margin-left 8px
 
 /* Checked */
-.ck-checkbox--input:checked + .ck-checkbox--element
-  background-color var(--primary)
 .ck-checkbox--input:checked + .ck-checkbox--element::after
   content ''
   display block
@@ -156,8 +154,6 @@ function changeValue() {
   box-sizing border-box
 
 /* Indeterminate */
-.ck-checkbox--input__indeterminate + .ck-checkbox--element
-  background-color var(--primary)
 .ck-checkbox--input__indeterminate + .ck-checkbox--element::after
   content ''
   display block
