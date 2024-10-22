@@ -82,11 +82,11 @@ function changeValue() {
   >
     <input
       class="ck-checkbox__input"
+      :class="{ 'ck-checkbox__input--indeterminate': value === null }"
       aria-hidden="true"
       type="checkbox"
       :disabled="disabled"
       :checked="value"
-      :indeterminate="value === null"
       @change="emit('change', $event)"
       @click.prevent
     />
@@ -156,9 +156,9 @@ function changeValue() {
   box-sizing border-box
 
 /* Indeterminate */
-.ck-checkbox__input:indeterminate + .ck-checkbox__element
+.ck-checkbox__input--indeterminate + .ck-checkbox__element
   background-color var(--primary)
-.ck-checkbox__input:indeterminate + .ck-checkbox__element::after
+.ck-checkbox__input--indeterminate + .ck-checkbox__element::after
   content ''
   display block
   position absolute
