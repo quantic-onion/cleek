@@ -37,7 +37,7 @@ const elementClass = computed(() => {
   const list = [];
   if (props.color && hooks.isColorTemplateVariable(props.color)) {
     list.push(`component__border-color--${props.color}`);
-    if (value.value) list.push(`component__color-background--${props.color}`);
+    if (value.value || value === null) list.push(`component__color-background--${props.color}`);
   }
   return list;
 });
@@ -45,7 +45,7 @@ const elementStyle = computed(() => {
   const list = [];
   if (props.color && !hooks.isColorTemplateVariable(props.color)) {
     list.push({ borderColor: props.color });
-    if (value.value) list.push({ backgroundColor: props.color });
+    if (value.value || value === null) list.push({ backgroundColor: props.color });
   }
   return list;
 });
