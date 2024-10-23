@@ -9,14 +9,19 @@ type Value = boolean | null;
 
 const value = defineModel<Value>({ required: true });
 
-const props = defineProps<{
-  label?: string;
-  disabled?: boolean;
-  preventAutoUpdate?: boolean;
-  color?: Color;
-  colorText?: Color;
-  size?: Size;
-}>();
+const props = withDefaults(
+  defineProps<{
+    label?: string;
+    disabled?: boolean;
+    preventAutoUpdate?: boolean;
+    color?: Color;
+    colorText?: Color;
+    size?: Size;
+  }>(),
+  {
+    color: 'primary',
+  },
+);
 
 const emit = defineEmits<{
   change: [event: Event];
