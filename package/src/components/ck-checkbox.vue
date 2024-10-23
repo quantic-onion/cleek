@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed } from '@vue/runtime-core';
+import { computed } from 'vue';
 // types
 import type { Color, Size } from '../types/cleek-options';
 // hooks
