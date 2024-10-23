@@ -82,7 +82,7 @@ function changeValue() {
   >
     <input
       class="ck-checkbox--input"
-      :class="{ 'ck-checkbox--input__indeterminate': value === null }"
+      :class="{ 'ck-checkbox--input__intermediate': value === null }"
       aria-hidden="true"
       type="checkbox"
       :disabled="disabled"
@@ -153,8 +153,8 @@ function changeValue() {
   transform rotate(45deg)
   box-sizing border-box
 
-/* Indeterminate */
-.ck-checkbox--input__indeterminate + .ck-checkbox--element::after
+/* intermediate */
+.ck-checkbox--input__intermediate + .ck-checkbox--element::after
   content ''
   display block
   position absolute
