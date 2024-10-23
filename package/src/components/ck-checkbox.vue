@@ -136,7 +136,6 @@ function changeValue() {
   box-sizing border-box
   border 2px solid
   border-radius 4px
-  border-color var(--primary)
   transition 0.15s
 .ck-checkbox--label
   user-select none
