@@ -102,6 +102,7 @@ function changeValue() {
 
 <style lang="stylus" scoped>
 .ck-checkbox
+  user-select none
   cursor pointer
   position relative
   display inline-flex
@@ -138,7 +139,6 @@ function changeValue() {
   border-radius 4px
   transition 0.15s
 .ck-checkbox--label
-  user-select none
   margin-left 8px
 
 /* Checked */
