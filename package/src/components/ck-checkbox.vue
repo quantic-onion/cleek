@@ -98,7 +98,7 @@ function changeValue() {
     <div class="ck-checkbox--element" :class="elementClass" :style="elementStyle" @click.prevent />
     <span v-if="label || $slots.default" class="ck-checkbox--label" :class="labelClass" :style="labelStyle" @click.prevent>
       <span v-if="label" v-text="label" />
-      <slot v-else />
+      <slot />
     </span>
   </label>
 </template>
