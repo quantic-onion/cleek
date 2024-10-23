@@ -157,7 +157,7 @@ function changeValue() {
   transform rotate(45deg)
   box-sizing border-box
 
-/* intermediate */
+/* Intermediate */
 .ck-checkbox--input__intermediate + .ck-checkbox--element::after
   content ''
   display block
