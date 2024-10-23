@@ -96,7 +96,10 @@ function changeValue() {
       @click.prevent
     />
     <div class="ck-checkbox--element" :class="elementClass" :style="elementStyle" @click.prevent />
-    <span v-if="label" class="ck-checkbox--label" :class="labelClass" :style="labelStyle" v-text="label" @click.prevent />
+    <span v-if="label || $slots.default" class="ck-checkbox--label" :class="labelClass" :style="labelStyle" @click.prevent>
+      <span v-if="label" v-text="label" />
+      <slot v-else />
+    </span>
   </label>
 </template>
 

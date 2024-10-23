@@ -2,10 +2,6 @@
 
 ## Version ?.?.?
 
-### Component: ck-checkbox.vue
-
-1. $slots.default (que se usaba para agregar un label) eliminado, en si lugar se usa la props "label"
-
 ### Component: ck-input.vue
 
 1. emit('delayChange', val) --> emit('changeDelayed', val)
