@@ -41,8 +41,8 @@ const checkboxClass = computed(() => {
 const elementClass = computed(() => {
   const list = [];
   if (props.color && hooks.isColorTemplateVariable(props.color)) {
-    list.push(`component__border-color--${props.color}`);
-    if (value.value || value.value === null) list.push(`component__color-background--${props.color}`);
+    list.push(`ck-component__border-color--${props.color}`);
+    if (value.value || value.value === null) list.push(`ck-component__color-background--${props.color}`);
   }
   return list;
 });
@@ -57,7 +57,7 @@ const elementStyle = computed(() => {
 const labelClass = computed(() => {
   const list = [];
   if (props.colorText && hooks.isColorTemplateVariable(props.colorText)) {
-    list.push(`component__color--${props.colorText}`);
+    list.push(`ck-component__color--${props.colorText}`);
   }
   return list;
 });
