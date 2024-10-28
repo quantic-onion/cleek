@@ -1,10 +1,13 @@
 <script setup lang="ts">
-import { ref, computed, watch, onMounted, getCurrentInstance } from 'vue';
+import { computed, watch } from 'vue';
+import { storeToRefs } from 'pinia';
+// stores
+import { useCleekOptionsStore } from '@/cleek-options/cleek-options.store';
 // components
 import CkButton from './ck-button.vue';
 import CkIcon from './ck-icon.vue';
 // types
-import type { Align, Color, Layout, CleekOptions, ButtonType } from '../cleek-options/cleek-options.types';
+import type { Align, Color, Layout, ButtonType } from '../cleek-options/cleek-options.types';
 // utils
 import hooks from '@/utils/global-hooks';
 import { setBodyOverflow } from '@/utils/css-helpers';
@@ -41,15 +44,15 @@ const emit = defineEmits<{
   cancel: [];
 }>();
 
-const cleekOptions = ref<CleekOptions>();
+const { cleekOptions } = storeToRefs(useCleekOptionsStore());
 
 const computedClassContent = computed(() => {
   const list = [];
   // layout
-  const layout = props.layout || cleekOptions.value?.styles.layout;
+  const layout = props.layout || cleekOptions.value.styles.layout;
   if (layout) list.push(layout);
   // text-color
-  const textColor = props.textColor || cleekOptions.value?.popup.textColor;
+  const textColor = props.textColor || cleekOptions.value.popup.textColor;
   if (textColor && hooks.isColorTemplateVariable(textColor)) {
     list.push(`ck-component__color--${textColor}`);
   }
@@ -58,23 +61,23 @@ const computedClassContent = computed(() => {
 const computedStyleContent = computed(() => {
   const list = [];
   // font-size
-  const fontSize = props.fontSize || cleekOptions.value?.popup.fontSize;
+  const fontSize = props.fontSize || cleekOptions.value.popup.fontSize;
   if (fontSize) list.push({ 'font-size': fontSize });
   // width
   if (props.width) list.push({ width: props.width });
   // max-width
-  const maxWidth = props.width ? '95%' : props.maxWidth || cleekOptions.value?.popup.maxWidth;
+  const maxWidth = props.width ? '95%' : props.maxWidth || cleekOptions.value.popup.maxWidth;
   if (maxWidth) list.push({ 'max-width': maxWidth });
   // text-color
-  const textColor = props.textColor || cleekOptions.value?.popup.textColor;
+  const textColor = props.textColor || cleekOptions.value.popup.textColor;
   if (textColor && !hooks.isColorTemplateVariable(textColor)) {
     list.push(`ck-component__color--${textColor}`);
     list.push({ color: textColor });
   }
   // background-color
   let backgroundColor = 'white';
-  if (cleekOptions.value?.popup.backgroundColor) backgroundColor = cleekOptions.value?.popup.backgroundColor;
-  if (cleekOptions.value?.darkMode) backgroundColor = cleekOptions.value?.darkModeColorItems;
+  if (cleekOptions.value.popup.backgroundColor) backgroundColor = cleekOptions.value.popup.backgroundColor;
+  if (cleekOptions.value.darkMode) backgroundColor = cleekOptions.value.darkModeColorItems;
   if (props.backgroundColor) backgroundColor = props.backgroundColor;
   if (backgroundColor && !hooks.isColorTemplateVariable(backgroundColor)) {
     list.push({ backgroundColor: backgroundColor });
@@ -85,15 +88,15 @@ const computedStyleHeader = computed(() => {
   const list = [];
   // header-color
   let headerColor = '';
-  if (cleekOptions.value?.popup.headerColor) headerColor = cleekOptions.value?.popup.headerColor;
-  if (cleekOptions.value?.darkMode) headerColor = cleekOptions.value?.darkModeColorItems;
+  if (cleekOptions.value.popup.headerColor) headerColor = cleekOptions.value.popup.headerColor;
+  if (cleekOptions.value.darkMode) headerColor = cleekOptions.value.darkModeColorItems;
   if (props.headerColor) headerColor = props.headerColor;
   if (headerColor && !hooks.isColorTemplateVariable(headerColor)) {
     list.push({ backgroundColor: headerColor });
   }
   // text-color
-  let textColor = props.textColor || cleekOptions.value?.popup.textColor;
-  if (cleekOptions.value?.darkMode) textColor = cleekOptions.value?.darkModeColorText;
+  let textColor = props.textColor || cleekOptions.value.popup.textColor;
+  if (cleekOptions.value.darkMode) textColor = cleekOptions.value.darkModeColorText;
   if (textColor && !hooks.isColorTemplateVariable(textColor)) {
     list.push(`ck-component__color--${textColor}`);
     list.push({ color: textColor });
@@ -104,8 +107,8 @@ const computedStyleBody = computed(() => {
   const list = [];
   // background-color
   let backgroundColor = '';
-  if (cleekOptions.value?.popup.backgroundColor) backgroundColor = cleekOptions.value?.popup.backgroundColor;
-  if (cleekOptions.value?.darkMode) backgroundColor = cleekOptions.value?.darkModeColorItems;
+  if (cleekOptions.value.popup.backgroundColor) backgroundColor = cleekOptions.value.popup.backgroundColor;
+  if (cleekOptions.value.darkMode) backgroundColor = cleekOptions.value.darkModeColorItems;
   if (props.backgroundColor) backgroundColor = props.backgroundColor;
   if (backgroundColor && !hooks.isColorTemplateVariable(backgroundColor)) {
     list.push({ backgroundColor: backgroundColor });
@@ -115,10 +118,10 @@ const computedStyleBody = computed(() => {
 const computedClassHeader = computed(() => {
   const list = [];
   // header-align
-  const headerAlign = props.headerAlign || cleekOptions.value?.popup.headerAlign;
+  const headerAlign = props.headerAlign || cleekOptions.value.popup.headerAlign;
   if (headerAlign) list.push(`header-align--${headerAlign}`);
   // header-color
-  const headerColor = props.headerColor || cleekOptions.value?.popup.headerColor;
+  const headerColor = props.headerColor || cleekOptions.value.popup.headerColor;
   if (headerColor && hooks.isColorTemplateVariable(headerColor)) {
     list.push(`ck-component__bg-color--${headerColor}`);
   }
@@ -128,12 +131,12 @@ const computedClassHeader = computed(() => {
 });
 const realAcceptBtnType = computed(() => {
   if (props.acceptBtnType) return props.acceptBtnType;
-  if (cleekOptions.value?.popup.acceptBtnType) return cleekOptions.value.popup.acceptBtnType;
+  if (cleekOptions.value.popup.acceptBtnType) return cleekOptions.value.popup.acceptBtnType;
   return 'outlined';
 });
 const realCancelBtnType = computed(() => {
   if (props.cancelBtnType) return props.cancelBtnType;
-  if (cleekOptions.value?.popup.cancelBtnType) return cleekOptions.value?.popup.cancelBtnType;
+  if (cleekOptions.value.popup.cancelBtnType) return cleekOptions.value.popup.cancelBtnType;
   return 'flat';
 });
 const isCloseBtnVisible = computed(() => {
@@ -143,12 +146,12 @@ const isCloseBtnVisible = computed(() => {
 });
 const realAcceptBtnText = computed(() => {
   if (props.acceptBtnText) return props.acceptBtnText;
-  if (cleekOptions.value?.lang === 'es') return 'Aceptar';
+  if (cleekOptions.value.lang === 'es') return 'Aceptar';
   return 'Accept';
 });
 const realCancelBtnText = computed(() => {
   if (props.cancelBtnText) return props.cancelBtnText;
-  if (cleekOptions.value?.lang === 'es') return 'Cancelar';
+  if (cleekOptions.value.lang === 'es') return 'Cancelar';
   return 'Cancel';
 });
 
@@ -166,10 +169,6 @@ function onBgClick() {
   if (props.notCloseByBg || props.notClose) return;
   isActive.value = false;
 }
-
-onMounted(() => {
-  cleekOptions.value = hooks.getCleekOptions(getCurrentInstance);
-});
 </script>
 
 <template>

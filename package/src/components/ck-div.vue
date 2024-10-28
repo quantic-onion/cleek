@@ -1,8 +1,10 @@
 <script setup lang="ts">
-import { computed, getCurrentInstance, onMounted, ref } from 'vue';
-import type { Ref } from 'vue';
+import { computed } from 'vue';
+import { storeToRefs } from 'pinia';
+// stores
+import { useCleekOptionsStore } from '@/cleek-options/cleek-options.store';
 // types
-import type { CleekOptions, SizeInCSS } from '../cleek-options/cleek-options.types';
+import type { SizeInCSS } from '../cleek-options/cleek-options.types';
 // hooks
 import hooks from '../utils/global-hooks';
 import useWindowWidth from '../hooks/windowWidth';
@@ -17,8 +19,8 @@ const emits = defineEmits<{
   (e: 'click', event: Event): void;
 }>();
 
+const { cleekOptions } = storeToRefs(useCleekOptionsStore());
 const { windowWidth } = useWindowWidth();
-let cleekOptions: Ref<undefined | CleekOptions> = ref();
 
 const computedStyle = computed(() => {
   const list = [];
@@ -28,15 +30,11 @@ const computedStyle = computed(() => {
     if (width) list.push({ width });
   }
   // gap
-  const gap = props.gap || cleekOptions.value?.div.gap;
+  const gap = props.gap || cleekOptions.value.div.gap;
   if (gap) list.push({ gap });
   // block
   if (props.block) list.push({ display: 'block' });
   return list;
-});
-
-onMounted(() => {
-  cleekOptions.value = hooks.getCleekOptions(getCurrentInstance);
 });
 </script>
 

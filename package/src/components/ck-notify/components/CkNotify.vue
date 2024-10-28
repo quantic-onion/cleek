@@ -1,16 +1,10 @@
 <script setup lang="ts">
-import { computed, getCurrentInstance, onMounted, ref } from 'vue';
+import { ref, computed, onMounted } from 'vue';
 import { packageConfig } from '../../../package-config';
-
-import type { Ref } from 'vue';
 // components
 import CkIcon from '../../ck-icon.vue';
-// types
-import type { CleekOptions } from '../../../cleek-options/cleek-options.types';
 // hooks
 import hooks from '../../../utils/global-hooks';
-
-let cleekOptions: Ref<undefined | CleekOptions> = ref();
 
 const isActive = ref(true);
 
@@ -62,7 +56,6 @@ const computedStyle = computed(() => {
 });
 
 onMounted(() => {
-  cleekOptions.value = hooks.getCleekOptions(getCurrentInstance);
   setTimeout(() => {
     setTimeout(() => {
       closeCallback.value();
@@ -72,28 +65,31 @@ onMounted(() => {
 </script>
 
 <template>
-<teleport v-if="isActive" to="body">
-  <div class="ck-notify__container">
-    <div
-      class="ck-notify"
-      :class="computedClass"
-      :style="computedStyle"
-      @click="isActive = false; closeCallback()"
-    >
-      <div class="ck-notify__title">
-        <div class="close-btn">
-          <ck-icon icon="times"/>
+  <teleport v-if="isActive" to="body">
+    <div class="ck-notify__container">
+      <div
+        class="ck-notify"
+        :class="computedClass"
+        :style="computedStyle"
+        @click="
+          isActive = false;
+          closeCallback();
+        "
+      >
+        <div class="ck-notify__title">
+          <div class="close-btn">
+            <ck-icon icon="times" />
+          </div>
+          {{ title || defaultTitle }}
         </div>
-        {{ title || defaultTitle }}
+        <div class="ck-notify__text" v-html="text" />
       </div>
-      <div class="ck-notify__text" v-html="text"/>
     </div>
-  </div>
-</teleport>
+  </teleport>
 </template>
 
 <style lang="stylus" scoped>
-@import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import 'undefined'
 $text-color = white
 
 .ck-notify__container

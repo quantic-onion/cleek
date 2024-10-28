@@ -1,12 +1,13 @@
 <script setup lang="ts">
-import { ref, computed, onMounted, getCurrentInstance } from 'vue';
-import type { CleekOptions, Icon, IconPack, Size } from '../cleek-options/cleek-options.types';
+import { computed } from 'vue';
+import { storeToRefs } from 'pinia';
+// stores
+import { useCleekOptionsStore } from '@/cleek-options/cleek-options.store';
+import type { Icon, IconPack, Size } from '../cleek-options/cleek-options.types';
 // components
 import CkIcon from './ck-icon.vue';
-// hooks
-import hooks from '../utils/global-hooks';
 
-type ModelValue = boolean | 1 | 0;
+// type ModelValue = boolean | 1 | 0;
 
 const value = defineModel<boolean>({ required: true });
 
@@ -25,8 +26,8 @@ const emits = defineEmits<{
   click: [];
 }>();
 
-let cleekOptions = ref<CleekOptions>();
 const defaultSize = 's';
+const { cleekOptions } = storeToRefs(useCleekOptionsStore());
 
 const computedClass = computed(() => {
   const list = [];
@@ -52,7 +53,7 @@ const iconClass = computed(() => {
 });
 const computedStyleContent = computed(() => {
   const list = [];
-  if (cleekOptions.value?.darkMode) list.push({ color: cleekOptions.value?.darkModeColorText });
+  if (cleekOptions.value.darkMode) list.push({ color: cleekOptions.value.darkModeColorText });
   if (props.size && props.size !== defaultSize) {
     list.push(`ck-switch__icon-size--${props.size}`);
   }
@@ -67,10 +68,6 @@ function handleSwitchClick(e: Event) {
   }
   emits('click');
 }
-
-onMounted(() => {
-  cleekOptions.value = hooks.getCleekOptions(getCurrentInstance);
-});
 </script>
 
 <template>

@@ -1,10 +1,12 @@
 <script setup lang="ts">
-import { computed, getCurrentInstance, onMounted, ref } from 'vue';
-import type { Ref } from 'vue';
+import { ref, computed } from 'vue';
+import { storeToRefs } from 'pinia';
+// stores
+import { useCleekOptionsStore } from '@/cleek-options/cleek-options.store';
 // components
 import CkLabel from './ck-label.vue';
 // types
-import type { Align, AlignVertical, Color, CleekOptions, Layout, SizeInCSS } from '../cleek-options/cleek-options.types';
+import type { Align, AlignVertical, Color, Layout, SizeInCSS } from '../cleek-options/cleek-options.types';
 // hooks
 import hooks from '../utils/global-hooks';
 import useWindowWidth from '../hooks/windowWidth';
@@ -44,8 +46,8 @@ const emits = defineEmits<{
   (e: 'changeDelayed', value: string): void;
 }>();
 
-let cleekOptions: Ref<undefined | CleekOptions> = ref();
-const refTextarea: Ref<null | HTMLTextAreaElement> = ref(null);
+const { cleekOptions } = storeToRefs(useCleekOptionsStore());
+const refTextarea = ref<HTMLTextAreaElement>();
 const { windowWidth } = useWindowWidth();
 const defaultDelayChangeTime = 300;
 
@@ -62,10 +64,10 @@ const inputValue = computed({
 const computedClassTextarea = computed(() => {
   const list = [];
   // layout
-  const layout = props.layout || cleekOptions.value?.styles.layout;
+  const layout = props.layout || cleekOptions.value.styles.layout;
   if (layout) list.push(layout);
   // border-color
-  const borderColor = props.borderColor || cleekOptions.value?.styles.borderColor;
+  const borderColor = props.borderColor || cleekOptions.value.styles.borderColor;
   if (borderColor && hooks.isColorTemplateVariable(borderColor)) {
     list.push(`ck-component__border-color--${borderColor}`);
   }
@@ -76,7 +78,7 @@ const computedClassTextarea = computed(() => {
 const computedStyleTextarea = computed(() => {
   const list = [];
   // border-color
-  const borderColor = props.borderColor || cleekOptions.value?.styles?.borderColor;
+  const borderColor = props.borderColor || cleekOptions.value.styles?.borderColor;
   if (borderColor && !hooks.isColorTemplateVariable(borderColor)) {
     list.push({ 'border-color': borderColor });
   }
@@ -115,15 +117,11 @@ function checkSearchTime(oldValue: string) {
     if (inputValue.value === oldValue) emits('changeDelayed', oldValue);
   }, props.delayChangeTime || defaultDelayChangeTime);
 }
-
-onMounted(() => {
-  cleekOptions.value = hooks.getCleekOptions(getCurrentInstance);
-});
 </script>
 
 <template>
   <div class="ck-textarea">
-    <ck-label v-if="label" :label-align="labelAlign">
+    <ck-label v-if="label" :align="labelAlign">
       {{ label }} <span v-if="optional" class="ck-textarea__optional-label">opcional</span>
     </ck-label>
     <textarea

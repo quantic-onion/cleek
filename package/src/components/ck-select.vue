@@ -1,6 +1,8 @@
 <script setup lang="ts">
-import { computed, getCurrentInstance, onMounted, ref } from 'vue';
-import type { Ref } from 'vue';
+import { ref, computed } from 'vue';
+import { storeToRefs } from 'pinia';
+// stores
+import { useCleekOptionsStore } from '@/cleek-options/cleek-options.store';
 import { qmStr } from 'quantic-methods';
 // components
 import CkLabel from './ck-label.vue';
@@ -9,7 +11,7 @@ import CkIcon from './ck-icon.vue';
 import hooks from '../utils/global-hooks';
 import useWindowWidth from '../hooks/windowWidth';
 // types
-import type { Align, AlignVertical, Color, CleekOptions, Icon, IconPack, Layout, WidthBreaks } from '../cleek-options/cleek-options.types';
+import type { Align, AlignVertical, Color, Icon, IconPack, Layout, WidthBreaks } from '../cleek-options/cleek-options.types';
 
 type SelectOption = any;
 
@@ -65,8 +67,6 @@ defineExpose({
   focus,
 });
 
-let cleekOptions: Ref<undefined | CleekOptions> = ref();
-
 const defaultMinWidth = '180px';
 const defaultClearValue = 'auto';
 // const defaultSearchable = 'auto';
@@ -74,6 +74,7 @@ const defaultReduceNameProp = 'name';
 const defaultReduceValueProp = 'id';
 const defaultBackgroundColor = 'unset'; // move to default file
 
+const { cleekOptions } = storeToRefs(useCleekOptionsStore());
 const { windowWidth } = useWindowWidth();
 const search = ref('');
 // const lastSelectedValue: Ref<null | string> = ref(null);
@@ -114,12 +115,12 @@ const computedClassSelect = computed(() => {
   // group
   list.push(hooks.getGroupClass(props, windowWidth.value));
   // layout
-  const layout = props.layout || cleekOptions.value?.styles.layout;
+  const layout = props.layout || cleekOptions.value.styles.layout;
   if (layout) list.push(layout);
   // clear able
   if (isClearBtnVisible.value) list.push('clear-able');
   // border-color
-  const borderColor = props.borderColor || cleekOptions.value?.styles.borderColor;
+  const borderColor = props.borderColor || cleekOptions.value.styles.borderColor;
   if (borderColor && hooks.isColorTemplateVariable(borderColor)) {
     list.push(`ck-component__border-color--${borderColor}`);
   }
@@ -128,20 +129,20 @@ const computedClassSelect = computed(() => {
 const computedStyleSelect = computed(() => {
   const list = [];
   // border-color
-  const borderColor = props.borderColor || cleekOptions.value?.styles.borderColor;
+  const borderColor = props.borderColor || cleekOptions.value.styles.borderColor;
   if (borderColor && !hooks.isColorTemplateVariable(borderColor)) {
     list.push({ 'border-color': borderColor });
   }
   // background-color
   let backgroundColor = '';
-  if (cleekOptions.value?.select.backgroundColor) backgroundColor = cleekOptions.value?.select.backgroundColor;
-  if (cleekOptions.value?.darkMode) backgroundColor = cleekOptions.value?.darkModeColorItems;
+  if (cleekOptions.value.select.backgroundColor) backgroundColor = cleekOptions.value.select.backgroundColor;
+  if (cleekOptions.value.darkMode) backgroundColor = cleekOptions.value.darkModeColorItems;
   if (backgroundColor && !hooks.isColorTemplateVariable(backgroundColor)) {
     list.push({ backgroundColor: backgroundColor });
   }
   // text-color
-  let textColor = cleekOptions.value?.popup.textColor;
-  if (cleekOptions.value?.darkMode) textColor = cleekOptions.value?.darkModeColorText;
+  let textColor = cleekOptions.value.popup.textColor;
+  if (cleekOptions.value.darkMode) textColor = cleekOptions.value.darkModeColorText;
   if (textColor) {
     if (hooks.isColorTemplateVariable(textColor)) {
       list.push(`ck-component__color--${textColor}`);
@@ -154,8 +155,8 @@ const computedStyleSelect = computed(() => {
 const computedStyleOption = computed(() => {
   const list = [];
   // text-color
-  let textColor = cleekOptions.value?.popup.textColor;
-  if (cleekOptions.value?.darkMode) textColor = cleekOptions.value?.darkModeColorText;
+  let textColor = cleekOptions.value.popup.textColor;
+  if (cleekOptions.value.darkMode) textColor = cleekOptions.value.darkModeColorText;
   if (textColor) {
     if (hooks.isColorTemplateVariable(textColor)) {
       list.push(`ck-component__color--${textColor}`);
@@ -202,7 +203,7 @@ const computedStyle = computed(() => {
 // });
 const logicClearValue = computed(() => {
   if (typeof props.clearValue !== 'undefined') return props.clearValue;
-  if (typeof cleekOptions.value?.select?.clearValue !== 'undefined') return cleekOptions.value.select.clearValue;
+  if (typeof cleekOptions.value.select?.clearValue !== 'undefined') return cleekOptions.value.select.clearValue;
   return defaultClearValue;
 });
 const realClearValue = computed(() => {
@@ -279,10 +280,6 @@ function focus() {
   //   el.focus();
   // }, 100);
 }
-
-onMounted(() => {
-  cleekOptions.value = hooks.getCleekOptions(getCurrentInstance);
-});
 </script>
 
 <template>

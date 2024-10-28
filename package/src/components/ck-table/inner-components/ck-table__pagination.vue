@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import { computed, getCurrentInstance, onMounted, ref, watch } from 'vue';
-import type { Ref } from 'vue';
+import { computed, watch } from 'vue';
+import { storeToRefs } from 'pinia';
+// stores
+import { useCleekOptionsStore } from '@/cleek-options/cleek-options.store';
 // components
 import CkIcon from '../../ck-icon.vue';
 // types
-import type { Align, Layout, CleekOptions } from '../../../cleek-options/cleek-options.types';
-// hooks
-import hooks from '../../../utils/global-hooks';
+import type { Align, Layout } from '../../../cleek-options/cleek-options.types';
 
 const props = defineProps<{
   totalPages: number;
@@ -22,9 +22,8 @@ const emits = defineEmits<{
   (e: 'update:currentPage', value: number): void;
 }>();
 
-let cleekOptions: Ref<undefined | CleekOptions> = ref();
-
 const itemsShowed = 5;
+const { cleekOptions } = storeToRefs(useCleekOptionsStore());
 
 const currentPageLocal = computed({
   get() {
@@ -73,7 +72,7 @@ const computedClass = computed(() => {
   const align = props.align || 'center';
   if (align) list.push(`pagination-align--${align || 'center'}`);
   // layout
-  const layout = props.layout || cleekOptions.value?.styles.layout;
+  const layout = props.layout || cleekOptions.value.styles.layout;
   if (layout) list.push(layout);
   return list;
 });
@@ -101,10 +100,6 @@ function onClickArrowRight() {
   if (!hasArrowRight.value) return;
   currentPageLocal.value = props.currentPage + 1;
 }
-
-onMounted(() => {
-  cleekOptions.value = hooks.getCleekOptions(getCurrentInstance);
-});
 </script>
 
 <template>

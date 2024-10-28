@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import { computed, getCurrentInstance, onMounted, ref } from 'vue';
-import type { Ref } from 'vue';
+import { computed } from 'vue';
+import { storeToRefs } from 'pinia';
+// stores
+import { useCleekOptionsStore } from '@/cleek-options/cleek-options.store';
 // types
-import type { CleekOptions, Color } from '../../cleek-options/cleek-options.types';
-// hooks
-import hooks from '../../utils/global-hooks';
+import type { Color } from '../../cleek-options/cleek-options.types';
 
 const props = defineProps<{
   backgroundColor?: Color;
@@ -12,8 +12,8 @@ const props = defineProps<{
   position?: string;
 }>();
 
-let cleekOptions: Ref<undefined | CleekOptions> = ref();
 const defaultPosition = 'fixed';
+const { cleekOptions } = storeToRefs(useCleekOptionsStore());
 
 const computedClassContent = computed(() => {
   const list = [];
@@ -33,14 +33,10 @@ const computedStyle = computed(() => {
 const computedStyleContent = computed(() => {
   const list = [];
   let backgroundColor = '';
-  if (cleekOptions.value?.darkMode) backgroundColor = cleekOptions.value?.darkModeColorItems;
+  if (cleekOptions.value.darkMode) backgroundColor = cleekOptions.value.darkModeColorItems;
   if (props.backgroundColor) backgroundColor = props.backgroundColor;
   if (backgroundColor) list.push({ backgroundColor: backgroundColor });
   return list;
-});
-
-onMounted(() => {
-  cleekOptions.value = hooks.getCleekOptions(getCurrentInstance);
 });
 </script>
 
