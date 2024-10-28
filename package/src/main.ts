@@ -3,9 +3,8 @@ import { App, Plugin } from 'vue';
 import type { CleekOptions } from './cleek-options/cleek-options.types';
 import { defaultCleekOptions } from './cleek-options/default-cleek-options';
 import { useCleekOptionsStore } from './cleek-options/cleek-options.store';
-// vue components
-import * as components from './components/index.js';
-export * from './components/index.js'; // to allow the use of individual components
+// components
+import * as components from './components';
 // fontawesome
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { fas } from '@fortawesome/free-solid-svg-icons';
@@ -57,4 +56,5 @@ const install: Exclude<Plugin['install'], undefined> = function installCleek(app
 
 // exports
 export default install;
-export { useCleekOptionsStore }
+export * from './components'; // to allow the use of individual components
+export { useCleekOptionsStore };
