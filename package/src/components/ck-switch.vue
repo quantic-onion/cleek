@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, computed, onMounted, getCurrentInstance } from 'vue';
-import type { CleekOptions, Icon, IconPack, Size } from '../types/cleek-options';
+import type { CleekOptions, Icon, IconPack, Size } from '../cleek-options/cleek-options.types';
 // components
 import CkIcon from './ck-icon.vue';
 // hooks

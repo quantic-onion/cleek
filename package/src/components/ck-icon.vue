@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 // hooks
 import hooks from '../utils/global-hooks';
 // @ts-ignore // fixme
-import type { Color, Icon, IconPack, Size, SizeInCSS } from '../types/cleek-options';
+import type { Color, Icon, IconPack, Size, SizeInCSS } from '../cleek-options/cleek-options.types';
 
 const props = defineProps<{
   icon: Icon;

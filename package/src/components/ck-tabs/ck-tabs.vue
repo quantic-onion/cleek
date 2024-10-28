@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, provide, onMounted } from 'vue';
 // types
-import { Icon } from '@/types/cleek-options';
+import { Icon } from '@/cleek-options/cleek-options.types';
 
 type Tab = {
   selectTab: (value: boolean) => void;

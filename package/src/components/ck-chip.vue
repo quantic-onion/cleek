@@ -3,7 +3,7 @@ import { computed } from 'vue';
 // components
 import CkIcon from './ck-icon.vue';
 // types
-import type { Align, Color, Icon, IconPack, Size } from '../types/cleek-options';
+import type { Align, Color, Icon, IconPack, Size } from '../cleek-options/cleek-options.types';
 // hooks
 import hooks from '../utils/global-hooks';
 

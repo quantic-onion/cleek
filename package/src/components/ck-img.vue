@@ -5,7 +5,7 @@ import type { Ref } from 'vue';
 import hooks from '../utils/global-hooks';
 import globalVariables from '../utils/globalVariables';
 // types
-import type { CleekOptions, Color, Size, SizeInCSS } from '../types/cleek-options';
+import type { CleekOptions, Color, Size, SizeInCSS } from '../cleek-options/cleek-options.types';
 
 const props = defineProps<{
   // src

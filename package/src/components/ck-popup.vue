@@ -4,7 +4,7 @@ import { ref, computed, watch, onMounted, getCurrentInstance } from 'vue';
 import CkButton from './ck-button.vue';
 import CkIcon from './ck-icon.vue';
 // types
-import type { Align, Color, Layout, CleekOptions, ButtonType } from '../types/cleek-options';
+import type { Align, Color, Layout, CleekOptions, ButtonType } from '../cleek-options/cleek-options.types';
 // utils
 import hooks from '@/utils/global-hooks';
 import { setBodyOverflow } from '@/utils/css-helpers';

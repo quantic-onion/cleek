@@ -9,7 +9,7 @@ import CkIcon from './ck-icon.vue';
 import hooks from '../utils/global-hooks';
 import useWindowWidth from '../hooks/windowWidth';
 // types
-import type { Align, AlignVertical, Color, CleekOptions, Icon, IconPack, Layout, WidthBreaks } from '../types/cleek-options';
+import type { Align, AlignVertical, Color, CleekOptions, Icon, IconPack, Layout, WidthBreaks } from '../cleek-options/cleek-options.types';
 
 type SelectOption = any;
 

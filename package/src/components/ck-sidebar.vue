@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, watch } from 'vue';
 // types
-import type { Color } from '../types/cleek-options';
+import type { Color } from '../cleek-options/cleek-options.types';
 // utils
 import hooks from '@/utils/global-hooks';
 import { setBodyOverflow } from '@/utils/css-helpers';

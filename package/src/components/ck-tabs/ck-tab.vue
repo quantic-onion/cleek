@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { inject, onMounted, ref, watch } from 'vue';
 // types
-import { Icon } from '@/types/cleek-options';
+import { Icon } from '@/cleek-options/cleek-options.types';
 
 const props = defineProps<{
   title: string;

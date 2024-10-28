@@ -2,7 +2,7 @@
 // components
 import CkTh from '../ck-th.vue';
 // types
-import type { Color } from '../../../types/cleek-options';
+import type { Color } from '../../../cleek-options/cleek-options.types';
 import type { ColumnItem } from '../../../types/table';
 
 defineProps<{

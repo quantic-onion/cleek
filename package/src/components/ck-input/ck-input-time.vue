@@ -3,7 +3,7 @@ import { computed, ref } from 'vue';
 import { qmDate } from 'quantic-methods';
 import type { Ref } from 'vue';
 // types
-import type { Align, AlignVertical, WidthBreaks } from '../../types/cleek-options';
+import type { Align, AlignVertical, WidthBreaks } from '../../cleek-options/cleek-options.types';
 
 type stringTime = string | null;
 type numberTime = number | undefined;

@@ -5,7 +5,7 @@ import type { Ref } from 'vue';
 import CkInput from '../../ck-input.vue';
 import CkIcon from '../../ck-icon.vue';
 // types
-import type { Align, Layout, CleekOptions } from '../../../types/cleek-options';
+import type { Align, Layout, CleekOptions } from '../../../cleek-options/cleek-options.types';
 // hooks
 import hooks from '../../../utils/global-hooks';
 

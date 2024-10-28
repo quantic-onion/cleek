@@ -17,7 +17,7 @@ import type {
   Layout,
   ButtonType,
   WidthBreaks,
-} from '../types/cleek-options';
+} from '../cleek-options/cleek-options.types';
 
 const props = defineProps<{
   // html

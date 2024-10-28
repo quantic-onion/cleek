@@ -6,7 +6,7 @@ import { qmStr } from 'quantic-methods';
 import hooks from '../../utils/global-hooks';
 import useWindowWidth from '../../hooks/windowWidth';
 // types
-import type { Align, AlignVertical, CleekOptions, Color, Icon, WidthBreaks } from '../../types/cleek-options';
+import type { Align, AlignVertical, CleekOptions, Color, Icon, WidthBreaks } from '../../cleek-options/cleek-options.types';
 import type { IconPack } from '@fortawesome/fontawesome-svg-core';
 
 type DateString = null | string;

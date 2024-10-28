@@ -4,7 +4,7 @@ import type { Ref } from 'vue';
 // components
 import CkLabel from './ck-label.vue';
 // types
-import type { Align, AlignVertical, Color, CleekOptions, Layout, SizeInCSS } from '../types/cleek-options';
+import type { Align, AlignVertical, Color, CleekOptions, Layout, SizeInCSS } from '../cleek-options/cleek-options.types';
 // hooks
 import hooks from '../utils/global-hooks';
 import useWindowWidth from '../hooks/windowWidth';

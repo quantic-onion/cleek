@@ -6,7 +6,7 @@ import CkLabel from './ck-label.vue';
 import functions from '../utils/global-hooks';
 import useWindowWidth from '../hooks/windowWidth';
 // types
-import type { Align } from '../types/cleek-options';
+import type { Align } from '../cleek-options/cleek-options.types';
 
 type Option = boolean | number | object | string;
 

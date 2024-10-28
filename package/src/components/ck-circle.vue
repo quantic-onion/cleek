@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 // types
-import type { Color, Icon, IconPack, Size } from '../types/cleek-options';
+import type { Color, Icon, IconPack, Size } from '../cleek-options/cleek-options.types';
 // hooks
 import hooks from '../utils/global-hooks';
 

@@ -19,7 +19,7 @@ import type {
   Layout,
   SizeInCSS,
   WidthBreaks,
-} from '../types/cleek-options';
+} from '../cleek-options/cleek-options.types';
 
 type Value = string | number;
 

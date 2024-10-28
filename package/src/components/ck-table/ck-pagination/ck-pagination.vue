@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 // types
-import type { Align } from '@/types/cleek-options';
+import type { Align } from '@/cleek-options/cleek-options.types';
 
 const props = defineProps<{
   modelValue: number;

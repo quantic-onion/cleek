@@ -2,7 +2,7 @@
 import { ref, computed, watch, getCurrentInstance, onMounted } from 'vue';
 import type { CSSProperties } from 'vue';
 // types
-import type { Align, CleekOptions, Layout } from '../../types/cleek-options';
+import type { Align, CleekOptions, Layout } from '../../cleek-options/cleek-options.types';
 // utils
 import hooks from '@/utils/global-hooks';
 
