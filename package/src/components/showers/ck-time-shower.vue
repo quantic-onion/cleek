@@ -15,7 +15,7 @@ const props = defineProps<{
     {{ qmDate.minToHour(minutes) }}
   </template>
   <template v-else>
-    | {{ qmDate.presentTime(time) }}
+    {{ qmDate.presentTime(time) }}
   </template>
   <span class="hs-text"> 
     hs
