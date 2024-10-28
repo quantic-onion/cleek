@@ -55,4 +55,6 @@ const install: Exclude<Plugin['install'], undefined> = function installCleek(app
   });
 };
 
+// exports
 export default install;
+export { useCleekOptionsStore }
