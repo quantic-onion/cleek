@@ -10,8 +10,8 @@ if (!['--patch', '--minor', '--major'].includes(versionType)) {
 
 try {
   execSync('bun run build', { stdio: 'inherit' });
-  execSync(`bun version ${versionType}`, { stdio: 'inherit' });
-  execSync('bun publish --non-interactive', { stdio: 'inherit' });
+  execSync(`bun run version ${versionType}`, { stdio: 'inherit' });
+  execSync('bun run publish --non-interactive', { stdio: 'inherit' });
 } catch (error) {
   console.error('Error during release process:', error);
   process.exit(1);
