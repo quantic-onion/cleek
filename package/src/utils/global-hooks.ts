@@ -3,9 +3,6 @@ import type { ColumnItem } from '../types/table';
 import type { Align, AlignVertical, Color, CleekOptions, Layout, WidthBreaks } from '../cleek-options/cleek-options.types';
 
 export default {
-  getCleekOptions(getCurrentInstance: any) {
-    return getCurrentInstance().appContext.app.config.globalProperties.$cleekOptions;
-  },
   getGroupClass(
     {
       group,
