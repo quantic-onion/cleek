@@ -2,7 +2,6 @@
 import { computed, getCurrentInstance, onMounted, ref, watch } from 'vue';
 import type { Ref } from 'vue';
 // components
-import CkInput from '../../ck-input.vue';
 import CkIcon from '../../ck-icon.vue';
 // types
 import type { Align, Layout, CleekOptions } from '../../../cleek-options/cleek-options.types';
