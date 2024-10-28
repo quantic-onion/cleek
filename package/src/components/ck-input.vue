@@ -1,6 +1,9 @@
 <script setup lang="ts">
 import { ref, computed, watch, onMounted } from 'vue';
+import { storeToRefs } from 'pinia';
 import { qmStr } from 'quantic-methods';
+// stores
+import { useCleekOptionsStore } from '@/cleek-options/cleek-options.store';
 // components
 import CkLabel from './ck-label.vue';
 import CkIcon from './ck-icon.vue';
@@ -83,6 +86,7 @@ const emit = defineEmits<{
 
 defineExpose({ focus, select });
 
+const { cleekOptions } = storeToRefs(useCleekOptionsStore());
 const { windowWidth } = useWindowWidth();
 const inputRef = ref<HTMLInputElement>();
 const inputValue = ref<Value>('');
