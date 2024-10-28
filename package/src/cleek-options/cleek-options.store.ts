@@ -14,7 +14,7 @@ export const useCleekOptionsStore = defineStore('cleek-options', () => {
   const popupOptions = computed(() => cleekOptions.value.popup);
   const selectOptions = computed(() => cleekOptions.value.select);
   const tableOptions = computed(() => cleekOptions.value.table);
-  watch(colorsOptions, (val) => setRootColors(val), { immediate: true });
+  watch(colorsOptions, (val) => setRootColors(val), { deep: true, immediate: true });
   return {
     cleekOptions,
     colorsOptions,
