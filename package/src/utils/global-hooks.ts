@@ -1,6 +1,6 @@
 // types
 import type { ColumnItem } from '../types/table';
-import type { Align, AlignVertical, Color, CleekOptions, Layout, WidthBreaks } from '../cleek-options/cleek-options.types';
+import type { Align, AlignVertical, WidthBreaks } from '../cleek-options/cleek-options.types';
 
 export default {
   getGroupClass(
