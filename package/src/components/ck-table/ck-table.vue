@@ -1,6 +1,8 @@
 <script setup lang="ts">
-import { computed, getCurrentInstance, onMounted, ref } from 'vue';
-import type { Ref } from 'vue';
+import { ref, computed } from 'vue';
+import { storeToRefs } from 'pinia';
+// stores
+import { useCleekOptionsStore } from '@/cleek-options/cleek-options.store';
 // components
 import CkIcon from '../ck-icon.vue';
 import CkTr from './ck-tr.vue';
@@ -12,7 +14,7 @@ import TablePagination from './inner-components/ck-table__pagination.vue';
 import TableColumnsManager from './inner-components/ck-table__columns-manager.vue';
 // types
 import type { ColumnItem } from '../../types/table';
-import type { Align, Color, CleekOptions, Layout, TableVersion } from '../../types/cleek-options';
+import type { Align, Color, Layout, TableVersion } from '../../cleek-options/cleek-options.types';
 // hooks
 import hooks from '../../utils/global-hooks';
 import useWindowWidth from '../../hooks/windowWidth';
@@ -64,30 +66,28 @@ const emits = defineEmits<{
   (e: 'update:currentPage', value: number): void;
 }>();
 
-let cleekOptions: Ref<undefined | CleekOptions> = ref();
-
 const defaultTableVersion = 'default'; // move to default file
 const defaultItemsPerPage = 40;
-
+const { cleekOptions } = storeToRefs(useCleekOptionsStore());
 const { windowWidth } = useWindowWidth();
-
 const isPopupActive = ref({
   columnsManager: false,
 });
+
 const isSelectable = computed(() => !!selectedRows.value);
 const isDarkModeActive = computed(() => {
   if (typeof props.darkMode !== 'undefined') return props.darkMode;
-  return cleekOptions.value?.darkMode;
+  return cleekOptions.value.darkMode;
 });
 const totalPages = computed(() => {
   return Math.ceil(props.listLength / props.itemsPerPage);
 });
 const defaultLoadingText = computed(() => {
-  if (cleekOptions.value?.lang === 'es') return 'Cargando...'; 
+  if (cleekOptions.value.lang === 'es') return 'Cargando...'; 
   return 'Loading...';
 });
 const defaultNoResultsText = computed(() => {
-  if (cleekOptions.value?.lang === 'es') return 'No se encontraron resultados';
+  if (cleekOptions.value.lang === 'es') return 'No se encontraron resultados';
   return 'No results found';
 });
 const realTableVersion = computed(() => {
@@ -164,7 +164,7 @@ const isNoResultsTextDisplayed = computed(() => {
   if (props.listLength) return false;
   return true;
 });
-const realLayout = computed(() => props.layout || cleekOptions.value?.styles.layout);
+const realLayout = computed(() => props.layout || cleekOptions.value.styles.layout);
 // isMobileVisible
 const isMobileVisible = computed(() => {
   return windowWidth.value <= (+props.mobileMaxWidth || 0);
@@ -186,7 +186,7 @@ const computedClassTable = computed(() => {
   if (props.cellPaddingY) list.push(`table__cell-padding-y--${props.cellPaddingY}`);
   if (props.notFullWidth) list.push('not-full-width');
   if (isDarkModeActive.value) list.push('dark-mode');
-  const striped = props.striped || cleekOptions.value?.table?.striped;
+  const striped = props.striped || cleekOptions.value.table?.striped;
   if (striped) list.push('striped-table');
   return list;
 });
@@ -205,10 +205,6 @@ function selectOrUnselectAll() {
     selectedRows.value.addManyRows(ids);
   }
 }
-
-onMounted(() => {
-  cleekOptions.value = hooks.getCleekOptions(getCurrentInstance);
-});
 </script>
 
 <template>

@@ -1,10 +1,11 @@
 <script setup lang="ts">
-import { ref, computed, watch, getCurrentInstance, onMounted } from 'vue';
+import { ref, computed, watch, onMounted } from 'vue';
 import type { CSSProperties } from 'vue';
+import { storeToRefs } from 'pinia';
+// stores
+import { useCleekOptionsStore } from '@/cleek-options/cleek-options.store';
 // types
-import type { Align, CleekOptions, Layout } from '../../types/cleek-options';
-// utils
-import hooks from '@/utils/global-hooks';
+import type { Align, Layout } from '../../cleek-options/cleek-options.types';
 
 const props = defineProps<{
   align?: Align;
@@ -12,7 +13,7 @@ const props = defineProps<{
   layout?: Layout;
 }>();
 
-const cleekOptions = ref<CleekOptions>();
+const { cleekOptions } = storeToRefs(useCleekOptionsStore());
 const isOpen = ref(false);
 const dropdownRef = ref<HTMLElement>();
 const contentRef = ref<HTMLElement>();
@@ -23,7 +24,7 @@ const computedClassContent = computed(() => {
   // dark
   if (props.dark) list.push('ck-dropdown--content__dark');
   // layout
-  const layout = props.layout || cleekOptions.value?.styles.layout;
+  const layout = props.layout || cleekOptions.value.styles.layout;
   if (layout) list.push(`ck-dropdown--content__${layout}`);
   return list;
 });
@@ -63,7 +64,6 @@ watch(contentRef, (val) => {
 });
 
 onMounted(() => {
-  cleekOptions.value = hooks.getCleekOptions(getCurrentInstance);
   window.addEventListener('scroll', () => (isOpen.value = false));
 });
 </script>

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 // types
-import { Color, Icon, Layout } from '@/types/cleek-options';
+import { Color, Icon, Layout } from '@/cleek-options/cleek-options.types';
 
 const props = defineProps<{
   modelValue: boolean;

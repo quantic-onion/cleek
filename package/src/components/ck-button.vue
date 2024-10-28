@@ -1,6 +1,8 @@
 <script setup lang="ts">
-import { computed, getCurrentInstance, onMounted, ref } from 'vue';
-import type { Ref } from 'vue';
+import { computed, ref } from 'vue';
+import { storeToRefs } from 'pinia';
+// stores
+import { useCleekOptionsStore } from '@/cleek-options/cleek-options.store';
 // components
 import CkIcon from './ck-icon.vue';
 // hooks
@@ -11,13 +13,12 @@ import type {
   Align,
   AlignVertical,
   Color,
-  CleekOptions,
   Icon,
   IconPack,
   Layout,
   ButtonType,
   WidthBreaks,
-} from '../types/cleek-options';
+} from '../cleek-options/cleek-options.types';
 
 const props = defineProps<{
   // html
@@ -50,14 +51,12 @@ const emits = defineEmits<{
   (e: 'click', event: Event): void;
 }>();
 
-const { windowWidth } = useWindowWidth();
-
 const defaultBackgroundColor = 'transparent'; // move to default file
 const defaultButtonType = 'outlined'; // move to default file
 const defaultColor = 'primary'; // move to default file
 const defaultAlign = 'left'; // move to default file
-
-let cleekOptions: Ref<undefined | CleekOptions> = ref();
+const { cleekOptions } = storeToRefs(useCleekOptionsStore());
+const { windowWidth } = useWindowWidth();
 
 const realButtonType = computed(() => {
   if (props.type) return props.type;
@@ -101,7 +100,7 @@ const computedClass = computed(() => {
     list.push(`ck-button__align--${props.align}`);
   }
   // layout
-  const layout = props.layout || cleekOptions.value?.styles.layout;
+  const layout = props.layout || cleekOptions.value.styles.layout;
   if (layout) list.push(layout);
   // type
   list.push(`type-${realButtonType.value}`);
@@ -135,13 +134,13 @@ const computedStyle = computed(() => {
   if (props.color && !hooks.isColorTemplateVariable(props.color)) {
     if (realButtonType.value === 'outlined') {
       list.push({ 'border-color': props.color });
-      list.push({ 'color': props.color });
+      list.push({ color: props.color });
     } else if (realButtonType.value === 'filled') {
-      list.push({ 'color': 'white' });
+      list.push({ color: 'white' });
       list.push({ 'border-color': props.color });
       list.push({ 'background-color': props.color });
     } else if (realButtonType.value === 'flat') {
-      list.push({ 'color': props.color });
+      list.push({ color: props.color });
     }
   }
   return list;
@@ -150,41 +149,37 @@ const computedStyle = computed(() => {
 function onClick(event: Event) {
   emits('click', event);
 }
-
-onMounted(() => {
-  cleekOptions.value = hooks.getCleekOptions(getCurrentInstance);
-});
 </script>
 
 <template>
-<button
-  type="button"
-  :class="computedClass"
-  :title="title"
-  :aria-label="title"
-  :disabled="disabled"
-  :style="computedStyle"
-  @click="onClick($event)"
->
-  <ck-icon v-if="isLoading" icon="spinner" spin/>
-  <template v-else>
-    <ck-icon
-      class="ck-button__icon-left"
-      v-if="icon"
-      :icon="icon"
-      :icon-pack="iconPack"
-      :class="{ 'just-icon': !$slots.default }"
-    />
-    <slot/>
-    <ck-icon
-      v-if="iconRight"
-      class="ck-button__icon-right"
-      :icon="iconRight"
-      :icon-pack="iconPack"
-      :class="{ 'just-icon': !$slots.default }"
-    />
-  </template>
-</button>
+  <button
+    type="button"
+    :class="computedClass"
+    :title="title"
+    :aria-label="title"
+    :disabled="disabled"
+    :style="computedStyle"
+    @click="onClick($event)"
+  >
+    <ck-icon v-if="isLoading" icon="spinner" spin />
+    <template v-else>
+      <ck-icon
+        class="ck-button__icon-left"
+        v-if="icon"
+        :icon="icon"
+        :icon-pack="iconPack"
+        :class="{ 'just-icon': !$slots.default }"
+      />
+      <slot />
+      <ck-icon
+        v-if="iconRight"
+        class="ck-button__icon-right"
+        :icon="iconRight"
+        :icon-pack="iconPack"
+        :class="{ 'just-icon': !$slots.default }"
+      />
+    </template>
+  </button>
 </template>
 
 <style lang="stylus" scoped>

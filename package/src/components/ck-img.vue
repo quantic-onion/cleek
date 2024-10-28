@@ -1,11 +1,13 @@
 <script setup lang="ts">
-import { computed, getCurrentInstance, onMounted, ref } from 'vue';
-import type { Ref } from 'vue';
+import { ref, computed, onMounted } from 'vue';
+import { storeToRefs } from 'pinia';
+// stores
+import { useCleekOptionsStore } from '@/cleek-options/cleek-options.store';
 // hooks
 import hooks from '../utils/global-hooks';
 import globalVariables from '../utils/globalVariables';
 // types
-import type { CleekOptions, Color, Size, SizeInCSS } from '../types/cleek-options';
+import type { Color, Size, SizeInCSS } from '../cleek-options/cleek-options.types';
 
 const props = defineProps<{
   // src
@@ -35,7 +37,7 @@ const emits = defineEmits<{
   (e: 'click', event: MouseEvent): void;
 }>();
 
-let cleekOptions: Ref<undefined | CleekOptions> = ref();
+const { cleekOptions } = storeToRefs(useCleekOptionsStore());
 const altNeeded = ref(false);
 const isMounted = ref(false);
 
@@ -85,7 +87,7 @@ const computedStyle = computed(() => {
   }
   // radius
   let radius = props.radius;
-  if (typeof props.radius === 'undefined' && cleekOptions.value?.styles.layout === 'squared') {
+  if (typeof props.radius === 'undefined' && cleekOptions.value.styles.layout === 'squared') {
     radius = '0px';
   }
   if (radius) styleList.push({ 'border-radius': radius });
@@ -118,33 +120,22 @@ function clickImg() {
   }
 }
 function getImg(src: string) {
-  let basePath = cleekOptions.value?.img.basePath;
-  if (cleekOptions.value?.img.basePath) basePath = cleekOptions.value?.img.basePath;
-  if (!basePath) basePath = cleekOptions.value?.img.basePathStatic;
-  if (props.dynamic) basePath = cleekOptions.value?.img.basePathDynamic;
+  let basePath = cleekOptions.value.img.basePath;
+  if (cleekOptions.value.img.basePath) basePath = cleekOptions.value.img.basePath;
+  if (!basePath) basePath = cleekOptions.value.img.basePathStatic;
+  if (props.dynamic) basePath = cleekOptions.value.img.basePathDynamic;
   return `${basePath}${src}`;
 }
 
 onMounted(() => {
-  cleekOptions.value = hooks.getCleekOptions(getCurrentInstance);
   isMounted.value = true;
 });
 </script>
 
 <template>
-<div
-  class="ck-img"
-  :class="computedClass"
-  :style="computedStyle"
-  @click="emits('click', $event)"
->
-  <img
-    :src="imageUrl"
-    :style="computedImgStyle"
-    :alt="alt"
-    @error="altNeeded = true"
-  />
-</div>
+  <div class="ck-img" :class="computedClass" :style="computedStyle" @click="emits('click', $event)">
+    <img :src="imageUrl" :style="computedImgStyle" :alt="alt" @error="altNeeded = true" />
+  </div>
 </template>
 
 <style lang="stylus" scoped>

@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import { computed, getCurrentInstance, onMounted, ref } from 'vue';
-import type { Ref } from 'vue';
+import { computed } from 'vue';
+import { storeToRefs } from 'pinia';
+// stores
+import { useCleekOptionsStore } from '@/cleek-options/cleek-options.store';
 // types
-import type { CleekOptions, Layout } from '@/types/cleek-options';
-// hooks
-import hooks from '../utils/global-hooks';
+import type { Layout } from '@/cleek-options/cleek-options.types';
 
 const props = defineProps<{
   modelValue?: any; // boolean (i cannot use boolean to differentiate between false and undefined)
@@ -20,7 +20,7 @@ const emits = defineEmits<{
   (e: 'closeCard'): void;
 }>();
 
-let cleekOptions: Ref<undefined | CleekOptions> = ref();
+const { cleekOptions } = storeToRefs(useCleekOptionsStore());
 
 const isCloseable = computed(() => typeof props.modelValue !== 'undefined');
 const isActive = computed({
@@ -36,14 +36,10 @@ const isActive = computed({
 });
 const computedClass = computed(() => {
   const list = [];
-  const layout = props.layout || cleekOptions.value?.styles.layout;
+  const layout = props.layout || cleekOptions.value.styles.layout;
   if (layout) list.push(`layout--${layout}`);
   if (props.clickable) list.push('clickable');
   return list;
-});
-
-onMounted(() => {
-  cleekOptions.value = hooks.getCleekOptions(getCurrentInstance);
 });
 </script>
 

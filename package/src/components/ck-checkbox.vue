@@ -1,77 +1,67 @@
 <script setup lang="ts">
-import { computed, ref, watch } from '@vue/runtime-core';
+import { computed } from 'vue';
 // types
-import type { Color, Size } from '../types/cleek-options';
+import type { Color, Size } from '../cleek-options/cleek-options.types';
 // hooks
 import hooks from '../utils/global-hooks';
 
-const isChecked = defineModel<boolean | null>();
+type Value = boolean | null;
 
-const props = defineProps<{
-  // modelValue: boolean;
-  label?: string;
-  disabled?: boolean;
-  color?: Color;
-  colorText?: Color;
-  size?: Size;
+const value = defineModel<Value>({ required: true });
+
+const props = withDefaults(
+  defineProps<{
+    label?: string;
+    disabled?: boolean;
+    preventAutoUpdate?: boolean;
+    color?: Color;
+    colorText?: Color;
+    size?: Size;
+  }>(),
+  {
+    color: 'primary',
+  },
+);
+
+const emit = defineEmits<{
+  change: [event: Event];
 }>();
 
-const emits = defineEmits<{
-  // (e: 'update:modelValue', value: boolean): void;
-  (e: 'change'): void;
-}>();
-
-// const isSelected = ref(props.modelValue);
-
-// const isChecked = computed({
-//   get() {
-//     return props.modelValue;
-//   },
-//   set(val: boolean) {
-//     // isSelected.value = val;
-//     emits('update:modelValue', val);
-//   },
-// });
 const checkboxAttributes = computed(() => {
   return {
     'aria-disabled': props.disabled,
     tabindex: props.disabled ? undefined : '0',
   };
 });
-const computedClassContainer = computed(() => {
+const checkboxClass = computed(() => {
   const list = [];
-  if (isChecked.value) list.push('is-selected');
-  if (props.size) list.push(`size--${props.size}`);
+  if (props.size) list.push(`size__${props.size}`);
   return list;
 });
-const computedClass = computed(() => {
+const elementClass = computed(() => {
   const list = [];
   if (props.color && hooks.isColorTemplateVariable(props.color)) {
     list.push(`ck-component__border-color--${props.color}`);
-    if (isChecked.value) {
-      list.push(`ck-component__color-background--${props.color}`);
-    }
+    if (value.value || value.value === null) list.push(`ck-component__color-background--${props.color}`);
   }
   return list;
 });
-const computedStyle = computed(() => {
+const elementStyle = computed(() => {
   const list = [];
   if (props.color && !hooks.isColorTemplateVariable(props.color)) {
     list.push({ borderColor: props.color });
-    if (isChecked.value) {
-      list.push({ backgroundColor: props.color });
-    }
+    if (value.value || value.value === null) list.push({ backgroundColor: props.color });
   }
   return list;
 });
-const computedClassLabel = computed(() => {
+const labelClass = computed(() => {
   const list = [];
   if (props.colorText && hooks.isColorTemplateVariable(props.colorText)) {
     list.push(`ck-component__color--${props.colorText}`);
   }
   return list;
 });
-const computedStyleLabel = computed(() => {
+const labelStyle = computed(() => {
   const list = [];
   if (props.colorText && !hooks.isColorTemplateVariable(props.colorText)) {
     list.push({ color: props.colorText });
@@ -79,16 +69,9 @@ const computedStyleLabel = computed(() => {
   return list;
 });
 
-// watch(() => isChecked.value, (val) => {
-//   isSelected.value = val;
-// });
-
-function onTrigger() {
-  // isChecked.value = !isChecked.value;
-}
-function updateValue() {
-  isChecked.value = !isChecked.value;
-  emits('change');
+function changeValue() {
+  if (props.preventAutoUpdate) return;
+  value.value = !value.value;
 }
 </script>
 
@@ -96,41 +79,33 @@ function updateValue() {
   <label
     v-bind="checkboxAttributes"
     class="ck-checkbox"
-    :class="computedClassContainer"
+    :class="checkboxClass"
     @keydown.space.prevent
-    @keyup.enter="onTrigger()"
-    @keyup.space="onTrigger()"
-    @click.prevent="updateValue()"
+    @keyup.enter="changeValue()"
+    @keyup.space="changeValue()"
+    @click.prevent="changeValue()"
   >
     <input
-      class="ck-checkbox__input"
+      class="ck-checkbox--input"
+      :class="{ 'ck-checkbox--input__intermediate': value === null }"
       aria-hidden="true"
       type="checkbox"
       :disabled="disabled"
-      :checked="isChecked"
+      :checked="value"
+      @change="emit('change', $event)"
       @click.prevent
     />
-      <!-- @change="isChecked = $event.target.checked; onChange($event)" -->
-    <div
-      class="ck-checkbox__element"
-      :class="computedClass"
-      :style="computedStyle"
-      @click.prevent
-    />
-    <span
-      v-if="$slots.default"
-      class="c-Checkbox__label"
-      :class="computedClassLabel"
-      :style="computedStyleLabel"
-      @click.prevent
-    >
-      <slot/>
+    <div class="ck-checkbox--element" :class="elementClass" :style="elementStyle" @click.prevent />
+    <span v-if="label || $slots.default" class="ck-checkbox--label" :class="labelClass" :style="labelStyle" @click.prevent>
+      <span v-if="label" v-text="label" />
+      <slot />
     </span>
   </label>
 </template>
 
 <style lang="stylus" scoped>
 .ck-checkbox
+  user-select none
   cursor pointer
   position relative
   display inline-flex
@@ -141,36 +116,36 @@ function updateValue() {
     display none
   span
     margin-left 0.25rem
-  &.size--xs
-    .ck-checkbox__element
+  &.size__xs
+    .ck-checkbox--element
       width 1rem
       height @width
       &::after
         transform rotate(45deg) scale(0.67)
         left 1px
         top -8px
-  &.size--s
-    .ck-checkbox__element
+  &.size__s
+    .ck-checkbox--element
       width 1.25rem
       height @width
       &::after
         transform rotate(45deg) scale(0.9)
         left 1px
         top -6px
-
-.ck-checkbox__element
+.ck-checkbox--element
   position relative
   display block
-  width 24px
   height 24px
+  width @height
+  box-sizing border-box
   border 2px solid
   border-radius 4px
-  border-color var(--primary)
   transition 0.15s
-  &.is-empty
-    background-color transparent !important
+.ck-checkbox--label
+  margin-left 8px
 
-.ck-checkbox__element::after
+/* Checked */
+.ck-checkbox--input:checked + .ck-checkbox--element::after
   content ''
   display block
   position absolute
@@ -183,40 +158,34 @@ function updateValue() {
   border-color white
   transform-origin bottom left
   transform rotate(45deg)
-  opacity 0
   box-sizing border-box
 
-.ck-checkbox__label
-  user-select none
-  margin-left 8px
-
-/* Checked */
-
-.ck-checkbox__input:checked + .ck-checkbox__element
-  background-color var(--primary)
-
-.ck-checkbox__input:checked + .ck-checkbox__element::after
-  opacity 1
+/* Intermediate */
+.ck-checkbox--input__intermediate + .ck-checkbox--element::after
+  content ''
+  display block
+  position absolute
+  top 50%
+  left 50%
+  height 3px
+  width 10px
+  transform translate(-50%, -50%)
+  background-color white
 
 /* Disabled */
-
 .ck-checkbox[aria-disabled='true']
   cursor not-allowed
-
-.ck-checkbox[aria-disabled='true'] .ck-checkbox__element
+.ck-checkbox[aria-disabled='true'] .ck-checkbox--element
   border-color #757575
   background-color #e0e0e0
-
 .ck-checkbox[aria-disabled='true']
-  .ck-checkbox__input:checked
-  + .ck-checkbox__element
+  .ck-checkbox--input:checked
+  + .ck-checkbox--element
     background-color #757575
-
-  .ck-checkbox[aria-disabled='true'] .ck-checkbox__element::after
+  .ck-checkbox[aria-disabled='true'] .ck-checkbox--element::after
     border-color #757575
-
   .ck-checkbox[aria-disabled='true']
-    .ck-checkbox__input:checked
-    + .ck-checkbox__element::after
+    .ck-checkbox--input:checked
+    + .ck-checkbox--element::after
       border-color #e0e0e0
 </style>

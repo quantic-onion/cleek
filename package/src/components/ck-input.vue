@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed, watch, onMounted, getCurrentInstance } from 'vue';
+import { ref, computed, watch, onMounted } from 'vue';
 import { qmStr } from 'quantic-methods';
 // components
 import CkLabel from './ck-label.vue';
@@ -12,14 +12,13 @@ import type {
   Align,
   AlignVertical,
   Color,
-  CleekOptions,
   Icon,
   IconPack,
   InputType,
   Layout,
   SizeInCSS,
   WidthBreaks,
-} from '../types/cleek-options';
+} from '../cleek-options/cleek-options.types';
 
 type Value = string | number;
 
@@ -85,7 +84,6 @@ const emit = defineEmits<{
 defineExpose({ focus, select });
 
 const { windowWidth } = useWindowWidth();
-const cleekOptions = ref<CleekOptions>();
 const inputRef = ref<HTMLInputElement>();
 const inputValue = ref<Value>('');
 const isShowingPassword = ref(false);
@@ -126,12 +124,12 @@ const computedClassInput = computed(() => {
   // hideBorder
   if (props.hideBorder) list.push('no-border');
   // layout
-  const layout = props.layout || cleekOptions.value?.styles.layout;
+  const layout = props.layout || cleekOptions.value.styles.layout;
   if (layout) list.push(layout);
   // size
   if (props.size) list.push(`ck-input-size__${props.size}`);
   // border-color
-  const borderColor = props.borderColor || cleekOptions.value?.styles.borderColor;
+  const borderColor = props.borderColor || cleekOptions.value.styles.borderColor;
   if (borderColor && hooks.isColorTemplateVariable(borderColor)) {
     list.push(`ck-component__border-color--${borderColor}`);
   }
@@ -144,19 +142,19 @@ const computedStyleInput = computed(() => {
   // font-size
   if (props.textColor) list.push({ color: props.textColor });
   // border-color
-  const borderColor = props.borderColor || cleekOptions.value?.styles.borderColor;
+  const borderColor = props.borderColor || cleekOptions.value.styles.borderColor;
   if (borderColor && !hooks.isColorTemplateVariable(borderColor)) {
     list.push({ 'border-color': borderColor });
   }
   // background-color
   let backgroundColor = '';
-  if (cleekOptions.value?.darkMode) backgroundColor = cleekOptions.value?.darkModeColorItems;
+  if (cleekOptions.value.darkMode) backgroundColor = cleekOptions.value.darkModeColorItems;
   if (backgroundColor && !hooks.isColorTemplateVariable(backgroundColor)) {
     list.push({ backgroundColor: backgroundColor });
   }
   // text-color
-  let textColor = props.textColor || cleekOptions.value?.popup.textColor;
-  if (cleekOptions.value?.darkMode) textColor = cleekOptions.value?.darkModeColorText;
+  let textColor = props.textColor || cleekOptions.value.popup.textColor;
+  if (cleekOptions.value.darkMode) textColor = cleekOptions.value.darkModeColorText;
   if (textColor && !hooks.isColorTemplateVariable(textColor)) {
     list.push(`ck-component__color--${textColor}`);
     list.push({ color: textColor });
@@ -217,7 +215,6 @@ function setTimeoutForChangeDelayed(oldModelVal: Value) {
 }
 
 onMounted(() => {
-  cleekOptions.value = hooks.getCleekOptions(getCurrentInstance);
   if (props.autofocus) focus();
 });
 </script>

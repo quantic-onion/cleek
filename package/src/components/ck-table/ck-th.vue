@@ -3,7 +3,7 @@ import { computed } from 'vue';
 // hooks
 import hooks from '../../utils/global-hooks';
 // types
-import type { Align, Color } from '../../types/cleek-options';
+import type { Align, Color } from '../../cleek-options/cleek-options.types';
 
 const props = defineProps<{
   align: Align; // default left

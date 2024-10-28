@@ -5,7 +5,7 @@ import CkIcon from '../../ck-icon.vue';
 import CkButton from '../../ck-button.vue';
 import CkInput from '../../ck-input.vue';
 // types
-import type { Layout, TableVersion } from '../../../types/cleek-options';
+import type { Layout, TableVersion } from '../../../cleek-options/cleek-options.types';
 // hooks
 import hooks from '../../../utils/global-hooks';
 

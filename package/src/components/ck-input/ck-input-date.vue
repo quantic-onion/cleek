@@ -1,12 +1,15 @@
 <script setup lang="ts">
-import { ref, computed, watch, onMounted, getCurrentInstance } from 'vue';
+import { ref, computed, watch } from 'vue';
+import { storeToRefs } from 'pinia';
+// stores
+import { useCleekOptionsStore } from '@/cleek-options/cleek-options.store';
 import Datepicker from 'vue3-datepicker';
 import { qmStr } from 'quantic-methods';
 // hooks
 import hooks from '../../utils/global-hooks';
 import useWindowWidth from '../../hooks/windowWidth';
 // types
-import type { Align, AlignVertical, CleekOptions, Color, Icon, WidthBreaks } from '../../types/cleek-options';
+import type { Align, AlignVertical, Color, Icon, WidthBreaks } from '../../cleek-options/cleek-options.types';
 import type { IconPack } from '@fortawesome/fontawesome-svg-core';
 
 type DateString = null | string;
@@ -35,8 +38,8 @@ const emit = defineEmits<{
   change: [value: DateString];
 }>();
 
+const { cleekOptions } = storeToRefs(useCleekOptionsStore());
 const { windowWidth } = useWindowWidth();
-const cleekOptions = ref<CleekOptions>();
 const refInput = ref<HTMLInputElement>();
 const random = ref(Math.floor(Math.random() * 1000));
 const uniqueId = ref(`ck-input-date-${random.value}`);
@@ -65,7 +68,7 @@ const deepComputedStyles = computed(() => {
   const list = [];
   // background-color
   let backgroundColor = '';
-  if (cleekOptions.value?.darkMode) backgroundColor = cleekOptions.value?.darkModeColorItems;
+  if (cleekOptions.value.darkMode) backgroundColor = cleekOptions.value.darkModeColorItems;
   if (backgroundColor && !hooks.isColorTemplateVariable(backgroundColor)) {
     list.push({ backgroundColor: backgroundColor });
   }
@@ -129,10 +132,6 @@ function setClosedStatus() {
 function handleIconRightClick() {
   if (props.clearable) inputValue.value = convertToDate(props.clearValue);
 }
-
-onMounted(() => {
-  cleekOptions.value = hooks.getCleekOptions(getCurrentInstance);
-});
 </script>
 
 <template>
