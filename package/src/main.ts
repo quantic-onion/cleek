@@ -1,7 +1,8 @@
 import { App, Plugin } from 'vue';
 // cleek-options
-import defaultCleekOptions from './default-cleek-options';
-import { CleekOptions } from './types/cleek-options';
+import type { CleekOptions } from './cleek-options/cleek-options.types';
+import { defaultCleekOptions } from './cleek-options/default-cleek-options';
+import { useCleekOptionsStore } from './cleek-options/cleek-options.store';
 // vue components
 import * as components from './components/index.js';
 export * from './components/index.js'; // to allow the use of individual components
@@ -23,25 +24,6 @@ library.add(fas);
 library.add(far);
 library.add(fab);
 
-function hexToRgb(hex: string) {
-  // Remove the hash symbol (#) if it exists
-  hex = hex.replace(/^#/, '');
-  // Parse the hex value into individual red, green, and blue components
-  const r = parseInt(hex.substring(0, 2), 16);
-  const g = parseInt(hex.substring(2, 4), 16);
-  const b = parseInt(hex.substring(4, 6), 16);
-  // Return the RGB values as an object
-  return { r, g, b };
-}
-function setRootColors(colors) {
-  const r = document.querySelector(':root') as any;
-  for (const key in colors) {
-    const colorHex = colors[key];
-    const rgbColor = hexToRgb(colors[key]);
-    r.style.setProperty(`--${key}`, colorHex);
-    r.style.setProperty(`--${key}-rgb`, `${rgbColor.r}, ${rgbColor.g}, ${rgbColor.b}`);
-  }
-}
 function getCleekOptions(userOptions: CleekOptions) {
   const options = defaultCleekOptions;
   for (const categoryName in defaultCleekOptions) {
@@ -58,13 +40,12 @@ function getCleekOptions(userOptions: CleekOptions) {
       }
     }
   }
-  setRootColors(options.colors);
   return options;
 }
 
 // install function executed by Vue.use()
 const install: Exclude<Plugin['install'], undefined> = function installCleek(app: App, options: CleekOptions) {
-  app.config.globalProperties.$cleekOptions = getCleekOptions(options);
+  useCleekOptionsStore().cleekOptions = getCleekOptions(options);
   // plugins
   app.use(vClickOutside);
   app.use(FloatingVue);

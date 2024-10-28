@@ -1,6 +1,6 @@
-import { CleekOptions } from './types/cleek-options';
+import type { CleekOptions } from './cleek-options.types';
 
-const cleekOptions: CleekOptions = {
+export const defaultCleekOptions: CleekOptions = {
   lang: 'en',
   darkMode: false,
   darkModeColorText: '#ccc',
@@ -35,11 +35,11 @@ const cleekOptions: CleekOptions = {
   },
   popup: {
     textColor: '',
-    headerAlign: '',
+    headerAlign: 'center',
     backgroundColor: '',
     headerColor: '',
-    acceptBtnType: '',
-    cancelBtnType: '',
+    acceptBtnType: 'filled',
+    cancelBtnType: 'filled',
     maxWidth: '',
     fontSize: '',
   },
@@ -54,5 +54,3 @@ const cleekOptions: CleekOptions = {
     headerBackgroundColor: '',
   },
 };
-
-export default cleekOptions;
