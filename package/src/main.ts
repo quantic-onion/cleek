@@ -1,4 +1,6 @@
 import { App } from 'vue';
+// types
+import type { PartialDeep } from './types';
 // utils
 import { mergeDeep } from './utils/objetc-helpers';
 // plugins
@@ -25,7 +27,7 @@ library.add(far);
 library.add(fab);
 
 // install function executed by app.use()
-function install(app: App, userOptions?: CleekOptions) {
+function install(app: App, userOptions?: PartialDeep<CleekOptions>) {
   // cleek options
   useCleekOptionsStore().cleekOptions = mergeDeep(defaultCleekOptions, userOptions);
   // plugins
