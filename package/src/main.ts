@@ -1,4 +1,6 @@
 import { App } from 'vue';
+// utils
+import { mergeDeep } from './utils/objetc-helpers';
 // plugins
 import vClickOutside from 'click-outside-vue3';
 import FloatingVue from 'floating-vue';
@@ -22,29 +24,10 @@ library.add(fas);
 library.add(far);
 library.add(fab);
 
-function getCleekOptions(userOptions: CleekOptions) {
-  const options = defaultCleekOptions;
-  for (const categoryName in defaultCleekOptions) {
-    if (userOptions[categoryName]) {
-      if (typeof userOptions[categoryName] === 'string' || typeof userOptions[categoryName] === 'boolean') {
-        // set string
-        options[categoryName] = userOptions[categoryName];
-      } else {
-        // set array
-        for (const key in userOptions[categoryName]) {
-          const value = userOptions[categoryName][key];
-          if (value) options[categoryName][key] = value;
-        }
-      }
-    }
-  }
-  return options;
-}
-
-// install function executed by Vue.use()
-function install(app: App, options: CleekOptions) {
+// install function executed by app.use()
+function install(app: App, userOptions?: CleekOptions) {
   // cleek options
-  useCleekOptionsStore().cleekOptions = getCleekOptions(options);
+  useCleekOptionsStore().cleekOptions = mergeDeep(defaultCleekOptions, userOptions);
   // plugins
   app.use(vClickOutside);
   app.use(FloatingVue);
