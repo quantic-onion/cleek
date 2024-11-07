@@ -1,6 +1,8 @@
 import { App } from 'vue';
 // types
 import type { PartialDeep } from './types';
+// resources
+import { floatingVueConfig } from './resources/floating-vue.config';
 // utils
 import { mergeDeep } from './utils/objetc-helpers';
 // plugins
@@ -32,7 +34,7 @@ function install(app: App, userOptions?: PartialDeep<CleekOptions>) {
   useCleekOptionsStore().cleekOptions = mergeDeep(defaultCleekOptions, userOptions);
   // plugins
   app.use(vClickOutside);
-  app.use(FloatingVue);
+  app.use(FloatingVue, floatingVueConfig);
   // components
   Object.entries(components).forEach(([componentName, component]) => {
     app.component(componentName, component);
