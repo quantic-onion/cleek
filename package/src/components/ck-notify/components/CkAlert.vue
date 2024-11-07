@@ -2,8 +2,8 @@
 import { computed, ref } from 'vue';
 // components
 import CkPopup from '../../ck-popup.vue';
-// hooks
-import { packageConfig } from '../../../package-config';
+// resources
+import { packageConfig } from '../../../resources/package-config';
 
 const title = ref('');
 const msg = ref('');

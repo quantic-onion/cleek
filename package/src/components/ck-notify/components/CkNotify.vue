@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import { ref, computed, onMounted } from 'vue';
-import { packageConfig } from '../../../package-config';
 // components
 import CkIcon from '../../ck-icon.vue';
+// resources
+import { packageConfig } from '../../../resources/package-config';
 // hooks
 import hooks from '../../../utils/global-hooks';
 

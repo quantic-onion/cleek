@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue';
-import { packageConfig } from '../../../package-config';
-// types
+// resources
+import { packageConfig } from '../../../resources/package-config';
 // hooks
 import hooks from '../../../utils/global-hooks';
 
