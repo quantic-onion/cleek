@@ -66,7 +66,6 @@ const emits = defineEmits<{
   (e: 'update:currentPage', value: number): void;
 }>();
 
-const defaultTableVersion = 'default'; // move to default file
 const defaultItemsPerPage = 40;
 const { cleekOptions } = storeToRefs(useCleekOptionsStore());
 const { windowWidth } = useWindowWidth();
@@ -82,18 +81,10 @@ const isDarkModeActive = computed(() => {
 const totalPages = computed(() => {
   return Math.ceil(props.listLength / props.itemsPerPage);
 });
-const defaultLoadingText = computed(() => {
-  if (cleekOptions.value.lang === 'es') return 'Cargando...'; 
-  return 'Loading...';
-});
-const defaultNoResultsText = computed(() => {
-  if (cleekOptions.value.lang === 'es') return 'No se encontraron resultados';
-  return 'No results found';
-});
 const realTableVersion = computed(() => {
   if (props.version) return props.version;
   if (cleekOptions.value) return cleekOptions.value.table.version;
-  return defaultTableVersion;
+  return 'default';
 });
 const realHeaderTextColor = computed(() => {
   if (props.headerTextColor) return props.headerTextColor;
@@ -158,11 +149,6 @@ const currentPageLocal = computed({
   set(val: number) {
     emits('update:currentPage', val);
   },
-});
-const isNoResultsTextDisplayed = computed(() => {
-  if (typeof props.listLength === 'undefined') return false;
-  if (props.listLength) return false;
-  return true;
 });
 const realLayout = computed(() => props.layout || cleekOptions.value.styles.layout);
 // isMobileVisible
@@ -316,20 +302,12 @@ function selectOrUnselectAll() {
           <slot :row="row" name="row">
           </slot>
         </ck-tr>
-        <!-- loadingText - noResultsText -->
-        <ck-tr v-if="isNoResultsTextDisplayed">
-          <ck-td class="no-result-text" colspan="100%" align="center">
-            <!-- loadingText -->
-            <template v-if="isLoading">
-              <ck-icon class="mr-2" icon="spinner" spin/>
-              {{ loadingText || defaultLoadingText }}
-            </template>
-            <!-- noResultsText -->
-            <template v-else-if="isNoResultsTextDisplayed">
-              {{ noResultsText || defaultNoResultsText }}
-            </template>
-          </ck-td>
-        </ck-tr>
+        <LoadingAndNoResultsText
+          :listLength="listLength"
+          :isLoading="isLoading"
+          :loadingText="loadingText"
+          :noResultsText="noResultsText"
+        />
       </tbody>
       <!-- footer -->
       <tfoot v-if="$slots.footer">
@@ -341,6 +319,12 @@ function selectOrUnselectAll() {
   <!-- mobile -->
   <div v-if="isMobileVisible" class="ck-table--mobile-container">
     <slot name="mobile"/>
+    <LoadingAndNoResultsText
+      :listLength="listLength"
+      :isLoading="isLoading"
+      :loadingText="loadingText"
+      :noResultsText="noResultsText"
+    />
   </div>
 
   <!-- pagination -->
