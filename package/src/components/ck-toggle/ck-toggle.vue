@@ -8,6 +8,7 @@ const props = defineProps<{
   color?: Color;
   layout?: Layout;
   icon?: Icon;
+  iconRight?: Icon;
   preventAutoUpdate?: boolean;
 }>();
 
@@ -31,13 +32,9 @@ const isActive = computed({
     :class="{ 'is-active': isActive }"
     @click="isActive = !isActive"
   >
-    <ck-icon v-if="icon" class="ck-toggle__icon" :icon="icon" />
-    <span>
-      <slot />
-    </span>
-    <!-- <div v-if="isActive" class="ck-toggle__close-icon">
-      <ck-icon icon="times" />
-    </div> -->
+    <ck-icon v-if="icon" :icon="icon" />
+    <slot />
+    <ck-icon v-if="iconRight" :icon="iconRight" />
   </div>
 </template>
 
