@@ -86,6 +86,14 @@ onMounted(() => {
         :columns="columnsList"
         @refreshList="refreshList($event)"
       >
+        <template #header>
+          Example of header
+        </template>
+        <template #headerBottom>
+          <div class="header-bottom">
+            Example of header bottom
+          </div>
+        </template>
       </ck-table>
       <!-- table 3 -->
       <ck-table
@@ -112,4 +120,8 @@ onMounted(() => {
   display flex
   flex-direction column
   gap 2rem
+.header-bottom
+  width 100%
+  padding 1rem
+  background-color var(--primary)
 </style>

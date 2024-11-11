@@ -12,6 +12,7 @@ import CkTableTitle from './inner-components/ck-table__title.vue';
 import TableHeaderItems from './inner-components/ck-table__header-items.vue';
 import TablePagination from './inner-components/ck-table__pagination.vue';
 import TableColumnsManager from './inner-components/ck-table__columns-manager.vue';
+import LoadingAndNoResultsText from './loading-and-no-results-text/LoadingAndNoResultsText.vue';
 // types
 import type { ColumnItem } from '../../types/table';
 import type { Align, Color, Layout, TableVersion } from '../../cleek-options/cleek-options.types';
@@ -229,6 +230,9 @@ function selectOrUnselectAll() {
       <slot name="header"/>
     </div>
   </div>
+  <div v-if="$slots.headerBottom" class="ck-table__header-bottom--slot">
+    <slot name="headerBottom"/>
+  </div>
   <!-- desktop -->
   <div
     v-if="!isMobileVisible"
@@ -402,18 +406,10 @@ function selectOrUnselectAll() {
     gap 0.5rem
     &.full-width
       width 100%
+  .ck-table__header-bottom--slot
+    width 100%
 .ck-table__pagination
   margin-top 1rem
-
-.no-result-text
-  background-color #eee
-  color #666
-  font-weight 600
-  font-size 1.1rem
-  padding 3rem 1rem
-.dark-mode .no-result-text
-  color $darkModeTextColor
-  background-color $darkModeColorItems
 
 .selected-rows-actions
   display flex

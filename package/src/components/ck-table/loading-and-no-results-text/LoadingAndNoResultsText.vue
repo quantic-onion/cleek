@@ -45,3 +45,15 @@ const realNoResultsText = computed(() => {
     </ck-td>
   </ck-tr>
 </template>
+
+<style lang="stylus" scoped>
+.no-result-text
+  background-color #eee
+  color #666
+  font-weight 600
+  font-size 1.1rem
+  padding 3rem 1rem
+.dark-mode .no-result-text
+  color $darkModeTextColor
+  background-color $darkModeColorItems
+</style>
