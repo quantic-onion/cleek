@@ -13,7 +13,7 @@ import useWindowWidth from '../hooks/windowWidth';
 // types
 import type { Align, AlignVertical, Color, Icon, IconPack, Layout, WidthBreaks } from '../cleek-options/cleek-options.types';
 
-type SelectOption = any;
+type Option = any;
 
 const props = defineProps<{
   modelValue: any;
@@ -25,9 +25,9 @@ const props = defineProps<{
   autofocus?: boolean; // CHECK
   notReduce?: boolean; // notReduce value & name
   notReduceValue?: boolean;
-  options?: SelectOption[];
-  reduceNameFunction?: (option: SelectOption) => string; // ej: (option) => option.name
-  reduceValueFunction?: (option: SelectOption) => any; // ej: (option) => option.id
+  options?: Option[];
+  reduceNameFunction?: (option: Option) => string; // ej: (option) => option.name
+  reduceValueFunction?: (option: Option) => any; // ej: (option) => option.id
   notClearable?: boolean;
   clearValue?: any;
   searchable?: boolean | string; // TODO
@@ -258,13 +258,13 @@ function onClick(event: Event) {
 //   if (!optionName) return false;
 //   return props.options.some(i => getOptionName(i) === optionName);
 // }
-function getOptionValue(option: SelectOption) {
+function getOptionValue(option: Option) {
   if (props.reduceValueFunction) return props.reduceValueFunction(option);
   if (props.notReduceValue || props.notReduce) return option;
   if (props.reduceValueMethod) return option[props.reduceValueMethod]();
   return option[props.reduceValueProp || defaultReduceValueProp];
 }
-function getOptionName(option: SelectOption) {
+function getOptionName(option: Option) {
   if (props.reduceNameFunction) return props.reduceNameFunction(option);
   if (props.notReduce) return option;
   if (props.reduceNameMethod) return option[props.reduceNameMethod]();
