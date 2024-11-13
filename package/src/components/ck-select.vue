@@ -74,7 +74,6 @@ const defaultReduceNameProp = 'name';
 const defaultReduceValueProp = 'id';
 const { cleekOptions } = storeToRefs(useCleekOptionsStore());
 const { windowWidth } = useWindowWidth();
-const initialOption = optionSelected.value;
 const search = ref('');
 
 const optionsFiltered = computed(() => {
@@ -180,30 +179,32 @@ const finalClearValue = computed(() => {
 });
 const realClearValue = computed(() => {
   if (finalClearValue.value !== 'auto') return finalClearValue.value;
-  switch (typeof initialOption) {
+  const option = optionSelected.value;
+  switch (typeof option) {
     case 'number':
       return 0;
     case 'string':
       return '';
     case 'object':
-      if (!initialOption) return null;
-      if (Array.isArray(initialOption)) return [];
+      if (!option) return null;
+      if (Array.isArray(option)) return [];
       return {};
     default:
       return null;
   }
 });
 const valueIsDefault = computed(() => {
-  if (finalClearValue.value !== 'auto') return optionSelected.value === finalClearValue.value;
-  if (typeof initialOption === 'number') return initialOption === 0;
-  if (typeof initialOption === 'string') return initialOption === '';
-  if (typeof initialOption === 'object') {
-    if (!initialOption) return initialOption === null;
+  const option = optionSelected.value;
+  if (finalClearValue.value !== 'auto') return option === finalClearValue.value;
+  if (typeof option === 'number') return option === 0;
+  if (typeof option === 'string') return option === '';
+  if (typeof option === 'object') {
+    if (!option) return option === null;
     // array is also object
-    if (Array.isArray(initialOption)) return initialOption.length === 0;
-    return Object.keys(initialOption).length === 0;
+    if (Array.isArray(option)) return option.length === 0;
+    return Object.keys(option).length === 0;
   }
-  return initialOption === null;
+  return option === null;
 });
 const isPlaceholderVisible = computed(() => {
   if (!props.placeholder) return;
