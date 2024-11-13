@@ -13,6 +13,10 @@ const props = defineProps<{
   layout?: Layout;
 }>();
 
+defineExpose({
+  close,
+});
+
 const { cleekOptions } = storeToRefs(useCleekOptionsStore());
 const isOpen = ref(false);
 const dropdownRef = ref<HTMLElement>();
@@ -62,6 +66,10 @@ watch(contentRef, (val) => {
     }
   }
 });
+
+function close() {
+  isOpen.value = false;
+}
 
 onMounted(() => {
   window.addEventListener('scroll', () => (isOpen.value = false));
