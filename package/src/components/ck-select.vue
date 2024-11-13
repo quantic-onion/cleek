@@ -71,7 +71,6 @@ defineExpose({
   focus,
 });
 
-const defaultClearValue = 'auto';
 // const defaultSearchable = 'auto';
 const defaultReduceNameProp = 'name';
 const defaultReduceValueProp = 'id';
@@ -187,7 +186,7 @@ const computedStyle = computed(() => {
 const logicClearValue = computed(() => {
   if (typeof props.clearValue !== 'undefined') return props.clearValue;
   if (typeof cleekOptions.value.select?.clearValue !== 'undefined') return cleekOptions.value.select.clearValue;
-  return defaultClearValue;
+  return 'auto';
 });
 const realClearValue = computed(() => {
   if (logicClearValue.value !== 'auto') return logicClearValue.value;
