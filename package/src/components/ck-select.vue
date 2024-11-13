@@ -57,6 +57,8 @@ const props = withDefaults(
     backgroundColor?: Color;
   }>(),
   {
+    reduceValueProp: 'id',
+    reduceNameProp: 'name',
     minWidth: '180px',
   },
 );
@@ -70,8 +72,6 @@ defineExpose({
   focus,
 });
 
-const defaultReduceNameProp = 'name';
-const defaultReduceValueProp = 'id';
 const { cleekOptions } = storeToRefs(useCleekOptionsStore());
 const { windowWidth } = useWindowWidth();
 const search = ref('');
@@ -231,14 +231,13 @@ function getOptionValue(option: Option) {
   if (props.reduceValueFunction) return props.reduceValueFunction(option);
   if (props.notReduceValue || props.notReduce) return option;
   if (props.reduceValueMethod) return option[props.reduceValueMethod]();
-  return option[props.reduceValueProp || defaultReduceValueProp];
+  return option[props.reduceValueProp];
 }
 function getOptionName(option: Option) {
   if (props.reduceNameFunction) return props.reduceNameFunction(option);
   if (props.notReduce) return option;
   if (props.reduceNameMethod) return option[props.reduceNameMethod]();
-  const reduceNameProp = props.reduceNameProp || defaultReduceNameProp;
-  return option[reduceNameProp];
+  return option[props.reduceNameProp];
 }
 function setClearValue() {
   optionSelected.value = realClearValue.value;
