@@ -248,9 +248,6 @@ const isEmptyOptionsMsgVisible = computed(() => isOptionsListEmpty.value);
 //   search.value = '';
 //   emits('focus', event);
 // }
-function onClick(event: Event) {
-  emits('click', event);
-}
 // function checkOptionsIsValid(optionName) {
 //   if (!optionName) return false;
 //   return props.options.some(i => getOptionName(i) === optionName);
@@ -311,7 +308,7 @@ function focus() {
       :style="computedStyleSelect"
       :disabled="disabled || isOptionsListEmpty"
       @change="emits('change', $event)"
-      @click="onClick($event)"
+      @click="emits('change', $event)"
     >
       <!-- option -->
       <option v-for="option in filteredOptions" :value="getOptionValue(option)" :key="option" :style="computedStyleOption">
