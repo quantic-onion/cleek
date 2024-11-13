@@ -15,7 +15,7 @@ import type { Align, AlignVertical, Color, Icon, IconPack, Layout, WidthBreaks }
 
 type Option = any;
 
-const value = defineModel({ required: true });
+const optionSelected = defineModel({ required: true });
 
 const props = withDefaults(
   defineProps<{
@@ -74,7 +74,7 @@ const defaultReduceNameProp = 'name';
 const defaultReduceValueProp = 'id';
 const { cleekOptions } = storeToRefs(useCleekOptionsStore());
 const { windowWidth } = useWindowWidth();
-const initialValue = value.value;
+const initialOption = optionSelected.value;
 const search = ref('');
 
 const optionsFiltered = computed(() => {
@@ -180,21 +180,21 @@ const finalClearValue = computed(() => {
 });
 const realClearValue = computed(() => {
   if (finalClearValue.value !== 'auto') return finalClearValue.value;
-  switch (typeof initialValue) {
+  switch (typeof initialOption) {
     case 'number':
       return 0;
     case 'string':
       return '';
-    case 'object': // array is also object
-      if (!initialValue) return null;
-      if (Array.isArray(initialValue)) return [];
+    case 'object':
+      if (!initialOption) return null;
+      if (Array.isArray(initialOption)) return [];
       return {};
     default:
       return null;
   }
 });
 const valueIsDefault = computed(() => {
-  if (finalClearValue.value !== 'auto') return value.value === finalClearValue.value;
+  if (finalClearValue.value !== 'auto') return optionSelected.value === finalClearValue.value;
   const currentValue = initialValue;
   if (typeof currentValue === 'number') return currentValue === 0;
   if (typeof currentValue === 'string') return currentValue === '';
@@ -241,7 +241,7 @@ function getOptionName(option: Option) {
   return option[reduceNameProp];
 }
 function setClearValue() {
-  value.value = realClearValue.value;
+  optionSelected.value = realClearValue.value;
 }
 function focus() {
   // const el = this.$refs.vSelect.$el.children[0].children[0].children[1];
@@ -278,7 +278,7 @@ function focus() {
     </ck-label>
     <!-- select -->
     <select
-      v-model="value"
+      v-model="optionSelected"
       :class="computedClassSelect"
       :style="computedStyleSelect"
       :disabled="disabled || isOptionsListEmpty"
