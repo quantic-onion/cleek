@@ -31,7 +31,6 @@ const props = withDefaults(
     reduceValueFunction?: (option: Option) => any; // ej: (option) => option.id
     notClearable?: boolean;
     clearValue?: any;
-    searchable?: boolean | string; // TODO
     width?: string;
     minWidth?: string;
     layout?: Layout;
@@ -71,7 +70,6 @@ defineExpose({
   focus,
 });
 
-// const defaultSearchable = 'auto';
 const defaultReduceNameProp = 'name';
 const defaultReduceValueProp = 'id';
 const { cleekOptions } = storeToRefs(useCleekOptionsStore());
@@ -175,14 +173,6 @@ const computedStyle = computed(() => {
   if (props.width) list.push({ width: props.width });
   return list;
 });
-// const realSearchable = computed(() => {
-//   const searchable = props.searchable || defaultSearchable;
-//   if (searchable === 'auto') {
-//     if (props.options.length < 5) return false;
-//     return true;
-//   }
-//   return searchable;
-// });
 const finalClearValue = computed(() => {
   if (props.clearValue) return props.clearValue;
   if (cleekOptions.value.select?.clearValue) return cleekOptions.value.select.clearValue;
