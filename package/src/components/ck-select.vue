@@ -13,24 +13,27 @@ import useWindowWidth from '../hooks/windowWidth';
 // types
 import type { Align, AlignVertical, Color, Icon, IconPack, Layout, WidthBreaks } from '../cleek-options/cleek-options.types';
 
+type OptionValue = any;
 type Option = any;
 
-const optionSelected = defineModel({ required: true });
+const optionValueSelected = defineModel<OptionValue>({ required: true });
 
 const props = withDefaults(
   defineProps<{
+    // reduce value
     reduceValueProp?: string;
     reduceValueMethod?: string;
-    reduceNameProp?: string; // prop of the object showed in HTML
-    reduceNameMethod?: string; // method of the object showed in HTML
-    autofocus?: boolean; // CHECK
-    notReduce?: boolean; // notReduce value & name
+    reduceValueFunction?: (option: Option) => OptionValue;
+    // reduce name
+    reduceNameProp?: string;
+    reduceNameMethod?: string;
+    reduceNameFunction?: (option: Option) => string;
+    notReduce?: boolean;
     notReduceValue?: boolean;
     options?: Option[];
-    reduceNameFunction?: (option: Option) => string; // ej: (option) => option.name
-    reduceValueFunction?: (option: Option) => any; // ej: (option) => option.id
     notClearable?: boolean;
     clearValue?: any;
+    autofocus?: boolean;
     width?: string;
     minWidth?: string;
     layout?: Layout;
@@ -86,10 +89,6 @@ const optionsFiltered = computed(() => {
 const isClearBtnVisible = computed(() => {
   if (props.notClearable) return false;
   if (valueIsDefault.value) return false;
-  // const existeesaopcion = props.options.some((option) => (
-  //   getOptionValue(option) === realClearValue
-  // ));
-  // if (!existeesaopcion) return false;
   return true;
 });
 const computedClassSelect = computed(() => {
@@ -179,7 +178,7 @@ const finalClearValue = computed(() => {
 });
 const realClearValue = computed(() => {
   if (finalClearValue.value !== 'auto') return finalClearValue.value;
-  const option = optionSelected.value;
+  const option = optionValueSelected.value;
   switch (typeof option) {
     case 'number':
       return 0;
@@ -194,7 +193,7 @@ const realClearValue = computed(() => {
   }
 });
 const valueIsDefault = computed(() => {
-  const option = optionSelected.value;
+  const option = optionValueSelected.value;
   if (finalClearValue.value !== 'auto') return option === finalClearValue.value;
   if (typeof option === 'number') return option === 0;
   if (typeof option === 'string') return option === '';
@@ -240,13 +239,7 @@ function getOptionName(option: Option) {
   return option[props.reduceNameProp];
 }
 function setClearValue() {
-  optionSelected.value = realClearValue.value;
-}
-function focus() {
-  // const el = this.$refs.vSelect.$el.children[0].children[0].children[1];
-  // setTimeout(() => {
-  //   el.focus();
-  // }, 100);
+  optionValueSelected.value = realClearValue.value;
 }
 </script>
 
@@ -277,7 +270,7 @@ function focus() {
     </ck-label>
     <!-- select -->
     <select
-      v-model="optionSelected"
+      v-model="optionValueSelected"
       :class="computedClassSelect"
       :style="computedStyleSelect"
       :disabled="disabled || isOptionsListEmpty"
