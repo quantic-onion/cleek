@@ -2,6 +2,10 @@
 
 ## Version ?.?.?
 
+### Component: ck-select.vue
+
+1. props.prop eliminada
+
 ### Component: ck-input.vue
 
 1. emit('delayChange', val) --> emit('changeDelayed', val)

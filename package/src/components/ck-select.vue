@@ -18,7 +18,6 @@ type Option = any;
 const value = defineModel({ required: true });
 
 const props = defineProps<{
-  prop?: string; // SHOULD BE DELETED REPLACE BY reduceNameProp
   reduceValueProp?: string;
   reduceValueMethod?: string;
   reduceNameProp?: string; // prop of the object showed in HTML
@@ -254,7 +253,7 @@ function getOptionName(option: Option) {
   if (props.notReduce) return option;
   if (props.reduceNameMethod) return option[props.reduceNameMethod]();
   const reduceNameProp = props.reduceNameProp || defaultReduceNameProp;
-  return option[props.prop || reduceNameProp];
+  return option[reduceNameProp];
 }
 function setClearValue() {
   value.value = realClearValue.value;
