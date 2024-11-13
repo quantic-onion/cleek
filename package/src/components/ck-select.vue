@@ -76,17 +76,12 @@ const { windowWidth } = useWindowWidth();
 const initialValue = value.value;
 const search = ref('');
 
-const filteredOptions = computed(() => {
+const optionsFiltered = computed(() => {
   const options = props.options || [];
-  const list = options.filter((option) => {
+  return options.filter((option) => {
     const name = getOptionName(option);
     return qmStr.checkContainsStr(name, search.value);
   });
-  return list;
-  // const noResultMsg = 'No se encuentra resultados'
-  // if (list.length) return list;
-  // if (props.notReduce) return [noResultMsg];
-  // return [{ [props.prop]: noResultMsg }]
 });
 const isClearBtnVisible = computed(() => {
   if (props.notClearable) return false;
@@ -225,7 +220,7 @@ const isPlaceholderVisible = computed(() => {
   if (!props.placeholder) return;
   return valueIsDefault.value;
 });
-const isOptionsListEmpty = computed(() => !filteredOptions.value.length);
+const isOptionsListEmpty = computed(() => !optionsFiltered.value.length);
 const isEmptyOptionsMsgVisible = computed(() => isOptionsListEmpty.value);
 
 // function onBlur(event: Event) {
@@ -301,7 +296,7 @@ function focus() {
       @click="emit('change', $event)"
     >
       <!-- option -->
-      <option v-for="option in filteredOptions" :value="getOptionValue(option)" :key="option" :style="computedStyleOption">
+      <option v-for="option in optionsFiltered" :value="getOptionValue(option)" :key="option" :style="computedStyleOption">
         {{ getOptionName(option) }}
       </option>
     </select>
