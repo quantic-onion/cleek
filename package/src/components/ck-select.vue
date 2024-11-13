@@ -195,16 +195,15 @@ const realClearValue = computed(() => {
 });
 const valueIsDefault = computed(() => {
   if (finalClearValue.value !== 'auto') return optionSelected.value === finalClearValue.value;
-  const currentValue = initialValue;
-  if (typeof currentValue === 'number') return currentValue === 0;
-  if (typeof currentValue === 'string') return currentValue === '';
-  if (typeof currentValue === 'object') {
-    if (!currentValue) return currentValue === null;
+  if (typeof initialOption === 'number') return initialOption === 0;
+  if (typeof initialOption === 'string') return initialOption === '';
+  if (typeof initialOption === 'object') {
+    if (!initialOption) return initialOption === null;
     // array is also object
-    if (Array.isArray(currentValue)) return currentValue.length === 0;
-    return Object.keys(currentValue).length === 0;
+    if (Array.isArray(initialOption)) return initialOption.length === 0;
+    return Object.keys(initialOption).length === 0;
   }
-  return currentValue === null;
+  return initialOption === null;
 });
 const isPlaceholderVisible = computed(() => {
   if (!props.placeholder) return;
