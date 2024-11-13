@@ -60,7 +60,7 @@ const props = defineProps<{
 const emits = defineEmits<{
   (e: 'update:modelValue', value: any): void;
   (e: 'click', event: Event): void;
-  (e: 'change', event?: Event): void;
+  (e: 'change', event: Event): void;
 }>(); // TERMINAR CLICK / CHANGE
 
 defineExpose({
@@ -84,7 +84,6 @@ const value = computed({
   set(val) {
     // if (val === null) val = realClearValue;
     emits('update:modelValue', val);
-    emits('change');
   },
 });
 const filteredOptions = computed(() => {
@@ -311,15 +310,11 @@ function focus() {
       :class="computedClassSelect"
       :style="computedStyleSelect"
       :disabled="disabled || isOptionsListEmpty"
+      @change="emits('change', $event)"
       @click="onClick($event)"
     >
       <!-- option -->
-      <option
-        v-for="option in filteredOptions"
-        :value="getOptionValue(option)"
-        :key="option"
-        :style="computedStyleOption"
-      >
+      <option v-for="option in filteredOptions" :value="getOptionValue(option)" :key="option" :style="computedStyleOption">
         {{ getOptionName(option) }}
       </option>
     </select>
@@ -333,7 +328,6 @@ function focus() {
 </template>
 
 <style lang="stylus" scoped>
-
 .ck-select
   display inline-block
   position relative
@@ -389,7 +383,7 @@ function focus() {
     height 25px
     border-radius 5px
     width @height
-    margin-bottom ((40px - @height) / 2)
+    margin-bottom 40px - @height / 2
     margin-right 1.25rem
     color #666
     transition 0.3s
@@ -406,12 +400,12 @@ function focus() {
 .ck-select
   &.has-icon-left
     select
-      padding-left 14px + (3 * $globalPadding)
+      padding-left 14px + 3 * $globalPadding
     .ck-select--placeholder
       padding-left 28px
   &.has-icon-right
     select
-      padding-right 14px + (3 * $globalPadding)
+      padding-right 14px + 3 * $globalPadding
     .ck-select--placeholder
       padding-right 28px
   // .ck-select__chevron-icon
