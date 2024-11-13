@@ -77,7 +77,6 @@ const defaultBackgroundColor = 'unset'; // move to default file
 const { cleekOptions } = storeToRefs(useCleekOptionsStore());
 const { windowWidth } = useWindowWidth();
 const search = ref('');
-// const lastSelectedValue: Ref<null | string> = ref(null);
 
 const value = computed({
   get() {
