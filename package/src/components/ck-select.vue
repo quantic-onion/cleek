@@ -71,9 +71,9 @@ const defaultClearValue = 'auto';
 // const defaultSearchable = 'auto';
 const defaultReduceNameProp = 'name';
 const defaultReduceValueProp = 'id';
-
 const { cleekOptions } = storeToRefs(useCleekOptionsStore());
 const { windowWidth } = useWindowWidth();
+const initialValue = value.value;
 const search = ref('');
 
 const filteredOptions = computed(() => {
@@ -195,14 +195,14 @@ const logicClearValue = computed(() => {
 });
 const realClearValue = computed(() => {
   if (logicClearValue.value !== 'auto') return logicClearValue.value;
-  switch (typeof props.modelValue) {
+  switch (typeof initialValue) {
     case 'number':
       return 0;
     case 'string':
       return '';
     case 'object': // array is also object
-      if (!props.modelValue) return null;
-      if (props.modelValue.constructor === Array) return [];
+      if (!initialValue) return null;
+      if (Array.isArray(initialValue)) return [];
       return {};
     default:
       return null;
@@ -210,7 +210,7 @@ const realClearValue = computed(() => {
 });
 const valueIsDefault = computed(() => {
   if (logicClearValue.value !== 'auto') return value.value === logicClearValue.value;
-  const currentValue = props.modelValue;
+  const currentValue = initialValue;
   if (typeof currentValue === 'number') return currentValue === 0;
   if (typeof currentValue === 'string') return currentValue === '';
   if (typeof currentValue === 'object') {
