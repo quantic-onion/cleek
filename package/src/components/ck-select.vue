@@ -183,13 +183,13 @@ const computedStyle = computed(() => {
 //   }
 //   return searchable;
 // });
-const logicClearValue = computed(() => {
-  if (typeof props.clearValue !== 'undefined') return props.clearValue;
-  if (typeof cleekOptions.value.select?.clearValue !== 'undefined') return cleekOptions.value.select.clearValue;
+const finalClearValue = computed(() => {
+  if (props.clearValue) return props.clearValue;
+  if (cleekOptions.value.select?.clearValue) return cleekOptions.value.select.clearValue;
   return 'auto';
 });
 const realClearValue = computed(() => {
-  if (logicClearValue.value !== 'auto') return logicClearValue.value;
+  if (finalClearValue.value !== 'auto') return finalClearValue.value;
   switch (typeof initialValue) {
     case 'number':
       return 0;
@@ -204,7 +204,7 @@ const realClearValue = computed(() => {
   }
 });
 const valueIsDefault = computed(() => {
-  if (logicClearValue.value !== 'auto') return value.value === logicClearValue.value;
+  if (finalClearValue.value !== 'auto') return value.value === finalClearValue.value;
   const currentValue = initialValue;
   if (typeof currentValue === 'number') return currentValue === 0;
   if (typeof currentValue === 'string') return currentValue === '';
