@@ -15,8 +15,9 @@ import type { Align, AlignVertical, Color, Icon, IconPack, Layout, WidthBreaks }
 
 type Option = any;
 
+const value = defineModel({ required: true });
+
 const props = defineProps<{
-  modelValue: any;
   prop?: string; // SHOULD BE DELETED REPLACE BY reduceNameProp
   reduceValueProp?: string;
   reduceValueMethod?: string;
@@ -57,11 +58,10 @@ const props = defineProps<{
   backgroundColor?: Color;
 }>();
 
-const emits = defineEmits<{
-  (e: 'update:modelValue', value: any): void;
-  (e: 'click', event: Event): void;
-  (e: 'change', event: Event): void;
-}>(); // TERMINAR CLICK / CHANGE
+const emit = defineEmits<{
+  change: [event: Event];
+  click: [event: Event];
+}>();
 
 defineExpose({
   focus,
@@ -77,15 +77,6 @@ const { cleekOptions } = storeToRefs(useCleekOptionsStore());
 const { windowWidth } = useWindowWidth();
 const search = ref('');
 
-const value = computed({
-  get() {
-    return props.modelValue;
-  },
-  set(val) {
-    // if (val === null) val = realClearValue;
-    emits('update:modelValue', val);
-  },
-});
 const filteredOptions = computed(() => {
   const options = props.options || [];
   const list = options.filter((option) => {
@@ -246,7 +237,7 @@ const isEmptyOptionsMsgVisible = computed(() => isOptionsListEmpty.value);
 // function onFocus(event: Event) {
 //   lastSelectedValue.value = search.value;
 //   search.value = '';
-//   emits('focus', event);
+//   emit('focus', event);
 // }
 // function checkOptionsIsValid(optionName) {
 //   if (!optionName) return false;
@@ -307,8 +298,8 @@ function focus() {
       :class="computedClassSelect"
       :style="computedStyleSelect"
       :disabled="disabled || isOptionsListEmpty"
-      @change="emits('change', $event)"
-      @click="emits('change', $event)"
+      @change="emit('change', $event)"
+      @click="emit('change', $event)"
     >
       <!-- option -->
       <option v-for="option in filteredOptions" :value="getOptionValue(option)" :key="option" :style="computedStyleOption">
