@@ -17,45 +17,50 @@ type Option = any;
 
 const value = defineModel({ required: true });
 
-const props = defineProps<{
-  reduceValueProp?: string;
-  reduceValueMethod?: string;
-  reduceNameProp?: string; // prop of the object showed in HTML
-  reduceNameMethod?: string; // method of the object showed in HTML
-  autofocus?: boolean; // CHECK
-  notReduce?: boolean; // notReduce value & name
-  notReduceValue?: boolean;
-  options?: Option[];
-  reduceNameFunction?: (option: Option) => string; // ej: (option) => option.name
-  reduceValueFunction?: (option: Option) => any; // ej: (option) => option.id
-  notClearable?: boolean;
-  clearValue?: any;
-  searchable?: boolean | string; // TODO
-  width?: string;
-  minWidth?: string;
-  layout?: Layout;
-  noBorder?: boolean;
-  borderColor?: Color;
-  bgTransparent?: boolean;
-  disabled?: boolean;
-  // group
-  group?: Align;
-  groupVertical?: AlignVertical;
-  widthBreaks?: WidthBreaks;
-  // icon
-  icon?: Icon;
-  iconRight?: Icon;
-  iconPack?: IconPack;
-  iconColor?: Color;
-  // label
-  label?: string;
-  labelAlign?: Align;
-  optional?: boolean;
-  // placeholder
-  placeholder?: string;
-  emptyOptionsMsg?: string;
-  backgroundColor?: Color;
-}>();
+const props = withDefaults(
+  defineProps<{
+    reduceValueProp?: string;
+    reduceValueMethod?: string;
+    reduceNameProp?: string; // prop of the object showed in HTML
+    reduceNameMethod?: string; // method of the object showed in HTML
+    autofocus?: boolean; // CHECK
+    notReduce?: boolean; // notReduce value & name
+    notReduceValue?: boolean;
+    options?: Option[];
+    reduceNameFunction?: (option: Option) => string; // ej: (option) => option.name
+    reduceValueFunction?: (option: Option) => any; // ej: (option) => option.id
+    notClearable?: boolean;
+    clearValue?: any;
+    searchable?: boolean | string; // TODO
+    width?: string;
+    minWidth?: string;
+    layout?: Layout;
+    noBorder?: boolean;
+    borderColor?: Color;
+    bgTransparent?: boolean;
+    disabled?: boolean;
+    // group
+    group?: Align;
+    groupVertical?: AlignVertical;
+    widthBreaks?: WidthBreaks;
+    // icon
+    icon?: Icon;
+    iconRight?: Icon;
+    iconPack?: IconPack;
+    iconColor?: Color;
+    // label
+    label?: string;
+    labelAlign?: Align;
+    optional?: boolean;
+    // placeholder
+    placeholder?: string;
+    emptyOptionsMsg?: string;
+    backgroundColor?: Color;
+  }>(),
+  {
+    minWidth: '180px',
+  },
+);
 
 const emit = defineEmits<{
   change: [event: Event];
@@ -66,7 +71,6 @@ defineExpose({
   focus,
 });
 
-const defaultMinWidth = '180px';
 const defaultClearValue = 'auto';
 // const defaultSearchable = 'auto';
 const defaultReduceNameProp = 'name';
@@ -167,10 +171,7 @@ const computedStyle = computed(() => {
     }
   }
   // minWidth
-  const minWidth = props.minWidth || defaultMinWidth;
-  if (!isWidthDefined && minWidth) {
-    list.push({ 'min-width': minWidth });
-  }
+  if (!isWidthDefined && props.minWidth) list.push({ 'min-width': props.minWidth });
   // width
   if (props.width) list.push({ width: props.width });
   return list;
