@@ -72,7 +72,6 @@ const defaultClearValue = 'auto';
 // const defaultSearchable = 'auto';
 const defaultReduceNameProp = 'name';
 const defaultReduceValueProp = 'id';
-const defaultBackgroundColor = 'unset'; // move to default file
 
 const { cleekOptions } = storeToRefs(useCleekOptionsStore());
 const { windowWidth } = useWindowWidth();
