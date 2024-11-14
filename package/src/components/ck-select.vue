@@ -1,16 +1,20 @@
 <script setup lang="ts">
-import { ref, computed } from 'vue';
+import { ref, computed, watch } from 'vue';
 import { storeToRefs } from 'pinia';
 // stores
 import { useCleekOptionsStore } from '@/cleek-options/cleek-options.store';
-import { qmStr } from 'quantic-methods';
 // components
 import CkLabel from './ck-label.vue';
 import CkIcon from './ck-icon.vue';
+// composables
+import { useScrollListener } from '@/composables/use-scroll-listener.composable';
+// utils
+import { normalizeText } from '@/utils/string-helpers';
 // hooks
 import hooks from '../utils/global-hooks';
 import useWindowWidth from '../hooks/windowWidth';
 // types
+import type { CSSProperties } from 'vue';
 import type { Align, AlignVertical, Color, Icon, IconPack, Layout, WidthBreaks } from '../cleek-options/cleek-options.types';
 
 type OptionValue = any;
@@ -21,6 +25,7 @@ const valueSelected = defineModel<OptionValue>({ required: true });
 const props = withDefaults(
   defineProps<{
     options: Option[];
+    optionsLimit?: number;
     // reduce value
     reduceValueProp?: string;
     reduceValueMethod?: string;
@@ -60,6 +65,7 @@ const props = withDefaults(
     backgroundColor?: Color;
   }>(),
   {
+    optionsLimit: 6,
     reduceValueProp: 'id',
     reduceNameProp: 'name',
     minWidth: '180px',
@@ -84,8 +90,24 @@ defineExpose({
 const { cleekOptions } = storeToRefs(useCleekOptionsStore());
 const { windowWidth } = useWindowWidth();
 const selectRef = ref<HTMLElement>();
+const inputRef = ref<HTMLInputElement>();
+const dropdownRef = ref<HTMLElement>();
+const dropdownStyle = ref<CSSProperties>();
+const inputValue = ref('');
+const isInputFocused = ref(false);
+const forceToDisplayAllOptions = ref(false);
 
-const isOptionsEmpty = computed(() => !props.options.length);
+const optionSelected = computed(() => props.options.find((option) => getOptionValue(option) === valueSelected.value));
+const optionsLength = computed(() => props.options.length);
+const isOptionsEmpty = computed(() => !optionsLength.value);
+const optionsToDisplay = computed(() => {
+  if (forceToDisplayAllOptions.value) return props.options;
+  const words = normalizeText(inputValue.value).split(' ');
+  return props.options.filter((option) => {
+    const description = normalizeText(getOptionName(option));
+    return words.every((word) => description.includes(word));
+  });
+});
 const isDisabled = computed(() => props.disabled || isOptionsEmpty.value);
 const finalClearValue = computed(() => {
   if (props.clearValue) return props.clearValue;
@@ -210,12 +232,25 @@ const optionStyle = computed(() => {
   return list;
 });
 
-function focus() {
-  selectRef.value?.focus();
-}
-function blur() {
-  selectRef.value?.blur();
-}
+watch(optionSelected, () => setInputValue());
+watch(dropdownRef, (val) => {
+  if (!val) return;
+  const clientHeight = document.documentElement.clientHeight;
+  const clientWidth = document.documentElement.clientWidth;
+  const inputRect = inputRef.value.getBoundingClientRect();
+  const styles: CSSProperties = {};
+  // open below
+  const openBelow = inputRect.top < clientHeight / 2;
+  if (openBelow) {
+    styles['top'] = `${inputRect.bottom}px`;
+  } else {
+    styles['bottom'] = `${clientHeight - inputRect.top}px`;
+  }
+  styles['left'] = `${inputRect.left}px`;
+  styles['right'] = `${clientWidth - inputRect.right}px`;
+  dropdownStyle.value = styles;
+});
+
 function getOptionValue(option: Option) {
   if (props.reduceValueFunction) return props.reduceValueFunction(option);
   if (props.notReduceValue || props.notReduce) return option;
@@ -228,9 +263,37 @@ function getOptionName(option: Option) {
   if (props.reduceNameMethod) return option[props.reduceNameMethod]();
   return option[props.reduceNameProp];
 }
-function setClearValue() {
-  valueSelected.value = realClearValue.value;
+function focus() {
+  selectRef.value?.focus();
 }
+function blur() {
+  selectRef.value?.blur();
+}
+function handleInputFocus() {
+  forceToDisplayAllOptions.value = true;
+  isInputFocused.value = true;
+}
+function handleInputBlur() {
+  setInputValue();
+  isInputFocused.value = false;
+}
+function handleInputInput() {
+  forceToDisplayAllOptions.value = false;
+}
+function setInputValue() {
+  const optionSelectedValue = optionSelected.value;
+  inputValue.value = optionSelectedValue ? getOptionName(optionSelectedValue) : '';
+}
+function setClearValue() {
+  inputValue.value = '';
+  valueSelected.value = realClearValue.value;
+  inputRef.value?.blur();
+}
+
+useScrollListener(inputRef, () => inputRef.value?.blur());
+
+// init component
+setInputValue();
 </script>
 
 <template>
@@ -241,6 +304,7 @@ function setClearValue() {
     </ck-label>
     <!-- select -->
     <select
+      v-if="optionsLength <= optionsLimit"
       ref="selectRef"
       v-model="valueSelected"
       :class="selectClass"
@@ -254,6 +318,30 @@ function setClearValue() {
         {{ getOptionName(option) }}
       </option>
     </select>
+    <!-- input -->
+    <input
+      v-else
+      v-model="inputValue"
+      ref="inputRef"
+      :disabled="isDisabled"
+      @focus="handleInputFocus()"
+      @blur="handleInputBlur()"
+      @input="handleInputInput()"
+    />
+    <!-- dropdown -->
+    <teleport to="body">
+      <ul v-if="isInputFocused && optionsToDisplay.length" ref="dropdownRef" class="input-dropdown" :style="dropdownStyle">
+        <li
+          v-for="option in optionsToDisplay"
+          :key="option.id"
+          class="dropdown--option"
+          :class="{ 'dropdown--option__selected': getOptionValue(option) === valueSelected }"
+          @mousedown="valueSelected = getOptionValue(option)"
+        >
+          {{ getOptionName(option) }}
+        </li>
+      </ul>
+    </teleport>
     <!-- placeholder -->
     <span v-if="isDisplayingPlaceholder" class="ck-select--placeholder" v-text="finalPlaceholder" />
     <!-- icon left -->
