@@ -212,20 +212,6 @@ const isPlaceholderVisible = computed(() => {
 const isOptionsListEmpty = computed(() => !optionsFiltered.value.length);
 const isEmptyOptionsMsgVisible = computed(() => isOptionsListEmpty.value);
 
-// function onBlur(event: Event) {
-//   const isValid = checkOptionsIsValid(event.target.value);
-//   if (!isValid) event.target.value = lastSelectedValue.value;
-//   lastSelectedValue.value = null;
-// }
-// function onFocus(event: Event) {
-//   lastSelectedValue.value = search.value;
-//   search.value = '';
-//   emit('focus', event);
-// }
-// function checkOptionsIsValid(optionName) {
-//   if (!optionName) return false;
-//   return props.options.some(i => getOptionName(i) === optionName);
-// }
 function getOptionValue(option: Option) {
   if (props.reduceValueFunction) return props.reduceValueFunction(option);
   if (props.notReduceValue || props.notReduce) return option;
