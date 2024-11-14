@@ -100,6 +100,7 @@ const forceToDisplayAllOptions = ref(false);
 const optionSelected = computed(() => props.options.find((option) => getOptionValue(option) === valueSelected.value));
 const optionsLength = computed(() => props.options.length);
 const isOptionsEmpty = computed(() => !optionsLength.value);
+const isDisplayingSelect = computed(() => optionsLength.value <= props.optionsLimit);
 const optionsToDisplay = computed(() => {
   if (forceToDisplayAllOptions.value) return props.options;
   const words = normalizeText(inputValue.value).split(' ');
@@ -146,7 +147,9 @@ const finalPlaceholder = computed(() => {
   if (isOptionsEmpty.value) return props.emptyOptionsMsg;
   return props.placeholder;
 });
-const isDisplayingPlaceholder = computed(() => (isOptionsEmpty.value || isDefaultValue.value) && finalPlaceholder.value);
+const isDisplayingPlaceholder = computed(
+  () => (isOptionsEmpty.value || isDefaultValue.value) && !inputValue.value && finalPlaceholder.value,
+);
 const isDisplayingClearBtn = computed(() => {
   if (props.notClearable) return false;
   return !isDefaultValue.value;
@@ -175,7 +178,7 @@ const selectContainerStyle = computed(() => {
   if (props.width) list.push({ width: props.width });
   return list;
 });
-const selectClass = computed(() => {
+const inputClass = computed(() => {
   const list = [];
   // group
   list.push(hooks.getGroupClass(props, windowWidth.value));
@@ -191,7 +194,7 @@ const selectClass = computed(() => {
   }
   return list;
 });
-const selectStyle = computed(() => {
+const inputStyle = computed(() => {
   const list = [];
   // border-color
   const borderColor = props.borderColor || cleekOptions.value.styles.borderColor;
@@ -304,11 +307,11 @@ setInputValue();
     </ck-label>
     <!-- select -->
     <select
-      v-if="optionsLength <= optionsLimit"
+      v-if="isDisplayingSelect"
       ref="selectRef"
       v-model="valueSelected"
-      :class="selectClass"
-      :style="selectStyle"
+      :class="inputClass"
+      :style="inputStyle"
       :disabled="isDisabled"
       @change="emit('change', $event)"
       @click="emit('change', $event)"
@@ -321,8 +324,10 @@ setInputValue();
     <!-- input -->
     <input
       v-else
-      v-model="inputValue"
       ref="inputRef"
+      v-model="inputValue"
+      :class="inputClass"
+      :style="inputStyle"
       :disabled="isDisabled"
       @focus="handleInputFocus()"
       @blur="handleInputBlur()"
@@ -349,7 +354,12 @@ setInputValue();
     <!-- icon right -->
     <ck-icon v-if="iconRight" class="ck-select--icon-right" :icon="iconRight" :icon-pack="iconPack" :color="iconColor" />
     <!-- clear btn -->
-    <div v-if="isDisplayingClearBtn" class="ck-select--clear-btn" @click="setClearValue()">
+    <div
+      v-if="isDisplayingClearBtn"
+      class="ck-select--clear-btn"
+      :class="{ 'inside-input': !isDisplayingSelect }"
+      @click="setClearValue()"
+    >
       <ck-icon icon="times" />
     </div>
   </div>
@@ -387,6 +397,26 @@ setInputValue();
     option
       font-size 0.9rem
       color #333
+  input
+    font-size $globalFontSize-s
+    box-sizing border-box
+    min-height 40px
+    width 100%
+    padding $globalPadding
+    border-radius $globalBorderRadius
+    border $border-width solid $globalBorderColor
+    &.rounded
+      border-radius 10rem
+    &.squared
+      border-radius 0
+    &.clearable
+      padding-right 2rem
+    &:focus
+      border-color var(--primary)
+      border-radius-bottom(1px)
+      outline 0
+    &:disabled
+      input-disabled()
   .ck-select--placeholder
     font-size 0.9rem
     position absolute
@@ -414,16 +444,39 @@ setInputValue();
     color #666
     flex-center()
     transition 0.3s
+    &.inside-input
+      right 0.25rem
     &:hover
       background-color rgba(black, 0.025)
   &.has-icon-left
     select
+    input
       padding-left 14px + 3 * $globalPadding
     .ck-select--placeholder
       padding-left 28px
   &.has-icon-right
     select
+    input
       padding-right 14px + 3 * $globalPadding
     .ck-select--placeholder
       padding-right 28px
+</style>
+
+<style lang="stylus">
+.input-dropdown
+  list-style-type none
+  position fixed
+  z-index 99999
+  padding 0
+  border 1px solid rgba(black, 0.025)
+  border-radius 0.2rem
+  margin 0
+  background-color white
+  ck-box-shadow()
+  .dropdown--option
+    padding 0.25em
+    &:hover
+      background-color rgba(black, 0.025)
+    &__selected
+      background-color rgba(black, 0.02)
 </style>
