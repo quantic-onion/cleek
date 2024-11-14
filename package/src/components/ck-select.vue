@@ -211,6 +211,11 @@ const isPlaceholderVisible = computed(() => {
 });
 const isOptionsListEmpty = computed(() => !optionsFiltered.value.length);
 const isEmptyOptionsMsgVisible = computed(() => isOptionsListEmpty.value);
+const isDisplayingPlaceholder = computed(() => isEmptyOptionsMsgVisible.value || isPlaceholderVisible.value);
+const finalPlaceholder = computed(() => {
+  if (isEmptyOptionsMsgVisible.value) return props.emptyOptionsMsg;
+  return props.placeholder;
+});
 
 function getOptionValue(option: Option) {
   if (props.reduceValueFunction) return props.reduceValueFunction(option);
@@ -268,12 +273,7 @@ function setClearValue() {
         {{ getOptionName(option) }}
       </option>
     </select>
-    <span v-if="isEmptyOptionsMsgVisible" class="ck-select--placeholder">
-      {{ emptyOptionsMsg }}
-    </span>
-    <span v-else-if="isPlaceholderVisible" class="ck-select--placeholder">
-      {{ placeholder }}
-    </span>
+    <span v-if="isDisplayingPlaceholder" class="ck-select--placeholder" v-text="finalPlaceholder" />
   </div>
 </template>
 
