@@ -126,7 +126,31 @@ const isDisplayingClearBtn = computed(() => {
   if (props.notClearable) return false;
   return !isDefaultValue.value;
 });
-const computedClassSelect = computed(() => {
+const selectContainerClass = computed(() => {
+  const list = [];
+  // icon
+  if (props.icon) list.push('has-icon-left');
+  if (props.iconRight) list.push('has-icon-right');
+  return list;
+});
+const selectContainerStyle = computed(() => {
+  const list = [];
+  // width-break
+  let isWidthDefined = false;
+  if (props.widthBreaks) {
+    const width = hooks.getWidthByWidthBreaks(props.widthBreaks, windowWidth.value);
+    if (width) {
+      list.push({ width });
+      isWidthDefined = true;
+    }
+  }
+  // minWidth
+  if (!isWidthDefined && props.minWidth) list.push({ 'min-width': props.minWidth });
+  // width
+  if (props.width) list.push({ width: props.width });
+  return list;
+});
+const selectClass = computed(() => {
   const list = [];
   // group
   list.push(hooks.getGroupClass(props, windowWidth.value));
@@ -142,7 +166,7 @@ const computedClassSelect = computed(() => {
   }
   return list;
 });
-const computedStyleSelect = computed(() => {
+const selectStyle = computed(() => {
   const list = [];
   // border-color
   const borderColor = props.borderColor || cleekOptions.value.styles.borderColor;
@@ -168,7 +192,7 @@ const computedStyleSelect = computed(() => {
   }
   return list;
 });
-const computedStyleOption = computed(() => {
+const optionStyle = computed(() => {
   const list = [];
   // text-color
   let textColor = cleekOptions.value.popup.textColor;
@@ -180,30 +204,6 @@ const computedStyleOption = computed(() => {
       list.push({ color: textColor });
     }
   }
-  return list;
-});
-const computedClass = computed(() => {
-  const list = [];
-  // icon
-  if (props.icon) list.push('has-icon-left');
-  if (props.iconRight) list.push('has-icon-right');
-  return list;
-});
-const computedStyle = computed(() => {
-  const list = [];
-  // width-break
-  let isWidthDefined = false;
-  if (props.widthBreaks) {
-    const width = hooks.getWidthByWidthBreaks(props.widthBreaks, windowWidth.value);
-    if (width) {
-      list.push({ width });
-      isWidthDefined = true;
-    }
-  }
-  // minWidth
-  if (!isWidthDefined && props.minWidth) list.push({ 'min-width': props.minWidth });
-  // width
-  if (props.width) list.push({ width: props.width });
   return list;
 });
 
@@ -231,7 +231,7 @@ function setClearValue() {
 </script>
 
 <template>
-  <div class="ck-select" :style="computedStyle" :class="computedClass">
+  <div class="ck-select" :class="selectContainerClass" :style="selectContainerStyle">
     <!-- icon left -->
     <ck-icon
       v-if="icon"
@@ -259,14 +259,14 @@ function setClearValue() {
     <select
       ref="selectRef"
       v-model="valueSelected"
-      :class="computedClassSelect"
-      :style="computedStyleSelect"
+      :class="selectClass"
+      :style="selectStyle"
       :disabled="disabled || isOptionsEmpty"
       @change="emit('change', $event)"
       @click="emit('change', $event)"
     >
       <!-- option -->
-      <option v-for="option in options" :value="getOptionValue(option)" :key="option" :style="computedStyleOption">
+      <option v-for="option in options" :value="getOptionValue(option)" :key="option" :style="optionStyle">
         {{ getOptionName(option) }}
       </option>
     </select>
