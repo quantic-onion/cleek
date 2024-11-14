@@ -4,7 +4,8 @@
 
 ### Component: ck-select.vue
 
-1. props.prop eliminada
+1. options?: Option[] --> options: Option[]
+2. props.prop eliminada
 
 ### Component: ck-input.vue
 

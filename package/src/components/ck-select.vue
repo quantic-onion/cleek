@@ -20,6 +20,7 @@ const valueSelected = defineModel<OptionValue>({ required: true });
 
 const props = withDefaults(
   defineProps<{
+    options: Option[];
     // reduce value
     reduceValueProp?: string;
     reduceValueMethod?: string;
@@ -30,7 +31,6 @@ const props = withDefaults(
     reduceNameFunction?: (option: Option) => string;
     notReduce?: boolean;
     notReduceValue?: boolean;
-    options?: Option[];
     notClearable?: boolean;
     clearValue?: any;
     autofocus?: boolean;
@@ -63,6 +63,9 @@ const props = withDefaults(
     reduceValueProp: 'id',
     reduceNameProp: 'name',
     minWidth: '180px',
+    // placeholder
+    placeholder: '',
+    emptyOptionsMsg: '',
   },
 );
 
@@ -79,19 +82,49 @@ defineExpose({
 const { cleekOptions } = storeToRefs(useCleekOptionsStore());
 const { windowWidth } = useWindowWidth();
 const selectRef = ref<HTMLElement>();
-const search = ref('');
 
-const optionsFiltered = computed(() => {
-  const options = props.options || [];
-  return options.filter((option) => {
-    const name = getOptionName(option);
-    return qmStr.checkContainsStr(name, search.value);
-  });
+const isOptionsEmpty = computed(() => !props.options.length);
+const finalClearValue = computed(() => {
+  if (props.clearValue) return props.clearValue;
+  if (cleekOptions.value.select?.clearValue) return cleekOptions.value.select.clearValue;
 });
-const isClearBtnVisible = computed(() => {
+const realClearValue = computed(() => {
+  if (finalClearValue.value) return finalClearValue.value;
+  const value = valueSelected.value;
+  switch (typeof value) {
+    case 'number':
+      return 0;
+    case 'string':
+      return '';
+    case 'object':
+      if (!value) return null;
+      if (Array.isArray(value)) return [];
+      return {};
+    default:
+      return null;
+  }
+});
+const isDefaultValue = computed(() => {
+  const value = valueSelected.value;
+  if (finalClearValue.value) return value === finalClearValue.value;
+  if (typeof value === 'number') return value === 0;
+  if (typeof value === 'string') return value === '';
+  if (typeof value === 'object') {
+    if (!value) return value === null;
+    // array is also object
+    if (Array.isArray(value)) return value.length === 0;
+    return Object.keys(value).length === 0;
+  }
+  return value === null;
+});
+const finalPlaceholder = computed(() => {
+  if (isOptionsEmpty.value) return props.emptyOptionsMsg;
+  return props.placeholder;
+});
+const isDisplayingPlaceholder = computed(() => (isOptionsEmpty.value || isDefaultValue.value) && finalPlaceholder.value);
+const isDisplayingClearBtn = computed(() => {
   if (props.notClearable) return false;
-  if (valueIsDefault.value) return false;
-  return true;
+  return !isDefaultValue.value;
 });
 const computedClassSelect = computed(() => {
   const list = [];
@@ -101,7 +134,7 @@ const computedClassSelect = computed(() => {
   const layout = props.layout || cleekOptions.value.styles.layout;
   if (layout) list.push(layout);
   // clear able
-  if (isClearBtnVisible.value) list.push('clear-able');
+  if (isDisplayingClearBtn.value) list.push('clear-able');
   // border-color
   const borderColor = props.borderColor || cleekOptions.value.styles.borderColor;
   if (borderColor && hooks.isColorTemplateVariable(borderColor)) {
@@ -173,51 +206,6 @@ const computedStyle = computed(() => {
   if (props.width) list.push({ width: props.width });
   return list;
 });
-const finalClearValue = computed(() => {
-  if (props.clearValue) return props.clearValue;
-  if (cleekOptions.value.select?.clearValue) return cleekOptions.value.select.clearValue;
-  return 'auto';
-});
-const realClearValue = computed(() => {
-  if (finalClearValue.value !== 'auto') return finalClearValue.value;
-  const option = valueSelected.value;
-  switch (typeof option) {
-    case 'number':
-      return 0;
-    case 'string':
-      return '';
-    case 'object':
-      if (!option) return null;
-      if (Array.isArray(option)) return [];
-      return {};
-    default:
-      return null;
-  }
-});
-const valueIsDefault = computed(() => {
-  const option = valueSelected.value;
-  if (finalClearValue.value !== 'auto') return option === finalClearValue.value;
-  if (typeof option === 'number') return option === 0;
-  if (typeof option === 'string') return option === '';
-  if (typeof option === 'object') {
-    if (!option) return option === null;
-    // array is also object
-    if (Array.isArray(option)) return option.length === 0;
-    return Object.keys(option).length === 0;
-  }
-  return option === null;
-});
-const isPlaceholderVisible = computed(() => {
-  if (!props.placeholder) return;
-  return valueIsDefault.value;
-});
-const isOptionsListEmpty = computed(() => !optionsFiltered.value.length);
-const isEmptyOptionsMsgVisible = computed(() => isOptionsListEmpty.value);
-const isDisplayingPlaceholder = computed(() => isEmptyOptionsMsgVisible.value || isPlaceholderVisible.value);
-const finalPlaceholder = computed(() => {
-  if (isEmptyOptionsMsgVisible.value) return props.emptyOptionsMsg;
-  return props.placeholder;
-});
 
 function focus() {
   selectRef.value?.focus();
@@ -260,7 +248,7 @@ function setClearValue() {
       :icon-pack="iconPack"
       :color="iconColor ? iconColor : 'lightgrey'"
     />
-    <div v-if="isClearBtnVisible" class="ck-select__clear-btn" @click="setClearValue()">
+    <div v-if="isDisplayingClearBtn" class="ck-select__clear-btn" @click="setClearValue()">
       <ck-icon icon="times" />
     </div>
     <!-- label -->
@@ -273,12 +261,12 @@ function setClearValue() {
       v-model="valueSelected"
       :class="computedClassSelect"
       :style="computedStyleSelect"
-      :disabled="disabled || isOptionsListEmpty"
+      :disabled="disabled || isOptionsEmpty"
       @change="emit('change', $event)"
       @click="emit('change', $event)"
     >
       <!-- option -->
-      <option v-for="option in optionsFiltered" :value="getOptionValue(option)" :key="option" :style="computedStyleOption">
+      <option v-for="option in options" :value="getOptionValue(option)" :key="option" :style="computedStyleOption">
         {{ getOptionName(option) }}
       </option>
     </select>
