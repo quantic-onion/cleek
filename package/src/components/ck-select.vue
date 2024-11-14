@@ -63,6 +63,8 @@ const props = withDefaults(
     reduceValueProp: 'id',
     reduceNameProp: 'name',
     minWidth: '180px',
+    // icon
+    iconColor: 'lightgrey',
     // placeholder
     placeholder: '',
     emptyOptionsMsg: '',
@@ -84,6 +86,7 @@ const { windowWidth } = useWindowWidth();
 const selectRef = ref<HTMLElement>();
 
 const isOptionsEmpty = computed(() => !props.options.length);
+const isDisabled = computed(() => props.disabled || isOptionsEmpty.value);
 const finalClearValue = computed(() => {
   if (props.clearValue) return props.clearValue;
   if (cleekOptions.value.select?.clearValue) return cleekOptions.value.select.clearValue;
@@ -158,7 +161,7 @@ const selectClass = computed(() => {
   const layout = props.layout || cleekOptions.value.styles.layout;
   if (layout) list.push(layout);
   // clear able
-  if (isDisplayingClearBtn.value) list.push('clear-able');
+  if (isDisplayingClearBtn.value) list.push('clearable');
   // border-color
   const borderColor = props.borderColor || cleekOptions.value.styles.borderColor;
   if (borderColor && hooks.isColorTemplateVariable(borderColor)) {
@@ -232,28 +235,9 @@ function setClearValue() {
 
 <template>
   <div class="ck-select" :class="selectContainerClass" :style="selectContainerStyle">
-    <!-- icon left -->
-    <ck-icon
-      v-if="icon"
-      class="ck-select__icon-left"
-      :icon="icon"
-      :icon-pack="iconPack"
-      :color="iconColor ? iconColor : 'lightgrey'"
-    />
-    <!-- icon right -->
-    <ck-icon
-      v-if="iconRight"
-      class="ck-select__icon-right"
-      :icon="iconRight"
-      :icon-pack="iconPack"
-      :color="iconColor ? iconColor : 'lightgrey'"
-    />
-    <div v-if="isDisplayingClearBtn" class="ck-select__clear-btn" @click="setClearValue()">
-      <ck-icon icon="times" />
-    </div>
     <!-- label -->
     <ck-label v-if="label" :align="labelAlign" for="ck-select">
-      {{ label }} <span v-if="optional" class="ck-select__optional-label">opcional</span>
+      {{ label }} <span v-if="optional" class="ck-select--optional-label">opcional</span>
     </ck-label>
     <!-- select -->
     <select
@@ -261,7 +245,7 @@ function setClearValue() {
       v-model="valueSelected"
       :class="selectClass"
       :style="selectStyle"
-      :disabled="disabled || isOptionsEmpty"
+      :disabled="isDisabled"
       @change="emit('change', $event)"
       @click="emit('change', $event)"
     >
@@ -270,81 +254,80 @@ function setClearValue() {
         {{ getOptionName(option) }}
       </option>
     </select>
+    <!-- placeholder -->
     <span v-if="isDisplayingPlaceholder" class="ck-select--placeholder" v-text="finalPlaceholder" />
+    <!-- icon left -->
+    <ck-icon v-if="icon" class="ck-select--icon-left" :icon="icon" :icon-pack="iconPack" :color="iconColor" />
+    <!-- icon right -->
+    <ck-icon v-if="iconRight" class="ck-select--icon-right" :icon="iconRight" :icon-pack="iconPack" :color="iconColor" />
+    <!-- clear btn -->
+    <div v-if="isDisplayingClearBtn" class="ck-select--clear-btn" @click="setClearValue()">
+      <ck-icon icon="times" />
+    </div>
   </div>
 </template>
 
 <style lang="stylus" scoped>
 .ck-select
-  display inline-block
   position relative
-  .ck-select__optional-label
-    color #aaa
+  display inline-block
+  .ck-select--optional-label
     font-size 0.75rem
     padding-left 0.25rem
     margin-left auto
+    color #aaa
   select
-    cursor text
-    width 100%
-    border 1px solid $globalBorderColor
-    height $globalMinHeight
-    border-radius $globalBorderRadius
     font-size $globalFontSize
-    padding $globalPadding
     box-sizing border-box
+    height $globalMinHeight
+    width 100%
+    padding $globalPadding
+    border 1px solid $globalBorderColor
+    border-radius $globalBorderRadius
     &.rounded
       border-radius 10rem
     &.squared
       border-radius 0
-    &.clear-able
+    &.clearable
       padding-right 3rem
     &:focus
       border-color var(--primary)
-      outline 0
       border-radius-bottom(1px)
+      outline 0
     &:disabled
       input-disabled()
     option
-      color #333
       font-size 0.9rem
-      // cursor pointer // NOT WORKING
-      // padding .25rem // NOT WORKING
-  // icon
-  > .ck-select__icon-left
-  > .ck-select__icon-right
+      color #333
+  .ck-select--placeholder
+    font-size 0.9rem
+    position absolute
+    left 12px
+    bottom 12px
+    color $color-placeholder
+    pointer-events none
+  .ck-select--icon-left
+  .ck-select--icon-right
     position absolute
     bottom 13px
     z-index 1
-  > .ck-select__icon-left
+  .ck-select--icon-left
     left 1.5 * $globalPadding
-  > .ck-select__icon-right
+  .ck-select--icon-right
     right 1.5 * $globalPadding
-  .ck-select__clear-btn
-    position absolute
-    right 0
-    bottom 0
-    display flex
-    align-items center
-    justify-content center
+  .ck-select--clear-btn
     cursor pointer
+    position absolute
+    right 1.25rem
+    bottom 7.5px
     height 25px
-    border-radius 5px
     width @height
-    margin-bottom 40px - @height / 2
-    margin-right 1.25rem
+    border-radius 5px
     color #666
+    flex-center()
     transition 0.3s
     &:hover
       background-color rgba(black, 0.025)
-  .ck-select--placeholder
-    position absolute
-    color $color-placeholder
-    left 12px
-    bottom 12px
-    font-size 0.9rem
-    pointer-events none
-
-.ck-select
   &.has-icon-left
     select
       padding-left 14px + 3 * $globalPadding
@@ -355,8 +338,4 @@ function setClearValue() {
       padding-right 14px + 3 * $globalPadding
     .ck-select--placeholder
       padding-right 28px
-  // .ck-select__chevron-icon
-  //   position absolute
-  //   right 10px
-  //   bottom 10px
 </style>
