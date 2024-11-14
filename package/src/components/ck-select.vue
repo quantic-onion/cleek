@@ -73,10 +73,12 @@ const emit = defineEmits<{
 
 defineExpose({
   focus,
+  blur,
 });
 
 const { cleekOptions } = storeToRefs(useCleekOptionsStore());
 const { windowWidth } = useWindowWidth();
+const selectRef = ref<HTMLElement>();
 const search = ref('');
 
 const optionsFiltered = computed(() => {
@@ -217,6 +219,12 @@ const finalPlaceholder = computed(() => {
   return props.placeholder;
 });
 
+function focus() {
+  selectRef.value?.focus();
+}
+function blur() {
+  selectRef.value?.blur();
+}
 function getOptionValue(option: Option) {
   if (props.reduceValueFunction) return props.reduceValueFunction(option);
   if (props.notReduceValue || props.notReduce) return option;
@@ -261,6 +269,7 @@ function setClearValue() {
     </ck-label>
     <!-- select -->
     <select
+      ref="selectRef"
       v-model="valueSelected"
       :class="computedClassSelect"
       :style="computedStyleSelect"
