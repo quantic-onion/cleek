@@ -16,7 +16,7 @@ import type { Align, AlignVertical, Color, Icon, IconPack, Layout, WidthBreaks }
 type OptionValue = any;
 type Option = any;
 
-const optionValueSelected = defineModel<OptionValue>({ required: true });
+const valueSelected = defineModel<OptionValue>({ required: true });
 
 const props = withDefaults(
   defineProps<{
@@ -178,7 +178,7 @@ const finalClearValue = computed(() => {
 });
 const realClearValue = computed(() => {
   if (finalClearValue.value !== 'auto') return finalClearValue.value;
-  const option = optionValueSelected.value;
+  const option = valueSelected.value;
   switch (typeof option) {
     case 'number':
       return 0;
@@ -193,7 +193,7 @@ const realClearValue = computed(() => {
   }
 });
 const valueIsDefault = computed(() => {
-  const option = optionValueSelected.value;
+  const option = valueSelected.value;
   if (finalClearValue.value !== 'auto') return option === finalClearValue.value;
   if (typeof option === 'number') return option === 0;
   if (typeof option === 'string') return option === '';
@@ -239,7 +239,7 @@ function getOptionName(option: Option) {
   return option[props.reduceNameProp];
 }
 function setClearValue() {
-  optionValueSelected.value = realClearValue.value;
+  valueSelected.value = realClearValue.value;
 }
 </script>
 
@@ -270,7 +270,7 @@ function setClearValue() {
     </ck-label>
     <!-- select -->
     <select
-      v-model="optionValueSelected"
+      v-model="valueSelected"
       :class="computedClassSelect"
       :style="computedStyleSelect"
       :disabled="disabled || isOptionsListEmpty"
