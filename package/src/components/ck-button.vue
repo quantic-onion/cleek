@@ -252,6 +252,10 @@ button
     margin-left 0.5rem
     &.just-icon
       margin-left 0
+  &.ck-button-size__xs
+    font-size 0.5rem
+    min-height unset
+    padding 0.2rem 0.35rem
   &.ck-button-size__s
     font-size 0.7rem
     min-height unset

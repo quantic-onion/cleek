@@ -7,7 +7,7 @@ import { allColors } from '@/all-colors';
 
 <template>
   <ContainerTest title="BUTTON">
-    <ck-button v-for="color in allColors" type="outlined" size="s" :key="color" :color="color">
+    <ck-button v-for="color in allColors" type="outlined" size="xs" :key="color" :color="color">
       {{ color }}
     </ck-button>
     <br/>
