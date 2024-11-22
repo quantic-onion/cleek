@@ -80,7 +80,9 @@ export class SelectedRows {
     this.ids = new Set(list);
     if (settings) this.toggleable = settings.toggleable;
   }
-
+  getIdsAsArray() {
+    return Array.from(this.ids)
+  }
   isRowSelected(id: RowId) {
     return this.ids.has(id);
   }
