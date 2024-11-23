@@ -72,7 +72,7 @@ function setColumnDisplayValue(colName: string, value: any) {
     >
       <ck-checkbox
         v-model="col.value"
-        @change="setColumnDisplayValue(col.name, col.value)"
+        @click="setColumnDisplayValue(col.name, col.value)"
       >
         {{ col.title }}
       </ck-checkbox>
