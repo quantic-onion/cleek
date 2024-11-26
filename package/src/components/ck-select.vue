@@ -366,6 +366,7 @@ setInputValue();
 </template>
 
 <style lang="stylus" scoped>
+$border-width = 1px
 .ck-select
   position relative
   display inline-block
