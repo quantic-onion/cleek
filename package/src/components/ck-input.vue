@@ -180,9 +180,11 @@ function handleInputClick(event: Event) {
 }
 function handleInputInput($event: Event) {
   changeValues(inputValue.value);
-  setTimeout(() => {
-    emit('input', $event);
-  }, 1);
+  setTimeout(() => emit('input', $event), 1);
+}
+function handleInputChange() {
+  emit('change', modelValue.value);
+  setTimeoutForChangeDelayed(modelValue.value);
 }
 function handleInputFocus($event: Event) {
   emit('focus', $event);
@@ -208,9 +210,7 @@ function setValues(modelVal: Value) {
   return finalModeValue;
 }
 function changeValues(inputVal: Value) {
-  const finalModelValue = setValues(inputVal);
-  emit('change', finalModelValue);
-  setTimeoutForChangeDelayed(finalModelValue);
+  setValues(inputVal);
 }
 function setTimeoutForChangeDelayed(oldModelVal: Value) {
   setTimeout(() => {
@@ -260,6 +260,7 @@ onMounted(() => {
         :disabled="disabled"
         @click="handleInputClick($event)"
         @input="handleInputInput($event)"
+        @change="handleInputChange()"
         @focus="handleInputFocus($event)"
         @blur="handleInputBlur($event)"
       />
