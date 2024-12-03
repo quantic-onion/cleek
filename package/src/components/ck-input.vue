@@ -250,26 +250,10 @@ onMounted(() => {
         size="s"
       />
       <input
-        v-if="isShowingPassword"
-        v-model="inputValue"
         ref="inputRef"
-        type="text"
-        :autocomplete="autocomplete ? 'on' : 'off'"
-        :placeholder="placeholder"
-        :class="computedClassInput"
-        :style="computedStyleInput"
-        :disabled="disabled"
-        @click="handleInputClick($event)"
-        @input="handleInputInput($event)"
-        @focus="handleInputFocus($event)"
-        @blur="handleInputBlur($event)"
-      />
-      <input
-        v-else
         v-model="inputValue"
-        ref="inputRef"
+        :type="isShowingPassword ? 'text' : type"
         :autocomplete="autocomplete ? 'on' : 'off'"
-        :type="type"
         :placeholder="placeholder"
         :class="computedClassInput"
         :style="computedStyleInput"
