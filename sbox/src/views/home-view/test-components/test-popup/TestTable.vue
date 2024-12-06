@@ -4,9 +4,24 @@ import { TableData, SelectedRows } from 'cleek';
 // components
 import ContainerTest from '../components/ContainerTest.vue';
 
+const rowActionId = ref(null);
+const rowActionsOptions = [
+  { id: null, name: 'Elije una acción' },
+  { id: '1', name: 'Opcion 1'},
+  { id: '2', name: 'Opcion 2'},
+];
 const columnsListSelectable = ref({
   id: { title: 'ID' },
   name: { title: 'Name' },
+  test1: { title: 'testeando columnas largas', autoWidth: true },
+  test2: { title: 'test largoooooooooooooooooooooo' },
+  test3: { title: 'test largooooooooooooo' },
+  test4: { title: 'testtttttttttttttttttttttttttttttttttttttttttttttttttttt' },
+  test5: { title: 'testtttttttttttttttttttttttttttttttttttttttttttttttttt' },
+  test6: { title: 'test' },
+  test7: { title: 'test' },
+  test8: { title: 'test' },
+  test9: { title: 'test9' },
   hidden: { title: 'Hidden Col', isDisplayed: false },
 });
 const columnsList = [
@@ -50,10 +65,25 @@ onMounted(() => {
       :rows="rows"
       :selectedRows="selectedRows"
     >
+    <template #selectedRowsActions>
+      <ck-select
+        v-model="rowActionId"
+        :options="rowActionsOptions"
+      />
+    </template>
       <template #row="{ row: user }">
         <ck-td :col="columnsListSelectable.id">{{ user.id }}</ck-td>
         <ck-td :col="columnsListSelectable.name">{{ user.name }}</ck-td>
         <ck-td :col="columnsListSelectable.hidden">This column is hidden by default</ck-td>
+        <ck-td :col="columnsListSelectable.test1">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ea qui inventore numquam voluptas neque blanditiis, iste esse adipisci recusandae eaque fuga laudantium pariatur similique eos eius voluptatibus alias corrupti quos.</ck-td>
+        <ck-td :col="columnsListSelectable.test2">Lorem ipsum dolor sit amet consectetur adipisicing elit. Ducimus mollitia consequatur tenetur, enim sapiente dicta harum eum. Mollitia deleniti, reiciendis illo porro dolor minus! Eveniet aut dolor laborum quo ipsam.</ck-td>
+        <ck-td :col="columnsListSelectable.test3">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quasi tempora officia est, sunt sit, provident unde iusto a hic dicta quo eaque nam voluptatum ad delectus beatae modi eveniet voluptatibus?</ck-td>
+        <ck-td :col="columnsListSelectable.test4">Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellat officiis, cum soluta ipsum placeat totam magnam unde dicta eligendi nemo earum voluptates ex numquam laborum inventore! Quos dolor temporibus doloremque.</ck-td>
+        <ck-td :col="columnsListSelectable.test5">Lorem ipsum dolor sit amet consectetur adipisicing elit. Vero dignissimos voluptate facilis dolores laudantium delectus animi consectetur eos id, officia quod totam beatae inventore dolorem harum, nostrum repellendus impedit tempore.</ck-td>
+        <ck-td :col="columnsListSelectable.test6">Lorem ipsum dolor sit amet consectetur adipisicing elit. Facere at necessitatibus, eligendi possimus harum saepe minus quisquam velit, quo quam autem? Expedita asperiores beatae iure earum iste possimus minima harum.</ck-td>
+        <ck-td :col="columnsListSelectable.test7">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Tempore qui mollitia cupiditate iure numquam vel optio! Suscipit reiciendis exercitationem, itaque velit laboriosam, illo assumenda perferendis rerum, in placeat sit similique.</ck-td>
+        <ck-td :col="columnsListSelectable.test8">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi ad voluptate eum corporis repellendus exercitationem expedita laborum nam distinctio vero, alias esse sapiente error est at molestiae magni doloribus eaque?</ck-td>
+        <ck-td :col="columnsListSelectable.test9">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Temporibus quasi quis quia illum sint eum laudantium numquam doloremque dolor molestias quibusdam omnis eligendi iure molestiae consectetur impedit magni, odio cumque!</ck-td>
       </template>
     </ck-table>
     <div class="test-tables__content">
