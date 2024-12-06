@@ -120,18 +120,18 @@ function changeValue() {
     .ck-checkbox--element
       width 1rem
       height @width
-      &::after
-        transform rotate(45deg) scale(0.67)
-        left 1px
-        top -8px
+    .ck-checkbox--input:checked + .ck-checkbox--element::after
+      transform rotate(45deg) scale(0.67)
+      left 1px
+      top -8px
   &.size__s
     .ck-checkbox--element
       width 1.25rem
       height @width
-      &::after
-        transform rotate(45deg) scale(0.9)
-        left 1px
-        top -6px
+    .ck-checkbox--input:checked + .ck-checkbox--element::after
+      transform rotate(45deg) scale(0.9)
+      left 1px
+      top -6px
 .ck-checkbox--element
   position relative
   display block
