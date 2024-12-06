@@ -31,6 +31,7 @@ export { default as CkIcon } from './ck-icon.vue';
 export { default as CkImg } from './ck-img.vue';
 export { default as CkInput } from './ck-input.vue';
 export { default as CkLabel } from './ck-label.vue';
+export { default as CkMpCheckout } from './ck-mp-checkout.vue';
 export { default as CkPopup } from './ck-popup.vue';
 export { default as CkRadio } from './ck-radio.vue';
 export { default as CkSelect } from './ck-select.vue';
@@ -81,7 +82,7 @@ export class SelectedRows {
     if (settings) this.toggleable = settings.toggleable;
   }
   getIdsAsArray() {
-    return Array.from(this.ids)
+    return Array.from(this.ids);
   }
   isRowSelected(id: RowId) {
     return this.ids.has(id);
