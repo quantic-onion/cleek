@@ -35,10 +35,10 @@ async function renderPaymentBrick(bricksBuilder) {
     },
     customization: {
       paymentMethods: {
-        ticket: 'all',
+        // ticket: 'all', TODO: preparar el back
         creditCard: 'all',
         debitCard: 'all',
-        mercadoPago: 'all',
+        // mercadoPago: 'all', TODO: preparar el back
       },
     },
     callbacks: {
