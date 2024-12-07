@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted } from 'vue';
+import { onMounted, onUnmounted } from 'vue';
 
 declare global {
   interface Window {
@@ -13,6 +13,7 @@ const props = defineProps<{
 }>();
 
 let bricksBuilder;
+let paymentBrickController;
 
 function loadMercadoPagoSDK(): Promise<void> {
   return new Promise((resolve, reject) => {
@@ -55,7 +56,7 @@ async function renderPaymentBrick(bricksBuilder) {
     },
   };
   try {
-    await bricksBuilder.create('payment', 'paymentBrick_container', settings);
+    paymentBrickController = await bricksBuilder.create('payment', 'paymentBrick_container', settings);
   } catch (err) {
     console.error('Failed to create Payment Brick:', err);
   }
@@ -69,6 +70,13 @@ onMounted(async () => {
     renderPaymentBrick(bricksBuilder);
   } catch (err) {
     console.error(err.message);
+  }
+});
+
+onUnmounted(() => {
+  if (paymentBrickController) {
+    paymentBrickController.unmount();
+    paymentBrickController = null;
   }
 });
 </script>
