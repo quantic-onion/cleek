@@ -6,11 +6,18 @@ declare global {
     MercadoPago?;
   }
 }
+type PaymentMethod = 'ticket' | 'creditCard' | 'debitCard' | 'mercadoPago';
 
-const props = defineProps<{
-  publicKey: string;
-  amount: number;
-}>();
+const props = withDefaults(
+  defineProps<{
+    publicKey: string;
+    amount: number;
+    paymentMethods?: PaymentMethod[];
+  }>(),
+  {
+    paymentMethods: () => ['creditCard', 'debitCard'],
+  },
+);
 
 let bricksBuilder;
 let paymentBrickController;
@@ -35,12 +42,10 @@ async function renderPaymentBrick(bricksBuilder) {
       amount: props.amount,
     },
     customization: {
-      paymentMethods: {
-        // ticket: 'all', TODO: preparar el back
-        creditCard: 'all',
-        debitCard: 'all',
-        // mercadoPago: 'all', TODO: preparar el back
-      },
+      paymentMethods: props.paymentMethods.reduce((acc, method) => {
+        acc[method] = 'all';
+        return acc;
+      }, {}),
     },
     callbacks: {
       onReady: () => {
