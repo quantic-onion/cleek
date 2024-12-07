@@ -7,6 +7,22 @@ declare global {
   }
 }
 type PaymentMethod = 'ticket' | 'creditCard' | 'debitCard' | 'mercadoPago';
+type CardData = {
+  token: string;
+  issuer_id: string;
+  payment_method_id: string;
+  transaction_amount: number;
+  payment_method_option_id: string | null;
+  processing_mode: string | null;
+  installments: number;
+  payer: {
+    email: string;
+    identification: {
+      type: string;
+      number: string;
+    };
+  };
+};
 
 const props = withDefaults(
   defineProps<{
@@ -18,6 +34,10 @@ const props = withDefaults(
     paymentMethods: () => ['creditCard', 'debitCard'],
   },
 );
+
+const emit = defineEmits<{
+  submit: [formData: CardData];
+}>();
 
 let bricksBuilder;
 let paymentBrickController;
@@ -47,13 +67,13 @@ async function renderPaymentBrick(bricksBuilder) {
         return acc;
       }, {}),
     },
+    locale: 'es-AR',
     callbacks: {
       onReady: () => {
         console.log('Payment Brick is ready');
       },
-      onSubmit: ({ formData, additionalData }) => {
-        console.log(formData);
-        console.log(additionalData);
+      onSubmit: ({ formData }) => {
+        emit('submit', formData);
       },
       onError: (err) => {
         console.error('Error in Payment Brick:', err);
