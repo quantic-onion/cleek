@@ -51,10 +51,16 @@ onMounted(() => {
 <template>
   <ContainerTest title="TABLE">
     <ck-table
+      v-model:search="tableData1.search"
+      v-model:currentPage="tableData1.currentPage"
       hasColumnsManager
+      :isLoading="isLoading"
+      :itemsPerPage="tableData1.itemsPerPage"
+      :listLength="tableData1.listLength"
       :columns="columnsListSelectable"
       :rows="rows"
       :selectedRows="selectedRows"
+      @refreshList="refreshList($event)"
     >
       <template #selectedRowsActions>
         <ck-select

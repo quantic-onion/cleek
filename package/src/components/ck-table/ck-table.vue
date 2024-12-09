@@ -230,9 +230,57 @@ function selectOrUnselectAll() {
       <slot name="header"/>
     </div>
   </div>
+  <!-- headerBottom -->
   <div v-if="$slots.headerBottom" class="ck-table__header-bottom--slot">
     <slot name="headerBottom"/>
   </div>
+  <!-- selectedRows -->
+  <template v-if="isSelectable || (filteredColumnsList.length && !($slots.mobile && isMobileVisible))">
+    <div class="header-row">
+      <div v-if="selectedRows?.ids?.size" class="selected-rows-actions">
+        <div class="selected-rows-actions__left">
+          <ck-checkbox
+            class="main-checkbox"
+            usesThirdState
+            size="xs"
+            color="#BABDBF"
+            :modelValue="isFullPageSelected"
+            @click="selectOrUnselectAll()"
+          />
+          <ck-chip class="nowrap cursor-pointer" size="s" iconRight="times" @click="selectedRows.removeAll()">
+            {{ selectedRows.ids.size }} seleccionado{{ selectedRows.ids.size === 1 ? '' : 's' }}
+          </ck-chip>
+        </div>
+        <slot name="selectedRowsActions"></slot>
+        <ck-button
+          v-if="currentPage && totalPages > 1"
+          size="s"
+          color="dark"
+        >
+          seleccionar todas las páginas
+        </ck-button>
+      </div>
+      <template v-else>
+        <div v-if="isSelectable" autoWidth>
+          <ck-checkbox
+            class="main-checkbox"
+            usesThirdState
+            size="xs"
+            color="#BABDBF"
+            :modelValue="isFullPageSelected"
+            @click="selectOrUnselectAll()"
+          />
+        </div>
+        <ck-table-title
+          v-for="col in filteredColumnsList"
+          :key="col.title"
+          :col="col"
+          :textColor="realHeaderTextColor"
+          :backgroundColor="realHeaderBackgroundColor"
+        />
+      </template>
+    </div>
+  </template>
   <!-- desktop -->
   <div
     v-if="!isMobileVisible"
@@ -240,55 +288,6 @@ function selectOrUnselectAll() {
     :class="{ 'not-overflow': notOverflow }"
   >
     <table class="ck-table__table" :class="computedClassTable">
-      <!-- header -->
-      <thead v-if="isSelectable || (filteredColumnsList.length && !($slots.mobile && isMobileVisible))">
-        <ck-tr class="header-row">
-          <ck-th v-if="selectedRows?.ids?.size" colspan="100%">
-            <div class="selected-rows-actions">
-              <div class="selected-rows-actions__left">
-                <ck-checkbox
-                  class="main-checkbox"
-                  usesThirdState
-                  size="xs"
-                  color="#BABDBF"
-                  :modelValue="isFullPageSelected"
-                  @click="selectOrUnselectAll()"
-                />
-                <ck-chip class="nowrap cursor-pointer" size="s" iconRight="times" @click="selectedRows.removeAll()">
-                  {{ selectedRows.ids.size }} seleccionado{{ selectedRows.ids.size === 1 ? '' : 's' }}
-                </ck-chip>
-              </div>
-              <slot name="selectedRowsActions"></slot>
-              <ck-button
-                v-if="currentPage && totalPages > 1"
-                size="s"
-                color="dark"
-              >
-                seleccionar todas las páginas
-              </ck-button>
-            </div>
-          </ck-th>
-          <template v-else>
-            <ck-th v-if="isSelectable" autoWidth>
-              <ck-checkbox
-                class="main-checkbox"
-                usesThirdState
-                size="xs"
-                color="#BABDBF"
-                :modelValue="isFullPageSelected"
-                @click="selectOrUnselectAll()"
-              />
-            </ck-th>
-            <ck-table-title
-              v-for="col in filteredColumnsList"
-              :key="col.title"
-              :col="col"
-              :textColor="realHeaderTextColor"
-              :backgroundColor="realHeaderBackgroundColor"
-            />
-          </template>
-        </ck-tr>
-      </thead>
       <!-- body -->
       <tbody>
         <slot/>
@@ -413,10 +412,11 @@ function selectOrUnselectAll() {
 
 .selected-rows-actions
   display flex
-  justify-content space-between
+  justify-content flex-start
   align-items center
   width 100%
-  gap 0.5rem
+  gap 1rem
+  margin-bottom 0.5rem
   .selected-rows-actions__left
     display flex
     align-items center
