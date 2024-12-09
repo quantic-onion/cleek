@@ -22,6 +22,7 @@ const columnsListSelectable = ref({
   test7: { title: 'test' },
   test8: { title: 'test' },
   test9: { title: 'test9' },
+  testLast: { title: 'última columna prueba' },
   hidden: { title: 'Hidden Col', isDisplayed: false },
 });
 const columnsList = [
@@ -60,10 +61,16 @@ onMounted(() => {
 <template>
   <ContainerTest title="TABLE">
     <ck-table
+      v-model:search="tableData1.search"
+      v-model:currentPage="tableData1.currentPage"
       hasColumnsManager
+      :isLoading="isLoading"
+      :itemsPerPage="tableData1.itemsPerPage"
+      :listLength="tableData1.listLength"
       :columns="columnsListSelectable"
       :rows="rows"
       :selectedRows="selectedRows"
+      @refreshList="refreshList($event)"
     >
     <template #selectedRowsActions>
       <ck-select
@@ -84,6 +91,7 @@ onMounted(() => {
         <ck-td :col="columnsListSelectable.test7">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Tempore qui mollitia cupiditate iure numquam vel optio! Suscipit reiciendis exercitationem, itaque velit laboriosam, illo assumenda perferendis rerum, in placeat sit similique.</ck-td>
         <ck-td :col="columnsListSelectable.test8">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi ad voluptate eum corporis repellendus exercitationem expedita laborum nam distinctio vero, alias esse sapiente error est at molestiae magni doloribus eaque?</ck-td>
         <ck-td :col="columnsListSelectable.test9">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Temporibus quasi quis quia illum sint eum laudantium numquam doloremque dolor molestias quibusdam omnis eligendi iure molestiae consectetur impedit magni, odio cumque!</ck-td>
+        <ck-td :col="columnsListSelectable.testLast">ULTIMACOLUMNADEPRUEBAAAAAAAAAAAAAAAAAAAAAAAAAA</ck-td>
       </template>
     </ck-table>
     <div class="test-tables__content">
