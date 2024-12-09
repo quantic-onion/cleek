@@ -292,6 +292,14 @@ function setClearValue() {
   valueSelected.value = realClearValue.value;
   inputRef.value?.blur();
 }
+// TODO --> click on chevron-down handle display of select options
+// function displaySelectOptions() {
+//   if (selectRef.value) {
+//     selectRef.value.focus();
+//     const event = new MouseEvent('mousedown', { bubbles: true, cancelable: true });
+//     selectRef.value.dispatchEvent(event);
+//   }
+// }
 
 useScrollListener(inputRef, () => inputRef.value?.blur());
 
@@ -362,6 +370,11 @@ setInputValue();
     >
       <ck-icon icon="times" />
     </div>
+    <!-- chevron-down icon -->
+    <!-- TODO @click="displaySelectOptions()" display select options -->
+    <div v-else class="ck-select--chevron-icon">
+      <ck-icon icon="chevron-down" />
+    </div>
   </div>
 </template>
 
@@ -381,8 +394,15 @@ $border-width = 1px
     height $globalMinHeight
     width 100%
     padding $globalPadding
+    padding-right 1.5rem // chevron-icon
     border 1px solid $globalBorderColor
     border-radius $globalBorderRadius
+    -webkit-appearance: none
+    -moz-appearance: none
+    appearance: none
+    background: none
+    border: none
+    outline: none
     &.rounded
       border-radius 10rem
     &.squared
@@ -404,14 +424,13 @@ $border-width = 1px
     min-height 40px
     width 100%
     padding $globalPadding
+    padding-right 1.5rem // chevron-icon
     border-radius $globalBorderRadius
     border $border-width solid $globalBorderColor
     &.rounded
       border-radius 10rem
     &.squared
       border-radius 0
-    &.clearable
-      padding-right 2rem
     &:focus
       border-color var(--primary)
       border-radius-bottom(1px)
@@ -437,7 +456,7 @@ $border-width = 1px
   .ck-select--clear-btn
     cursor pointer
     position absolute
-    right 1.25rem
+    right 0.25rem
     bottom 7.5px
     height 25px
     width @height
@@ -461,6 +480,16 @@ $border-width = 1px
       padding-right 14px + 3 * $globalPadding
     .ck-select--placeholder
       padding-right 28px
+  .ck-select--chevron-icon
+    position absolute
+    right 0.25rem
+    bottom 7.5px
+    height 25px
+    width @height
+    border-radius 5px
+    color #666
+    flex-center()
+    transition 0.3s
 </style>
 
 <style lang="stylus">
