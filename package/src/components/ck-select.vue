@@ -292,14 +292,6 @@ function setClearValue() {
   valueSelected.value = realClearValue.value;
   inputRef.value?.blur();
 }
-// TODO --> click on chevron-down handle display of select options
-// function displaySelectOptions() {
-//   if (selectRef.value) {
-//     selectRef.value.focus();
-//     const event = new MouseEvent('mousedown', { bubbles: true, cancelable: true });
-//     selectRef.value.dispatchEvent(event);
-//   }
-// }
 
 useScrollListener(inputRef, () => inputRef.value?.blur());
 
@@ -371,8 +363,7 @@ setInputValue();
       <ck-icon icon="times" />
     </div>
     <!-- chevron-down icon -->
-    <!-- TODO @click="displaySelectOptions()" display select options -->
-    <div v-else class="ck-select--chevron-icon">
+    <div v-else class="ck-select--chevron-icon" @click="handleInputFocus()">
       <ck-icon icon="chevron-down" />
     </div>
   </div>
@@ -490,6 +481,7 @@ $border-width = 1px
     color #666
     flex-center()
     transition 0.3s
+    cursor pointer
 </style>
 
 <style lang="stylus">
