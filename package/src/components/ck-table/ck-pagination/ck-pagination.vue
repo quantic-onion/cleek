@@ -47,7 +47,7 @@ function goToNextStep() {
 <div class="ck-pagination" :class="computedClass">
   <ck-button
     group="left"
-    icon="arrow-left"
+    :icon="currentStep === 1 ? 'grip-lines-vertical' : 'arrow-left'"
     :type="currentStep === 1 ? 'flat' : ''"
     @click="goToPreviousStep()"
   />
@@ -65,7 +65,7 @@ function goToNextStep() {
   <!-- next button -->
   <ck-button
     group="right"
-    icon="arrow-right"
+    :icon="currentStep === maxStep ? 'grip-lines-vertical' : 'arrow-right'"
     :type="currentStep === maxStep ? 'flat' : ''"
     @click="goToNextStep()"
   />
