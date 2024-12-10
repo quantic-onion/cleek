@@ -15,6 +15,7 @@ const props = defineProps<{
   headerColor?: Color;
   headerAlign?: boolean;
   closeBtnAlign?: 'left' | 'right';
+  closeBtnIcon?: string;
   notCloseBtn?: boolean;
   isLoading?: boolean;
 }>();
@@ -52,6 +53,10 @@ const computedStyleHeader = computed(() => {
   }
   return list;
 });
+const computedCloseBtnIcon = computed(() => {
+  if (props.closeBtnIcon) return props.closeBtnIcon;
+  return 'times'
+})
 
 watch(isActive, (val) => setBodyOverflow(!val));
 </script>
@@ -71,7 +76,7 @@ watch(isActive, (val) => setBodyOverflow(!val));
         <div v-if="title" class="sidebar-header-title">
           {{ title }}
         </div>
-        <ck-icon class="close-btn" icon="times" />
+        <ck-icon class="close-btn" :icon="computedCloseBtnIcon" />
       </div>
       <!-- content -->
       <div class="loader-container" v-if="isLoading">
