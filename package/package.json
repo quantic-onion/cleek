@@ -7,7 +7,8 @@
   "repository": "",
   "type": "module",
   "files": [
-    "dist"
+    "dist",
+    "src/assets/fonts/**/*"
   ],
   "main": "./dist/main.cjs.js",
   "module": "./dist/main.es.js",
