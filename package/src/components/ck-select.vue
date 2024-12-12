@@ -251,6 +251,10 @@ watch(dropdownRef, (val) => {
   }
   styles['left'] = `${inputRect.left}px`;
   styles['right'] = `${clientWidth - inputRect.right}px`;
+  const maxHeightMargin = 100;
+  styles['max-height'] = openBelow
+    ? `${clientHeight - inputRect.top - maxHeightMargin}px`
+    : `${inputRect.bottom - maxHeightMargin}px`;
   dropdownStyle.value = styles;
 });
 
@@ -473,6 +477,7 @@ $border-width = 1px
   border-radius 0.2rem
   margin 0
   background-color white
+  overflow auto
   ck-box-shadow()
   .dropdown--option
     padding 0.25em
