@@ -238,24 +238,26 @@ const optionStyle = computed(() => {
 watch(optionSelected, () => setInputValue());
 watch(dropdownRef, (val) => {
   if (!val) return;
-  const clientHeight = document.documentElement.clientHeight;
-  const clientWidth = document.documentElement.clientWidth;
-  const inputRect = inputRef.value.getBoundingClientRect();
-  const styles: CSSProperties = {};
-  // open below
-  const openBelow = inputRect.top < clientHeight / 2;
-  if (openBelow) {
-    styles['top'] = `${inputRect.bottom}px`;
-  } else {
-    styles['bottom'] = `${clientHeight - inputRect.top}px`;
-  }
-  styles['left'] = `${inputRect.left}px`;
-  styles['right'] = `${clientWidth - inputRect.right}px`;
-  const maxHeightMargin = 100;
-  styles['max-height'] = openBelow
-    ? `${clientHeight - inputRect.top - maxHeightMargin}px`
-    : `${inputRect.bottom - maxHeightMargin}px`;
-  dropdownStyle.value = styles;
+  setTimeout(() => {
+    const clientHeight = document.documentElement.clientHeight;
+    const clientWidth = document.documentElement.clientWidth;
+    const inputRect = inputRef.value.getBoundingClientRect();
+    const styles: CSSProperties = {};
+    // open below
+    const openBelow = inputRect.top < clientHeight / 2;
+    if (openBelow) {
+      styles['top'] = `${inputRect.bottom}px`;
+    } else {
+      styles['bottom'] = `${clientHeight - inputRect.top}px`;
+    }
+    styles['left'] = `${inputRect.left}px`;
+    styles['right'] = `${clientWidth - inputRect.right}px`;
+    const maxHeightMargin = 100;
+    styles['max-height'] = openBelow
+      ? `${clientHeight - inputRect.top - maxHeightMargin}px`
+      : `${inputRect.bottom - maxHeightMargin}px`;
+    dropdownStyle.value = styles;
+  }, 300);
 });
 
 function getOptionValue(option: Option) {
