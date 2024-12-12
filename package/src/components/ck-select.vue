@@ -478,8 +478,8 @@ $border-width = 1px
   border 1px solid rgba(black, 0.025)
   border-radius 0.2rem
   margin 0
-  background-color white
   overflow auto
+  background-color white
   ck-box-shadow()
   .dropdown--option
     padding 0.25em
