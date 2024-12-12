@@ -296,7 +296,7 @@ function setInputValue() {
 function setClearValue() {
   inputValue.value = '';
   valueSelected.value = realClearValue.value;
-  inputRef.value?.blur();
+  // inputRef.value?.blur();
 }
 
 useScrollListener(inputRef, () => inputRef.value?.blur());
