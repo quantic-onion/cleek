@@ -299,6 +299,8 @@ onMounted(() => {
   display inline-block
   position relative
   align-items flex-end
+  &:focus-within
+    z-index 99999
   .ck-input__optional-label
     color #aaa
     font-size 0.75rem
@@ -324,7 +326,7 @@ onMounted(() => {
         color $color-placeholder
       &::-ms-input-placeholder
         color $color-placeholder
-      &:focus-visible
+      &:focus
         outline 2px solid var(--primary)
       &.rounded
         border-radius 10rem
