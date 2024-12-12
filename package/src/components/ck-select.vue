@@ -238,6 +238,7 @@ const optionStyle = computed(() => {
 watch(optionSelected, () => setInputValue());
 watch(dropdownRef, (val) => {
   if (!val) return;
+  dropdownStyle.value = { display: 'none' };
   setTimeout(() => {
     const clientHeight = document.documentElement.clientHeight;
     const clientWidth = document.documentElement.clientWidth;
@@ -256,6 +257,7 @@ watch(dropdownRef, (val) => {
     styles['max-height'] = openBelow
       ? `${clientHeight - inputRect.top - maxHeightMargin}px`
       : `${inputRect.bottom - maxHeightMargin}px`;
+    styles['display'] = 'block';
     dropdownStyle.value = styles;
   }, 300);
 });
