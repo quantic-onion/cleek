@@ -31,6 +31,7 @@ function closeWithLoading() {
   <ck-sidebar
     v-model="isSidebarActiveWithFooter"
     title="Sidebar with footer"
+    closeBtnIcon="chevron-right"
   >
     <span>Content</span>
     <span>Content</span>

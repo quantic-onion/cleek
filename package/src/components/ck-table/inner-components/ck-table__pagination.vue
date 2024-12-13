@@ -100,6 +100,10 @@ function onClickArrowRight() {
   if (!hasArrowRight.value) return;
   currentPageLocal.value = props.currentPage + 1;
 }
+function onClickArrowLeft() {
+  if (!hasArrowLeft.value) return;
+  currentPageLocal.value = props.currentPage - 1;
+}
 </script>
 
 <template>
@@ -112,7 +116,7 @@ class="ck-table__pagination-container"
     <div
       class="ck-table__pagination--arrow-left"
       :class="{ disabled: !hasArrowLeft }"
-      @click="currentPageLocal = currentPage - 1"
+      @click="onClickArrowLeft()"
     >
       <ck-icon :icon="hasArrowLeft ? 'angle-left' : 'grip-lines-vertical'"/>
     </div>
