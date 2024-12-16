@@ -388,6 +388,9 @@ $border-width = 1px
     margin-left auto
     color #aaa
   select
+    appearance none
+    -webkit-appearance none
+    -moz-appearance none
     font-size $globalFontSize
     box-sizing border-box
     height $globalMinHeight
@@ -396,12 +399,6 @@ $border-width = 1px
     padding-right 1.5rem // chevron-icon
     border 1px solid $globalBorderColor
     border-radius $globalBorderRadius
-    -webkit-appearance: none
-    -moz-appearance: none
-    appearance: none
-    background: none
-    border: none
-    outline: none
     &.rounded
       border-radius 10rem
     &.squared
