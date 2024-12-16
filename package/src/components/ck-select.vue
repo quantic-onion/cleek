@@ -291,6 +291,9 @@ function handleInputBlur() {
 function handleInputInput() {
   forceToDisplayAllOptions.value = false;
 }
+function handleChevronIconClick() {
+  inputRef.value?.focus();
+}
 function setInputValue() {
   const optionSelectedValue = optionSelected.value;
   inputValue.value = optionSelectedValue ? getOptionName(optionSelectedValue) : '';
@@ -364,14 +367,14 @@ setInputValue();
     <!-- clear btn -->
     <div
       v-if="isDisplayingClearBtn"
-      class="ck-select--clear-btn"
+      class="ck-select--btn"
       :class="{ 'inside-input': !isDisplayingSelect }"
       @click="setClearValue()"
     >
       <ck-icon icon="times" />
     </div>
     <!-- chevron-down icon -->
-    <div v-else class="ck-select--chevron-icon" @click="handleInputFocus()">
+    <div v-else-if="!isDisplayingSelect" class="ck-select--btn inside-input" @click="handleChevronIconClick()">
       <ck-icon icon="chevron-down" />
     </div>
   </div>
@@ -388,15 +391,11 @@ $border-width = 1px
     margin-left auto
     color #aaa
   select
-    appearance none
-    -webkit-appearance none
-    -moz-appearance none
     font-size $globalFontSize
     box-sizing border-box
     height $globalMinHeight
     width 100%
     padding $globalPadding
-    padding-right 1.5rem // chevron-icon
     border 1px solid $globalBorderColor
     border-radius $globalBorderRadius
     &.rounded
@@ -420,13 +419,14 @@ $border-width = 1px
     min-height 40px
     width 100%
     padding $globalPadding
-    padding-right 1.5rem // chevron-icon
     border-radius $globalBorderRadius
     border $border-width solid $globalBorderColor
     &.rounded
       border-radius 10rem
     &.squared
       border-radius 0
+    &.clearable
+      padding-right 2rem
     &:focus
       border-color var(--primary)
       border-radius-bottom(1px)
@@ -449,10 +449,10 @@ $border-width = 1px
     left 1.5 * $globalPadding
   .ck-select--icon-right
     right 1.5 * $globalPadding
-  .ck-select--clear-btn
+  .ck-select--btn
     cursor pointer
     position absolute
-    right 0.25rem
+    right 1.25rem
     bottom 7.5px
     height 25px
     width @height
@@ -476,17 +476,6 @@ $border-width = 1px
       padding-right 14px + 3 * $globalPadding
     .ck-select--placeholder
       padding-right 28px
-  .ck-select--chevron-icon
-    position absolute
-    right 0.25rem
-    bottom 7.5px
-    height 25px
-    width @height
-    border-radius 5px
-    color #666
-    flex-center()
-    transition 0.3s
-    cursor pointer
 </style>
 
 <style lang="stylus">
