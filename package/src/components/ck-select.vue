@@ -259,7 +259,7 @@ watch(dropdownRef, (val) => {
       : `${inputRect.bottom - maxHeightMargin}px`;
     styles['display'] = 'block';
     dropdownStyle.value = styles;
-  }, 300);
+  }, 150);
 });
 
 function getOptionValue(option: Option) {
@@ -365,18 +365,24 @@ setInputValue();
     <!-- icon right -->
     <ck-icon v-if="iconRight" class="ck-select--icon-right" :icon="iconRight" :icon-pack="iconPack" :color="iconColor" />
     <!-- clear btn -->
-    <div
+    <ck-button
       v-if="isDisplayingClearBtn"
       class="ck-select--btn"
       :class="{ 'inside-input': !isDisplayingSelect }"
+      size="s"
+      icon="times"
+      type="flat"
       @click="setClearValue()"
-    >
-      <ck-icon icon="times" />
-    </div>
-    <!-- chevron-down icon -->
-    <div v-else-if="!isDisplayingSelect" class="ck-select--btn inside-input" @click="handleChevronIconClick()">
-      <ck-icon icon="chevron-down" />
-    </div>
+    />
+    <!-- chevron down btn -->
+    <ck-button
+      v-else-if="!isDisplayingSelect"
+      class="ck-select--btn inside-input"
+      size="s"
+      icon="chevron-down"
+      type="flat"
+      @click="handleChevronIconClick()"
+    />
   </div>
 </template>
 
