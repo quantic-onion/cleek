@@ -408,6 +408,7 @@ $border-width = 1px
       font-size 0.9rem
       color #333
   input
+    cursor default
     font-size $globalFontSize-s
     box-sizing border-box
     min-height 40px
