@@ -346,7 +346,7 @@ setInputValue();
     />
     <!-- dropdown -->
     <teleport to="body">
-      <ul v-if="isInputFocused && optionsToDisplay.length" ref="dropdownRef" class="input-dropdown" :style="dropdownStyle">
+      <ul v-if="isInputFocused && optionsToDisplay.length" ref="dropdownRef" class="ck-input-dropdown" :style="dropdownStyle">
         <li
           v-for="option in optionsToDisplay"
           :key="option.id"
@@ -485,13 +485,13 @@ $border-width = 1px
 </style>
 
 <style lang="stylus">
-.input-dropdown
+.ck-input-dropdown
   list-style-type none
   position fixed
   z-index 99999
   padding 0
-  border 1px solid rgba(black, 0.025)
-  border-radius 0.2rem
+  border 1px solid rgba(black, 0.3)
+  border-radius 0.25rem
   margin 0
   overflow auto
   background-color white
@@ -499,7 +499,7 @@ $border-width = 1px
   .dropdown--option
     padding 0.25em
     &:hover
-      background-color rgba(black, 0.025)
+      background-color rgba(black, 0.05)
     &__selected
-      background-color rgba(black, 0.02)
+      background-color rgba(black, 0.025)
 </style>
