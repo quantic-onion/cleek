@@ -365,24 +365,9 @@ setInputValue();
     <!-- icon right -->
     <ck-icon v-if="iconRight" class="ck-select--icon-right" :icon="iconRight" :icon-pack="iconPack" :color="iconColor" />
     <!-- clear btn -->
-    <ck-button
-      v-if="isDisplayingClearBtn"
-      class="ck-select--btn"
-      :class="{ 'inside-input': !isDisplayingSelect }"
-      size="s"
-      icon="times"
-      type="flat"
-      @click="setClearValue()"
-    />
+    <ck-button v-if="isDisplayingClearBtn" class="ck-select--btn" size="s" icon="times" type="flat" @click="setClearValue()" />
     <!-- chevron down btn -->
-    <ck-button
-      v-else-if="!isDisplayingSelect"
-      class="ck-select--btn inside-input"
-      size="s"
-      icon="chevron-down"
-      type="flat"
-      @click="handleChevronIconClick()"
-    />
+    <ck-button class="ck-select--btn" :style="{ 'pointer-events': 'none' }" size="s" icon="chevron-down" type="flat" />
   </div>
 </template>
 
@@ -404,6 +389,9 @@ $border-width = 1px
     padding $globalPadding
     border 1px solid $globalBorderColor
     border-radius $globalBorderRadius
+    appearance none
+    -webkit-appearance none
+    -moz-appearance none
     &.rounded
       border-radius 10rem
     &.squared
@@ -458,7 +446,7 @@ $border-width = 1px
   .ck-select--btn
     cursor pointer
     position absolute
-    right 1.25rem
+    right 0.5rem
     bottom 7.5px
     height 25px
     width @height
