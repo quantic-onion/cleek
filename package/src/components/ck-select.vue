@@ -96,6 +96,7 @@ const dropdownStyle = ref<CSSProperties>();
 const inputValue = ref('');
 const isInputFocused = ref(false);
 const forceToDisplayAllOptions = ref(false);
+const indexSelected = ref(-1);
 
 const optionSelected = computed(() => props.options.find((option) => getOptionValue(option) === valueSelected.value));
 const optionsLength = computed(() => props.options.length);
@@ -109,6 +110,7 @@ const optionsToDisplay = computed(() => {
     return words.every((word) => description.includes(word));
   });
 });
+const optionsToDisplayLength = computed(() => optionsToDisplay.value.length);
 const isDisabled = computed(() => props.disabled || isOptionsEmpty.value);
 const finalClearValue = computed(() => {
   if (props.clearValue) return props.clearValue;
@@ -236,6 +238,11 @@ const optionStyle = computed(() => {
 });
 
 watch(optionSelected, () => setInputValue());
+watch(optionsToDisplayLength, (val) => {
+  if (indexSelected.value === -1) return;
+  if (indexSelected.value + 1 <= val) return;
+  indexSelected.value = val - 1;
+});
 watch(dropdownRef, (val) => {
   if (!val) return;
   dropdownStyle.value = { display: 'none' };
@@ -276,9 +283,11 @@ function getOptionName(option: Option) {
 }
 function focus() {
   selectRef.value?.focus();
+  inputRef.value?.focus();
 }
 function blur() {
   selectRef.value?.blur();
+  inputRef.value?.blur();
 }
 function handleInputFocus() {
   forceToDisplayAllOptions.value = true;
@@ -291,8 +300,17 @@ function handleInputBlur() {
 function handleInputInput() {
   forceToDisplayAllOptions.value = false;
 }
-function handleChevronIconClick() {
-  inputRef.value?.focus();
+function handleInputKeydown(key: string) {
+  const optionsLength = optionsToDisplayLength.value;
+  if (key === 'ArrowDown') {
+    indexSelected.value = indexSelected.value + 1 >= optionsLength ? 0 : indexSelected.value + 1;
+  } else if (key === 'ArrowUp') {
+    indexSelected.value = indexSelected.value <= 0 ? optionsLength - 1 : indexSelected.value - 1;
+  } else if (key === 'Enter') {
+    const index = indexSelected.value >= 0 ? indexSelected.value : 0;
+    valueSelected.value = getOptionValue(optionsToDisplay.value[index]);
+    blur();
+  }
 }
 function setInputValue() {
   const optionSelectedValue = optionSelected.value;
@@ -343,16 +361,21 @@ setInputValue();
       @focus="handleInputFocus()"
       @blur="handleInputBlur()"
       @input="handleInputInput()"
+      @keydown="handleInputKeydown($event.key)"
     />
     <!-- dropdown -->
     <teleport to="body">
       <ul v-if="isInputFocused && optionsToDisplay.length" ref="dropdownRef" class="ck-input-dropdown" :style="dropdownStyle">
         <li
-          v-for="option in optionsToDisplay"
+          v-for="(option, optionIndex) in optionsToDisplay"
           :key="option.id"
           class="dropdown--option"
-          :class="{ 'dropdown--option__selected': getOptionValue(option) === valueSelected }"
+          :class="{
+            'dropdown--option__selected': getOptionValue(option) === valueSelected,
+            'dropdown--option__index-selected': optionIndex === indexSelected,
+          }"
           @mousedown="valueSelected = getOptionValue(option)"
+          @mouseenter="indexSelected = optionIndex"
         >
           {{ getOptionName(option) }}
         </li>
@@ -487,8 +510,8 @@ $border-width = 1px
   ck-box-shadow()
   .dropdown--option
     padding 0.25em
-    &:hover
-      background-color rgba(black, 0.05)
+    &__index-selected
+      background-color rgba(200, 200, 200, 0.5)
     &__selected
-      background-color rgba(black, 0.025)
+      background-color rgba(173, 216, 230, 0.8)
 </style>
