@@ -330,7 +330,7 @@ function setClearValue() {
 }
 function setIindexSelected() {
   if (optionSelected.value) {
-    const index = optionsToDisplay.value.findIndex((option) => option.id === optionSelected.value.id);
+    const index = optionsToDisplay.value.findIndex((option) => getOptionValue(option) === getOptionValue(optionSelected.value));
     indexSelected.value = index - 1;
   } else {
     indexSelected.value = -1;
@@ -384,7 +384,7 @@ setInputValue();
       <ul v-if="isInputFocused && optionsToDisplay.length" ref="dropdownRef" class="ck-input-dropdown" :style="dropdownStyle">
         <li
           v-for="(option, optionIndex) in optionsToDisplay"
-          :key="option.id"
+          :key="getOptionValue(option)"
           class="dropdown--option"
           :class="{
             'dropdown--option__selected': getOptionValue(option) === valueSelected,
