@@ -111,6 +111,11 @@ const optionsToDisplay = computed(() => {
   });
 });
 const optionsToDisplayLength = computed(() => optionsToDisplay.value.length);
+const inputPlaceholer = computed(() => {
+  if (!isInputFocused.value) return '';
+  if (!optionSelected.value) return '';
+  return getOptionName(optionSelected.value);
+});
 const isDisabled = computed(() => props.disabled || isOptionsEmpty.value);
 const finalClearValue = computed(() => {
   if (props.clearValue) return props.clearValue;
@@ -290,7 +295,9 @@ function blur() {
   inputRef.value?.blur();
 }
 function handleInputFocus() {
+  inputValue.value = '';
   forceToDisplayAllOptions.value = true;
+  setIindexSelected();
   isInputFocused.value = true;
 }
 function handleInputBlur() {
@@ -320,6 +327,14 @@ function setClearValue() {
   inputValue.value = '';
   valueSelected.value = realClearValue.value;
   // inputRef.value?.blur();
+}
+function setIindexSelected() {
+  if (optionSelected.value) {
+    const index = optionsToDisplay.value.findIndex((option) => option.id === optionSelected.value.id);
+    indexSelected.value = index - 1;
+  } else {
+    indexSelected.value = -1;
+  }
 }
 
 useScrollListener(inputRef, () => inputRef.value?.blur());
@@ -357,6 +372,7 @@ setInputValue();
       v-model="inputValue"
       :class="inputClass"
       :style="inputStyle"
+      :placeholder="inputPlaceholer"
       :disabled="isDisabled"
       @focus="handleInputFocus()"
       @blur="handleInputBlur()"
