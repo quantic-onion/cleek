@@ -219,7 +219,10 @@ function setTimeoutForChangeDelayed(oldModelVal: Value) {
 }
 
 onMounted(() => {
-  if (props.autofocus) focus();
+  if (props.autofocus) {
+    focus();
+    handleInputClick(null);
+  }
 });
 </script>
 
