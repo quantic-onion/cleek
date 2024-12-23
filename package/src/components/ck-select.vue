@@ -330,8 +330,8 @@ function setClearValue() {
 }
 function setIindexSelected() {
   if (optionSelected.value) {
-    const index = optionsToDisplay.value.findIndex((option) => getOptionValue(option) === getOptionValue(optionSelected.value));
-    indexSelected.value = index - 1;
+    const options = optionsToDisplay.value;
+    indexSelected.value = options.findIndex((op) => getOptionValue(op) === getOptionValue(optionSelected.value));
   } else {
     indexSelected.value = -1;
   }
