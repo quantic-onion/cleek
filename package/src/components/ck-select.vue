@@ -112,8 +112,8 @@ const optionsToDisplay = computed(() => {
 });
 const optionsToDisplayLength = computed(() => optionsToDisplay.value.length);
 const inputPlaceholer = computed(() => {
-  if (!isInputFocused.value) return '';
-  if (!optionSelected.value) return '';
+  if (!isInputFocused.value) return;
+  if (!optionSelected.value) return;
   return getOptionName(optionSelected.value);
 });
 const isDisabled = computed(() => props.disabled || isOptionsEmpty.value);
