@@ -6,6 +6,7 @@ import CkIcon from './ck-icon.vue';
 import type { Align, Color, Icon, IconPack, Size } from '../cleek-options/cleek-options.types';
 // hooks
 import hooks from '../utils/global-hooks';
+import useWindowWidth from '../hooks/windowWidth';
 
 const props = defineProps<{
   size?: Size; // default s
@@ -17,11 +18,14 @@ const props = defineProps<{
   icon?: Icon;
   iconRight?: Icon;
   iconPack?: IconPack;
+  // group
+  group?: Align;
 }>();
 
 const defaultTextColor = 'white';
 const defaultColor = 'primary';
 const defaultSize = 's';
+const { windowWidth } = useWindowWidth();
 
 const emits = defineEmits<{
   (e: 'click', event: Event): void;
@@ -33,6 +37,8 @@ const computedClass = computed(() => {
   if (!props.color || hooks.isColorTemplateVariable(props.color)) {
     list.push(`ck-component__bg-color--${props.color || defaultColor}`);
   }
+  // group
+  list.push(hooks.getGroupClass(props, windowWidth.value));
   // size
   list.push(`size-${props.size || defaultSize}`);
   // align
