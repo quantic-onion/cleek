@@ -26,6 +26,7 @@ const props = withDefaults(
   defineProps<{
     options: Option[];
     optionsLimit?: number;
+    isLoading?: boolean;
     // reduce value
     reduceValueProp?: string;
     reduceValueMethod?: string;
@@ -151,11 +152,12 @@ const isDefaultValue = computed(() => {
   return value === null;
 });
 const finalPlaceholder = computed(() => {
+  if (props.isLoading) return 'Cargando...'
   if (isOptionsEmpty.value) return props.emptyOptionsMsg;
   return props.placeholder;
 });
 const isDisplayingPlaceholder = computed(
-  () => (isOptionsEmpty.value || isDefaultValue.value) && !inputValue.value && finalPlaceholder.value,
+  () => ((isOptionsEmpty.value || isDefaultValue.value) && !inputValue.value && finalPlaceholder.value) || props.isLoading,
 );
 const isDisplayingClearBtn = computed(() => {
   if (props.notClearable) return false;
