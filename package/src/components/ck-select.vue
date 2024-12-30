@@ -242,7 +242,6 @@ const optionStyle = computed(() => {
   return list;
 });
 
-watch(valueSelected, (val) => emit('change', val));
 watch(optionSelected, () => setInputValue());
 watch(optionsToDisplayLength, (val) => {
   if (indexSelected.value === -1) return;
@@ -316,9 +315,13 @@ function handleInputKeydown(key: string) {
     indexSelected.value = indexSelected.value <= 0 ? optionsLength - 1 : indexSelected.value - 1;
   } else if (key === 'Enter') {
     const index = indexSelected.value >= 0 ? indexSelected.value : 0;
-    valueSelected.value = getOptionValue(optionsToDisplay.value[index]);
+    setValueSelected(getOptionValue(optionsToDisplay.value[index]));
     blur();
   }
+}
+function setValueSelected(newVal: OptionValue) {
+  valueSelected.value = newVal;
+  emit('change', newVal);
 }
 function setInputValue() {
   const optionSelectedValue = optionSelected.value;
@@ -326,8 +329,7 @@ function setInputValue() {
 }
 function setClearValue() {
   inputValue.value = '';
-  valueSelected.value = realClearValue.value;
-  // inputRef.value?.blur();
+  setValueSelected(realClearValue.value);
 }
 function setIindexSelected() {
   if (optionSelected.value) {
@@ -358,6 +360,7 @@ setInputValue();
       :class="inputClass"
       :style="inputStyle"
       :disabled="isDisabled"
+      @change="emit('change', valueSelected)"
       @click="emit('click', $event)"
     >
       <!-- option -->
@@ -391,7 +394,7 @@ setInputValue();
             'dropdown--option__selected': getOptionValue(option) === valueSelected,
             'dropdown--option__index-selected': optionIndex === indexSelected,
           }"
-          @mousedown="valueSelected = getOptionValue(option)"
+          @mousedown="setValueSelected(getOptionValue(option))"
           @mouseenter="indexSelected = optionIndex"
         >
           {{ getOptionName(option) }}
