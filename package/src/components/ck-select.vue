@@ -358,7 +358,7 @@ setInputValue();
       :style="inputStyle"
       :disabled="isDisabled"
       @change="emit('change', $event)"
-      @click="emit('change', $event)"
+      @click="emit('click', $event)"
     >
       <!-- option -->
       <option v-for="option in options" :value="getOptionValue(option)" :key="option" :style="optionStyle">
