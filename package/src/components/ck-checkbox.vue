@@ -17,6 +17,7 @@ const props = withDefaults(
     color?: Color;
     colorText?: Color;
     size?: Size;
+    textSize?: Size;
   }>(),
   {
     color: 'primary',
@@ -26,6 +27,8 @@ const props = withDefaults(
 const emit = defineEmits<{
   change: [event: Event];
 }>();
+
+const defaultTextSize = 'm';
 
 const checkboxAttributes = computed(() => {
   return {
@@ -58,6 +61,10 @@ const labelClass = computed(() => {
   const list = [];
   if (props.colorText && hooks.isColorTemplateVariable(props.colorText)) {
     list.push(`ck-component__color--${props.colorText}`);
+  }
+  // textSize
+  if (props.textSize && props.textSize !== defaultTextSize) {
+    list.push(`ck-checkbox--label-text-size--${props.textSize}`);
   }
   return list;
 });
@@ -143,6 +150,15 @@ function changeValue() {
   transition 0.15s
 .ck-checkbox--label
   margin-left 8px
+  font-size 1rem
+  &-text-size--xs
+    font-size 0.65rem
+  &-text-size--s
+    font-size 0.85rem
+  &-text-size--l
+    font-size 1.2rem
+  &-text-size--xl
+    font-size 1.5rem
 
 /* Checked */
 .ck-checkbox--input:checked + .ck-checkbox--element::after

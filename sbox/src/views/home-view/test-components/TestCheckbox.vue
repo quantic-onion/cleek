@@ -27,9 +27,11 @@ watch(values, async () => {
   <ContainerTest title="CHECKBOX">
     <div v-if="isDisplayingCheckbox" class="test-checkbox__container">
       <div class="test-checkbox__row">
-        <ck-checkbox v-model="values.primary" size="xs">xs</ck-checkbox>
-        <ck-checkbox v-model="values.primary" size="s">s</ck-checkbox>
-        <ck-checkbox v-model="values.primary" size="m">m</ck-checkbox>
+        <ck-checkbox v-model="values.primary" size="xs" textSize="xs">Size and textSize xs</ck-checkbox>
+        <ck-checkbox v-model="values.primary" size="s" textSize="s">Size and textSize s</ck-checkbox>
+        <ck-checkbox v-model="values.primary" size="m">Size and textSize-default- m</ck-checkbox>
+        <ck-checkbox v-model="values.primary" size="l" textSize="l">textSize l</ck-checkbox>
+        <ck-checkbox v-model="values.primary" size="xl" textSize="xl">textSize xl</ck-checkbox>
       </div>
       <div class="test-checkbox__row">
         <ck-checkbox v-for="color in allColors" :key="color" :color="color" v-model="values[color]">
