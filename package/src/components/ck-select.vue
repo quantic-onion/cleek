@@ -78,7 +78,7 @@ const props = withDefaults(
 );
 
 const emit = defineEmits<{
-  change: [event: Event];
+  change: [val: OptionValue];
   click: [event: Event];
 }>();
 
@@ -242,6 +242,7 @@ const optionStyle = computed(() => {
   return list;
 });
 
+watch(valueSelected, (val) => emit('change', val));
 watch(optionSelected, () => setInputValue());
 watch(optionsToDisplayLength, (val) => {
   if (indexSelected.value === -1) return;
@@ -357,7 +358,6 @@ setInputValue();
       :class="inputClass"
       :style="inputStyle"
       :disabled="isDisabled"
-      @change="emit('change', $event)"
       @click="emit('click', $event)"
     >
       <!-- option -->
@@ -374,6 +374,7 @@ setInputValue();
       :style="inputStyle"
       :placeholder="inputPlaceholer"
       :disabled="isDisabled"
+      @click="emit('click', $event)"
       @focus="handleInputFocus()"
       @blur="handleInputBlur()"
       @input="handleInputInput()"
