@@ -17,6 +17,7 @@ const props = defineProps<{
   outlined?: boolean;
   squared?: boolean;
   size?: Size;
+  textSize?: Size;
   // icon
   icon?: Icon;
   iconPack?: IconPack;
@@ -27,6 +28,7 @@ const emits = defineEmits<{
 }>();
 
 const defaultSize = 's';
+const defaultTextSize = 'm';
 const { cleekOptions } = storeToRefs(useCleekOptionsStore());
 
 const computedClass = computed(() => {
@@ -59,6 +61,14 @@ const computedStyleContent = computed(() => {
   }
   return list;
 });
+const computedClassContent = computed(() => {
+  const list = [];
+  // textSize
+  if (props.textSize && props.textSize !== defaultTextSize) {
+    list.push(`ck-switch__text-size--${props.textSize}`);
+  }
+  return list;
+});
 
 function handleSwitchClick(e: Event) {
   if (props.preventAutoUpdate) {
@@ -88,7 +98,7 @@ function handleSwitchClick(e: Event) {
       <!-- icon-right -->
       <ck-icon v-if="icon && !value" class="ck-switch__icon-right" :icon="icon" :icon-pack="iconPack" :class="iconClass" />
     </div>
-    <span v-if="$slots.default" class="ck-switch__content" :style="computedStyleContent">
+    <span v-if="$slots.default" class="ck-switch__content" :style="computedStyleContent" :class="computedClassContent">
       <slot />
     </span>
   </label>
@@ -129,6 +139,16 @@ $transitionTime = 0.4s
   .ck-switch__content
     user-select none
     margin-left 5px
+  .ck-switch__text-size
+    font-size 1rem
+    &--xs
+      font-size 0.65rem
+    &--s
+      font-size 0.85rem
+    &--l
+      font-size 1.2rem
+    &--xl
+      font-size 1.5rem
   .ck-switch__icon-left
   .ck-switch__icon-right
     position absolute

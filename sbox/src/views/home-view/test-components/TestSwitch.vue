@@ -67,10 +67,10 @@ function handleDoNotUpdate() {
       <p v-if="remainingSecondsToUpdate">Se actualizará en {{ remainingSecondsToUpdate }} segundos</p>
     </div>
     <div>
-      <p>Icon</p>
-      <ck-switch v-model="valueIcon1" icon="dollar-sign" />
-      <ck-switch v-model="valueIcon2" icon="user" />
-      <ck-switch v-model="valueIcon3" icon="euro-sign" />
+      <p>Icon - Size - TextSize</p>
+      <ck-switch v-model="valueIcon1" icon="dollar-sign" textSize="xs" size="xs">TextSize xs - size xs</ck-switch>
+      <ck-switch v-model="valueIcon2" icon="user" textSize="s" size="s">TextSize S</ck-switch>
+      <ck-switch v-model="valueIcon3" icon="euro-sign" size="m" textSize="m">TextSize and Size M</ck-switch>
     </div>
   </ContainerTest>
 </template>
