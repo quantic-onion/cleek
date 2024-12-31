@@ -77,9 +77,10 @@ const props = withDefaults(
 
 const emit = defineEmits<{
   click: [event: Event];
-  input: [event: Event];
   focus: [event: Event];
   blur: [event: Event];
+  input: [value: Value];
+  inputDelayed: [value: Value];
   change: [value: Value];
   changeDelayed: [value: Value];
 }>();
@@ -178,13 +179,22 @@ function handleInputClick(event: Event) {
   emit('click', event);
   if (props.autoSelect) inputRef.value?.select();
 }
-function handleInputInput($event: Event) {
-  changeValues(inputValue.value);
-  setTimeout(() => emit('input', $event), 1);
+function handleInputInput() {
+  setValues(inputValue.value);
+  emit('input', modelValue.value);
+  const oldModelVal = modelValue.value;
+  setTimeout(() => {
+    if (modelValue.value !== oldModelVal) return;
+    emit('inputDelayed', oldModelVal);
+  }, props.delayChangeTime);
 }
 function handleInputChange() {
   emit('change', modelValue.value);
-  setTimeoutForChangeDelayed(modelValue.value);
+  const oldModelVal = modelValue.value;
+  setTimeout(() => {
+    if (modelValue.value !== oldModelVal) return;
+    emit('changeDelayed', oldModelVal);
+  }, props.delayChangeTime);
 }
 function handleInputFocus($event: Event) {
   emit('focus', $event);
@@ -208,14 +218,6 @@ function setValues(modelVal: Value) {
   modelValue.value = finalModeValue;
   inputValue.value = finalModeValue;
   return finalModeValue;
-}
-function changeValues(inputVal: Value) {
-  setValues(inputVal);
-}
-function setTimeoutForChangeDelayed(oldModelVal: Value) {
-  setTimeout(() => {
-    if (modelValue.value === oldModelVal) emit('changeDelayed', oldModelVal);
-  }, props.delayChangeTime);
 }
 
 onMounted(() => {
@@ -241,7 +243,7 @@ onMounted(() => {
         group="left"
         type="filled"
         class="ck-input-plus-minus-buttons"
-        @click="changeValues(+inputValue - 1)"
+        @click="setValues(+inputValue - 1)"
       />
       <!-- icon left -->
       <ck-icon
@@ -262,7 +264,7 @@ onMounted(() => {
         :style="computedStyleInput"
         :disabled="disabled"
         @click="handleInputClick($event)"
-        @input="handleInputInput($event)"
+        @input="handleInputInput()"
         @change="handleInputChange()"
         @focus="handleInputFocus($event)"
         @blur="handleInputBlur($event)"
@@ -291,7 +293,7 @@ onMounted(() => {
         group="right"
         type="filled"
         class="ck-input-plus-minus-buttons"
-        @click="changeValues(+inputValue + 1)"
+        @click="setValues(+inputValue + 1)"
       />
     </div>
   </div>
