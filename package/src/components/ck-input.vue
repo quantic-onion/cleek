@@ -180,17 +180,16 @@ function handleInputClick(event: Event) {
   if (props.autoSelect) inputRef.value?.select();
 }
 function handleInputInput() {
-  setValues(inputValue.value);
-  emit('input', modelValue.value);
-  const oldModelVal = modelValue.value;
+  const oldModelVal = setValues(inputValue.value);
+  emit('input', oldModelVal);
   setTimeout(() => {
     if (modelValue.value !== oldModelVal) return;
     emit('inputDelayed', oldModelVal);
   }, props.delayChangeTime);
 }
 function handleInputChange() {
-  emit('change', modelValue.value);
   const oldModelVal = modelValue.value;
+  emit('change', oldModelVal);
   setTimeout(() => {
     if (modelValue.value !== oldModelVal) return;
     emit('changeDelayed', oldModelVal);
