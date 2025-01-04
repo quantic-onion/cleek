@@ -27,6 +27,9 @@ const computedTdClass = computed(() => {
   if (props.autoWidth || props.col?.autoWidth) list.push('auto-width');
   // overflowAuto
   if (props.overflowAuto || props.col?.overflowAuto) list.push('overflow-auto');
+  // verticalAlign
+  const verticalAlign = props.verticalAlign || props.col?.verticalAlign;
+  if (verticalAlign) list.push(`vertical-align--${verticalAlign}`);
   return list;
 });
 const computedSpanClass = computed(() => {
@@ -41,9 +44,6 @@ const computedSpanClass = computed(() => {
   if (props.block || props.col?.block) list.push('block');
   // nowrap
   if (props.nowrap || props.col?.nowrap) list.push('no-wrap-text');
-  // verticalAlign
-  const verticalAlign = props.verticalAlign || props.col?.verticalAlign;
-  if (verticalAlign) list.push(`vertical-align--${verticalAlign}`);
   return list;
 });
 const computedStyle = computed(() => {
@@ -90,6 +90,10 @@ const isColumnDisplayed = computed(() => {
     overflow auto
   &.auto-width
     width 1px
+  &.vertical-align--top
+    vertical-align top
+  &.vertical-align--bottom
+    vertical-align bottom
   > span
     display flex
     align-items center
@@ -105,10 +109,6 @@ const isColumnDisplayed = computed(() => {
       justify-content flex-end
       text-align right
       margin-left auto
-    &.vertical-align--top
-      align-items flex-start
-    &.vertical-align--bottom
-      align-items flex-end
     &.no-wrap-text
       white-space nowrap
     &.block
