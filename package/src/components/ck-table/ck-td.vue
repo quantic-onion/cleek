@@ -27,9 +27,6 @@ const computedTdClass = computed(() => {
   if (props.autoWidth || props.col?.autoWidth) list.push('auto-width');
   // overflowAuto
   if (props.overflowAuto || props.col?.overflowAuto) list.push('overflow-auto');
-  // verticalAlign
-  const verticalAlign = props.verticalAlign || props.col?.verticalAlign;
-  if (verticalAlign) list.push(`vertical-align--${verticalAlign}`);
   return list;
 });
 const computedSpanClass = computed(() => {
@@ -44,6 +41,9 @@ const computedSpanClass = computed(() => {
   if (props.block || props.col?.block) list.push('block');
   // nowrap
   if (props.nowrap || props.col?.nowrap) list.push('no-wrap-text');
+  // verticalAlign
+  const verticalAlign = props.verticalAlign || props.col?.verticalAlign;
+  if (verticalAlign) list.push(`vertical-align--${verticalAlign}`);
   return list;
 });
 const computedStyle = computed(() => {
