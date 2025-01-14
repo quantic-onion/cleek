@@ -167,7 +167,7 @@ const computedStyleInput = computed(() => {
   return list;
 });
 
-watch(modelValue, (val) => setValues(val), { immediate: true });
+watch(() => modelValue.value, (val) => setValues(val), { immediate: true });
 
 function focus() {
   inputRef.value?.focus();

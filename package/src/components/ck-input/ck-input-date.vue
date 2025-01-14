@@ -75,17 +75,14 @@ const deepComputedStyles = computed(() => {
   return list;
 });
 
-watch(
-  () => props.modelValue,
-  (val) => {
-    if (refInput.value) {
-      refInput.value.style.display = 'block';
-      refInput.value.focus();
-      refInput.value.style.display = 'none';
-    }
-    emit('change', val);
-  },
-);
+watch(() => props.modelValue, (val) => {
+  if (refInput.value) {
+    refInput.value.style.display = 'block';
+    refInput.value.focus();
+    refInput.value.style.display = 'none';
+  }
+  emit('change', val);
+});
 
 // TODO move this to qmDate
 function convertToDate(dateString: DateString) {

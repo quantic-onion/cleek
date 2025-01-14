@@ -77,12 +77,7 @@ const computedClass = computed(() => {
   return list;
 });
 
-watch(
-  () => currentPageLocal.value,
-  () => {
-    emits('refreshList');
-  },
-);
+watch(() => currentPageLocal.value, () => emits('refreshList'));
 
 function updatePageByInput(eventTarget: HTMLInputElement) {
   let newValue = +eventTarget.value;

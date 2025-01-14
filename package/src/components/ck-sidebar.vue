@@ -58,7 +58,7 @@ const computedCloseBtnIcon = computed(() => {
   return 'times'
 })
 
-watch(isActive, (val) => setBodyOverflow(!val));
+watch(() => isActive.value, (val) => setBodyOverflow(!val));
 </script>
 
 <template>

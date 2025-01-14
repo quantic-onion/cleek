@@ -33,7 +33,7 @@ const computedClassContent = computed(() => {
   return list;
 });
 
-watch(isOpen, (val) => {
+watch(() => isOpen.value, (val) => {
   if (val) {
     const clientHeight = document.documentElement.clientHeight;
     const clientWidth = document.documentElement.clientWidth;
@@ -57,7 +57,7 @@ watch(isOpen, (val) => {
     dropdownContentStyle.value = styles;
   }
 });
-watch(contentRef, (val) => {
+watch(() => contentRef.value, (val) => {
   if (val) {
     if (props.align !== 'left' && props.align !== 'right') {
       // align (center)

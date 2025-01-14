@@ -155,7 +155,7 @@ const realCancelBtnText = computed(() => {
   return 'Cancel';
 });
 
-watch(isActive, (val) => setBodyOverflow(!val));
+watch(() => isActive.value, (val) => setBodyOverflow(!val));
 
 function onCancel() {
   emit('cancel');

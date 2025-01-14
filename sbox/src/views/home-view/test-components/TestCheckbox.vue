@@ -16,7 +16,7 @@ const values = ref({
   purple: false,
 });
 
-watch(values, async () => {
+watch(() => values.value, async () => {
   isDisplayingCheckbox.value = false;
   await nextTick(); // this is to fix a cleek problem when updating the value from outside
   isDisplayingCheckbox.value = true;

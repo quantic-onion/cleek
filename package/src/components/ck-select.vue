@@ -244,13 +244,13 @@ const optionStyle = computed(() => {
   return list;
 });
 
-watch(optionSelected, () => setInputValue());
-watch(optionsToDisplayLength, (val) => {
+watch(() => optionSelected.value, () => setInputValue());
+watch(() => optionsToDisplayLength.value, (val) => {
   if (indexSelected.value === -1) return;
   if (indexSelected.value + 1 <= val) return;
   indexSelected.value = val - 1;
 });
-watch(dropdownRef, (val) => {
+watch(() => dropdownRef.value, (val) => {
   if (!val) return;
   dropdownStyle.value = { display: 'none' };
   setTimeout(() => {

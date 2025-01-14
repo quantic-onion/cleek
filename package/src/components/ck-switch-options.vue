@@ -52,7 +52,7 @@ const computedItemStyle = computed(() => {
   return list;
 });
 
-watch(selectedOption, (val) => emit('change', val));
+watch(() => selectedOption.value, (val) => emit('change', val));
 
 function defaultReduceFunction(option) {
   return option.id;

@@ -24,7 +24,7 @@ const values = ref({
   'secondary-light': false,
 });
 
-watch(values, async () => {
+watch(() => values.value, async () => {
   isDisplayingSwitch.value = false;
   await nextTick(); // this is to fix a cleek problem when updating the value from outside
   isDisplayingSwitch.value = true;
