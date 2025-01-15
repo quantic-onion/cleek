@@ -167,7 +167,11 @@ const computedStyleInput = computed(() => {
   return list;
 });
 
-watch(() => modelValue.value, (val) => setValues(val), { immediate: true });
+watch(
+  () => modelValue.value,
+  (val) => setValues(val),
+  { immediate: true },
+);
 
 function focus() {
   inputRef.value?.focus();
@@ -175,25 +179,31 @@ function focus() {
 function select() {
   inputRef.value?.select();
 }
-function handleInputClick(event: Event) {
-  emit('click', event);
-  if (props.autoSelect) inputRef.value?.select();
-}
-function handleInputInput() {
-  const oldModelVal = setValues(inputValue.value);
+function emitInputs(oldModelVal: Value) {
   emit('input', oldModelVal);
   setTimeout(() => {
     if (modelValue.value !== oldModelVal) return;
     emit('inputDelayed', oldModelVal);
   }, props.delayChangeTime);
 }
-function handleInputChange() {
-  const oldModelVal = modelValue.value;
+function emitChanges(oldModelVal: Value) {
   emit('change', oldModelVal);
   setTimeout(() => {
     if (modelValue.value !== oldModelVal) return;
     emit('changeDelayed', oldModelVal);
   }, props.delayChangeTime);
+}
+function handleInputClick(event: Event) {
+  emit('click', event);
+  if (props.autoSelect) inputRef.value?.select();
+}
+function handleInputInput() {
+  const oldModelVal = setValues(inputValue.value);
+  emitInputs(oldModelVal);
+}
+function handleInputChange() {
+  const oldModelVal = modelValue.value;
+  emitChanges(oldModelVal);
 }
 function handleInputFocus($event: Event) {
   emit('focus', $event);
@@ -202,6 +212,16 @@ function handleInputFocus($event: Event) {
 function handleInputBlur($event: Event) {
   emit('blur', $event);
   if (props.type === 'number' && !inputValue.value) inputValue.value = modelValue.value;
+}
+function handleMinusButtonClick() {
+  const oldModelVal = setValues(+inputValue.value - 1);
+  emitInputs(oldModelVal);
+  emitChanges(oldModelVal);
+}
+function handlePlusButtonClick() {
+  const oldModelVal = setValues(+inputValue.value + 1);
+  emitInputs(oldModelVal);
+  emitChanges(oldModelVal);
 }
 function getFinalModelValue(modelVal: Value) {
   let finalValue = modelVal;
@@ -242,7 +262,7 @@ onMounted(() => {
         group="left"
         type="filled"
         class="ck-input-plus-minus-buttons"
-        @click="setValues(+inputValue - 1)"
+        @click="handleMinusButtonClick()"
       />
       <!-- icon left -->
       <ck-icon
@@ -292,7 +312,7 @@ onMounted(() => {
         group="right"
         type="filled"
         class="ck-input-plus-minus-buttons"
-        @click="setValues(+inputValue + 1)"
+        @click="handlePlusButtonClick()"
       />
     </div>
   </div>
