@@ -18,6 +18,7 @@ const props = defineProps<{
   icon?: Icon;
   iconRight?: Icon;
   iconPack?: IconPack;
+  clickable?: boolean;
   // group
   group?: Align;
 }>();
@@ -44,6 +45,8 @@ const computedClass = computed(() => {
   // align
   if (props.align) list.push(`align--${props.align}`);
   if (props.nowrap) list.push(`ck-chip--${props.nowrap}`);
+  // group
+  if (props.clickable) list.push('clickable');
   return list;
 });
 const computedStyle = computed(() => {
@@ -80,6 +83,7 @@ const computedStyle = computed(() => {
   font-size 0.75rem
   padding 0.3rem 0.75rem
   border-radius 10rem
+  transition 0.3s
   &.ck-chip--nowrap
     white-space nowrap
   &.size-xs
