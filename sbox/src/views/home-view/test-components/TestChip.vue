@@ -11,6 +11,7 @@ import { allColors } from '@/all-colors';
       v-for="color in allColors"
       :key="color"
       :color="color"
+      clickable
     >
       {{ color }}
     </ck-chip>

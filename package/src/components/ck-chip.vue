@@ -100,4 +100,8 @@ const computedStyle = computed(() => {
     justify-content flex-start
   &.align--right
     justify-content flex-end
+  &.clickable
+    cursor pointer
+    &:hover
+      opacity 0.6
 </style>
