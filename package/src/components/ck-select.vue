@@ -160,6 +160,7 @@ const isDisplayingPlaceholder = computed(
   () => ((isOptionsEmpty.value || isDefaultValue.value) && !inputValue.value && finalPlaceholder.value) || props.isLoading,
 );
 const isDisplayingClearBtn = computed(() => {
+  if (isDisabled.value) return false;
   if (props.notClearable) return false;
   return !isDefaultValue.value;
 });
@@ -412,7 +413,7 @@ setInputValue();
     <!-- clear btn -->
     <ck-button v-if="isDisplayingClearBtn" class="ck-select--btn" size="s" icon="times" type="flat" @click="setClearValue()" />
     <!-- chevron down btn -->
-    <ck-button v-else class="ck-select--btn" :style="{ 'pointer-events': 'none' }" size="s" icon="chevron-down" type="flat" />
+    <ck-button v-else-if="!isDisabled" class="ck-select--btn" :style="{ 'pointer-events': 'none' }" size="s" icon="chevron-down" type="flat" />
   </div>
 </template>
 
