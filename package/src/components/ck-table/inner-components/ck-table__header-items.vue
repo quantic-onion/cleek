@@ -6,11 +6,10 @@ import CkButton from '../../ck-button.vue';
 import CkInput from '../../ck-input.vue';
 // types
 import type { Layout, TableVersion } from '../../../cleek-options/cleek-options.types';
-// hooks
-import hooks from '../../../utils/global-hooks';
+
+const searchLocal = defineModel<string>({ required: true });
 
 const props = defineProps<{
-  search?: string;
   hasColumnsManager: boolean;
   showRefreshBtn: boolean;
   hideItemsPerPage: boolean;
@@ -20,45 +19,24 @@ const props = defineProps<{
   listLength: number;
   layout: Layout;
   version: TableVersion;
-  isLoading: { type: boolean, default: undefined };
+  isLoading: { type: boolean; default: undefined };
 }>();
 
 const emits = defineEmits<{
-  (e: 'update:search', search: string): void;
-  (e: 'refreshList', pageChange: boolean): void;
-  (e: 'openColumnsManager'): void;
+  refreshList: [pageChange: boolean];
+  openColumnsManager: [];
 }>();
 
-const searchLocal = computed({
-  // @ts-ignore
-  get() {
-    return props.search;
-  },
-  set(val: string) {
-    emits('update:search', val);
-  },
-});
-const isSearchVisible = computed(() => {
-  return typeof searchLocal.value !== 'undefined';
-});
-const itemsPerPageStart = computed(() => {
-  return (props.currentPage - 1) * props.itemsPerPage + 1;
-});
+const isSearchVisible = computed(() => typeof searchLocal.value !== 'undefined');
+const itemsPerPageStart = computed(() => (props.currentPage - 1) * props.itemsPerPage + 1);
 const itemsPerPageEnd = computed(() => {
   const value = props.currentPage * props.itemsPerPage;
   if (!props.itemsPerPage || value > props.listLength) return props.listLength;
   return value;
 });
-const itemsPerPageIsVisible = computed(() => {
-  return !props.hideItemsPerPage && props.listLength && props.currentPage;
-});
-const refreshBtnIsVisible = computed(() => {
-  return itemsPerPageIsVisible.value || props.showRefreshBtn;
-});
+const itemsPerPageIsVisible = computed(() => !props.hideItemsPerPage && props.listLength && props.currentPage);
 const searchGroupValue = computed(() => {
-  if (itemsPerPageIsVisible.value && props.hasColumnsManager) {
-    return 'center';
-  }
+  if (itemsPerPageIsVisible.value && props.hasColumnsManager) return 'center';
   if (itemsPerPageIsVisible.value) return 'right';
   if (props.hasColumnsManager) return 'left';
   return '';
@@ -74,7 +52,7 @@ const computedClass = computed(() => {
 
 function clickRefreshListBtn() {
   if (props.isLoading) return;
-  emits('refreshList', true)
+  emits('refreshList', true);
 }
 function checkRefresh() {
   const search = searchLocal.value;
@@ -86,56 +64,56 @@ function checkRefresh() {
 </script>
 
 <template>
-<div class="ck-table__header-items" :class="computedClass">
-  <template v-if="!hideHeaderActions">
-    <!-- refresh btn -->
-    <ck-button
-      v-if="refreshBtnIsVisible"
-      type="flat"
-      title="Recargar lista"
-      backgroundColor="transparent"
-      :layout="layout"
-      :icon="isLoading ? 'spinner' : 'rotate-right'"
-      :isLoading="!!isLoading"
-      @click="clickRefreshListBtn()"
-    />
-    <!-- pages -->
-    <div
-      v-if="(isLoading && listLength === 0) || itemsPerPageIsVisible"
-      class="items-per-page"
-      :class="{ 'ck-component__group--left': (isSearchVisible) }"
-    >
-      <template v-if="isLoading && listLength === 0">
-        <ck-icon class="px-2" icon="spinner" spin/>
-      </template>
-      <template v-else-if="itemsPerPageIsVisible">
-        {{ itemsPerPageStart }} - {{ itemsPerPageEnd }} de {{ listLength }}
-      </template>
-    </div>
-    <!-- search -->
-    <ck-input
-      v-if="isSearchVisible"
-      v-model="searchLocal"
-      class="ck-table--search-input"
-      icon="magnifying-glass"
-      placeholder="Buscar..."
-      :group="searchGroupValue"
-      :layout="layout"
-      :borderColor="version === 'colored' ? 'white' : ''"
-      @input="checkRefresh()"
-    />
-    <!-- columns manager -->
-    <ck-button
-      icon="columns"
-      type="filled"
-      title="Administrador de columnas"
-      v-if="hasColumnsManager"
-      :group="itemsPerPageIsVisible || isSearchVisible ? 'right' : ''"
-      :layout="layout"
-      @click="emits('openColumnsManager')"
-    />
-  </template>
-</div>
+  <div class="ck-table__header-items" :class="computedClass">
+    <template v-if="!hideHeaderActions">
+      <!-- refresh btn -->
+      <ck-button
+        v-if="showRefreshBtn"
+        type="flat"
+        title="Recargar lista"
+        backgroundColor="transparent"
+        :layout="layout"
+        :icon="isLoading ? 'spinner' : 'rotate-right'"
+        :isLoading="!!isLoading"
+        @click="clickRefreshListBtn()"
+      />
+      <!-- pages -->
+      <div
+        v-if="(isLoading && listLength === 0) || itemsPerPageIsVisible"
+        class="items-per-page"
+        :class="{ 'ck-component__group--left': isSearchVisible }"
+      >
+        <template v-if="isLoading && listLength === 0">
+          <ck-icon class="px-2" icon="spinner" spin />
+        </template>
+        <template v-else-if="itemsPerPageIsVisible">
+          {{ itemsPerPageStart }} - {{ itemsPerPageEnd }} de {{ listLength }}
+        </template>
+      </div>
+      <!-- search -->
+      <ck-input
+        v-if="isSearchVisible"
+        v-model="searchLocal"
+        class="ck-table--search-input"
+        icon="magnifying-glass"
+        placeholder="Buscar..."
+        :group="searchGroupValue"
+        :layout="layout"
+        :borderColor="version === 'colored' ? 'white' : ''"
+        @input="checkRefresh()"
+      />
+      <!-- columns manager -->
+      <ck-button
+        icon="columns"
+        type="filled"
+        title="Administrador de columnas"
+        v-if="hasColumnsManager"
+        :group="itemsPerPageIsVisible || isSearchVisible ? 'right' : ''"
+        :layout="layout"
+        @click="emits('openColumnsManager')"
+      />
+    </template>
+  </div>
 </template>
 
 <style lang="stylus" scoped>

@@ -207,7 +207,7 @@ function selectOrUnselectAll() {
   <div v-if="$slots.header || !hideHeaderActions" class="ck-table__header">
     <!-- header items -->
     <TableHeaderItems
-      v-model:search="searchLocal"
+      v-model="searchLocal"
       :hideHeaderActions="hideHeaderActions"
       :currentPage="currentPage"
       :hasColumnsManager="hasColumnsManager"
