@@ -54,8 +54,8 @@ function clickRefreshListBtn() {
   if (props.isLoading) return;
   emits('refreshList', true);
 }
-function checkRefresh() {
-  const search = searchLocal.value;
+function checkRefresh(value) {
+  const search = value;
   setTimeout(() => {
     if (search !== searchLocal.value) return;
     emits('refreshList', false);
@@ -100,7 +100,7 @@ function checkRefresh() {
         :group="searchGroupValue"
         :layout="layout"
         :borderColor="version === 'colored' ? 'white' : ''"
-        @input="checkRefresh()"
+        @input="checkRefresh($event)"
       />
       <!-- columns manager -->
       <ck-button
