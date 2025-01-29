@@ -42,6 +42,7 @@ const props = defineProps<{
 const emit = defineEmits<{
   accept: [];
   cancel: [];
+  close: [];
 }>();
 
 const { cleekOptions } = storeToRefs(useCleekOptionsStore());
@@ -155,7 +156,10 @@ const realCancelBtnText = computed(() => {
   return 'Cancel';
 });
 
-watch(() => isActive.value, (val) => setBodyOverflow(!val));
+watch(() => isActive.value, (val) => {
+  setBodyOverflow(!val)
+  if (!val) emit('close');
+});
 
 function onCancel() {
   emit('cancel');
