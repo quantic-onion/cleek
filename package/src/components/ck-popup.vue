@@ -156,14 +156,15 @@ const realCancelBtnText = computed(() => {
   return 'Cancel';
 });
 
-watch(() => isActive.value, (val) => {
-  setBodyOverflow(!val)
-  if (!val) emit('close');
-});
+watch(() => isActive.value, (val) => setBodyOverflow(!val));
 
+function closePopup() {
+  isActive.value = false;
+  emit('close');
+}
 function onCancel() {
   emit('cancel');
-  if (!props.preventCloseOnCancel) isActive.value = false;
+  if (!props.preventCloseOnCancel) closePopup();
 }
 function onAccept() {
   emit('accept');
@@ -171,7 +172,7 @@ function onAccept() {
 function onBgClick() {
   // hacerle un movimiento de rebote como en vuesax
   if (props.notCloseByBg || props.notClose) return;
-  isActive.value = false;
+  closePopup();
 }
 </script>
 
@@ -187,7 +188,7 @@ function onBgClick() {
             <!-- header slot -->
             <slot name="header" />
             <!-- close btn -->
-            <ck-icon v-if="isCloseBtnVisible" class="icon-close" icon="times" @click="isActive = false" />
+            <ck-icon v-if="isCloseBtnVisible" class="icon-close" icon="times" @click="closePopup()" />
           </div>
           <div class="ck-popup__slot-body" :style="computedStyleBody">
             <slot />
