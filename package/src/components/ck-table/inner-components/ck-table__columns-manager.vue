@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { computed, ref, watch } from 'vue';
-import type { Ref } from 'vue';
 // components
 import CkCheckbox from '../../ck-checkbox.vue';
 import CkPopup from '../../ck-popup.vue';
@@ -26,7 +25,7 @@ const emits = defineEmits<{
   (e: 'update:modelValue', value: boolean): void;
 }>();
 
-let columnsCheckable: Ref<ColumnCheckableItem[]> = ref([]);
+let columnsCheckable = ref<ColumnCheckableItem[]>([]);
 
 const isActive = computed({
   get() { return props.modelValue; },

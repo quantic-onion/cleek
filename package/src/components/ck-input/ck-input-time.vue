@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue';
 import { qmDate } from 'quantic-methods';
-import type { Ref } from 'vue';
 // types
 import type { Align, AlignVertical, WidthBreaks } from '../../cleek-options/cleek-options.types';
 

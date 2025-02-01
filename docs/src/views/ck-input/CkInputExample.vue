@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import { ckNotify } from 'cleek';
-import type { Ref } from 'vue';
 // components
 import ComponentShower from '@/components/ComponentShower.vue';
 import ComponentShowerRow from '@/components/ComponentShowerRow.vue';
@@ -14,8 +13,8 @@ type CkInput = {
 }; // import { CkInput } from 'cleek';
 
 const autofocusPopup = ref(false);
-const refInputTestFocus: Ref<null | CkInput> = ref(null);
-const refInputTestSelect: Ref<null | CkInput> = ref(null);
+const refInputTestFocus = ref<null | CkInput>(null);
+const refInputTestSelect = ref<null | CkInput>(null);
 
 const text = ref('Dynamic label');
 const dateExample = ref('2022-03-29');
