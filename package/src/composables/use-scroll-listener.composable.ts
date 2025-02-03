@@ -1,6 +1,7 @@
 import { onMounted, onBeforeUnmount } from 'vue';
+import type { Ref } from 'vue';
 
-export function useScrollListener(element = new HTMLElement(), handleScroll: (event: Event) => void) {
+export function useScrollListener(element: Ref<HTMLElement>, handleScroll: (event: Event) => void) {
   const manageScrollListeners = (action: 'addEventListener' | 'removeEventListener') => {
     let parent = element.value?.parentElement;
     while (parent && parent !== document.body) {
