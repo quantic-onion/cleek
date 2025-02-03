@@ -8,9 +8,13 @@ import useWindowWidth from '../hooks/windowWidth';
 // types
 import type { Align } from '../cleek-options/cleek-options.types';
 
-type Option = boolean | number | object | string;
+type Option = {
+  id: boolean | number | string;
+  name: string;
+  icon?: string;
+};
 
-const selectedOption = defineModel<Option>({ required: true });
+const selectedOption = defineModel<Option['id']>({ required: true });
 
 const props = withDefaults(
   defineProps<{
@@ -58,12 +62,13 @@ function defaultReduceFunction(option) {
   return option.id;
 }
 function getOptionValue(option: Option) {
-  if (props.notReduce) return option;
+  if (props.notReduce) return option.name;
   if (props.reduceFunction) {
     return props.reduceFunction(option);
   }
   return defaultReduceFunction(option);
 }
+
 </script>
 
 <template>
@@ -82,6 +87,7 @@ function getOptionValue(option: Option) {
         :style="computedItemStyle"
         @click="selectedOption = getOptionValue(option)"
       >
+        <ck-icon v-if="option.icon" class="ck-switch-options__option--icon" :icon="option.icon" />
         {{ option[prop] }}
       </div>
     </div>
@@ -127,6 +133,8 @@ $borderColor = var(--primary)
     &.selected
       background-color var(--primary)
       color white
+    .ck-switch-options__option--icon
+      margin-right 0.4rem
 // group
 .group-top
   &.ck-switch-options__container
