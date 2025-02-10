@@ -25,6 +25,7 @@ const props = defineProps<{
   title?: string;
   disabled?: boolean;
   isLoading?: boolean;
+  tabindex?: number;
   // style
   type?: ButtonType;
   color?: Color;
@@ -158,6 +159,7 @@ function onClick(event: Event) {
     :title="title"
     :aria-label="title"
     :disabled="disabled"
+    :tabindex="tabindex"
     :style="computedStyle"
     @click="onClick($event)"
   >

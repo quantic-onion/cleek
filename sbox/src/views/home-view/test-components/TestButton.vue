@@ -12,7 +12,7 @@ import { allColors } from '@/all-colors';
     </ck-button>
     <br/>
     <br/>
-    <ck-button v-for="color in allColors" type="filled" size="s" :key="color" :color="color">
+    <ck-button v-for="color in allColors" type="filled" size="s" :key="color" :color="color" tabindex="-1">
       {{ color }}
     </ck-button>
     <br/>
