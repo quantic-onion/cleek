@@ -95,6 +95,7 @@ const isShowingPassword = ref(false);
 const plusMinusButtonsDefaultWithInput = '120px';
 const plusMinusButtonsDefaultAlign = 'center';
 
+const finalJustInteger = computed(() => props.justInteger || props.plusMinusButtons);
 const finalLabelAlign = computed(() => {
   if (props.labelAlign) return props.labelAlign;
   if (props.align) return props.align;
@@ -226,7 +227,7 @@ function getFinalModelValue(val: Value) {
   let finalValue = val;
   if (props.capitalize) finalValue = qmStr.capitalize(`${finalValue}`);
   if (props.toUpperCase) finalValue = `${finalValue}`.toUpperCase();
-  if (props.justInteger) finalValue = parseInt(`${+finalValue}`);
+  if (finalJustInteger.value) finalValue = parseInt(`${+finalValue}`);
   if (typeof props.min !== 'undefined' && +finalValue < +props.min) finalValue = +props.min;
   if (typeof props.max !== 'undefined' && +finalValue > +props.max) finalValue = +props.max;
   return finalValue;
