@@ -179,18 +179,18 @@ function focus() {
 function select() {
   inputRef.value?.select();
 }
-function emitInputs(oldModelVal: Value) {
-  emit('input', oldModelVal);
+function emitInputs(val: Value) {
+  emit('input', val);
   setTimeout(() => {
-    if (modelValue.value !== oldModelVal) return;
-    emit('inputDelayed', oldModelVal);
+    if (modelValue.value !== val) return;
+    emit('inputDelayed', val);
   }, props.delayChangeTime);
 }
-function emitChanges(oldModelVal: Value) {
-  emit('change', oldModelVal);
+function emitChanges(val: Value) {
+  emit('change', val);
   setTimeout(() => {
-    if (modelValue.value !== oldModelVal) return;
-    emit('changeDelayed', oldModelVal);
+    if (modelValue.value !== val) return;
+    emit('changeDelayed', val);
   }, props.delayChangeTime);
 }
 function handleInputClick(event: Event) {
@@ -198,12 +198,11 @@ function handleInputClick(event: Event) {
   if (props.autoSelect) inputRef.value?.select();
 }
 function handleInputInput() {
-  const oldModelVal = setValues(inputValue.value);
-  emitInputs(oldModelVal);
+  const val = setValues(inputValue.value);
+  emitInputs(val);
 }
 function handleInputChange() {
-  const oldModelVal = modelValue.value;
-  emitChanges(oldModelVal);
+  emitChanges(modelValue.value);
 }
 function handleInputFocus($event: Event) {
   emit('focus', $event);
@@ -214,17 +213,17 @@ function handleInputBlur($event: Event) {
   if (props.type === 'number' && !inputValue.value) inputValue.value = modelValue.value;
 }
 function handleMinusButtonClick() {
-  const oldModelVal = setValues(+inputValue.value - 1);
-  emitInputs(oldModelVal);
-  emitChanges(oldModelVal);
+  const val = setValues(+inputValue.value - 1);
+  emitInputs(val);
+  emitChanges(val);
 }
 function handlePlusButtonClick() {
-  const oldModelVal = setValues(+inputValue.value + 1);
-  emitInputs(oldModelVal);
-  emitChanges(oldModelVal);
+  const val = setValues(+inputValue.value + 1);
+  emitInputs(val);
+  emitChanges(val);
 }
-function getFinalModelValue(modelVal: Value) {
-  let finalValue = modelVal;
+function getFinalModelValue(val: Value) {
+  let finalValue = val;
   if (props.capitalize) finalValue = qmStr.capitalize(`${finalValue}`);
   if (props.toUpperCase) finalValue = `${finalValue}`.toUpperCase();
   if (props.justInteger) finalValue = parseInt(`${+finalValue}`);
@@ -232,8 +231,8 @@ function getFinalModelValue(modelVal: Value) {
   if (typeof props.max !== 'undefined' && +finalValue > +props.max) finalValue = +props.max;
   return finalValue;
 }
-function setValues(modelVal: Value) {
-  const finalModeValue = getFinalModelValue(modelVal);
+function setValues(val: Value) {
+  const finalModeValue = getFinalModelValue(val);
   modelValue.value = finalModeValue;
   inputValue.value = finalModeValue;
   return finalModeValue;
