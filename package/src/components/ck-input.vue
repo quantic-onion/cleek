@@ -95,6 +95,11 @@ const isShowingPassword = ref(false);
 const plusMinusButtonsDefaultWithInput = '120px';
 const plusMinusButtonsDefaultAlign = 'center';
 
+const finalType = computed(() => {
+  if (isShowingPassword.value) return 'text';
+  if (props.plusMinusButtons) return 'number';
+  return props.type;
+});
 const finalJustInteger = computed(() => props.justInteger || props.plusMinusButtons);
 const finalLabelAlign = computed(() => {
   if (props.labelAlign) return props.labelAlign;
@@ -207,11 +212,11 @@ function handleInputChange() {
 }
 function handleInputFocus($event: Event) {
   emit('focus', $event);
-  if (props.type === 'number' && !inputValue.value) inputValue.value = '';
+  if (finalType.value === 'number' && !inputValue.value) inputValue.value = '';
 }
 function handleInputBlur($event: Event) {
   emit('blur', $event);
-  if (props.type === 'number' && !inputValue.value) inputValue.value = modelValue.value;
+  if (finalType.value === 'number' && !inputValue.value) inputValue.value = modelValue.value;
 }
 function handleMinusButtonClick() {
   const val = setValues(+inputValue.value - 1);
@@ -276,7 +281,7 @@ onMounted(() => {
       <input
         ref="inputRef"
         v-model="inputValue"
-        :type="isShowingPassword ? 'text' : type"
+        :type="finalType"
         :autocomplete="autocomplete ? 'on' : 'off'"
         :placeholder="placeholder"
         :class="computedClassInput"
