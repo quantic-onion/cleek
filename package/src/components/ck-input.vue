@@ -391,6 +391,7 @@ onMounted(() => {
       bottom 13px
       z-index 1
     .show-password
+      user-select none
       position absolute
       right $border-width
       bottom $border-width
