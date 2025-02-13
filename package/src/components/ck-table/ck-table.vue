@@ -294,7 +294,7 @@ function selectOrUnselectAll() {
         <slot/>
         <slot name="desktop"/>
         <!-- slot row -->
-        <ck-tr v-for="row in rows" :key="row[rowSelectorKey]">
+        <ck-tr v-for="(row, rowIndex) in rows" :key="row[rowSelectorKey]">
           <ck-td v-if="isSelectable" autoWidth>
             <ck-checkbox
               size="xs"
@@ -303,7 +303,7 @@ function selectOrUnselectAll() {
               @click="selectedRows.switchValue(row[rowSelectorKey])"
             />
           </ck-td>
-          <slot :row="row" name="row">
+          <slot name="row" :row="row" :rowIndex="rowIndex">
           </slot>
         </ck-tr>
         <LoadingAndNoResultsText
