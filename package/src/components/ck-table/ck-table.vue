@@ -407,14 +407,11 @@ function selectOrUnselectAll() {
       width 100%
   .ck-table__header-bottom--slot
     width 100%
-.ck-table__pagination
-  margin-top 1rem
-
 .selected-rows-actions
-  display flex
-  justify-content flex-start
-  align-items center
   width 100%
+  display flex
+  justify-content space-between
+  align-items flex-end
   gap 1rem
   margin-bottom 0.5rem
   .selected-rows-actions__left
@@ -424,4 +421,6 @@ function selectOrUnselectAll() {
 .main-checkbox
   margin-left -1px
   margin-bottom -1px
+.ck-table__pagination
+  margin-top 1rem
 </style>
