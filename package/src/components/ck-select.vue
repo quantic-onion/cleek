@@ -464,7 +464,7 @@ $border-width = 1px
       color #333
   input
     cursor default
-    font-size $globalFontSize-s
+    font-size $globalFontSize
     box-sizing border-box
     min-height 40px
     width 100%
