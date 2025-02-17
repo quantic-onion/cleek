@@ -152,7 +152,7 @@ const isDefaultValue = computed(() => {
   return value === null;
 });
 const finalPlaceholder = computed(() => {
-  if (props.isLoading) return 'Cargando...'
+  if (props.isLoading) return 'Cargando...';
   if (isOptionsEmpty.value) return props.emptyOptionsMsg;
   return props.placeholder;
 });
@@ -188,14 +188,14 @@ const selectContainerStyle = computed(() => {
   if (props.width) list.push({ width: props.width });
   return list;
 });
-const inputClass = computed(() => {
+const selectClass = computed(() => {
   const list = [];
   // group
   list.push(hooks.getGroupClass(props, windowWidth.value));
   // layout
   const layout = props.layout || cleekOptions.value.styles.layout;
   if (layout) list.push(layout);
-  // clear able
+  // clearable
   if (isDisplayingClearBtn.value) list.push('clearable');
   // border-color
   const borderColor = props.borderColor || cleekOptions.value.styles.borderColor;
@@ -204,7 +204,7 @@ const inputClass = computed(() => {
   }
   return list;
 });
-const inputStyle = computed(() => {
+const selectStyle = computed(() => {
   const list = [];
   // border-color
   const borderColor = props.borderColor || cleekOptions.value.styles.borderColor;
@@ -252,30 +252,30 @@ watch(() => optionsToDisplayLength.value, (val) => {
   indexSelected.value = val - 1;
 });
 watch(() => dropdownRef.value, (val) => {
-  if (!val) return;
-  dropdownStyle.value = { display: 'none' };
-  setTimeout(() => {
-    const clientHeight = document.documentElement.clientHeight;
-    const clientWidth = document.documentElement.clientWidth;
-    const inputRect = inputRef.value.getBoundingClientRect();
-    const styles: CSSProperties = {};
-    // open below
-    const openBelow = inputRect.top < clientHeight / 2;
-    if (openBelow) {
-      styles['top'] = `${inputRect.bottom}px`;
-    } else {
-      styles['bottom'] = `${clientHeight - inputRect.top}px`;
-    }
-    styles['left'] = `${inputRect.left}px`;
-    styles['right'] = `${clientWidth - inputRect.right}px`;
-    const maxHeightMargin = 100;
-    styles['max-height'] = openBelow
-      ? `${clientHeight - inputRect.top - maxHeightMargin}px`
-      : `${inputRect.bottom - maxHeightMargin}px`;
-    styles['display'] = 'block';
-    dropdownStyle.value = styles;
-  }, 150);
-});
+    if (!val) return;
+    dropdownStyle.value = { display: 'none' };
+    setTimeout(() => {
+      const clientHeight = document.documentElement.clientHeight;
+      const clientWidth = document.documentElement.clientWidth;
+      const inputRect = inputRef.value.getBoundingClientRect();
+      const styles: CSSProperties = {};
+      // open below
+      const openBelow = inputRect.top < clientHeight / 2;
+      if (openBelow) {
+        styles['top'] = `${inputRect.bottom}px`;
+      } else {
+        styles['bottom'] = `${clientHeight - inputRect.top}px`;
+      }
+      styles['left'] = `${inputRect.left}px`;
+      styles['right'] = `${clientWidth - inputRect.right}px`;
+      const maxHeightMargin = 100;
+      styles['max-height'] = openBelow
+        ? `${clientHeight - inputRect.top - maxHeightMargin}px`
+        : `${inputRect.bottom - maxHeightMargin}px`;
+      styles['display'] = 'block';
+      dropdownStyle.value = styles;
+    }, 150);
+  });
 
 function getOptionValue(option: Option) {
   if (props.reduceValueFunction) return props.reduceValueFunction(option);
@@ -360,8 +360,9 @@ setInputValue();
       v-if="isDisplayingSelect"
       ref="selectRef"
       v-model="valueSelected"
-      :class="inputClass"
-      :style="inputStyle"
+      id="ck-select"
+      :class="selectClass"
+      :style="selectStyle"
       :disabled="isDisabled"
       @change="emit('change', valueSelected)"
       @click="emit('click', $event)"
@@ -376,8 +377,9 @@ setInputValue();
       v-else
       ref="inputRef"
       v-model="inputValue"
-      :class="inputClass"
-      :style="inputStyle"
+      id="ck-select"
+      :class="selectClass"
+      :style="selectStyle"
       :placeholder="inputPlaceholer"
       :disabled="isDisabled"
       @click="emit('click', $event)"
@@ -413,7 +415,14 @@ setInputValue();
     <!-- clear btn -->
     <ck-button v-if="isDisplayingClearBtn" class="ck-select--btn" size="s" icon="times" type="flat" @click="setClearValue()" />
     <!-- chevron down btn -->
-    <ck-button v-else-if="!isDisabled" class="ck-select--btn" :style="{ 'pointer-events': 'none' }" size="s" icon="chevron-down" type="flat" />
+    <ck-button
+      v-else-if="!isDisabled"
+      class="ck-select--btn"
+      :style="{ 'pointer-events': 'none' }"
+      size="s"
+      icon="chevron-down"
+      type="flat"
+    />
   </div>
 </template>
 
