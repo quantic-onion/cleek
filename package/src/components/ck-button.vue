@@ -159,7 +159,7 @@ function handleButtonClick(event: Event) {
     :class="computedClass"
     :title="title"
     :aria-label="title"
-    :disabled="disabled || isLoading"
+    :disabled="disabled"
     :tabindex="tabindex"
     :style="computedStyle"
     @click="handleButtonClick($event)"
