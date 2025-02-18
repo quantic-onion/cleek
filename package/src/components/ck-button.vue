@@ -150,7 +150,7 @@ const computedStyle = computed(() => {
     :class="computedClass"
     :title="title"
     :aria-label="title"
-    :disabled="disabled"
+    :disabled="disabled || isLoading"
     :tabindex="tabindex"
     :style="computedStyle"
   >
