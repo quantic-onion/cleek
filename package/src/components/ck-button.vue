@@ -48,6 +48,10 @@ const props = defineProps<{
   groupVertical?: AlignVertical;
 }>();
 
+const emit = defineEmits<{
+  click: [event: Event];
+}>();
+
 const defaultBackgroundColor = 'transparent'; // move to default file
 const defaultButtonType = 'outlined'; // move to default file
 const defaultColor = 'primary'; // move to default file
@@ -142,6 +146,11 @@ const computedStyle = computed(() => {
   }
   return list;
 });
+
+function handleButtonClick(event: Event) {
+  if (props.isLoading) return;
+  emit('click', event);
+}
 </script>
 
 <template>
@@ -153,6 +162,7 @@ const computedStyle = computed(() => {
     :disabled="disabled || isLoading"
     :tabindex="tabindex"
     :style="computedStyle"
+    @click="handleButtonClick($event)"
   >
     <ck-icon v-if="isLoading" icon="spinner" spin />
     <template v-else>
