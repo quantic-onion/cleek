@@ -30,7 +30,7 @@ const modelValue = defineModel<Value>({ required: true });
 const props = withDefaults(
   defineProps<{
     type?: InputType;
-    autocomplete?: boolean;
+    preventAutocomplete?: boolean;
     disabled?: boolean;
     placeholder?: string;
     plusMinusButtons?: boolean;
@@ -282,7 +282,7 @@ onMounted(() => {
         ref="inputRef"
         v-model="inputValue"
         :type="finalType"
-        :autocomplete="autocomplete ? 'on' : 'off'"
+        :autocomplete="preventAutocomplete ? '.' : 'on'"
         :placeholder="placeholder"
         :class="computedClassInput"
         :style="computedStyleInput"

@@ -382,6 +382,7 @@ setInputValue();
       :style="selectStyle"
       :placeholder="inputPlaceholer"
       :disabled="isDisabled"
+      preventAutocomplete
       @click="emit('click', $event)"
       @focus="handleInputFocus()"
       @blur="handleInputBlur()"
