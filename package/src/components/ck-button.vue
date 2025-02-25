@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue';
+import { computed } from 'vue';
 import { storeToRefs } from 'pinia';
 // stores
 import { useCleekOptionsStore } from '@/cleek-options/cleek-options.store';
@@ -48,8 +48,8 @@ const props = defineProps<{
   groupVertical?: AlignVertical;
 }>();
 
-const emits = defineEmits<{
-  (e: 'click', event: Event): void;
+const emit = defineEmits<{
+  click: [event: Event];
 }>();
 
 const defaultBackgroundColor = 'transparent'; // move to default file
@@ -59,17 +59,17 @@ const defaultAlign = 'left'; // move to default file
 const { cleekOptions } = storeToRefs(useCleekOptionsStore());
 const { windowWidth } = useWindowWidth();
 
-const realButtonType = computed(() => {
+const finalButtonType = computed(() => {
   if (props.type) return props.type;
   if (cleekOptions.value) return cleekOptions.value.button.type;
   return defaultButtonType;
 });
-const realBackgroundColor = computed(() => {
+const finalBackgroundColor = computed(() => {
   if (props.backgroundColor) return props.backgroundColor;
   if (cleekOptions.value && !props.type) return cleekOptions.value.button.backgroundColor;
   return defaultBackgroundColor;
 });
-const realTextColor = computed(() => {
+const finalTextColor = computed(() => {
   if (props.textColor) return props.textColor;
   if (cleekOptions.value && !props.type) return cleekOptions.value.button.textColor;
   return '';
@@ -81,19 +81,19 @@ const computedClass = computed(() => {
   // color
   const color = props.color || defaultColor;
   if (color !== defaultColor) {
-    if (realButtonType.value === 'filled') {
+    if (finalButtonType.value === 'filled') {
       list.push(`ck-component__bg-color--${props.color}`);
     } else {
       list.push(`ck-component__border-color--${props.color}`);
     }
   }
   // backgroundColor
-  if (realBackgroundColor.value !== defaultBackgroundColor && hooks.isColorTemplateVariable(realBackgroundColor.value)) {
-    list.push(`ck-component__bg-color--${realBackgroundColor.value}`);
+  if (finalBackgroundColor.value !== defaultBackgroundColor && hooks.isColorTemplateVariable(finalBackgroundColor.value)) {
+    list.push(`ck-component__bg-color--${finalBackgroundColor.value}`);
   }
   // textColor
-  if (realTextColor.value && hooks.isColorTemplateVariable(realTextColor.value)) {
-    list.push(`ck-component__color--${realTextColor.value}`);
+  if (finalTextColor.value && hooks.isColorTemplateVariable(finalTextColor.value)) {
+    list.push(`ck-component__color--${finalTextColor.value}`);
   }
   // align
   const align = props.align || defaultAlign;
@@ -104,7 +104,7 @@ const computedClass = computed(() => {
   const layout = props.layout || cleekOptions.value.styles.layout;
   if (layout) list.push(layout);
   // type
-  list.push(`type-${realButtonType.value}`);
+  list.push(`type-${finalButtonType.value}`);
   // size
   if (props.size) list.push(`ck-button-size__${props.size}`);
   // isLoading
@@ -123,32 +123,33 @@ const computedStyle = computed(() => {
     }
   }
   // textColor
-  if (realTextColor.value && !hooks.isColorTemplateVariable(realTextColor.value)) {
-    list.push({ color: `${realTextColor.value} !important` });
+  if (finalTextColor.value && !hooks.isColorTemplateVariable(finalTextColor.value)) {
+    list.push({ color: `${finalTextColor.value} !important` });
   }
   // width
   if (props.width && !isWidthDefined) list.push({ width: props.width });
   // backgroundColor
-  if (realBackgroundColor.value !== defaultBackgroundColor && !hooks.isColorTemplateVariable(realBackgroundColor.value)) {
-    list.push({ 'background-color': realBackgroundColor.value });
+  if (finalBackgroundColor.value !== defaultBackgroundColor && !hooks.isColorTemplateVariable(finalBackgroundColor.value)) {
+    list.push({ 'background-color': finalBackgroundColor.value });
   }
   if (props.color && !hooks.isColorTemplateVariable(props.color)) {
-    if (realButtonType.value === 'outlined') {
+    if (finalButtonType.value === 'outlined') {
       list.push({ 'border-color': props.color });
       list.push({ color: props.color });
-    } else if (realButtonType.value === 'filled') {
+    } else if (finalButtonType.value === 'filled') {
       list.push({ color: 'white' });
       list.push({ 'border-color': props.color });
       list.push({ 'background-color': props.color });
-    } else if (realButtonType.value === 'flat') {
+    } else if (finalButtonType.value === 'flat') {
       list.push({ color: props.color });
     }
   }
   return list;
 });
 
-function onClick(event: Event) {
-  emits('click', event);
+function handleButtonClick(event: Event) {
+  if (props.isLoading) return;
+  emit('click', event);
 }
 </script>
 
@@ -161,7 +162,7 @@ function onClick(event: Event) {
     :disabled="disabled"
     :tabindex="tabindex"
     :style="computedStyle"
-    @click="onClick($event)"
+    @click="handleButtonClick($event)"
   >
     <ck-icon v-if="isLoading" icon="spinner" spin />
     <template v-else>
