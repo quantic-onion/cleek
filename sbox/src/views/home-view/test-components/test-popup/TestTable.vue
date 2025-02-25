@@ -56,12 +56,12 @@ onMounted(() => {
       :rows="rows"
       :selectedRows="selectedRows"
     >
-    <template #selectedRowsActions>
-      <ck-select
-        v-model="rowActionId"
-        :options="rowActionsOptions"
-      />
-    </template>
+      <template #selectedRowsActions>
+        <ck-select
+          v-model="rowActionId"
+          :options="rowActionsOptions"
+        />
+      </template>
       <template #row="{ row: user }">
         <ck-td :col="columnsListSelectable.id">{{ user.id }}</ck-td>
         <ck-td :col="columnsListSelectable.name">{{ user.name }}</ck-td>
