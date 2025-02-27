@@ -27,6 +27,7 @@ const props = withDefaults(
     options: Option[];
     optionsLimit?: number;
     isLoading?: boolean;
+    notReduce?: boolean;
     // reduce value
     reduceValueProp?: string;
     reduceValueMethod?: string;
@@ -37,7 +38,6 @@ const props = withDefaults(
     reduceNameMethod?: string;
     reduceNameFunction?: (option: Option) => string;
     notReduceName?: boolean;
-    notReduce?: boolean;
     notClearable?: boolean;
     clearValue?: any;
     autofocus?: boolean;
