@@ -6,13 +6,18 @@ import ContainerTest from './components/ContainerTest.vue';
 import { allColors } from '@/all-colors';
 
 const selectedTab = ref('second');
+const selectedTabTest = ref('first');
 // const allTabs = ['tab1', 'tab2', 'tab3'];
 </script>
 
 <template>
   <ContainerTest title="TABS">
-
     <ck-tabs v-model="selectedTab">
+      <ck-tab title="First"><p>I'm the first tab</p></ck-tab>
+      <ck-tab title="Second"><p>I'm the second tab</p></ck-tab>
+      <ck-tab title="Disabled"><p>I'm a disabled tab!</p></ck-tab>
+    </ck-tabs>
+    <ck-tabs v-model="selectedTabTest" class="mt-2" type="outlined">
       <ck-tab title="First"><p>I'm the first tab</p></ck-tab>
       <ck-tab title="Second"><p>I'm the second tab</p></ck-tab>
       <ck-tab title="Disabled"><p>I'm a disabled tab!</p></ck-tab>
