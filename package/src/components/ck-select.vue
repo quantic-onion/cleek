@@ -31,12 +31,13 @@ const props = withDefaults(
     reduceValueProp?: string;
     reduceValueMethod?: string;
     reduceValueFunction?: (option: Option) => OptionValue;
+    notReduceValue?: boolean;
     // reduce name
     reduceNameProp?: string;
     reduceNameMethod?: string;
     reduceNameFunction?: (option: Option) => string;
+    notReduceName?: boolean;
     notReduce?: boolean;
-    notReduceValue?: boolean;
     notClearable?: boolean;
     clearValue?: any;
     autofocus?: boolean;
@@ -285,7 +286,7 @@ function getOptionValue(option: Option) {
 }
 function getOptionName(option: Option) {
   if (props.reduceNameFunction) return props.reduceNameFunction(option);
-  if (props.notReduce) return option;
+  if (props.notReduceName || props.notReduce) return option;
   if (props.reduceNameMethod) return option[props.reduceNameMethod]();
   return option[props.reduceNameProp];
 }
