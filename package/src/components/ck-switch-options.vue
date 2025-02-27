@@ -17,6 +17,7 @@ const valueSelected = defineModel<OptionValue>({ required: true });
 const props = withDefaults(
   defineProps<{
     options?: Option[];
+    useQuery?: boolean;
     queryName?: string;
     notReduce?: boolean;
     // reduce value
@@ -52,8 +53,10 @@ const emit = defineEmits<{
 const route = useRoute();
 const router = useRouter();
 const { windowWidth } = useWindowWidth();
+const defaultQueryName = 'q';
 
-const isUsingQuery = computed(() => !!props.queryName);
+const isUsingQuery = computed(() => props.useQuery || !!props.queryName);
+const finalQueryName = computed(() => props.queryName || defaultQueryName);
 const optionsClass = computed(() => {
   const list = [];
   list.push(functions.getGroupClass(props, windowWidth.value));
@@ -81,11 +84,11 @@ function handleOptionClick(option: Option) {
   const value = getOptionValue(option);
   valueSelected.value = value;
   emit('change', value);
-  if (isUsingQuery.value) router.push({ query: { [props.queryName]: value } });
+  if (isUsingQuery.value) router.push({ query: { [finalQueryName.value]: value } });
 }
 function initValueSelected() {
   if (!isUsingQuery.value) return;
-  const queryValue = route.query[props.queryName] as OptionValue;
+  const queryValue = route.query[finalQueryName.value] as OptionValue;
   if (!queryValue) return;
   valueSelected.value = queryValue;
 }
