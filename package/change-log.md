@@ -2,6 +2,14 @@
 
 ## Version ?.?.?
 
+### Component: ck-awitch-options.vue
+
+1. prop?: string --> reduceValueProp?: string
+2. notReduce?: boolean --> notReduceValue?: boolean
+3. reduceFunction?: (option: Option) => any --> reduceValueFunction?: (option: Option) => OptionValue
+
+## Version ?.?.?
+
 ### Component: ck-select.vue
 
 1. options?: Option[] --> options: Option[]
