@@ -68,7 +68,7 @@ const optionStyle = computed(() => {
   return list;
 });
 
-function getOptionValue(option: Option) {
+function getOptionValue(option: Option): OptionValue {
   if (props.reduceValueFunction) return props.reduceValueFunction(option);
   if (props.notReduceValue || props.notReduce) return option;
   if (props.reduceValueMethod) return option[props.reduceValueMethod]();
@@ -80,16 +80,23 @@ function getOptionName(option: Option) {
   if (props.reduceNameMethod) return option[props.reduceNameMethod]();
   return option[props.reduceNameProp];
 }
+function setQuery(value: OptionValue) {
+  const query = finalQueryName.value;
+  router.push({ query: { [query]: value } });
+}
 function handleOptionClick(option: Option) {
   const value = getOptionValue(option);
   valueSelected.value = value;
   emit('change', value);
-  if (isUsingQuery.value) router.push({ query: { [finalQueryName.value]: value } });
+  if (isUsingQuery.value) setQuery(value);
 }
 function initValueSelected() {
   if (!isUsingQuery.value) return;
   const queryValue = route.query[finalQueryName.value] as OptionValue;
-  if (!queryValue) return;
+  if (!queryValue) {
+    setQuery(valueSelected.value);
+    return;
+  }
   valueSelected.value = queryValue;
 }
 
