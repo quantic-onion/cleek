@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { computed } from 'vue';
-import { useRoute, useRouter } from 'vue-router';
 // components
 import CkLabel from './ck-label.vue';
 // hooks
@@ -17,8 +16,6 @@ const valueSelected = defineModel<OptionValue>({ required: true });
 const props = withDefaults(
   defineProps<{
     options?: Option[];
-    useQuery?: boolean;
-    queryName?: string;
     notReduce?: boolean;
     // reduce value
     reduceValueProp?: string;
@@ -50,13 +47,8 @@ const emit = defineEmits<{
   change: [val: OptionValue];
 }>();
 
-const route = useRoute();
-const router = useRouter();
 const { windowWidth } = useWindowWidth();
-const defaultQueryName = 'q';
 
-const isUsingQuery = computed(() => props.useQuery || !!props.queryName);
-const finalQueryName = computed(() => props.queryName || defaultQueryName);
 const optionsClass = computed(() => {
   const list = [];
   list.push(functions.getGroupClass(props, windowWidth.value));
@@ -80,28 +72,11 @@ function getOptionName(option: Option) {
   if (props.reduceNameMethod) return option[props.reduceNameMethod]();
   return option[props.reduceNameProp];
 }
-function setQuery(value: OptionValue) {
-  const query = finalQueryName.value;
-  router.push({ query: { [query]: value } });
-}
 function handleOptionClick(option: Option) {
   const value = getOptionValue(option);
   valueSelected.value = value;
   emit('change', value);
-  if (isUsingQuery.value) setQuery(value);
 }
-function initValueSelected() {
-  if (!isUsingQuery.value) return;
-  const queryValue = route.query[finalQueryName.value] as OptionValue;
-  if (!queryValue) {
-    setQuery(valueSelected.value);
-    return;
-  }
-  valueSelected.value = queryValue;
-}
-
-// init component
-initValueSelected();
 </script>
 
 <template>
