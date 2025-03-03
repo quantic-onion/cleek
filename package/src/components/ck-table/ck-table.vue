@@ -260,25 +260,6 @@ function selectOrUnselectAll() {
           seleccionar todas las páginas
         </ck-button>
       </div>
-      <template v-else>
-        <div v-if="isSelectable" autoWidth>
-          <ck-checkbox
-            class="main-checkbox"
-            usesThirdState
-            size="xs"
-            color="#BABDBF"
-            :modelValue="isFullPageSelected"
-            @click="selectOrUnselectAll()"
-          />
-        </div>
-        <ck-table-title
-          v-for="col in filteredColumnsList"
-          :key="col.title"
-          :col="col"
-          :textColor="realHeaderTextColor"
-          :backgroundColor="realHeaderBackgroundColor"
-        />
-      </template>
     </div>
   </template>
   <!-- desktop -->
@@ -288,6 +269,27 @@ function selectOrUnselectAll() {
     :class="{ 'not-overflow': notOverflow }"
   >
     <table class="ck-table__table" :class="computedClassTable">
+      <thead v-if="!selectedRows?.ids?.size">
+        <tr>
+          <th v-if="isSelectable">
+            <ck-checkbox
+              class="main-checkbox"
+              usesThirdState
+              size="xs"
+              color="#BABDBF"
+              :modelValue="isFullPageSelected"
+              @click="selectOrUnselectAll()"
+            />
+          </th>
+          <CkTableTitle
+            v-for="col in filteredColumnsList"
+            :key="col.title"
+            :col="col"
+            :textColor="realHeaderTextColor"
+            :backgroundColor="realHeaderBackgroundColor"
+          />
+        </tr>
+      </thead>
       <!-- body -->
       <tbody>
         <slot/>
@@ -413,7 +415,7 @@ function selectOrUnselectAll() {
   justify-content space-between
   align-items flex-end
   gap 1rem
-  margin-bottom 0.5rem
+  padding 0.5rem
   .selected-rows-actions__left
     display flex
     align-items center
