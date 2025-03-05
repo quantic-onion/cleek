@@ -50,7 +50,7 @@ onMounted(() => {
 
 <template>
   <div class="ck-tabs">
-    <div class="ck-tabs__header">
+    <div class="ck-tabs__header" :class="{'header--flat': finalTabsType === 'flat'}">
       <div
         v-for="(tab, index) in tabs"
         :key="index"
@@ -72,6 +72,8 @@ $border-radius = 0.25rem
 .ck-tabs
   .ck-tabs__header
     display flex
+    &.header--flat
+      gap 2rem
     .ck-tabs__header--button-outlined
       cursor pointer
       transition 0.3s
